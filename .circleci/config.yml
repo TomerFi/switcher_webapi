@@ -102,7 +102,7 @@ jobs:
       name: docker-publish/docker
     steps:
       - checkout
-      - docker-publish/build
+      - docker-publish/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
@@ -146,7 +146,7 @@ jobs:
     steps:
       - checkout
       - prepare-venv
-      - codecov/upload
+      - codecov/upload:
           conf: .codecov.yml
           file: coverage_report/coverage.xml
           upload_name: switcher_webapi-${CIRCLE_BUILD_NUM}
@@ -157,7 +157,7 @@ workflows:
     jobs:
       - dockerlint-job
 
-      - docker-check-and-build-job
+      - docker-check-and-build-job:
           requires:
             - dockerlint-job
 
