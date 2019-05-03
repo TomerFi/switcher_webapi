@@ -102,7 +102,7 @@ jobs:
       name: docker-publish/docker
     steps:
       - checkout
-      - docker-publish/check
+      - setup_remote_docker 
       - docker-publish/build:
           dockerfile: Dockerfile
           path: .
