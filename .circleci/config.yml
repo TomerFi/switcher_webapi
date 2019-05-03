@@ -1,0 +1,184 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.4
+  docker-publish: circleci/docker-publish@0.1.7
+
+executors:
+  python-docker:
+    docker:
+      - image: "circleci/python:3.7.3-stretch"
+    working_directory: ~/workspace
+    environment:
+      TZ: "Asia/Jerusalem"
+
+commands:
+  prepare-venv:
+    description: Prepare the virtual environment
+    steps:
+      - restore_cache:
+          keys:
+            - v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+      - run:
+          name: Create the venv, install all requirements and save to cache
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
+            pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
+            nodeenv -pvn 12.1.0 --without-ssl --no-npm-clean .
+            npm install -g dockerlint
+      - save_cache:
+          key: v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+          paths:
+            - ./venv
+
+  run-dockerlint:
+    description: Run dockerlint linter
+    steps:
+      - run:
+          name: Dockerlint
+          command: |
+            . venv/bin/activate
+            dockerlint Dockerfile
+
+  run-linters:
+    description: Run flake8, pydocstyle and pydocstyle linters
+    steps:
+      - run:
+          name: Linters
+          command: |
+            . venv/bin/activate
+            flake8 --statistics --count --doctests pyscripts/
+            pydocstyle -v --count pyscripts/
+            pycodestyle -v --statistics --show-pep8 --count pyscripts/
+
+  run-pylint:
+    description: Run pylint
+    steps:
+      - run:
+          name: Pylint
+          command: |
+            . venv/bin/activate
+            pylint --disable fixme --rcfile pylintrc pyscripts/
+
+  run-mypy:
+    description: Run mypy type checking
+    steps:
+      - run:
+          name: Mypy
+          command: |
+            . venv/bin/activate
+            mypy --config-file mypy.ini pyscripts/
+
+  run-tests-with-coverage:
+    description: Run pytest test cases with coverage report
+    steps:
+      - run:
+          name: Pytest
+          command: |
+            . venv/bin/activate
+            pytest -vs --cov=pyscripts --cov-append --cov-config=.coveragerc --cov-report=xml:coverage_report/coverage.xml pyscripts/test_server.py
+      - persist_to_workspace:
+          root: coverage_report/
+          paths:
+            - coverage.xml
+      - store_artifacts:
+          path: coverage_report
+      - store_test_results:
+          path: coverage_report
+
+jobs:
+  dockerlint-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-dockerlint
+
+  docker-check-and-build-job:
+    executor:
+      name: docker-publish/docker
+    steps:
+      - checkout
+      - docker-publish/build
+          dockerfile: Dockerfile
+          path: .
+          image: tomerfi/switcher_webapi
+          tag: testing
+
+  linters-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-linters
+
+  pylint-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-pylint
+
+  mypy-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-mypy
+
+  unittests-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-tests-with-coverage
+
+  coverage-reports-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - codecov/upload
+          conf: .codecov.yml
+          file: coverage_report/coverage.xml
+          upload_name: switcher_webapi-${CIRCLE_BUILD_NUM}
+
+workflows:
+  version: "2.1"
+  build:
+    jobs:
+      - dockerlint-job
+
+      - docker-check-and-build-job
+          requires:
+            - dockerlint-job
+
+      - linters-job:
+          requires:
+            - docker-check-and-build-job
+
+      - pylint-job:
+          requires:
+            - docker-check-and-build-job
+
+      - mypy-job:
+          requires:
+            - docker-check-and-build-job
+
+      - unittests-job:
+          requires:
+            - linters-job
+            - pylint-job
+            - mypy-job
+
+      - coverage-reports-job:
+          requires:
+            - unittests-job

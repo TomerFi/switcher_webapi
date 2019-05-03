@@ -1,0 +1,15 @@
+[Reports]
+reports=no
+score=no
+output-format=colorized
+
+[Similarities]
+ignore-comments=no
+
+[Format]
+max-line-length=79
+expected-line-ending-format=LF
+
+[Design]
+max-args=6
+
