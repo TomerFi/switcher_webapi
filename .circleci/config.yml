@@ -103,7 +103,6 @@ jobs:
     steps:
       - attach_workspace:
           at: coverage_report/
-      - checkout
       - setup_remote_docker 
       - docker-publish/build:
           dockerfile: Dockerfile
