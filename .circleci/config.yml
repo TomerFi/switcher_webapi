@@ -101,8 +101,7 @@ jobs:
     executor:
       name: docker-publish/docker
     steps:
-      - attach_workspace:
-          at: coverage_report/
+      - checkout
       - setup_remote_docker 
       - docker-publish/build:
           dockerfile: Dockerfile
@@ -146,8 +145,8 @@ jobs:
     executor:
       name: python-docker
     steps:
-      - checkout
-      - prepare-venv
+      - attach_workspace:
+          at: coverage_report/
       - codecov/upload:
           conf: .codecov.yml
           file: coverage_report/coverage.xml
