@@ -1,8 +1,5 @@
 """Constants for the Switcher WebAPI."""
 
-from socket import gethostbyname, gethostname
-
-TEST_SERVER_HOST = gethostbyname(gethostname())
 TEST_SERVER_PORT = 8271
 
 DUMMY_TIME_LEFT = '01:29:27'

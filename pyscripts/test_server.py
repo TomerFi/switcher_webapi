@@ -1,6 +1,7 @@
 """Unit tests for the Switcher WebAPI."""
 
 from datetime import datetime
+from socket import gethostbyname, gethostname
 
 from aiohttp import ClientSession
 from aioswitcher.api.messages import ResponseMessageType
@@ -14,7 +15,7 @@ import mappings
 
 
 BASE_URL_FORMAT = (
-    'http://' + consts.TEST_SERVER_HOST
+    'http://' + gethostbyname(gethostname())
     + ':' + str(consts.TEST_SERVER_PORT) + '{}')
 
 URL_GET_STATE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_GET_STATE)

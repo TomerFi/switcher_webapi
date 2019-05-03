@@ -3,6 +3,7 @@
 from asyncio import (AbstractEventLoop, Future, get_event_loop,
                      set_event_loop, StreamReader, StreamWriter)
 from datetime import datetime
+from socket import gethostbyname, gethostname
 from typing import Any, Generator
 
 from aioswitcher.api import messages
@@ -48,7 +49,7 @@ def mock_test_client(
     """Fixture for stating server in the event loop."""
     return loop.run_until_complete(
         sanic_test_app.create_server(
-            host=consts.TEST_SERVER_HOST, port=consts.TEST_SERVER_PORT,
+            host=gethostbyname(gethostname()), port=consts.TEST_SERVER_PORT,
             return_asyncio_server=True))
 
 
