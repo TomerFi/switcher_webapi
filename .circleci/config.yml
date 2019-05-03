@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  codecov: codecov/codecov@1.0.4
   docker-publish: circleci/docker-publish@0.1.7
 
 executors:
@@ -145,14 +146,12 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
       - attach_workspace:
           at: coverage_report/
-      - run:
-          name: CodeCov
-          command: |
-            . venv/bin/activate
-            codecov --file coverage_report/coverage.xml
+      - codecov/upload:
+          conf: .codecov.yml
+          file: coverage_report/coverage.xml
+          upload_name: switcher_webapi-${CIRCLE_BUILD_NUM}
 
 workflows:
   version: "2.1"
