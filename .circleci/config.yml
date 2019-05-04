@@ -39,7 +39,7 @@ commands:
               rm 0.3.11.tar.gz
             fi
       - save_cache:
-          key: - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
+          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
             - ./node_modules
 
