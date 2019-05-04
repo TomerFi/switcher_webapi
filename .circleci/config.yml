@@ -10,8 +10,39 @@ executors:
     working_directory: ~/workspace
     environment:
       TZ: "Asia/Jerusalem"
+  
+  node-docker:
+    docker:
+      - image: "circleci/node:lts"
+    working_directory: ~/workspace
+      
 
 commands:
+  install-dockerlint:
+    description: Download and install the dockerlint linter
+    steps:
+      - restore_cache:
+          keys:
+            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
+      - run:
+          name: Install dockerlint
+          command: |
+            if npm -g list | grep dockerlint < /dev/null
+            then
+              wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
+              tar xvzf 0.3.11.tar.gz
+              cd dockerlint-0.3.11
+              make clean js dist
+              npm install
+              cd..
+              rm -rf dockerlint-0.3.11/
+              rm 0.3.11.tar.gz
+            fi
+      - save_cache:
+          key: - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
+          paths:
+            - ./node_modules
+
   prepare-venv:
     description: Prepare the virtual environment
     steps:
@@ -38,8 +69,7 @@ commands:
       - run:
           name: Dockerlint
           command: |
-            . venv/bin/activate
-            dockerlint Dockerfile
+            dockerlint -dpf Dockerfile
 
   run-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
@@ -90,10 +120,10 @@ commands:
 jobs:
   dockerlint-job:
     executor:
-      name: python-docker
+      name: node-docker
     steps:
       - checkout
-      - prepare-venv
+      - install-dockerlint
       - run-dockerlint
 
   docker-check-and-build-job:
