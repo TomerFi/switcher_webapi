@@ -27,17 +27,14 @@ commands:
       - run:
           name: Install dockerlint
           command: |
-            if npm -g list | grep dockerlint < /dev/null
-            then
-              wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
-              tar xvzf 0.3.11.tar.gz
-              cd dockerlint-0.3.11
-              make clean js dist
-              npm install
-              cd..
-              rm -rf dockerlint-0.3.11/
-              rm 0.3.11.tar.gz
-            fi
+            wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
+            tar xvzf 0.3.11.tar.gz
+            cd dockerlint-0.3.11
+            make clean js dist
+            npm install
+            cd..
+            rm -rf dockerlint-0.3.11/
+            rm 0.3.11.tar.gz
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
