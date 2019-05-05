@@ -30,7 +30,8 @@ else
   tar xzf $1.tar.gz
   cd dockerlint-$1
   make clean js
-  rm -r "!(bin|lib)"
+  cd ..
+  rm $1.tar.gz
   echo "dockerlint-$1 created."
   exit 0
 fi
