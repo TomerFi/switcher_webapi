@@ -40,7 +40,7 @@ commands:
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
-            - /usr/local/lib/node_modules
+            - ~/usr/local/lib/node_modules
 
   prepare-venv:
     description: Prepare the virtual environment
