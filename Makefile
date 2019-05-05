@@ -57,6 +57,9 @@ docker_build_no_cache: ## build image from Dockerfile with no caching.
   --build-arg VERSION=$(CODE_VERSION) \
   -t $(FULL_IMAGE_NAME) .
 
+docker_tag_latest: ## add latest tag before pushing the latest version
+docker_tag_latest: docker tag FULL_IMAGE_NAME IMAGE_NAME:latest
+
 docker_run: ## run the built image as a container (must be built first).
 docker_run:	verify-environment-file
 	docker run -d -p $(EXPOSED_PORT):8000 \
