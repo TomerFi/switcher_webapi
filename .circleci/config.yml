@@ -27,7 +27,7 @@ commands:
       - run:
           name: Install dockerlint 0.3.11
           command: |
-            dockerlint-download-prepare.sh "0.3.11"
+            shellscripts/dockerlint-download-prepare.sh 0.3.11
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
