@@ -32,8 +32,7 @@ commands:
             wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
             tar xzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
-            make clean js
-            rm -rv !(package.json|*.js)
+            make clean js dist
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
