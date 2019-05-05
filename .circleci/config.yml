@@ -29,15 +29,15 @@ commands:
           command: |
             sudo apt-get update
             sudo apt-get install coffeescript --no-install-recommends -y
-            wget -v --output-document dockerlint.tar.gz --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
-            tar xzf dockerlint.tar.gz
-            cd dockerlint
+            wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
+            tar xzf 0.3.11.tar.gz
+            cd dockerlint-0.3.11
             make clean js
             rm -rv !(package.json|*.js)
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
-            - dockerlint
+            - dockerlint-0.3.11
 
   prepare-venv:
     description: Prepare the virtual environment
@@ -65,7 +65,7 @@ commands:
       - run:
           name: Dockerlint
           command: |
-            node dockerlint/bin/dockerlint.js -dpf Dockerfile
+            node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
 
   run-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
