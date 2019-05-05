@@ -27,6 +27,7 @@ commands:
       - run:
           name: Install dockerlint
           command: |
+            npm install coffeescript
             wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
             tar xvzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
