@@ -48,7 +48,7 @@ version: '3.7'
 services:
   switcher_api:
     image: tomerfi/switcher_webapi:latest
-    container_name: 'tomerfi_switcher'
+    container_name: 'switcher_webapi'
     env_file:
       - .env_vars
     ports:
