@@ -25,14 +25,9 @@ commands:
           keys:
             - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
       - run:
-          name: Install dockerlint
+          name: Install dockerlint 0.3.11
           command: |
-            sudo apt-get update
-            sudo apt-get install coffeescript --no-install-recommends -y
-            wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
-            tar xzf 0.3.11.tar.gz
-            cd dockerlint-0.3.11
-            make clean js
+            dockerlint-download-prepare.sh "0.3.11"
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
