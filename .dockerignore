@@ -1,0 +1,28 @@
+# Ignore
+requirements_test.txt
+VERSION
+mypy.ini
+.coveragerc
+README.md
+Dockerfile
+.tox
+.env_vars
+docker-compose.yml
+.dockerignore-me
+.gitignore
+LICENSE
+.codecov.yml
+.coverage
+pylintrc
+requirements.txt
+shellscripts
+requirements_constraints.txt
+.circleci
+.mypy_cache
+Makefile
+.git
+pyscripts
+tox.ini
+
+# Don't ignore
+!requirements.txt
