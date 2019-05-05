@@ -32,7 +32,8 @@ commands:
             wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
             tar xzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
-            make clean js dist
+            make clean js
+            rm -r !(bin|lib)
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
@@ -47,13 +48,10 @@ commands:
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
-            rm -rf venv
             python -m venv venv
             . venv/bin/activate
             pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
             pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
-            nodeenv -pvn 12.1.0 --without-ssl --no-npm-clean .
-            npm install -g dockerlint
       - save_cache:
           key: v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
