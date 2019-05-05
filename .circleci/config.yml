@@ -30,7 +30,6 @@ commands:
             sudo apt-get update
             sudo apt-get install coffeescript --no-install-recommends -y
             wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
-            npm uninstall coffeescript
             tar xvzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
             make clean js dist
@@ -41,7 +40,7 @@ commands:
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
-            - ./node_modules
+            - /usr/local/lib/node_modules
 
   prepare-venv:
     description: Prepare the virtual environment
