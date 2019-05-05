@@ -3,7 +3,7 @@ requirements_test.txt
 VERSION
 mypy.ini
 .coveragerc
-README.md
+# README.md
 Dockerfile
 .tox
 .env_vars
