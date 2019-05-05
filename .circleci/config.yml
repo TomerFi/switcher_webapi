@@ -27,8 +27,8 @@ commands:
       - run:
           name: Install dockerlint
           command: |
-            apt-get update
-            apt-get install coffeescript --no-install-recommends -y
+            sudo apt-get update
+            sudo apt-get install coffeescript --no-install-recommends -y
             wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/0.3.11.tar.gz
             tar xvzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
