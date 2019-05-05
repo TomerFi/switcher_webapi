@@ -33,7 +33,6 @@ commands:
             tar xzf 0.3.11.tar.gz
             cd dockerlint-0.3.11
             make clean js
-            rm -r !(bin|lib)
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
