@@ -189,7 +189,7 @@ async def test_get_schedules_request(
 
                 assert len(body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS]) == 1
                 assert body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS][0] == \
-                    WEEKDAY_TUP[_get_next_weekday()]]
+                    WEEKDAY_TUP[_get_next_weekday()]
 
                 assert body[consts.KEY_SCHEDULES][0][
                     consts.KEY_START_TIME] == consts.DUMMY_START_TIME
