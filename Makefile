@@ -1,5 +1,5 @@
 ######################################################################
-# .device_info file should must the following 5 keys, example:       #
+# .env_vars file should must the following 5 keys, example:       #
 # ------------------------------------------------------------------ #
 # EXPOSED_PORT=8000
 # CONF_DEVICE_IP_ADDR=192.168.100.157                                #
@@ -8,15 +8,15 @@
 # CONF_DEVICE_PASSWORD=12345678                                      #
 # CONF_THROTTLE=5.0                                                  #
 #																																		 #
-# change the file name by passing device_info="another_file" to make #
+# change the file name by passing env_vars="another_file" to make #
 ######################################################################
 
 EXPOSED_PORT ?= 8000
 CONF_THROTTLE ?= 5.0
 
-device_info ?= .device_info
-include $(device_info)
-export $(shell sed 's/=.*//' $(device_info))
+env_vars ?= .env_vars
+include $(env_vars)
+export $(shell sed 's/=.*//' $(env_vars))
 
 -PHONY: help
 

@@ -1,7 +1,7 @@
 ##########################
 ### Custom for project ###
 ##########################
-.device_info
+.env_vars
 docker-compose.yml
 
 
