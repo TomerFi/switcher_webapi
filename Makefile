@@ -1,15 +1,19 @@
-######################################################################
-# .env_vars file should must the following 5 keys, example:       #
-# ------------------------------------------------------------------ #
-# EXPOSED_PORT=8000
-# CONF_DEVICE_IP_ADDR=192.168.100.157                                #
-# CONF_PHONE_ID=1234                                                 #
-# CONF_DEVICE_ID=ab1c2d                                              #
-# CONF_DEVICE_PASSWORD=12345678                                      #
-# CONF_THROTTLE=5.0                                                  #
-#																																		 #
-# change the file name by passing env_vars="another_file" to make #
-######################################################################
+########################################################################
+# .env_vars file contains following keys, example:                     #
+# -------------------------------------------------------------------- #
+# (Optional)                                                           #
+# EXPOSED_PORT=8000                                                    #
+# CONF_THROTTLE=5.0                                                    #
+#                                                     					       #
+# (Mandatory)                                                          #
+# CONF_DEVICE_IP_ADDR=192.168.100.157                                  #
+# CONF_PHONE_ID=1234                                                   #
+# CONF_DEVICE_ID=ab1c2d                                                #
+# CONF_DEVICE_PASSWORD=12345678                                        #
+#                                                                      #
+#																																	     #
+# change the source file name by passing env_vars=another_file to make #
+########################################################################
 
 EXPOSED_PORT ?= 8000
 CONF_THROTTLE ?= 5.0
@@ -18,9 +22,7 @@ env_vars ?= .env_vars
 include $(env_vars)
 export $(shell sed 's/=.*//' $(env_vars))
 
--PHONY: help
-
-default: help docker_build docker_build_no_cache docker_run docker_build_and_run docker_build_no_cache_and_run verify-environment-file verify-release-tag
+default: help
 
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
