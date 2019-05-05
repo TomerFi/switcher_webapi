@@ -15,13 +15,13 @@ Dockerfile
 Makefile
 mypy.ini
 pylintrc
-requirements.txt
 requirements_test.txt
-requirements_constraints.txt
 tox.ini
 
 # Don't ignore
 !pyscripts
 !LICENSE
 !README.md
+!requirements.txt
+!requirements_constraints.txt
 !VERSION
