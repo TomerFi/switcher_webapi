@@ -7,7 +7,7 @@
 | GitHub | ![Open Issues](https://img.shields.io/github/issues-raw/tomerfi/switcher_webapi.svg) ![Commit Activity Month](https://img.shields.io/github/commit-activity/m/tomerfi/switcher_webapi.svg) ![Last Commit](https://img.shields.io/github/last-commit/tomerfi/switcher_webapi.svg) ![GitHub language count](https://img.shields.io/github/languages/count/tomerfi/switcher_webapi.svg) ![GitHub top language](https://img.shields.io/github/languages/top/tomerfi/switcher_webapi.svg) |
 | Project | ![GitHub release](https://img.shields.io/github/release/tomerfi/switcher_webapi.svg) ![GitHub](https://img.shields.io/github/license/tomerfi/switcher_webapi.svg) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) |
 
-An asyncronous [sanic webapp](https://pypi.org/project/sanic/) running inside a [python docker image](https://hub.docker.com/_/python) using [uvloop](https://pypi.org/project/uvloop/) as the event loop.</br>
+An asynchronous [sanic webapp](https://pypi.org/project/sanic/) running inside a [python docker image](https://hub.docker.com/_/python) using [uvloop](https://pypi.org/project/uvloop/) as the event loop.</br>
 Used as a rest api wrapper for [aioswitcher](https://pypi.org/project/aioswitcher/).</br>
 If you're using the [Switcher Water Heater](https://switcher.co.il/) and you want to wrap a rest api around it... you came to the right place!</br>
 </br>
@@ -25,9 +25,9 @@ If you're using the [Switcher Water Heater](https://switcher.co.il/) and you wan
 - If you don't want to be forced to restart the container if the device's ip address changes, please consider assigning the device with a static ip address.
 - The Switcher-V2-Python repository is build with python 2.7.
 - The [aioswitcher](https://github.com/TomerFi/aioswitcher) was tested with the Switcher V2 device by myself and with the Switcher Touch device by the community.
-- This project was intended for local usage, it's ok if you want to use it remotely, just make sure to take the proper security messures such as reverse proxy and ssl.
+- This project was intended for local usage, it's ok if you want to use it remotely, just make sure to take the proper security measures such as reverse proxy and ssl.
 - The WebAPI has a throttle mechanism to prevent overfloating the device with frequent requests, it defaults to 5 seconds throttle time.
-- Some users have been reporting lately about failurs using the Switcher-V2-Python script after upgrading the device firmware to 3.0, please follow the relevant issues in the script repository before doing the same.
+- Some users have been reporting lately about failures using the Switcher-V2-Python script after upgrading the device firmware to 3.0, please follow the relevant issues in the script repository before doing the same.
 
 ## Install
 ```shell
@@ -41,9 +41,9 @@ docker run -d -p 8000:8000 \
 You can also add another optional environment variable, `-e CONF_THROTTLE=5.0` for setting the throttle time between consecutive requests, this is optional and the default value is `5.0`.
 
 ## Usage
-Once running, you can send REST reqeusts towards the container. </br>
+Once running, you can send REST requests towards the container. </br>
 
-With the exception of the `create_schedule` requests, all the requests requiering input can take it as a json body or in the form of query parameters.</br>
+With the exception of the `create_schedule` requests, all the requests requiring input can take it as a json body or in the form of query parameters.</br>
 </br>
 
 ### /switcher/get_state
@@ -66,7 +66,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 **Method:** `POST`</br>
 **Request parameters:**
 
-| Key | Requiered | Description |
+| Key | Required | Description |
 | - | - | - |
 | `minutes` | **Optional** | turn on the device with an off timer of 1-180 minutes. |
 
@@ -100,7 +100,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 **Method: POST**</br>
 **Request parameters:**
 
-| Key | Requiered | Description |
+| Key | Required | Description |
 | - | - | - |
 | `hours` | **Mandatory** | hours value 1-3. |
 | `minutes` | **Mandatory** | minutes value 0-59. |
@@ -128,7 +128,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 **Method: POST**</br>
 **Request parameters:**
 
-| Key | Requiered | Description |
+| Key | Required | Description |
 | - | - | - |
 | `name` | **Mandatory** | device name, accepts length of 2-32 characters. |
 
@@ -190,7 +190,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
     ]
 }
 ```
-*Please note*, the `schedules` list can contain up to 8 schedules with the identifiers of 0-7 represnting the actual schedule slots on the device.</br>
+*Please note*, the `schedules` list can contain up to 8 schedules with the identifiers of 0-7 representing the actual schedule slots on the device.</br>
 </br>
 
 ### /switcher/enable_schedule
@@ -199,7 +199,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 
 | Key | Requiered | Description |
 | - | - | - |
-| `schedule_data` | **Mandatory** | the `schedule_data` associated with the chosen schedule (retrived with `/switcher/get_schedules`). |
+| `schedule_data` | **Mandatory** | the `schedule_data` associated with the chosen schedule (retrieved with `/switcher/get_schedules`). |
 
 **Request body example:**
 ```json
@@ -222,7 +222,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 
 | Key | Requiered | Description |
 | - | - | - |
-| `schedule_data` | **Mandatory** | the `schedule_data` associated with the chosen schedule (retrived with `/switcher/get_schedules`). |
+| `schedule_data` | **Mandatory** | the `schedule_data` associated with the chosen schedule (retrieved with `/switcher/get_schedules`). |
 
 **Request body example:**
 ```json
@@ -245,7 +245,7 @@ With the exception of the `create_schedule` requests, all the requests requierin
 
 | Key | Requiered | Description |
 | - | - | - |
-| `schedule_id` | **Mandatory** | the `schedule_id` associated with the chosen schedule (retrived with `/switcher/get_schedules`). |
+| `schedule_id` | **Mandatory** | the `schedule_id` associated with the chosen schedule (retrieved with `/switcher/get_schedules`). |
 
 **Request body example:**
 ```json
@@ -309,7 +309,7 @@ Possible values for the `days` list:
 </br>
 
 ### Exceptions
-Unless unhandled, all excptions will return a json object in response body:
+Unless unhandled, all exceptions will return a json object in response body:
 ```json
 {
   "successful": false,
