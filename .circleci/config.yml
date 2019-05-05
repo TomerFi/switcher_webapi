@@ -37,6 +37,7 @@ commands:
             cd ..
             rm -rf dockerlint-0.3.11/
             rm 0.3.11.tar.gz
+            find . -name "node_modules"
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
