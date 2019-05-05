@@ -36,6 +36,14 @@ URL_CREATE_SCHEDULE = \
     BASE_URL_FORMAT.format(mappings.URL_MAPPING_CREATE_SCHEDULE)
 
 
+def _get_next_weekday() -> int:
+    """Use for getting next day weekday."""
+    current_day = datetime.now(utc).weekday()
+    if current_day == 6:
+        return 0
+    return current_day + 1
+
+
 async def test_get_state_request(get_state_response: MagicMock) -> None:
     """Test /switcher/get_state request."""
     with patch('request_handlers.SwitcherV2Api.get_state',
@@ -181,7 +189,7 @@ async def test_get_schedules_request(
 
                 assert len(body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS]) == 1
                 assert body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS][0] == \
-                    WEEKDAY_TUP[datetime.now(utc).weekday() + 1]
+                    WEEKDAY_TUP[_get_next_weekday()]]
 
                 assert body[consts.KEY_SCHEDULES][0][
                     consts.KEY_START_TIME] == consts.DUMMY_START_TIME
@@ -469,7 +477,7 @@ async def test_create_schedule_request(
     with patch('request_handlers.SwitcherV2Api.create_schedule',
                return_value=create_schedule_response):
         async with ClientSession() as session:
-            selected_test_day = WEEKDAY_TUP[datetime.now(utc).weekday() + 1]
+            selected_test_day = WEEKDAY_TUP[_get_next_weekday()]
             async with session.put(
                     URL_CREATE_SCHEDULE,
                     **{'json': {consts.PARAM_DAYS: [selected_test_day],
