@@ -1,21 +1,18 @@
 """Unit tests for the Switcher WebAPI."""
 
-from datetime import datetime
-from socket import gethostbyname, gethostname
-
 from aiohttp import ClientSession
 from aioswitcher.api.messages import ResponseMessageType
 from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from asynctest import MagicMock, patch
 from bs4 import BeautifulSoup
-from pytz import utc
 
 import consts
+from helpers import get_local_ip_address, get_next_weekday
 import mappings
 
 
 BASE_URL_FORMAT = (
-    'http://' + gethostbyname(gethostname())
+    'http://' + get_local_ip_address()
     + ':' + str(consts.TEST_SERVER_PORT) + '{}')
 
 URL_GET_STATE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_GET_STATE)
@@ -34,14 +31,6 @@ URL_DELETE_SCHEDULE = \
     BASE_URL_FORMAT.format(mappings.URL_MAPPING_DELETE_SCHEDULE)
 URL_CREATE_SCHEDULE = \
     BASE_URL_FORMAT.format(mappings.URL_MAPPING_CREATE_SCHEDULE)
-
-
-def _get_next_weekday() -> int:
-    """Use for getting next day weekday."""
-    current_day = datetime.now(utc).weekday()
-    if current_day == 6:
-        return 0
-    return current_day + 1
 
 
 async def test_get_state_request(get_state_response: MagicMock) -> None:
@@ -189,7 +178,7 @@ async def test_get_schedules_request(
 
                 assert len(body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS]) == 1
                 assert body[consts.KEY_SCHEDULES][0][consts.KEY_DAYS][0] == \
-                    WEEKDAY_TUP[_get_next_weekday()]
+                    WEEKDAY_TUP[get_next_weekday()]
 
                 assert body[consts.KEY_SCHEDULES][0][
                     consts.KEY_START_TIME] == consts.DUMMY_START_TIME
@@ -477,7 +466,7 @@ async def test_create_schedule_request(
     with patch('request_handlers.SwitcherV2Api.create_schedule',
                return_value=create_schedule_response):
         async with ClientSession() as session:
-            selected_test_day = WEEKDAY_TUP[_get_next_weekday()]
+            selected_test_day = WEEKDAY_TUP[get_next_weekday()]
             async with session.put(
                     URL_CREATE_SCHEDULE,
                     **{'json': {consts.PARAM_DAYS: [selected_test_day],

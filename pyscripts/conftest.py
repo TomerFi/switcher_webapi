@@ -2,8 +2,6 @@
 
 from asyncio import (AbstractEventLoop, Future, get_event_loop,
                      set_event_loop, StreamReader, StreamWriter)
-from datetime import datetime
-from socket import gethostbyname, gethostname
 from typing import Any, Generator
 
 from aioswitcher.api import messages
@@ -11,11 +9,11 @@ from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from aioswitcher.schedules import SwitcherV2Schedule
 from asynctest import MagicMock, Mock, patch
 from pytest import fixture
-from pytz import utc
 from sanic import Sanic
 from uvloop import new_event_loop
 
 import consts
+from helpers import get_local_ip_address, get_next_weekday
 from start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
                           CONF_DEVICE_PASSWORD, CONF_PHONE_ID,
                           CONF_THROTTLE, sanic_app)
@@ -49,7 +47,7 @@ def mock_test_client(
     """Fixture for stating server in the event loop."""
     return loop.run_until_complete(
         sanic_test_app.create_server(
-            host=gethostbyname(gethostname()), port=consts.TEST_SERVER_PORT,
+            host=get_local_ip_address(), port=consts.TEST_SERVER_PORT,
             return_asyncio_server=True))
 
 
@@ -108,7 +106,7 @@ def mock_schedule_object() -> Generator[None, None, SwitcherV2Schedule]:
     mock_object.schedule_id = consts.DUMMY_SCHEDULE_ID
     mock_object.enabled = True
     mock_object.recurring = True
-    mock_object.days = [WEEKDAY_TUP[datetime.now(utc).weekday() + 1]]
+    mock_object.days = [WEEKDAY_TUP[get_next_weekday()]]
     mock_object.start_time = consts.DUMMY_START_TIME
     mock_object.end_time = consts.DUMMY_END_TIME
     mock_object.duration = consts.DUMMY_DURATION
