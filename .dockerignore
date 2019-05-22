@@ -8,9 +8,7 @@ shellscripts
 .coverage
 .coveragerc
 .dockerignore
-.env_vars
 .gitignore
-docker-compose.yml
 Dockerfile
 Makefile
 mypy.ini
