@@ -186,8 +186,6 @@ async def test_get_schedules_request(
                     consts.KEY_END_TIME] == consts.DUMMY_END_TIME
                 assert body[consts.KEY_SCHEDULES][0][
                     consts.KEY_DURATION] == consts.DUMMY_DURATION
-                assert body[consts.KEY_SCHEDULES][0][
-                    consts.KEY_NEXT_RUN] in consts.RESULT_NEXT_RUN_LIST
 
             get_schedules_response.successful = False
             async with session.get(URL_GET_SCHEDULES) as response:

@@ -11,7 +11,6 @@ DUMMY_SCHEDULE_ID = '0'
 DUMMY_START_TIME = '20:00'
 DUMMY_END_TIME = '20:30'
 DUMMY_DURATION = '0:30:00'
-RESULT_NEXT_RUN_LIST = ['Due today at 20:00', 'Due tommorow at 20:00']
 
 DUMMY_SCHEDULE_DATA = 'schdeule_data_goes_here!'
 
