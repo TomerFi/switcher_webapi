@@ -207,7 +207,7 @@ workflows:
       - unittests-job:
           requires:
             - linters-job
-            - pylint-job
+            - security-job
             - mypy-job
 
       - coverage-reports-job:
