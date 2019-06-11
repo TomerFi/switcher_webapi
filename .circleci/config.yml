@@ -59,6 +59,15 @@ commands:
           command: |
             node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
 
+  check-security:
+    description: Run bandit tests
+    steps:
+      - run:
+          name: Code-security
+          command: |
+            . venv/bin/activate
+            bandit -rvc .bandit pyscripts -l -ii
+
   run-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
     steps:
@@ -69,14 +78,6 @@ commands:
             flake8 --statistics --count --doctests pyscripts/
             pydocstyle -v --count pyscripts/
             pycodestyle -v --statistics --show-pep8 --count pyscripts/
-
-  run-pylint:
-    description: Run pylint
-    steps:
-      - run:
-          name: Pylint
-          command: |
-            . venv/bin/activate
             pylint --disable fixme --rcfile pylintrc pyscripts/
 
   run-mypy:
@@ -95,7 +96,7 @@ commands:
           name: Pytest
           command: |
             . venv/bin/activate
-            pytest -vs --cov=pyscripts --cov-append --cov-config=.coveragerc --cov-report=xml:coverage_report/coverage.xml pyscripts/test_server.py
+            pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage_report/coverage.xml pyscripts/test_server.py
       - persist_to_workspace:
           root: coverage_report/
           paths:
@@ -125,6 +126,14 @@ jobs:
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
+
+  security-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - check-security
 
   linters-job:
     executor:
@@ -171,22 +180,23 @@ jobs:
           command: |
             . venv/bin/activate
             codecov --file coverage_report/coverage.xml
+            python-codacy-coverage -r coverage_report/coverage.xml
 
 workflows:
-  version: "2.1"
+  version: "2"
   build:
     jobs:
       - dockerlint-job
 
-      - docker-check-and-build-job:
+      - security-job:
           requires:
             - dockerlint-job
 
-      - linters-job:
+      - docker-check-and-build-job:
           requires:
-            - docker-check-and-build-job
+            -  security-job
 
-      - pylint-job:
+      - linters-job:
           requires:
             - docker-check-and-build-job
 

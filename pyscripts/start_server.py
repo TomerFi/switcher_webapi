@@ -23,7 +23,7 @@ from request_handlers import (
 
 CONF_PHONE_ID = 'PHONE_ID'
 CONF_DEVICE_ID = 'DEVICE_ID'
-CONF_DEVICE_PASSWORD = 'DEVICE_PASSWORD'
+CONF_DEVICE_PASSWORD = 'DEVICE_PASSWORD'  # nosec
 CONF_DEVICE_IP_ADDR = 'DEVICE_IP_ADDR'
 CONF_THROTTLE = 'THROTTLE'
 
@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
     set_event_loop(new_event_loop())
     server_coro = sanic_app.create_server(
-        host='0.0.0.0', port=parser.parse_args().port,
+        host='0.0.0.0', port=parser.parse_args().port,  # nosec
         return_asyncio_server=True)
     event_loop = None  # type: Optional[AbstractEventLoop]
     try:
