@@ -2,9 +2,6 @@
 ### Custom for project ###
 ##########################
 .env_vars
-docker-compose.yml
-docker-stack.yml
-
 
 ########################################################################
 ### https://github.com/github/gitignore/blob/master/Python.gitignore ###
