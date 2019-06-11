@@ -9,6 +9,7 @@ shellscripts
 .coveragerc
 .dockerignore
 .gitignore
+bandit.yml
 Dockerfile
 Makefile
 mypy.ini
