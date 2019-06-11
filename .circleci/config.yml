@@ -66,7 +66,7 @@ commands:
           name: Code-security
           command: |
             . venv/bin/activate
-            bandit -rvc .bandit pyscripts -l -ii
+            bandit -rvc bandit.yml pyscripts -l -ii
 
   run-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
