@@ -1,4 +1,5 @@
 .git
+docs
 .tox*
 .coverage
 .coveragerc
