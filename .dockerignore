@@ -3,6 +3,7 @@
 .git
 .mypy_cache
 .tox
+docs
 shellscripts
 .codecov.yml
 .coverage
