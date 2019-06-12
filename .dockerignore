@@ -9,6 +9,8 @@ shellscripts
 .coveragerc
 .dockerignore
 .gitignore
+.prettierignore
+.prettierrc.yml
 bandit.yml
 Dockerfile
 Makefile
