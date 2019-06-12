@@ -41,6 +41,8 @@ commands:
       - run:
           name: Install prettier
           command: |
+            npm list -g
+            npm list
             npm install --no-save prettier
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
@@ -79,6 +81,8 @@ commands:
       - run:
           name: Prettier
           command: |
+            npm list -g
+            npm list
             prettier --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
 
   check-security:
