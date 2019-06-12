@@ -37,14 +37,13 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+            - v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
       - run:
           name: Install prettier
           command: |
-            npm install --user prettier
-            ls node_modules
+            npm install --user --no-save prettier
       - save_cache:
-          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+          key: v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
           paths:
             - ./node_modules
             - ./package.json
@@ -81,7 +80,7 @@ commands:
       - run:
           name: Prettier
           command: |
-            prettier --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
+            node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
 
   check-security:
     description: Run bandit tests
