@@ -45,7 +45,7 @@ commands:
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
           paths:
-            - /root/.npm
+            - ./.npm
 
   prepare-venv:
     description: Prepare the virtual environment
