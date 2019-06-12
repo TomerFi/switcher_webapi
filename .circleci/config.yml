@@ -37,13 +37,13 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "prettierrc.yml" }}-{{ checksum "prettierignore" }}
+            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
       - run:
           name: Install prettier
           command: |
             npm install --save-dev --save-exact prettier
       - save_cache:
-          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "prettierrc.yml" }}-{{ checksum "prettierignore" }}
+          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
           paths:
             - ./node_modules
 
@@ -223,6 +223,7 @@ workflows:
       - docker-check-and-build-job:
           requires:
             - dockerlint-job
+            - prettier-job
 
       - security-job:
           requires:
