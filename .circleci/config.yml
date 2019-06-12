@@ -10,12 +10,11 @@ executors:
     working_directory: ~/workspace
     environment:
       TZ: "Asia/Jerusalem"
-  
+
   node-docker:
     docker:
       - image: "circleci/node:lts"
     working_directory: ~/workspace
-      
 
 commands:
   install-dockerlint:
@@ -26,12 +25,25 @@ commands:
             - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
       - run:
           name: Install dockerlint 0.3.11
-          command: |
-            bash shellscripts/dockerlint-download-prepare.sh 0.3.11
+          command: bash shellscripts/dockerlint-download-prepare.sh 0.3.11
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
           paths:
             - dockerlint-0.3.11
+
+  install-prettier:
+    description: Install prettier with npm
+    steps:
+      - restore_cache:
+          keys:
+            - v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+      - run:
+          name: Install prettier
+          command: npm install prettier
+      - save_cache:
+          key: v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+          paths:
+            - ./node_modules
 
   prepare-venv:
     description: Prepare the virtual environment
@@ -56,8 +68,23 @@ commands:
     steps:
       - run:
           name: Dockerlint
+          command: node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
+
+  run-prettier:
+    description: Run prettier linter
+    steps:
+      - run:
+          name: Prettier
+          command: node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
+
+  check-security:
+    description: Run bandit tests
+    steps:
+      - run:
+          name: Code-security
           command: |
-            node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
+            . venv/bin/activate
+            bandit -rvc bandit.yml pyscripts -l -ii
 
   run-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
@@ -69,14 +96,6 @@ commands:
             flake8 --statistics --count --doctests pyscripts/
             pydocstyle -v --count pyscripts/
             pycodestyle -v --statistics --show-pep8 --count pyscripts/
-
-  run-pylint:
-    description: Run pylint
-    steps:
-      - run:
-          name: Pylint
-          command: |
-            . venv/bin/activate
             pylint --disable fixme --rcfile pylintrc pyscripts/
 
   run-mypy:
@@ -95,7 +114,7 @@ commands:
           name: Pytest
           command: |
             . venv/bin/activate
-            pytest -vs --cov=pyscripts --cov-append --cov-config=.coveragerc --cov-report=xml:coverage_report/coverage.xml pyscripts/test_server.py
+            pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage_report/coverage.xml pyscripts/test_server.py
       - persist_to_workspace:
           root: coverage_report/
           paths:
@@ -114,17 +133,33 @@ jobs:
       - install-dockerlint
       - run-dockerlint
 
+  prettier-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - install-prettier
+      - run-prettier
+
   docker-check-and-build-job:
     executor:
       name: docker-publish/docker
     steps:
       - checkout
-      - setup_remote_docker 
+      - setup_remote_docker
       - docker-publish/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
+
+  security-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - check-security
 
   linters-job:
     executor:
@@ -171,22 +206,26 @@ jobs:
           command: |
             . venv/bin/activate
             codecov --file coverage_report/coverage.xml
+            python-codacy-coverage -r coverage_report/coverage.xml
 
 workflows:
-  version: "2.1"
+  version: "2"
   build:
     jobs:
       - dockerlint-job
 
+      - prettier-job
+
       - docker-check-and-build-job:
           requires:
             - dockerlint-job
+            - prettier-job
 
-      - linters-job:
+      - security-job:
           requires:
             - docker-check-and-build-job
 
-      - pylint-job:
+      - linters-job:
           requires:
             - docker-check-and-build-job
 
@@ -196,8 +235,8 @@ workflows:
 
       - unittests-job:
           requires:
+            - security-job
             - linters-job
-            - pylint-job
             - mypy-job
 
       - coverage-reports-job:

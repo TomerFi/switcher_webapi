@@ -46,6 +46,6 @@ then
   echo "Description updated successful."
   exit 0
 else
-  echo "Failed updating the description, response code: %s\n" "${code}"
+  echo -e "Failed updating the description, response code: %s\n" "${code}"
   exit 1
 fi
