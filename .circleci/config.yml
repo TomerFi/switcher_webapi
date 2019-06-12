@@ -42,11 +42,12 @@ commands:
           name: Install prettier
           command: |
             npm install --user prettier
-            npm list
+            ls node_modules
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
           paths:
-            - /home/circleci/workspace
+            - ./node_modules
+            - ./package.json
 
   prepare-venv:
     description: Prepare the virtual environment
