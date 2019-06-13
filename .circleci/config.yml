@@ -75,12 +75,26 @@ commands:
           name: Dockerlint
           command: node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
 
+  hadolint-docker:
+    description: Run one-time-container for passing the Dockerfile through Hadolint
+    steps:
+      - run:
+          name: Run hadolint docker
+          command: docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile
+
   run-prettier:
     description: Run prettier linter
     steps:
       - run:
           name: Prettier
           command: node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
+
+  shellcheck-docker:
+    description: Run one-time-container for passing the shell scripts through the shellcheck linter
+    steps:
+      - run:
+          name: Run shellcheck docker
+          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
   sphinx-build:
     description: Verify build docs with sphinx by building to temp directory
@@ -150,13 +164,6 @@ commands:
       - store_test_results:
           path: coverage_report
 
-  shellcheck-docker:
-    description: Run one-time-container for passing the shell scripts through the shellcheck linter
-    steps:
-      - run:
-          name: Run shellcheck docker
-          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
-
 jobs:
   dockerlint-job:
     executor:
@@ -165,6 +172,13 @@ jobs:
       - checkout
       - install-dockerlint
       - run-dockerlint
+
+  hadolint-docker-job:
+    executor:
+      name: docker-machine
+    steps:
+      - checkout
+      - hadolint-docker
 
   prettier-job:
     executor:
@@ -274,14 +288,20 @@ workflows:
 
       - shellcheck-docker-job
 
-      - dockerlint-job:
+      #- dockerlint-job:
+      #    requires:
+      #      - prettier-job
+      #      - shellcheck-docker-job
+
+      - hadolint-docker-job:
           requires:
             - prettier-job
             - shellcheck-docker-job
 
       - docker-check-and-build-job:
           requires:
-            - dockerlint-job
+            - hadolint-docker-job
+            #- dockerlint-job
 
       - security-job:
           requires:
