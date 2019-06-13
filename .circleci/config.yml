@@ -86,7 +86,14 @@ commands:
             . venv/bin/activate
             bandit -rvc bandit.yml pyscripts -l -ii
 
-  run-linters:
+  run-docs-linters:
+    description: Pass restructuredText files through doc8 linter.
+    steps:
+      - run:
+          name: Doc8
+          command: doc8 --config doc8.ini docs/source
+
+  run-code-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
     steps:
       - run:
@@ -161,13 +168,21 @@ jobs:
       - prepare-venv
       - check-security
 
-  linters-job:
+  docs-linters-job:
     executor:
       name: python-docker
     steps:
       - checkout
       - prepare-venv
-      - run-linters
+      - run-docs-linters
+
+  code-linters-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - run-code-linters
 
   pylint-job:
     executor:
@@ -216,16 +231,19 @@ workflows:
 
       - prettier-job
 
+      - docs-linters-job
+
       - docker-check-and-build-job:
           requires:
             - dockerlint-job
             - prettier-job
+            - docs-linters-job
 
       - security-job:
           requires:
             - docker-check-and-build-job
 
-      - linters-job:
+      - code-linters-job:
           requires:
             - docker-check-and-build-job
 
@@ -236,7 +254,7 @@ workflows:
       - unittests-job:
           requires:
             - security-job
-            - linters-job
+            - code-linters-job
             - mypy-job
 
       - coverage-reports-job:

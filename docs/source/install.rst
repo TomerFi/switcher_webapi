@@ -20,13 +20,14 @@ You can also add another optional environment variable:
 for setting the throttle time between consecutive requests,
 this is optional and the default value is **5.0**.
 
-Here's an example of running the container using *docker-compose* setting the environment variables in a designated file.
+Here's an example of running the container using *docker-compose* setting the
+environment variables in a designated file.
 
 .. code-block:: yaml
 
    # docker-compose.yml
    version: "3.7"
-   
+
    services:
      switcher_api:
        image: tomerfi/switcher_webapi:latest

@@ -3,7 +3,8 @@ Usage
 
 Once running, you can send REST requests towards the container.
 With the exception of the *create_schedule* requests,
-all the requests requiring input accepts it as a json body or in the form of query parameters.
+all the requests requiring input accepts it as a json body or in the form of
+query parameters.
 
 /switcher/get_state
 ^^^^^^^^^^^^^^^^^^^
@@ -33,11 +34,12 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 **Request parameters:**
 
-+-------------+------------+--------------------------------------------------------+
-| Key         | Required   | Description                                            |
-+=============+============+========================================================+
-| **minutes** | *Optional* | turn on the device with an off timer of 1-180 minutes. |
-+-------------+------------+--------------------------------------------------------+
++-------------+------------+-----------------------------------------+
+| Key         | Required   | Description                             |
++=============+============+=========================================+
+| **minutes** | *Optional* | turn on the device with an off timer of |
+|             |            | 1-180 minutes.                          |
++-------------+------------+-----------------------------------------+
 
 
 **Request body example:**
@@ -185,7 +187,8 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 .. note::
 
-   The *schedules* list can contain up to 8 schedules with the identifiers of 0-7 representing the actual schedule slots on the device.
+   The *schedules* list can contain up to 8 schedules with the identifiers
+   of 0-7 representing the actual schedule slots on the device.
 
 /switcher/enable_schedule
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -194,13 +197,14 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 **Request parameters:**
 
-+-------------------+-------------+----------------------------------------------------------+
-| Key               | Required    | Description                                              |
-+===================+=============+==========================================================+
-| **schedule_data** | *Mandatory* | the *schedule_data* associated with the chosen schedule. |
-|                   |             |                                                          |
-|                   |             | retrieved with */switcher/get_schedules*.                |
-+-------------------+-------------+----------------------------------------------------------+
++-------------------+-------------+-------------------------------------------+
+| Key               | Required    | Description                               |
++===================+=============+===========================================+
+| **schedule_data** | *Mandatory* | the *schedule_data* associated with the   |
+|                   |             | chosen schedule.                          |
+|                   |             |                                           |
+|                   |             | retrieved with */switcher/get_schedules*. |
++-------------------+-------------+-------------------------------------------+
 
 **Request body example:**
 
@@ -225,13 +229,14 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 **Request parameters:**
 
-+-------------------+-------------+----------------------------------------------------------+
-| Key               | Required    | Description                                              |
-+===================+=============+==========================================================+
-| **schedule_data** | *Mandatory* | the *schedule_data* associated with the chosen schedule. |
-|                   |             |                                                          |
-|                   |             | retrieved with */switcher/get_schedules*.                |
-+-------------------+-------------+----------------------------------------------------------+
++-------------------+-------------+-------------------------------------------+
+| Key               | Required    | Description                               |
++===================+=============+===========================================+
+| **schedule_data** | *Mandatory* | the *schedule_data* associated with the   |
+|                   |             | chosen schedule.                          |
+|                   |             |                                           |
+|                   |             | retrieved with */switcher/get_schedules*. |
++-------------------+-------------+-------------------------------------------+
 
 **Request body example:**
 
@@ -256,13 +261,14 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 **Request parameters:**
 
-+-----------------+-------------+--------------------------------------------------------+
-| Key             | Required    | Description                                            |
-+=================+=============+========================================================+
-| **schedule_id** | *Mandatory* | the *schedule_id* associated with the chosen schedule. |
-|                 |             |                                                        |
-|                 |             | retrieved with */switcher/get_schedules*.              |
-+-----------------+-------------+--------------------------------------------------------+
++-----------------+-------------+-------------------------------------------+
+| Key             | Required    | Description                               |
++=================+=============+===========================================+
+| **schedule_id** | *Mandatory* | the *schedule_id* associated with the     |
+|                 |             | chosen schedule.                          |
+|                 |             |                                           |
+|                 |             | retrieved with */switcher/get_schedules*. |
++-----------------+-------------+-------------------------------------------+
 
 **Request body example:**
 
@@ -287,21 +293,21 @@ all the requests requiring input accepts it as a json body or in the form of que
 
 **Request parameters:**
 
-+-------------------+-------------+--------------------------------------------------------------------------------+
-| Key               | Required    | Description                                                                    |
-+===================+=============+================================================================================+
-| **days**          | *Mandatory* | a list of days for the schedule to run in.                                     |
-|                   |             |                                                                                |
-|                   |             | (empty for non-recurring schedules).                                           |
-+-------------------+-------------+--------------------------------------------------------------------------------+
-| **start_hours**   | *Mandatory* | start time hours value 0-23.                                                   |
-+-------------------+-------------+--------------------------------------------------------------------------------+
-| **start_minutes** | *Mandatory* | start minutes value 0-59.                                                      |
-+-------------------+-------------+--------------------------------------------------------------------------------+
-| **stop_hours**    | *Mandatory* | stop time hours value 0-23.                                                    |
-+-------------------+-------------+--------------------------------------------------------------------------------+
-| **stop_minutes**  | *Mandatory* | stop minutes value 0-59.                                                       |
-+-------------------+-------------+--------------------------------------------------------------------------------+
++-------------------+-------------+------------------------------------------+
+| Key               | Required    | Description                              |
++===================+=============+==========================================+
+| **days**          | *Mandatory* | list of days for the schedule to run in. |
+|                   |             |                                          |
+|                   |             | (empty for non-recurring schedules).     |
++-------------------+-------------+------------------------------------------+
+| **start_hours**   | *Mandatory* | start time hours value 0-23.             |
++-------------------+-------------+------------------------------------------+
+| **start_minutes** | *Mandatory* | start minutes value 0-59.                |
++-------------------+-------------+------------------------------------------+
+| **stop_hours**    | *Mandatory* | stop time hours value 0-23.              |
++-------------------+-------------+------------------------------------------+
+| **stop_minutes**  | *Mandatory* | stop minutes value 0-59.                 |
++-------------------+-------------+------------------------------------------+
 
 **Request body example:**
 
@@ -337,8 +343,9 @@ Possible values for the *days* list:
 
 
 .. note::
-   
-   Due to its complexity, the *create_schedule* request accepts its arguments in the form of a json body only, query parameters will not be accepted.
+
+   Due to its complexity, the *create_schedule* request accepts its arguments
+   in the form of a json body only, query parameters will not be accepted.
 
 Exceptions
 ^^^^^^^^^^

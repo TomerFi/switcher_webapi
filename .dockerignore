@@ -13,6 +13,7 @@ shellscripts
 .prettierignore
 .prettierrc.yml
 bandit.yml
+doc8.ini
 Dockerfile
 Makefile
 mypy.ini
