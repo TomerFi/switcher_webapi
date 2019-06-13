@@ -85,7 +85,7 @@ commands:
           command: |
             . venv/bin/activate
             mkdir sphinxtemp
-            sphinx-build -W -b html -d docs/source sphinxtemp
+            sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
             rm -r sphinxtemp
 
   check-security:
@@ -191,7 +191,9 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Run shellcheck
-          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest *.sh
+          command: |
+            shfiles=$(find "$PWD"/shellscripts/* -print)
+            docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest $shfiles
 
   security-job:
     executor:
