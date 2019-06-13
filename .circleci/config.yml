@@ -18,7 +18,7 @@ executors:
 
   docker-machine:
     machine:
-      image: circleci/classic:2019-06
+      image: circleci/classic:201808-01
     working_directory: ~/workspace
 
 commands:
