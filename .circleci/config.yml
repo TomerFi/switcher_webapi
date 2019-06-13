@@ -30,7 +30,7 @@ commands:
             - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
       - run:
           name: Install prettier
-          command: npm install prettier
+          command: npm install prettier@1.18.2
       - save_cache:
           key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
