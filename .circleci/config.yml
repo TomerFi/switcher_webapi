@@ -16,32 +16,32 @@ executors:
       - image: "circleci/node:lts"
     working_directory: ~/workspace
 
-  docker-machine:
+  machine-docker:
     machine:
       image: "circleci/classic:201808-01"
     working_directory: ~/workspace
 
 commands:
-  install-prettier:
-    description: Install prettier with npm
+  prepare-node:
+    description: Prepare node environment
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
       - run:
           name: Install prettier
           command: npm install prettier
       - save_cache:
-          key: v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
             - ./node_modules
 
-  prepare-venv:
-    description: Prepare the virtual environment
+  prepare-python:
+    description: Prepare python's virtual environment
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
@@ -50,9 +50,33 @@ commands:
             pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
             pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
       - save_cache:
-          key: v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
             - ./venv
+
+  prepare-machine:
+    description: Prepare the virtual machine
+    steps:
+      - restore_cache:
+          keys:
+            - v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+      - run:
+          name: Download docker images and save to cache
+          command: |
+            filename=docker-cache/saved_images.tar
+            if [[ -f "$filename" ]]
+            then
+              docker load < "$filename"
+            else
+              mkdir -p docker-cache
+              docker pull hadolint/hadolint:v1.16.3
+              docker pull koalaman/shellcheck:v0.6.0
+              docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            fi
+      - save_cache:
+          key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+          paths:
+            - docker-cache
 
   hadolint-docker:
     description: Run one-time-container for passing the Dockerfile through Hadolint
@@ -146,9 +170,10 @@ commands:
 jobs:
   hadolint-docker-job:
     executor:
-      name: docker-machine
+      name: machine-docker
     steps:
       - checkout
+      - prepare-machine
       - hadolint-docker
 
   prettier-job:
@@ -156,7 +181,7 @@ jobs:
       name: node-docker
     steps:
       - checkout
-      - install-prettier
+      - prepare-node
       - run-prettier
 
   docker-check-and-build-job:
@@ -177,14 +202,15 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - sphinx-build
 
   shellcheck-docker-job:
     executor:
-      name: docker-machine
+      name: machine-docker
     steps:
       - checkout
+      - prepare-machine
       - shellcheck-docker
 
   security-job:
@@ -192,7 +218,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - check-security
 
   docs-linters-job:
@@ -200,7 +226,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-docs-linters
 
   code-linters-job:
@@ -208,7 +234,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-code-linters
 
   pylint-job:
@@ -216,7 +242,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-pylint
 
   mypy-job:
@@ -224,7 +250,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-mypy
 
   unittests-job:
@@ -232,7 +258,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-tests-with-coverage
 
   coverage-reports-job:
@@ -240,7 +266,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - attach_workspace:
           at: coverage_report/
       - run:
@@ -259,11 +285,6 @@ workflows:
 
       - shellcheck-docker-job
 
-      #- dockerlint-job:
-      #    requires:
-      #      - prettier-job
-      #      - shellcheck-docker-job
-
       - hadolint-docker-job:
           requires:
             - prettier-job
@@ -272,7 +293,6 @@ workflows:
       - docker-check-and-build-job:
           requires:
             - hadolint-docker-job
-            #- dockerlint-job
 
       - security-job:
           requires:
