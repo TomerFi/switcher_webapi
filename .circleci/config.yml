@@ -16,6 +16,11 @@ executors:
       - image: "circleci/node:lts"
     working_directory: ~/workspace
 
+  docker-machine:
+    machine: true
+      image: "docker:18.09.6"
+    working_directory: ~/workspace
+
 commands:
   install-dockerlint:
     description: Download and install the dockerlint linter
@@ -190,9 +195,8 @@ jobs:
       - sphinx-build
 
   shellcheck-docker-job:
-    machine:
-      - image: "docker:18.09.6"
-    working_directory: ~/workspace
+    executor:
+      name: docker-machine
     steps:
       - checkout
       - setup_remote_docker:
