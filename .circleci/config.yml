@@ -22,20 +22,6 @@ executors:
     working_directory: ~/workspace
 
 commands:
-  install-dockerlint:
-    description: Download and install the dockerlint linter
-    steps:
-      - restore_cache:
-          keys:
-            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
-      - run:
-          name: Install dockerlint 0.3.11
-          command: bash shellscripts/dockerlint-download-prepare.sh 0.3.11
-      - save_cache:
-          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
-          paths:
-            - dockerlint-0.3.11
-
   install-prettier:
     description: Install prettier with npm
     steps:
@@ -67,13 +53,6 @@ commands:
           key: v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
             - ./venv
-
-  run-dockerlint:
-    description: Run dockerlint linter
-    steps:
-      - run:
-          name: Dockerlint
-          command: node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
 
   hadolint-docker:
     description: Run one-time-container for passing the Dockerfile through Hadolint
@@ -165,14 +144,6 @@ commands:
           path: coverage_report
 
 jobs:
-  dockerlint-job:
-    executor:
-      name: node-docker
-    steps:
-      - checkout
-      - install-dockerlint
-      - run-dockerlint
-
   hadolint-docker-job:
     executor:
       name: docker-machine
