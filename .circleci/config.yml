@@ -154,7 +154,9 @@ commands:
     steps:
       - run:
           name: Run shellcheck docker
-          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+          command: |
+            echo $(ls -A1 shellscripts)
+            docker run --rm -v "shellscripts:/mnt" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
 jobs:
   dockerlint-job:
