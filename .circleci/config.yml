@@ -184,14 +184,14 @@ jobs:
 
   shellcheck-docker-job:
     docker:
-      - image: koalaman/shellcheck:latest
+      - image: koalaman/shellcheck:v0.6.0
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
           name: Run shellcheck
-          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest /mnt/dockerlint-download-prepare.sh
+          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
   security-job:
     executor:
