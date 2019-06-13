@@ -191,7 +191,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Run shellcheck
-          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest $(find shellscripts/* -print)
+          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest /mnt/*.sh
 
   security-job:
     executor:
