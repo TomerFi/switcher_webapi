@@ -16,11 +16,6 @@ executors:
       - image: "circleci/node:lts"
     working_directory: ~/workspace
 
-  docker-docker:
-    docker:
-      - image: "docker:18.09.6"
-    working_directory: ~/workspace
-
 commands:
   install-dockerlint:
     description: Download and install the dockerlint linter
@@ -188,15 +183,9 @@ jobs:
       - sphinx-build
 
   shellcheck-docker-job:
-    executor:
-      name: docker-docker
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Run shellcheck
-          command: docker run --rm -v "shellscripts:/mnt" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+    docker:
+      - image: koalaman/shellcheck:v0.6.0
+        command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
   security-job:
     executor:
