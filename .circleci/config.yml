@@ -16,8 +16,8 @@ executors:
       - image: "circleci/node:lts"
     working_directory: ~/workspace
 
-  docker-docker:
-    docker:
+  docker-machine:
+    machine:
       - image: "docker:18.09.6"
     working_directory: ~/workspace
 
@@ -154,9 +154,7 @@ commands:
     steps:
       - run:
           name: Run shellcheck docker
-          command: |
-            echo $(ls -A1 shellscripts)
-            docker run --rm -v "~/workspace/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
 jobs:
   dockerlint-job:
@@ -198,7 +196,7 @@ jobs:
 
   shellcheck-docker-job:
     executor:
-      name: docker-docker
+      name: docker-machine
     steps:
       - checkout
       - setup_remote_docker:
