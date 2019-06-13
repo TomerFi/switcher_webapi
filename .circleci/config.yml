@@ -149,6 +149,13 @@ commands:
       - store_test_results:
           path: coverage_report
 
+  shellcheck-docker:
+    description: Run one-time-container for passing the shell scripts through the shellcheck linter
+    steps:
+      - run:
+          name: Run shellcheck docker
+          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+
 jobs:
   dockerlint-job:
     executor:
@@ -192,11 +199,7 @@ jobs:
       name: docker-docker
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Run shellcheck
-          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+      - shellcheck-docker
 
   security-job:
     executor:
