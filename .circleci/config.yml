@@ -18,7 +18,6 @@ executors:
 
   docker-machine:
     machine: true
-      image: "docker:18.09.6"
     working_directory: ~/workspace
 
 commands:
