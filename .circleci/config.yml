@@ -91,7 +91,9 @@ commands:
     steps:
       - run:
           name: Doc8
-          command: doc8 --config doc8.ini docs/source
+          command: |
+            . venv/bin/activate
+            doc8 --config doc8.ini docs/source
 
   run-code-linters:
     description: Run flake8, pydocstyle and pydocstyle linters
