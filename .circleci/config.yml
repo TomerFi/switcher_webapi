@@ -198,8 +198,6 @@ jobs:
       name: docker-machine
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
       - shellcheck-docker
 
   security-job:
