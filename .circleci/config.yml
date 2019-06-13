@@ -85,7 +85,7 @@ commands:
           command: |
             . venv/bin/activate
             mkdir sphinxtemp
-            sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
+            sphinx-build -W -b html -d docs/source sphinxtemp
             rm -r sphinxtemp
 
   check-security:
@@ -166,7 +166,8 @@ jobs:
       name: docker-publish/docker
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
       - docker-publish/build:
           dockerfile: Dockerfile
           path: .
@@ -183,14 +184,14 @@ jobs:
 
   shellcheck-docker-job:
     docker:
-      - image: koalaman/shellcheck:v0.6.0
+      - image: koalaman/shellcheck:latest
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
           name: Run shellcheck
-          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:v0.6.0 *.sh
+          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:latest *.sh
 
   security-job:
     executor:
