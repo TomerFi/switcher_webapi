@@ -1,5 +1,5 @@
-.git
-docs
+.git*
+docs*
 .tox*
 .coverage
 .coveragerc
@@ -7,6 +7,7 @@ docs
 .env_vars
 .gitignore
 .prettierignore
+.shellcheckrc
 Dockerfile
 Makefile
 pylintrc

@@ -77,6 +77,17 @@ commands:
           name: Prettier
           command: node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
 
+  sphinx-build:
+    description: Verify build docs with sphinx by building to temp directory
+    steps:
+      - run:
+          name: Sphinx-build
+          command: |
+            . venv/bin/activate
+            mkdir sphinxtemp
+            sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
+            rm -r sphinxtemp
+
   check-security:
     description: Run bandit tests
     steps:
@@ -162,6 +173,25 @@ jobs:
           image: tomerfi/switcher_webapi
           tag: testing
 
+  sphinx-build-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-venv
+      - sphinx-build
+
+  shellcheck-docker-job:
+    docker:
+      - image: koalaman/shellcheck:v0.6.0
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Run shellcheck
+          command: docker run --rm -v shellscripts:/mnt koalaman/shellcheck:v0.6.0 *.sh
+
   security-job:
     executor:
       name: python-docker
@@ -227,16 +257,17 @@ jobs:
 
 workflows:
   version: "2"
-  build:
+
+  code-build:
     jobs:
       - prettier-job
 
-      - docs-linters-job
+      - shellcheck-docker-job
 
       - dockerlint-job:
           requires:
             - prettier-job
-            - docs-linters-job
+            - shellcheck-docker-job
 
       - docker-check-and-build-job:
           requires:
@@ -263,3 +294,11 @@ workflows:
       - coverage-reports-job:
           requires:
             - unittests-job
+
+  docs-build:
+    jobs:
+      - docs-linters-job
+
+      - sphinx-build-job:
+          requires:
+            - docs-linters-job

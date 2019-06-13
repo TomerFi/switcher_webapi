@@ -26,12 +26,13 @@ else
   echo "dockerlint-$1 was not found, downloading and preparing." 
   sudo apt-get update
   sudo apt-get install coffeescript --no-install-recommends -y
-  wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/$1.tar.gz
-  tar xzf $1.tar.gz
-  cd dockerlint-$1
-  make clean js
-  cd ..
-  rm $1.tar.gz
+  wget -v --https-only https://github.com/RedCoolBeans/dockerlint/archive/"$1".tar.gz
+  tar xzf "$1".tar.gz
+  (
+    cd dockerlint-"$1" || exit 1
+    make clean js
+  )
+  rm "$1".tar.gz
   echo "dockerlint-$1 created."
   exit 0
 fi

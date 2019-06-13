@@ -3,8 +3,8 @@
 # dockerlint-verify.sh
 #
 # The script verifies the existence of npm (https://www.npmjs.com/) and the npm package dockerlint (https://www.npmjs.com/package/dockerlint).
-# If both exists the script will run the dockerlint linter against the Dockerfile passed as the first argumetn to the script.
-# The script does not install anythong on your behalf, for using it, please manually install npm and dockerlint.
+# If both exists the script will run the dockerlint linter against the Dockerfile passed as the first argument to the script.
+# The script does not install anything on your behalf, for using it, please manually install npm and dockerlint.
 
 display_no_npm() {
     echo -e "### !!!SKIPPING TEST!!! ###\n"
