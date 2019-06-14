@@ -64,15 +64,12 @@ commands:
           name: Download docker images and save to cache
           command: |
             filename=docker-cache/saved_images.tar
-            if [[ -f "$filename" ]]
-            then
-              docker load < "$filename"
-            else
-              mkdir -p docker-cache
-              docker pull hadolint/hadolint:v1.16.3
-              docker pull koalaman/shellcheck:v0.6.0
-              docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
-            fi
+            if [[ -f "$filename" ]]; then docker load < "$filename"; fi
+            mkdir -p docker-cache
+            docker pull hadolint/hadolint:v1.16.3
+            docker pull koalaman/shellcheck:v0.6.0
+            docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
           paths:
