@@ -12,12 +12,14 @@ shellscripts
 .gitignore
 .prettierignore
 .prettierrc.yml
+.shellcheckrc
 bandit.yml
 doc8.ini
 Dockerfile
 Makefile
 mypy.ini
 pylintrc
+requirements_docs.txt
 requirements_test.txt
 tox.ini
 
