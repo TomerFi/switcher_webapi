@@ -10,8 +10,8 @@
 
 An asynchronous [sanic webapp](https://pypi.org/project/sanic/) running inside a [python docker image](https://hub.docker.com/_/python) using [uvloop](https://pypi.org/project/uvloop/) as the event loop.</br>
 Used as a rest api wrapper for [aioswitcher](https://pypi.org/project/aioswitcher/).</br>
+
 If you're using the [Switcher Water Heater](https://switcher.co.il/) and you want to wrap a rest api around it... you came to the right place!</br>
-</br>
 
 For full install and usage instructions,
 Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io) hosted with *readthedocs.io.*
