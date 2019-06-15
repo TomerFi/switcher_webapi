@@ -11,5 +11,3 @@ Welcome to Switcher water heater WebAPI documentation!
    usage
    credits
    license
-
-* :ref:`search`
