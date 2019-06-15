@@ -133,7 +133,7 @@ commands:
           name: Linters
           command: |
             . venv/bin/activate
-            flake8 --statistics --count --doctests --verbose
+            flake8 --statistics --count --doctests --verbose pyscripts/ docs/source/
             pylint --disable fixme --rcfile pylintrc pyscripts/ docs/source/conf.py
 
   run-mypy:
