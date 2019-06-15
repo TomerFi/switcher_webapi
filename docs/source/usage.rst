@@ -6,8 +6,10 @@ With the exception of the *create_schedule* requests,
 all the requests requiring input accepts it as a json body or in the form of
 query parameters.
 
-/switcher/get_state
-^^^^^^^^^^^^^^^^^^^
+get_state
+^^^^^^^^^
+
+**URL:** */switcher/get_state*
 
 **Method:** *GET*
 
@@ -27,8 +29,10 @@ query parameters.
    }
 
 
-/switcher/turn_on
-^^^^^^^^^^^^^^^^^
+turn_on
+^^^^^^^
+
+**URL**: */switcher/turn_on*
 
 **Method:** *POST*
 
@@ -58,8 +62,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/turn_off
-^^^^^^^^^^^^^^^^^^
+turn_off
+^^^^^^^^
+
+**URL:** */switcher/turn_off*
 
 **Method:** *POST*
 
@@ -73,8 +79,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/set_auto_shutdown
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+set_auto_shutdown
+^^^^^^^^^^^^^^^^^
+
+**URL:** */switcher/set_auto_shutdown*
 
 **Method:** *POST*
 
@@ -109,8 +117,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/set_device_name
-^^^^^^^^^^^^^^^^^^^^^^^^^
+set_device_name
+^^^^^^^^^^^^^^^
+
+**URL:** */switcher/set_device_name*
 
 **Method:** *POST*
 
@@ -138,8 +148,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/get_schedules
-^^^^^^^^^^^^^^^^^^^^^^^
+get_schedules
+^^^^^^^^^^^^^
+
+**URL:** */switcher/get_schedules*
 
 **Method:** *GET*
 
@@ -190,8 +202,10 @@ query parameters.
    The *schedules* list can contain up to 8 schedules with the identifiers
    of 0-7 representing the actual schedule slots on the device.
 
-/switcher/enable_schedule
-^^^^^^^^^^^^^^^^^^^^^^^^^
+enable_schedule
+^^^^^^^^^^^^^^^
+
+**URL:** */switcher/enable_schedule*
 
 **Method:** *PATCH*
 
@@ -222,8 +236,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/disable_schedule
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+disable_schedule
+^^^^^^^^^^^^^^^^
+
+**URL:** */switcher/disable_schedule*
 
 **Method:** *PATCH*
 
@@ -254,8 +270,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/delete_schedule
-^^^^^^^^^^^^^^^^^^^^^^^^^
+delete_schedule
+^^^^^^^^^^^^^^^
+
+**URL:** */switcher/delete_schedule*
 
 **Method:** *DELETE*
 
@@ -286,8 +304,10 @@ query parameters.
      "successful": true
    }
 
-/switcher/create_schedule
-^^^^^^^^^^^^^^^^^^^^^^^^^
+create_schedule
+^^^^^^^^^^^^^^^
+
+**URL:** */switcher/create_schedule*
 
 **Method:** *PUT*
 

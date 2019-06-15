@@ -8,9 +8,6 @@ orbs:
   # Therefor the user and password environment variables does not need to be set.
   docker-publish: circleci/docker-publish@0.1.7
 
-
-
-
 #####################
 ##### Executors #####
 #####################
@@ -36,9 +33,6 @@ executors:
     working_directory: ~/workspace
     environment:
       TZ: "Asia/Jerusalem"
-
-
-
 
 #####################
 ##### Commands ######
@@ -70,7 +64,7 @@ commands:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
           paths:
             - docker-cache
-  
+
   # Node packages are installed here and then saved to cache.
   # Use with the node-docker executer as preparation before executing npm modules.
   prepare-node:
@@ -102,6 +96,7 @@ commands:
             . venv/bin/activate
             pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
             pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
+            pip install -q --progress-bar off -r requirements_docs.txt -c requirements_constraints.txt
       - save_cache:
           key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
@@ -146,9 +141,6 @@ commands:
             . venv/bin/activate
             doc8 --config doc8.ini docs/source
 
-  # Note, currently the _static folder is empty and therefore it's being checked-out
-  # Becouse of the -W argument, sphinx convert the "can't find _static folder" warning to and show-stopper error.
-  # Therefore the _static folder is created before running sphinx-build.
   sphinx-build:
     description: Verify build docs with python sphinx by building into temp directory
     steps:
@@ -157,7 +149,6 @@ commands:
           command: |
             . venv/bin/activate
             mkdir sphinxtemp
-            mkdir docs/source/_static
             sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
             rm -r sphinxtemp
 
@@ -206,14 +197,10 @@ commands:
       - store_test_results:
           path: coverage_report
 
-
-
-
 #####################
 ####### Jobs ########
 #####################
 jobs:
-
   #############################################
   ### Jobs for the docs-lint-build workflow ###
   #############################################
@@ -319,9 +306,6 @@ jobs:
             . venv/bin/activate
             codecov --file coverage_report/coverage.xml
             python-codacy-coverage -r coverage_report/coverage.xml
-
-
-
 
 #####################
 ##### Workslows #####
