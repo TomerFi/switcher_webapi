@@ -1,8 +1,8 @@
-Welcome to switcher_webapi's documentation!
-===========================================
+Welcome to Switcher water heater WebAPI documentation!
+======================================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
    what
@@ -13,10 +13,4 @@ Welcome to switcher_webapi's documentation!
    credits
    license
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
