@@ -1,4 +1,5 @@
 aioswitcher
 asyncio_throttle
+sphinx==2.1.1
 sanic
 uvloop

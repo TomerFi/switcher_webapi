@@ -1,9 +1,35 @@
 version: 2.1
 
+#####################
+####### Orbs ########
+#####################
 orbs:
+  # Currently docker-publish orb is used to build the docker image and not publish it,
+  # Therefor the user and password environment variables does not need to be set.
   docker-publish: circleci/docker-publish@0.1.7
 
+
+
+
+#####################
+##### Executors #####
+#####################
 executors:
+  # Used for running one-time docker images.
+  # Currnet image (201808-01) runs docker 18.06.0-ce and docker-compose 1.22.0.
+  # https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
+  machine-docker:
+    machine:
+      image: "circleci/classic:201808-01"
+    working_directory: ~/workspace
+
+  # Used for executing npm modules.
+  node-docker:
+    docker:
+      - image: "circleci/node:lts"
+    working_directory: ~/workspace
+
+  # Used for starting python programs.
   python-docker:
     docker:
       - image: "circleci/python:3.7.3-stretch"
@@ -11,46 +37,64 @@ executors:
     environment:
       TZ: "Asia/Jerusalem"
 
-  node-docker:
-    docker:
-      - image: "circleci/node:lts"
-    working_directory: ~/workspace
 
+
+
+#####################
+##### Commands ######
+#####################
 commands:
-  install-dockerlint:
-    description: Download and install the dockerlint linter
-    steps:
-      - restore_cache:
-          keys:
-            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
-      - run:
-          name: Install dockerlint 0.3.11
-          command: bash shellscripts/dockerlint-download-prepare.sh 0.3.11
-      - save_cache:
-          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum "shellscripts/dockerlint-verify.sh" }}
-          paths:
-            - dockerlint-0.3.11
+  ##################################################################
+  ### Commands for creating environments and save/restore caches ###
+  ##################################################################
 
-  install-prettier:
-    description: Install prettier with npm
+  # Docker images are pulled here and saved to cache.
+  # Use with the machine-docker executer as preparation before running one-time docker containers.
+  prepare-machine:
+    description: Prepare the virtual machine
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+            - v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
+      - run:
+          name: Download docker images and save to cache
+          command: |
+            filename=docker-cache/saved_images.tar
+            if [[ -f "$filename" ]]; then docker load < "$filename"; fi
+            mkdir -p docker-cache
+            docker pull hadolint/hadolint:v1.16.3
+            docker pull koalaman/shellcheck:v0.6.0
+            docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+
+      - save_cache:
+          key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
+          paths:
+            - docker-cache
+  
+  # Node packages are installed here and then saved to cache.
+  # Use with the node-docker executer as preparation before executing npm modules.
+  prepare-node:
+    description: Prepare node environment
+    steps:
+      - restore_cache:
+          keys:
+            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierignore" }}-{{ checksum ".prettierrc.yml" }}
       - run:
           name: Install prettier
-          command: npm install prettier
+          command: npm install prettier@1.18.2
       - save_cache:
-          key: v1-switcher-webapi-npm-{{ .Branch }}-{{ checksum ".prettierrc.yml" }}-{{ checksum ".prettierignore" }}
+          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierignore" }}-{{ checksum ".prettierrc.yml" }}
           paths:
             - ./node_modules
 
-  prepare-venv:
-    description: Prepare the virtual environment
+  # Pypi packages are installed here into a venv that is saved to cache.
+  # Use with the python-docker executer as preparaton before starting python programs.
+  prepare-python:
+    description: Prepare python's virtual environment
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
@@ -59,56 +103,94 @@ commands:
             pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
             pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
       - save_cache:
-          key: v1-switcher-webapi-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}-{{ checksum "requirements_constraints.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
             - ./venv
 
-  run-dockerlint:
-    description: Run dockerlint linter
+  ######################################################################################################
+  ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
+  ######################################################################################################
+  hadolint-docker:
+    description: Run one-time container for hadolint linter against Dockerfile
     steps:
       - run:
-          name: Dockerlint
-          command: node dockerlint-0.3.11/bin/dockerlint.js -dpf Dockerfile
+          name: Run hadolint docker
+          command: docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile
 
+  shellcheck-docker:
+    description: Run one-time container for shellcheck linter against shellscripts/*.sh
+    steps:
+      - run:
+          name: Run shellcheck docker
+          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+
+  ######################################################################################################
+  ###### Commands running inside the node-docker executer after running the prepare-node command #######
+  ######################################################################################################
   run-prettier:
-    description: Run prettier linter
+    description: Execute npm's prettier module to linting yaml and md files
     steps:
       - run:
           name: Prettier
           command: node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
 
+  ######################################################################################################
+  #### Commands running inside the python-docker executer after running the prepare-python command #####
+  ######################################################################################################
+  run-docs-linters:
+    description: Run python doc8 linter against docs/source/*.rst
+    steps:
+      - run:
+          name: Doc8
+          command: |
+            . venv/bin/activate
+            doc8 --config doc8.ini docs/source
+
+  # Note, currently the _static folder is empty and therefore it's being checked-out
+  # Becouse of the -W argument, sphinx convert the "can't find _static folder" warning to and show-stopper error.
+  # Therefore the _static folder is created before running sphinx-build.
+  sphinx-build:
+    description: Verify build docs with python sphinx by building into temp directory
+    steps:
+      - run:
+          name: Sphinx-build
+          command: |
+            . venv/bin/activate
+            mkdir sphinxtemp
+            mkdir docs/source/_static
+            sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
+            rm -r sphinxtemp
+
   check-security:
-    description: Run bandit tests
+    description: Run python bandit against py files
     steps:
       - run:
           name: Code-security
           command: |
             . venv/bin/activate
-            bandit -rvc bandit.yml pyscripts -l -ii
+            bandit -rvc bandit.yml pyscripts docs/source/conf.py -l -ii
 
-  run-linters:
-    description: Run flake8, pydocstyle and pydocstyle linters
+  run-code-linters:
+    description: Run python flake8 and pylint againt py files
     steps:
       - run:
           name: Linters
           command: |
             . venv/bin/activate
-            flake8 --statistics --count --doctests pyscripts/
-            pydocstyle -v --count pyscripts/
-            pycodestyle -v --statistics --show-pep8 --count pyscripts/
-            pylint --disable fixme --rcfile pylintrc pyscripts/
+            flake8 --statistics --count --doctests --verbose pyscripts/ docs/source/
+            pylint --disable fixme --rcfile pylintrc pyscripts/ docs/source/conf.py
 
   run-mypy:
-    description: Run mypy type checking
+    description: Run mypy type-checking againt py files
     steps:
       - run:
           name: Mypy
           command: |
             . venv/bin/activate
-            mypy --config-file mypy.ini pyscripts/
+            mypy --config-file mypy.ini pyscripts/ docs/source/conf.py
 
   run-tests-with-coverage:
-    description: Run pytest test cases with coverage report
+    description: Run pytest test cases with coverage report against py files
     steps:
       - run:
           name: Pytest
@@ -124,29 +206,67 @@ commands:
       - store_test_results:
           path: coverage_report
 
+
+
+
+#####################
+####### Jobs ########
+#####################
 jobs:
-  dockerlint-job:
+
+  #############################################
+  ### Jobs for the docs-lint-build workflow ###
+  #############################################
+  docs-linters-job:
     executor:
-      name: node-docker
+      name: python-docker
     steps:
       - checkout
-      - install-dockerlint
-      - run-dockerlint
+      - prepare-python
+      - run-docs-linters
 
+  sphinx-build-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-python
+      - sphinx-build
+
+  #############################################
+  ### Jobs for the code-lint-test workflow ####
+  #############################################
   prettier-job:
     executor:
       name: node-docker
     steps:
       - checkout
-      - install-prettier
+      - prepare-node
       - run-prettier
+
+  shellcheck-docker-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - shellcheck-docker
+
+  hadolint-docker-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - hadolint-docker
 
   docker-check-and-build-job:
     executor:
       name: docker-publish/docker
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
       - docker-publish/build:
           dockerfile: Dockerfile
           path: .
@@ -158,31 +278,23 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - check-security
 
-  linters-job:
+  code-linters-job:
     executor:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
-      - run-linters
-
-  pylint-job:
-    executor:
-      name: python-docker
-    steps:
-      - checkout
-      - prepare-venv
-      - run-pylint
+      - prepare-python
+      - run-code-linters
 
   mypy-job:
     executor:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-mypy
 
   unittests-job:
@@ -190,7 +302,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - run-tests-with-coverage
 
   coverage-reports-job:
@@ -198,7 +310,7 @@ jobs:
       name: python-docker
     steps:
       - checkout
-      - prepare-venv
+      - prepare-python
       - attach_workspace:
           at: coverage_report/
       - run:
@@ -208,24 +320,45 @@ jobs:
             codecov --file coverage_report/coverage.xml
             python-codacy-coverage -r coverage_report/coverage.xml
 
+
+
+
+#####################
+##### Workslows #####
+#####################
 workflows:
   version: "2"
-  build:
-    jobs:
-      - dockerlint-job
 
+  # Lint and build the documantation site files
+  docs-lint-build:
+    jobs:
+      - docs-linters-job
+
+      - sphinx-build-job:
+          requires:
+            - docs-linters-job
+
+  # Lint and the test the code, scripts and Dockerfile
+  code-lint-test:
+    jobs:
       - prettier-job
+
+      - shellcheck-docker-job
+
+      - hadolint-docker-job:
+          requires:
+            - prettier-job
+            - shellcheck-docker-job
 
       - docker-check-and-build-job:
           requires:
-            - dockerlint-job
-            - prettier-job
+            - hadolint-docker-job
 
       - security-job:
           requires:
             - docker-check-and-build-job
 
-      - linters-job:
+      - code-linters-job:
           requires:
             - docker-check-and-build-job
 
@@ -236,7 +369,7 @@ workflows:
       - unittests-job:
           requires:
             - security-job
-            - linters-job
+            - code-linters-job
             - mypy-job
 
       - coverage-reports-job:
