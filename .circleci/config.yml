@@ -146,9 +146,6 @@ commands:
             . venv/bin/activate
             doc8 --config doc8.ini docs/source
 
-  # Note, currently the _static folder is empty and therefore it's being checked-out
-  # Becouse of the -W argument, sphinx convert the "can't find _static folder" warning to and show-stopper error.
-  # Therefore the _static folder is created before running sphinx-build.
   sphinx-build:
     description: Verify build docs with python sphinx by building into temp directory
     steps:
@@ -157,7 +154,6 @@ commands:
           command: |
             . venv/bin/activate
             mkdir sphinxtemp
-            mkdir docs/source/_static
             sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
             rm -r sphinxtemp
 
