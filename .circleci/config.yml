@@ -249,12 +249,14 @@ jobs:
 
   docker-check-and-build-job:
     executor:
-      name: docker-publish/docker
+      name: docker
+      image: "circleci/python"
+      tag: "3.7.3-stretch"
     steps:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - docker-publish/build:
+      - docker/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
