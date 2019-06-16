@@ -39,39 +39,39 @@ fileContentTests:
 
 metadataTest:
   labels:
-    - key: 'org.label-schema.build-date'
+    - key: "org.label-schema.build-date"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.name'
+    - key: "org.label-schema.name"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.description'
+    - key: "org.label-schema.description"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.url'
+    - key: "org.label-schema.url"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.vcs-url'
+    - key: "org.label-schema.vcs-url"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.vcs-ref'
+    - key: "org.label-schema.vcs-ref"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.version'
+    - key: "org.label-schema.version"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.schema-version'
+    - key: "org.label-schema.schema-version"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.docker.cmd'
+    - key: "org.label-schema.docker.cmd"
       value: "."
       isRegex: true
-    - key: 'org.label-schema.docker.params'
+    - key: "org.label-schema.docker.params"
       value: "."
       isRegex: true
-    - key: 'license'
-      value: 'MIT'
-    - key: 'maintainer'
+    - key: "license"
+      value: "MIT"
+    - key: "maintainer"
       value: "."
       isRegex: true
   exposedPorts: ["8000"]
