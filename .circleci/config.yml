@@ -56,7 +56,6 @@ commands:
             filename=docker-cache/saved_images.tar
             if [[ -f "$filename" ]]; then docker load < "$filename"; fi
             mkdir -p docker-cache
-            docker pull python:3.7.3-stretch
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
             docker save -o "$filename" python:3.7.3-stretch hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
@@ -91,6 +90,16 @@ commands:
           keys:
             - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
       - run:
+          name: Install container-structure-test
+          command: |
+            if [[ ! -f "./google-container-tools/container-structure-test" ]]
+            then
+              mkdir -p ./google-container-tools
+              curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+              chmod +x container-structure-test-linux-amd64
+              mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
+            fi
+      - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
@@ -102,6 +111,7 @@ commands:
           key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
             - ./venv
+            - ./google-container-tools
 
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
@@ -120,12 +130,9 @@ commands:
           name: Run shellcheck docker
           command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
 
-  install-run-cst:
-    description: Install and run the GoogleContainerTools/container-structure-test tool
+  run-container-structure-test:
+    description: Run the GoogleContainerTools/container-structure-test tool
     steps:
-      - run:
-          name: Install container-structure-test
-          command: mkdir ./google-container-tools && curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
       - run:
           name: Run container-structure-test
           command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
@@ -258,7 +265,7 @@ jobs:
       - prepare-machine
       - hadolint-docker
 
-  docker-check-and-build-job:
+  docker-build-test-structure-job:
     executor:
       name: machine-docker
     steps:
@@ -269,8 +276,8 @@ jobs:
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
-          extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=fakeref --build-arg VERSION=testing'
-      - install-run-cst
+          extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=testref --build-arg VERSION=testing'
+      - run-container-structure-test
 
   security-job:
     executor:
@@ -346,7 +353,7 @@ workflows:
             - prettier-job
             - shellcheck-docker-job
 
-      - docker-check-and-build-job:
+      - docker-build-test-structure:
           requires:
             - hadolint-docker-job
 

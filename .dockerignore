@@ -4,7 +4,6 @@
 .mypy_cache
 .tox
 docs
-pyscripts/test_server.py
 shellscripts
 .codecov.yml
 .coverage
