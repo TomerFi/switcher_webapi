@@ -249,9 +249,7 @@ jobs:
 
   docker-check-and-build-job:
     executor:
-      name: docker-orb/docker
-      image: "circleci/python"
-      tag: "3.7.3-stretch"
+      name: machine-docker
     steps:
       - checkout
       - setup_remote_docker:
@@ -261,6 +259,7 @@ jobs:
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
+          extra_build_args: '--build-arg BUILD_DATE=fakedate --build-arg VCS_REF=fakeref --build-arg VERSION=testing'
 
   security-job:
     executor:
