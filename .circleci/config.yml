@@ -51,6 +51,16 @@ commands:
           keys:
             - v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
       - run:
+          name: Install container-structure-test
+          command: |
+            if [[ ! -f "./google-container-tools/container-structure-test" ]]
+            then
+              mkdir -p ./google-container-tools
+              curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+              chmod +x container-structure-test-linux-amd64
+              mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
+            fi
+      - run:
           name: Download docker images and save to cache
           command: |
             filename=docker-cache/saved_images.tar
@@ -64,6 +74,7 @@ commands:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
           paths:
             - docker-cache
+            - ./google-container-tools
 
   # Node packages are installed here and then saved to cache.
   # Use with the node-docker executer as preparation before executing npm modules.
@@ -90,16 +101,6 @@ commands:
           keys:
             - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
       - run:
-          name: Install container-structure-test
-          command: |
-            if [[ ! -f "./google-container-tools/container-structure-test" ]]
-            then
-              mkdir -p ./google-container-tools
-              curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
-              chmod +x container-structure-test-linux-amd64
-              mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
-            fi
-      - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
@@ -111,7 +112,6 @@ commands:
           key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
             - ./venv
-            - ./google-container-tools
 
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
