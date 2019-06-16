@@ -43,6 +43,7 @@ commands:
   ##################################################################
 
   # Docker images are pulled here and saved to cache.
+  # Various tools can be saved to cache here.
   # Use with the machine-docker executer as preparation before running one-time docker containers.
   prepare-machine:
     description: Prepare the virtual machine
@@ -341,33 +342,36 @@ workflows:
           requires:
             - docs-linters-job
 
-  # Lint and the test the code, scripts and Dockerfile
+  # Build and test the docker images
+  docker-build-test:
+    jobs:
+      - hadolint-docker-job
+
+      - docker-build-test-structure-job:
+          requires:
+            - hadolint-docker-job
+
+  # Lint and the test the code and scripts
   code-lint-test:
     jobs:
       - prettier-job
 
       - shellcheck-docker-job
 
-      - hadolint-docker-job:
+      - security-job:
           requires:
             - prettier-job
             - shellcheck-docker-job
 
-      - docker-build-test-structure-job:
-          requires:
-            - hadolint-docker-job
-
-      - security-job:
-          requires:
-            - docker-build-test-structure-job
-
       - code-linters-job:
           requires:
-            - docker-build-test-structure-job
+            - prettier-job
+            - shellcheck-docker-job
 
       - mypy-job:
           requires:
-            - docker-build-test-structure-job
+            - prettier-job
+            - shellcheck-docker-job
 
       - unittests-job:
           requires:
