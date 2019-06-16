@@ -353,21 +353,21 @@ workflows:
             - prettier-job
             - shellcheck-docker-job
 
-      - docker-build-test-structure:
+      - docker-build-test-structure-job:
           requires:
             - hadolint-docker-job
 
       - security-job:
           requires:
-            - docker-build-test-structure
+            - docker-build-test-structure-job
 
       - code-linters-job:
           requires:
-            - docker-build-test-structure
+            - docker-build-test-structure-job
 
       - mypy-job:
           requires:
-            - docker-build-test-structure
+            - docker-build-test-structure-job
 
       - unittests-job:
           requires:
