@@ -6,7 +6,7 @@ version: 2.1
 orbs:
   # Currently docker orb is used to build the docker image and not publish it,
   # Therefor the user and password environment variables does not need to be set.
-  docker-publish: circleci/docker@0.5.1
+  docker-orb: circleci/docker@0.5.1
 
 #####################
 ##### Executors #####
@@ -256,7 +256,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-      - docker/build:
+      - docker-orb/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
