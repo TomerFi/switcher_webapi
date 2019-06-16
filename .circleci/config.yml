@@ -359,15 +359,15 @@ workflows:
 
       - security-job:
           requires:
-            - docker-check-and-build-job
+            - docker-build-test-structure
 
       - code-linters-job:
           requires:
-            - docker-check-and-build-job
+            - docker-build-test-structure
 
       - mypy-job:
           requires:
-            - docker-check-and-build-job
+            - docker-build-test-structure
 
       - unittests-job:
           requires:
