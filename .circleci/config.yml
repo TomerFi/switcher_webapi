@@ -249,7 +249,7 @@ jobs:
 
   docker-check-and-build-job:
     executor:
-      name: docker
+      name: docker-orb/docker
       image: "circleci/python"
       tag: "3.7.3-stretch"
     steps:
