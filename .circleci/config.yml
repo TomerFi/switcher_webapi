@@ -125,7 +125,7 @@ commands:
     steps:
       - run:
           name: Install container-structure-test
-          command: curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
+          command: mkdir ./google-container-tools && curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
       - run:
           name: Run container-structure-test
           command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
