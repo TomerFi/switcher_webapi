@@ -125,10 +125,10 @@ commands:
     steps:
       - run:
           name: Install container-structure-test
-          command: curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+          command: curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
       - run:
           name: Run container-structure-test
-          command: container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
+          command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
