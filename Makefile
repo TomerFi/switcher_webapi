@@ -49,12 +49,34 @@ docker-build: ## build image from Dockerfile.
   --build-arg VERSION=$(CODE_VERSION) \
   -t $(FULL_IMAGE_NAME) .
 
+docker-build-testing-image: ## build image from Dockerfile using a testing tag.
+	docker build \
+	--build-arg VCS_REF=$(GIT_COMMIT) \
+  --build-arg BUILD_DATE=$(CURRENT_DATE) \
+  --build-arg VERSION=testing \
+  -t $(strip $(IMAGE_NAME)):testing .
+
+docker-remove-testing-image: ## remove the testing image (must be build first).
+	docker image rm $(strip $(IMAGE_NAME)):testing
+
 docker-build-no-cache: ## build image from Dockerfile with no caching.
 	docker build --no-cache \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
   --build-arg BUILD_DATE=$(CURRENT_DATE) \
   --build-arg VERSION=$(CODE_VERSION) \
   -t $(FULL_IMAGE_NAME) .
+
+structure-test: ## run the container-structure-test tool against the built image (must be build first) using the relative container_structure.yml file
+	bash shellscripts/container-structure-test-verify.sh container_structure.yml $(FULL_IMAGE_NAME)
+
+docker-build-structure-test: ## build the image and test the container structure
+docker-build-structure-test: docker-build structure-test
+
+docker-build-no-cache-structure-test: ## build the image and test the container structure
+docker-build-no-cache-structure-test: docker-build-no-cache structure-test
+
+docker-full-structure-testing: ## build the image with the testing tag and remove after structure test
+docker-full-structure-testing: docker-build-testing-image structure-test docker-remove-testing-image
 
 docker-tag-latest: ## add latest tag before pushing the latest version
 	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest

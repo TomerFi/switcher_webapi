@@ -1,0 +1,80 @@
+schemaVersion: "2.0.0"
+
+fileExistenceTests:
+  - name: "LICENSE shouldExist: true"
+    path: /srv/switcher_webapi/LICENSE
+    shouldExist: true
+  - name: "conftest.py shouldExist: true"
+    path: /srv/switcher_webapi/conftest.py
+    shouldExist: true
+  - name: "consts.py shouldExist: true"
+    path: /srv/switcher_webapi/consts.py
+    shouldExist: true
+  - name: "helpers.py shouldExist: true"
+    path: /srv/switcher_webapi/helpers.py
+    shouldExist: true
+  - name: "mappings.py shouldExist: true"
+    path: /srv/switcher_webapi/mappings.py
+    shouldExist: true
+  - name: "request_handlers.py shouldExist: true"
+    path: /srv/switcher_webapi/request_handlers.py
+    shouldExist: true
+  - name: "start_server.py.py shouldExist: true"
+    path: /srv/switcher_webapi/start_server.py
+    shouldExist: true
+  - name: "test_server.py shouldExist: false"
+    path: /srv/switcher_webapi/test_server.py
+    shouldExist: false
+  - name: "requirements.txt shouldExist: true"
+    path: /srv/switcher_webapi/requirements.txt
+    shouldExist: true
+  - name: "requirements_constraints.txt shouldExist: true"
+    path: /srv/switcher_webapi/requirements_constraints.txt
+    shouldExist: true
+
+fileContentTests:
+  - name: "LICENSE is MIT"
+    path: /srv/switcher_webapi/LICENSE
+    expectedContents: ["MIT License.*"]
+
+metadataTest:
+  labels:
+    - key: "org.label-schema.build-date"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.name"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.description"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.url"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.vcs-url"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.vcs-ref"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.version"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.schema-version"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.docker.cmd"
+      value: "."
+      isRegex: true
+    - key: "org.label-schema.docker.params"
+      value: "."
+      isRegex: true
+    - key: "license"
+      value: "MIT"
+    - key: "maintainer"
+      value: "."
+      isRegex: true
+  exposedPorts: ["8000"]
+  entrypoint: []
+  cmd: ["/bin/sh", "-c", "python -u start_server.py -p 8000"]
+  workdir: "/srv/switcher_webapi"

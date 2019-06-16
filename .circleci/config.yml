@@ -4,9 +4,9 @@ version: 2.1
 ####### Orbs ########
 #####################
 orbs:
-  # Currently docker-publish orb is used to build the docker image and not publish it,
-  # Therefor the user and password environment variables does not need to be set.
-  docker-publish: circleci/docker-publish@0.1.7
+  # Currently, docker orb is used to build the docker image and not publish it,
+  # Therefore the user and password environment variables does not need to be set.
+  docker-orb: circleci/docker@0.5.1
 
 #####################
 ##### Executors #####
@@ -43,6 +43,7 @@ commands:
   ##################################################################
 
   # Docker images are pulled here and saved to cache.
+  # Various tools can be saved to cache here.
   # Use with the machine-docker executer as preparation before running one-time docker containers.
   prepare-machine:
     description: Prepare the virtual machine
@@ -50,6 +51,16 @@ commands:
       - restore_cache:
           keys:
             - v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
+      - run:
+          name: Install container-structure-test
+          command: |
+            if [[ ! -f "./google-container-tools/container-structure-test" ]]
+            then
+              mkdir -p ./google-container-tools
+              curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+              chmod +x container-structure-test-linux-amd64
+              mv container-structure-test-linux-amd64 ./google-container-tools/container-structure-test
+            fi
       - run:
           name: Download docker images and save to cache
           command: |
@@ -64,6 +75,7 @@ commands:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
           paths:
             - docker-cache
+            - ./google-container-tools
 
   # Node packages are installed here and then saved to cache.
   # Use with the node-docker executer as preparation before executing npm modules.
@@ -118,6 +130,13 @@ commands:
       - run:
           name: Run shellcheck docker
           command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+
+  run-container-structure-test:
+    description: Run the GoogleContainerTools/container-structure-test tool
+    steps:
+      - run:
+          name: Run container-structure-test
+          command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
@@ -247,18 +266,19 @@ jobs:
       - prepare-machine
       - hadolint-docker
 
-  docker-check-and-build-job:
+  docker-build-test-structure-job:
     executor:
-      name: docker-publish/docker
+      name: machine-docker
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - docker-publish/build:
+      - prepare-machine
+      - docker-orb/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
+          extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=testref --build-arg VERSION=testing'
+      - run-container-structure-test
 
   security-job:
     executor:
@@ -322,33 +342,36 @@ workflows:
           requires:
             - docs-linters-job
 
-  # Lint and the test the code, scripts and Dockerfile
+  # Build and test the docker images
+  docker-build-test:
+    jobs:
+      - hadolint-docker-job
+
+      - docker-build-test-structure-job:
+          requires:
+            - hadolint-docker-job
+
+  # Lint and the test the code and scripts
   code-lint-test:
     jobs:
       - prettier-job
 
       - shellcheck-docker-job
 
-      - hadolint-docker-job:
+      - security-job:
           requires:
             - prettier-job
             - shellcheck-docker-job
 
-      - docker-check-and-build-job:
-          requires:
-            - hadolint-docker-job
-
-      - security-job:
-          requires:
-            - docker-check-and-build-job
-
       - code-linters-job:
           requires:
-            - docker-check-and-build-job
+            - prettier-job
+            - shellcheck-docker-job
 
       - mypy-job:
           requires:
-            - docker-check-and-build-job
+            - prettier-job
+            - shellcheck-docker-job
 
       - unittests-job:
           requires:
