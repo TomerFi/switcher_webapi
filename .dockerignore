@@ -4,6 +4,7 @@
 .mypy_cache
 .tox
 docs
+pyscripts/test_server.py
 shellscripts
 .codecov.yml
 .coverage
@@ -14,6 +15,7 @@ shellscripts
 .prettierrc.yml
 .shellcheckrc
 bandit.yml
+container_structure.yml
 doc8.ini
 Dockerfile
 Makefile

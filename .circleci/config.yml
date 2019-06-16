@@ -56,9 +56,10 @@ commands:
             filename=docker-cache/saved_images.tar
             if [[ -f "$filename" ]]; then docker load < "$filename"; fi
             mkdir -p docker-cache
+            docker pull python:3.7.3-stretch
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
-            docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker save -o "$filename" python:3.7.3-stretch hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
@@ -118,6 +119,16 @@ commands:
       - run:
           name: Run shellcheck docker
           command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+
+  install-run-cst:
+    description: Install and run the GoogleContainerTools/container-structure-test tool
+    steps:
+      - run:
+          name: Install container-structure-test
+          command: curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 && chmod +x container-structure-test-linux-amd64 && mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+      - run:
+          name: Run container-structure-test
+          command: container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
@@ -252,12 +263,14 @@ jobs:
       name: machine-docker
     steps:
       - checkout
+      - prepare-machine
       - docker-orb/build:
           dockerfile: Dockerfile
           path: .
           image: tomerfi/switcher_webapi
           tag: testing
           extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=fakeref --build-arg VERSION=testing'
+      - install-run-cst
 
   security-job:
     executor:

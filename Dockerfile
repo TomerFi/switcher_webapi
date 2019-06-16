@@ -37,9 +37,9 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 WORKDIR /srv/switcher_webapi
 
-COPY pyscripts/*.py requirements.txt ./
+COPY LICENSE pyscripts/*.py requirements.txt requirements_constraints.txt ./
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt -c requirements_constraints.txt
 
 EXPOSE 8000
 
