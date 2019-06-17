@@ -1,22 +1,25 @@
----
+* * *
+
 name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
 
----
+* * *
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
 **Docker image version**
 The image version used:
+
 > **Note:** If you're using the `latest` tag, you can get the version from the designated label like so:
-```shell
-docker image inspect tomerfi/switcher_webapi:latest \
--f '{{ index .Config.Labels "org.label-schema.version" }}'
-```
+>
+> ```shell
+> docker image inspect tomerfi/switcher_webapi:latest \
+> -f '{{ index .Config.Labels "org.label-schema.version" }}'
+> ```
 
 **Reproduce**
 Steps to reproduce the behavior:
