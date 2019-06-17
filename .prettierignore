@@ -7,7 +7,9 @@ docs*
 .env_vars
 .gitignore
 .prettierignore
+.remarkrc
 .shellcheckrc
+node_modules
 Dockerfile
 Makefile
 pylintrc

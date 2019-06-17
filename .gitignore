@@ -2,6 +2,7 @@
 ### Custom for project ###
 ##########################
 .env_vars
+node_modules
 
 ########################################################################
 ### https://github.com/github/gitignore/blob/master/Python.gitignore ###

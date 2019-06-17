@@ -1,3 +1,4 @@
+<!--lint disable maximum-line-length-->
 # Switcher Boiler Unofficial Docker-based WebAPI
 
 | Stage   | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -14,4 +15,4 @@ Used as a rest api wrapper for [aioswitcher](https://pypi.org/project/aioswitche
 If you're using the [Switcher Water Heater](https://switcher.co.il/) and you want to wrap a rest api around it... you came to the right place!</br>
 
 For full install and usage instructions,
-Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io) hosted with _readthedocs.io._
+Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io) hosted with *readthedocs.io.*
