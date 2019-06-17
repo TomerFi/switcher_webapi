@@ -1,7 +1,5 @@
 endOfLine: "lf"
 overrides:
-  - files: "*.md"
-    parser: "markdown"
   - files: "*.yml"
     parser: "yaml"
     single-quote: false

@@ -12,13 +12,16 @@ shellscripts
 .gitignore
 .prettierignore
 .prettierrc.yml
+.remarkrc
 .shellcheckrc
+node_modules
 bandit.yml
 container_structure.yml
 doc8.ini
 Dockerfile
 Makefile
 mypy.ini
+package.json
 pylintrc
 requirements_docs.txt
 requirements_test.txt

@@ -84,12 +84,12 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierignore" }}-{{ checksum ".prettierrc.yml" }}
+            - v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
       - run:
           name: Install prettier
-          command: npm install prettier@1.18.2
+          command: npm install
       - save_cache:
-          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum ".prettierignore" }}-{{ checksum ".prettierrc.yml" }}
+          key: v1-switcher-webapi-node-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
 
@@ -141,12 +141,19 @@ commands:
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
   ######################################################################################################
-  run-prettier:
-    description: Execute npm's prettier module to linting yaml and md files
+  md-linter:
+    description: Run npm's remark and remark-lint plugins against md files
     steps:
       - run:
-          name: Prettier
-          command: node_modules/prettier/bin-prettier.js --config .prettierrc.yml --ignore-path .prettierignore --check *.* **/*.*
+          name: Remark - md lint
+          command: lint-md
+
+  yml-linter:
+    description: Run npm's prettier module against yml files
+    steps:
+      - run:
+          name: Prettier - yml lint
+          command: npm run lint-yml
 
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
@@ -223,6 +230,14 @@ jobs:
   #############################################
   ### Jobs for the docs-lint-build workflow ###
   #############################################
+  md-linter-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - md-linter
+
   docs-linters-job:
     executor:
       name: python-docker
@@ -242,13 +257,13 @@ jobs:
   #############################################
   ### Jobs for the code-lint-test workflow ####
   #############################################
-  prettier-job:
+  yml-linter-job:
     executor:
       name: node-docker
     steps:
       - checkout
       - prepare-node
-      - run-prettier
+      - yml-linter
 
   shellcheck-docker-job:
     executor:
@@ -336,7 +351,11 @@ workflows:
   # Lint and build the documantation site files
   docs-lint-build:
     jobs:
-      - docs-linters-job
+      - md-linter-job
+
+      - docs-linters-job:
+          requires:
+            - md-linter-job
 
       - sphinx-build-job:
           requires:
@@ -354,23 +373,23 @@ workflows:
   # Lint and the test the code and scripts
   code-lint-test:
     jobs:
-      - prettier-job
+      - yml-linter-job
 
       - shellcheck-docker-job
 
       - security-job:
           requires:
-            - prettier-job
+            - yml-linter-job
             - shellcheck-docker-job
 
       - code-linters-job:
           requires:
-            - prettier-job
+            - yml-linter-job
             - shellcheck-docker-job
 
       - mypy-job:
           requires:
-            - prettier-job
+            - yml-linter-job
             - shellcheck-docker-job
 
       - unittests-job:
