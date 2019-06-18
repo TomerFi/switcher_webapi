@@ -76,7 +76,7 @@ But no worries, everything is fixable.
 ## Continuous Deployment
 ### Docker Hub
 When a **git-tag** with the regex of `/^[0-9.]+$/` is set, [Docker Hub Cloud](https://hub.docker.com/r/tomerfi/switcher_webapi/builds) will build the image based on the Dockerfile instructions file and tag it twice:
--   *<git-tag>*
+-   `<git-tag>`
 -   latest
 
 ### Read the Docs
