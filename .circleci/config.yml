@@ -117,19 +117,19 @@ commands:
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
   ######################################################################################################
-  hadolint-docker:
+  dockerfile-lint:
     description: Run one-time container for hadolint linter against Dockerfile
     steps:
       - run:
           name: Run hadolint docker
-          command: docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile
+          command: bash shellscripts/run-once-docker-operations.sh lint-dockerfile
 
-  shellcheck-docker:
+  shellscripts-check:
     description: Run one-time container for shellcheck linter against shellscripts/*.sh
     steps:
       - run:
           name: Run shellcheck docker
-          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+          command: bash shellscripts/run-once-docker-operations.sh check-shellscripts
 
   run-container-structure-test:
     description: Run the GoogleContainerTools/container-structure-test tool
@@ -141,14 +141,14 @@ commands:
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
   ######################################################################################################
-  md-linter:
+  md-lint:
     description: Run npm's remark and remark-lint plugins against md files
     steps:
       - run:
           name: Remark - md lint
           command: npm run lint-md
 
-  yml-linter:
+  yml-lint:
     description: Run npm's prettier module against yml files
     steps:
       - run:
@@ -158,7 +158,7 @@ commands:
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
   ######################################################################################################
-  run-docs-linters:
+  docs-lint:
     description: Run python doc8 linter against docs/source/*.rst
     steps:
       - run:
@@ -187,7 +187,7 @@ commands:
             . venv/bin/activate
             bandit -rvc bandit.yml pyscripts docs/source/conf.py -l -ii
 
-  run-code-linters:
+  run-code-lint:
     description: Run python flake8 and pylint againt py files
     steps:
       - run:
@@ -230,13 +230,13 @@ jobs:
   #############################################
   ### Jobs for the docs-lint-build workflow ###
   #############################################
-  md-linter-job:
+  md-lint-job:
     executor:
       name: node-docker
     steps:
       - checkout
       - prepare-node
-      - md-linter
+      - md-lint
 
   docs-linters-job:
     executor:
@@ -244,7 +244,7 @@ jobs:
     steps:
       - checkout
       - prepare-python
-      - run-docs-linters
+      - docs-lint
 
   sphinx-build-job:
     executor:
@@ -257,29 +257,29 @@ jobs:
   #############################################
   ### Jobs for the code-lint-test workflow ####
   #############################################
-  yml-linter-job:
+  yml-lint-job:
     executor:
       name: node-docker
     steps:
       - checkout
       - prepare-node
-      - yml-linter
+      - yml-lint
 
-  shellcheck-docker-job:
+  shellscripts-check-job:
     executor:
       name: machine-docker
     steps:
       - checkout
       - prepare-machine
-      - shellcheck-docker
+      - shellscripts-check
 
-  hadolint-docker-job:
+  dockerfile-lint-job:
     executor:
       name: machine-docker
     steps:
       - checkout
       - prepare-machine
-      - hadolint-docker
+      - dockerfile-lint
 
   docker-build-test-structure-job:
     executor:
@@ -303,13 +303,13 @@ jobs:
       - prepare-python
       - check-security
 
-  code-linters-job:
+  code-lint-job:
     executor:
       name: python-docker
     steps:
       - checkout
       - prepare-python
-      - run-code-linters
+      - run-code-lint
 
   mypy-job:
     executor:
@@ -351,11 +351,11 @@ workflows:
   # Lint and build the documantation site files
   docs-lint-build:
     jobs:
-      - md-linter-job
+      - md-lint-job
 
       - docs-linters-job:
           requires:
-            - md-linter-job
+            - md-lint-job
 
       - sphinx-build-job:
           requires:
@@ -364,38 +364,38 @@ workflows:
   # Build and test the docker images
   docker-build-test:
     jobs:
-      - hadolint-docker-job
+      - dockerfile-lint-job
 
       - docker-build-test-structure-job:
           requires:
-            - hadolint-docker-job
+            - dockerfile-lint-job
 
   # Lint and the test the code and scripts
   code-lint-test:
     jobs:
-      - yml-linter-job
+      - yml-lint-job
 
-      - shellcheck-docker-job
+      - shellscripts-check-job
 
       - security-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - yml-lint-job
+            - shellscripts-check-job
 
-      - code-linters-job:
+      - code-lint-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - yml-lint-job
+            - shellscripts-check-job
 
       - mypy-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - yml-lint-job
+            - shellscripts-check-job
 
       - unittests-job:
           requires:
             - security-job
-            - code-linters-job
+            - code-lint-job
             - mypy-job
 
       - coverage-reports-job:
