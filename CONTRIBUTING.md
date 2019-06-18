@@ -1,4 +1,5 @@
-# Contributing to switcher_webapi, dockerized solution for integrating with your Switcher water heater
+# Contributing to switcher_webapi
+# A dockerized solution for integrating with your Switcher water heater
 
 First off, thank you for taking the time to contribute.
 
