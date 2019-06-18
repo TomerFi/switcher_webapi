@@ -12,3 +12,4 @@ Welcome to Switcher water heater WebAPI documentation!
    credits
    license
    changelog
+   conduct
