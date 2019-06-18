@@ -69,7 +69,8 @@ commands:
             mkdir -p docker-cache
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
-            docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker pull circleci/circleci-cli:alpine
+            docker save -o "$filename" circleci/circleci-cli:alpine hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
@@ -141,6 +142,13 @@ commands:
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
   ######################################################################################################
+  pkg-validate:
+    description: Run npm's package-json-validate for validating the package.json file
+    steps:
+      - run:
+          name: Pjv - package.json
+          command: npm run validate-pkg
+
   md-lint:
     description: Run npm's remark and remark-lint plugins against md files
     steps:
@@ -254,25 +262,9 @@ jobs:
       - prepare-python
       - sphinx-build
 
-  #############################################
-  ### Jobs for the code-lint-test workflow ####
-  #############################################
-  yml-lint-job:
-    executor:
-      name: node-docker
-    steps:
-      - checkout
-      - prepare-node
-      - yml-lint
-
-  shellscripts-check-job:
-    executor:
-      name: machine-docker
-    steps:
-      - checkout
-      - prepare-machine
-      - shellscripts-check
-
+  ###############################################
+  ### Jobs for the docker-build-test workflow ###
+  ###############################################
   dockerfile-lint-job:
     executor:
       name: machine-docker
@@ -294,6 +286,33 @@ jobs:
           tag: testing
           extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=testref --build-arg VERSION=testing'
       - run-container-structure-test
+
+  #############################################
+  ### Jobs for the code-lint-test workflow ####
+  #############################################
+  pkg-validate-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - pkg-validate
+
+  yml-lint-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - yml-lint
+
+  shellscripts-check-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - shellscripts-check
 
   security-job:
     executor:
@@ -373,12 +392,15 @@ workflows:
   # Lint and the test the code and scripts
   code-lint-test:
     jobs:
+      - pkg-validate-job
+
       - yml-lint-job
 
       - shellscripts-check-job
 
       - security-job:
           requires:
+            - pkg-validate-job
             - yml-lint-job
             - shellscripts-check-job
 
