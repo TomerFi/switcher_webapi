@@ -1,4 +1,0 @@
-shellscripts/dockerlint-download-prepare.sh
-shellscripts/dockerlint-verify.sh
-shellscripts/push-docker-description.sh
-shellscripts/shellcheck-verify.sh
