@@ -13,17 +13,14 @@
   "bugs": {
     "url": "https://github.com/TomerFi/switcher_webapi/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://switcher-webapi.readthedocs.io/en/stable/license.html"
-    }
-  ],
+  "license": "MIT",
   "author": {
     "name": "Tomer Figenblat",
     "email": "tomer.figenblat@gmail.com",
     "url": "https://github.com/TomerFi"
   },
+  "contributors": [],
+  "engines": {},
   "files": [
     ".remarkrc"
   ],
@@ -36,9 +33,11 @@
   },
   "scripts": {
     "lint-md": "remark --rc-path .remarkrc --frail . .github",
-    "lint-yml": "prettier --config .prettierrc.yml --ignore-path .prettierignore --check *.yml **/*.yml"
+    "lint-yml": "prettier --config .prettierrc.yml --ignore-path .prettierignore --check *.yml **/*.yml",
+    "validate-pkg": "pjv --filenmae package.json --spec npm --warnings --recommendations"
   },
   "dependencies": {
+    "package-json-validator": "0.6.3",
     "prettier": "1.18.2",
     "remark-cli": "6.0.1",
     "remark-frontmatter": "1.3.2",
