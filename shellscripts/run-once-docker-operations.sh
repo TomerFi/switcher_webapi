@@ -17,6 +17,7 @@ display_usage() {
     echo "usage: $0 lint-dockerfile"
     echo "usage: $0 check-shellscripts"
     echo "usage: $0 generate-changelog"
+    echo "usage: $0 circleci-validate"
 }
 
 if command -v docker > /dev/null
@@ -38,6 +39,9 @@ then
         docker run --rm -it -v "$PWD:/usr/local/src/your-app" ferrarimarco/github-changelog-generator:latest --user tomerfi --project switcher_webapi --no-issues --no-unreleased --no-pull-requests
         sed -i '$d' CHANGELOG.md
         sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' CHANGELOG.md
+      elif [ "$1" = "circleci-validate" ]
+      then
+        docker run --rm -it -v "$PWD/.circleci/:/.circleci/" circleci/circleci-cli:alpine config validate
       fi
     fi
 else
