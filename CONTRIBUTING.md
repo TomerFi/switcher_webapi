@@ -65,7 +65,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
     linting various file types (yml).
 
 -   `.remarkrc` is the configuration file for [remark-lint](https://github.com/remarkjs/remark-lint)
-    plugin for [Remark](https://remark.js.org/) linting md files.
+    plugin for [Remark](https://remark.js.org/) linting *markdown* files.
 
 -   `bandit.yml` is the configuration file for [Bandit common security issues finder](https://github.com/PyCQA/bandit)
     checking python scripts.
@@ -225,6 +225,11 @@ will receive a notification and publish the image metadata.
 
     -   [remark-lint](https://www.npmjs.com/package/remark-lint) is configured with [.remarkrc](.remarkrc).
 
+-   *NPM Package*: [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
+    for checking the project *markdown* files for spelling errors.
+    -   [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck) dictionary file
+        is [.spelling](.spelling).
+
 -   *NPM Package*: [prettier](https://www.npmjs.com/package/prettier) for validating yml files
     syntax against all existing yml files.
     -   Ignoring files with [prettier](https://www.npmjs.com/package/prettier) is done using the
@@ -313,6 +318,12 @@ Then you can execute the scripts from the same path.
 
 -   `npm run validate-pkg` will run [package-json-validator](https://www.npmjs.com/package/package-json-validator)
     against the [package.json](package.json) file.
+
+-   `npm run spell-md-interactive` will run [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
+    against *markdown* files in an interactive manner allowing us to select the appropriate action.
+
+-   `npm run spell-md-report` will run [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
+    against *markdown* files and print the report to stdout.
 
 ### Shell Scripts
 The shell scripts in `shellscripts` were written for `bash` and not for `sh`.

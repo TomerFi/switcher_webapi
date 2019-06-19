@@ -215,6 +215,11 @@ Environments and Tools
 
     *   `remark-lint`_ is configured with ``.remarkrc``.
 
+*   *NPM Package*: `markdown-spellcheck`_ for checking the project *markdown* files for spelling
+    errors.
+
+    *   `markdown-spellcheck`_ dictionary file is ``.spelling``.
+
 *   *NPM Package*: prettier_ for validating yml files syntax against all existing yml files.
     *   Ignoring files with prettier_ is done using the ``.prettierignore`` file.
 
@@ -296,9 +301,18 @@ NPM Scripts
 Before using the scrips, you need to install the dependencies.
 From the ``package.json`` file path, run ``npm install``,
 Then you can execute the scripts from the same path.
+
 *   ``npm run lint-md`` will `run remark`_ against *markdown* files.
+
 *   ``npm run lint-yml`` will `run prettier`_ against *yml* files.
+
 *   ``npm run validate-pkg`` will run `package-json-validator`_ against the ``package.json`` file.
+
+*   ``npm run spell-md-interactive`` will run `markdown-spellcheck`_ against *markdown* files in an
+    interactive manner allowing us to select the appropriate action.
+
+*   ``npm run spell-md-report`` will run `markdown-spellcheck`_ against *markdown* files and print
+    the report to stdout.
 
 Shell Scripts
 -------------
@@ -452,3 +466,4 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _CII Best Practices: https://bestpractices.coreinfrastructure.org/en/projects/2891
 .. _black: https://pypi.org/project/black/
 .. _PEP518: https://www.python.org/dev/peps/pep-0518/
+.. _markdown-spellcheck: https://www.npmjs.com/package/markdown-spellcheck
