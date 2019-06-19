@@ -118,10 +118,12 @@ manages our dependencies, scripts and some metadata.
 
 ### Documentation
 -   `docs/sources` is where the *rst files* for creating the [Sphinx Documentation](http://www.sphinx-doc.org/en/master/)
-    are stored for build, deploy and host by [Read the Docs](https://readthedocs.org/).
+    are stored for build, deployment and hosting by [Read the Docs](https://readthedocs.org/).
 
 -   `docs/Makefile` the basic *Makefile* for [Sphinx](http://www.sphinx-doc.org/en/master/)
-    documentation generator.
+    documentation generator. From the [docs](docs/) path, type `make html` and
+    [sphinx](http://www.sphinx-doc.org/en/master/) will create the documentation site locally in
+    `docs/build`.
 
 ## Continuous Integration
 ### CircleCi
@@ -235,8 +237,8 @@ will receive a notification and publish the image metadata.
 -   *Linux Tool*: [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
     for verifying the docker image content.
     -   The tool runs with the helper script [shellscripts/container-structure-test-verify.sh](shellscripts/container-structure-test-verify.sh)
-        so it will not fail if the tool is not present when running `tox` locally. But it will come
-        up in [CircleCi](https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev)
+        so it will not fail if the tool is not present when running `tox` locally. But this will
+        probably come up with [CircleCi](https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev).
         so please consider installing the tool manually.
 
     -   [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
@@ -267,7 +269,9 @@ will receive a notification and publish the image metadata.
 
 ## Testing
 Testing is performed with [Pytest, Full-featured Python testing tool](https://docs.pytest.org/en/latest/).</br>
-The various Rest Http requests test-cases is in [pyscripts/test_server.py](pyscripts/test_server.py).
+The various Rest Http request test-cases is in [pyscripts/test_server.py](pyscripts/test_server.py).</br>
+
+For automated local tests, use `tox`.
 
 ## Guidelines
 > **Please Note**: that project [semvar](https://semver.org/) is being handled in both [VERSION](VERSION)
@@ -290,12 +294,12 @@ Here are some guidelines (recommendations) for contributing to the `switcher_web
 ### NPM Scripts
 Before using the scrips, you need to install the dependencies.</br>
 From the [package.json](package.json) file path, run `npm install`,
-and then you can execute the scripts from the same path.
+Then you can execute the scripts from the same path.
 -   `npm run lint-md` will run [remark](https://remark.js.org/) against *markdown* files.
 -   `npm run lint-yml` will run [prettier](https://prettier.io/) against *yml* files.
 
 ### Shell Scripts
-The shell scripts in [shellscripts](shellscripts/) will not execute correctly with `sh` please use `bash`.
+The shell scripts in `shellscripts` were wriiten for `bash` and not for `sh`.
 -   `bash shellscripts/container-structure-test-verify.sh` will verify the existence of
     [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
     and execute it. The script will `exit 0` if the tool doesn't exists so it will not fail `tox`.
@@ -303,7 +307,7 @@ The shell scripts in [shellscripts](shellscripts/) will not execute correctly wi
 -   `bash shellscripts/push-docker-description.sh` allows the deployment of the local
     [README.md](README.md) file as a docker image description in
     [Docker Hub](https://cloud.docker.com/repository/docker/tomerfi/switcher_webapi).
-    Please use it with [Makefile](#makefile) as it requires arguments.
+    Please use it with [Makefile](#makefile) as arguments are required
 
 -   `bash shellscripts/run-once-docker-operations.sh <add-argument-here>` will verify the
     existence of [Docker](https://www.docker.com/) before executing various run-once docker
@@ -327,7 +331,7 @@ The shell scripts in [shellscripts](shellscripts/) will not execute correctly wi
         for validating the [.circleci/config.yml](.circleci/config.yml) file.
 
 ### Makefile
-It's highly recommended using the [Makefile](Makefile),
+Using the [Makefile](Makefile) is highly recommended,
 especially in regards to docker operations, try `make help` to list all the available tasks:
 -   `make docker-build` will build image from Dockerfile.
 
