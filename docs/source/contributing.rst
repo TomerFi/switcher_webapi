@@ -298,6 +298,7 @@ From the ``package.json`` file path, run ``npm install``,
 Then you can execute the scripts from the same path.
 *   ``npm run lint-md`` will `run remark`_ against *markdown* files.
 *   ``npm run lint-yml`` will `run prettier`_ against *yml* files.
+*   ``npm run validate-pkg`` will run `package-json-validator`_ against the ``package.json`` file.
 
 Shell Scripts
 -------------

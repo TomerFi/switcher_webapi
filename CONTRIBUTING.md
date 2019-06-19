@@ -308,7 +308,11 @@ Before using the scrips, you need to install the dependencies.</br>
 From the [package.json](package.json) file path, run `npm install`,
 Then you can execute the scripts from the same path.
 -   `npm run lint-md` will run [remark](https://remark.js.org/) against *markdown* files.
+
 -   `npm run lint-yml` will run [prettier](https://prettier.io/) against *yml* files.
+
+-   `npm run validate-pkg` will run [package-json-validator](https://www.npmjs.com/package/package-json-validator)
+    against the [package.json](package.json) file.
 
 ### Shell Scripts
 The shell scripts in `shellscripts` were wriiten for `bash` and not for `sh`.
