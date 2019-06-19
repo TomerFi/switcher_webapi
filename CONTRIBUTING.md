@@ -103,7 +103,6 @@ Please feel free to contribute, even to this contributing guideline file, if you
 ### Ignore files
 -   `.dockerignore` used for controlling what goes in the *docker image*.
 -   `.gitignore` used for controlling what will not be pushed to *github*.
--   `.prettierignore` used for setting ignore list for *prettier code formatter*.
 
 ### Requirement files
 -   `requirements.txt` is a list of python requirements for running the solution.
@@ -232,9 +231,6 @@ will receive a notification and publish the image metadata.
 
 -   *NPM Package*: [prettier](https://www.npmjs.com/package/prettier) for validating yml files
     syntax against all existing yml files.
-    -   Ignoring files with [prettier](https://www.npmjs.com/package/prettier) is done using the
-        [.prettierignore](.prettierignore) file.
-
     -   [prettier](https://www.npmjs.com/package/prettier) is configured with [.prettierrc.yml](.prettierrc.yml).
 
 -   *Docker Image*: [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) is used

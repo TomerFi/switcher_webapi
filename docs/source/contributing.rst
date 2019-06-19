@@ -81,7 +81,6 @@ Ignore files
 
 *   ``.dockerignore`` used for controlling what goes in the *docker image*.
 *   ``.gitignore`` used for controlling what will not be pushed to *github*.
-*   ``.prettierignore`` used for setting ignore list for *prettier code formatter*.
 
 Requirement files
 -----------------
@@ -221,8 +220,6 @@ Environments and Tools
     *   `markdown-spellcheck`_ dictionary file is ``.spelling``.
 
 *   *NPM Package*: prettier_ for validating yml files syntax against all existing yml files.
-    *   Ignoring files with prettier_ is done using the ``.prettierignore`` file.
-
     *   prettier_ is configured with ``.prettierrc.yml``.
 
 *   *Docker Image*: `koalaman/shellcheck`_ is used for checking shell script residing in
