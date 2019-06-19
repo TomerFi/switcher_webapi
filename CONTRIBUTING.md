@@ -230,7 +230,7 @@ will receive a notification and publish the image metadata.
     for checking shell script residing in [shellscripts](shellscripts/).
 
 -   *Docker Image*: [hadolint/hadolint](https://hub.docker.com/r/hadolint/hadolint) is used for
-    linting the instruction file Dockerfile.
+    linting the instruction file [Dockerfile](Dockerfile).
 
 -   *Linux Tool*: [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
     for verifying the docker image content.
@@ -270,7 +270,7 @@ Testing is performed with [Pytest, Full-featured Python testing tool](https://do
 The various Rest Http requests test-cases is in [pyscripts/test_server.py](pyscripts/test_server.py).
 
 ## Guidelines
-> **Please Note**: that project [semvar]( https://semver.org/) is being handled in both [VERSION](VERSION)
+> **Please Note**: that project [semvar](https://semver.org/) is being handled in both [VERSION](VERSION)
 > file for creating the docker image with [Makefile](Makefile) and [package.json](package.json)
 > for packaging handling.
 
@@ -291,7 +291,7 @@ Here are some guidelines (recommendations) for contributing to the `switcher_web
 Before using the scrips, you need to install the dependencies.</br>
 From the [package.json](package.json) file path, run `npm install`,
 and then you can execute the scripts from the same path.
--   `npm run lint-md` will run [remark](https://remark.js.org/) against `markdown` files.
+-   `npm run lint-md` will run [remark](https://remark.js.org/) against *markdown* files.
 -   `npm run lint-yml` will run [prettier](https://prettier.io/) against *yml* files.
 
 ### Shell Scripts
@@ -320,7 +320,7 @@ The shell scripts in [shellscripts](shellscripts/) will not execute correctly wi
     -   argument `generate-changelog` will execute the docker image
         [ferrarimarco/github-changelog-generator](https://hub.docker.com/r/ferrarimarco/github-changelog-generator)
         for generating a simple [CHANGELOG.md](CHANGELOG.md) based on `git-release-tags`,
-        the created is fail can be used as a manual base for updating the documentation site.
+        the created file can be later used as a manual base for updating the documentation site.
 
     -   argument `circleci-validate` will execute the docker image
         [circleci/circleci-cli](https://hub.docker.com/r/circleci/circleci-cli)
