@@ -304,6 +304,13 @@ Here are some guidelines (recommendations) for contributing to the `switcher_web
 
 -   If writing python code, please remember to [static type](https://www.python.org/dev/peps/pep-0484/).
 
+-   You can run npm's script `spell-md-interactive` for handling all spelling mistakes before
+    testing.
+    You can also choose to run `spell-md-report` to print a full report instead of handling the
+    spelling mistakes one-by-one.
+    -   [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck) dictionary is the
+        file [.spelling](.spelling).
+
 ### NPM Scripts
 Before using the scrips, you need to install the dependencies.</br>
 From the [package.json](package.json) file path, run `npm install`,

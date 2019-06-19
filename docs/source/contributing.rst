@@ -292,6 +292,12 @@ Here are some guidelines (recommendations) for contributing to the ``switcher_we
 *   If you're writing python code, please remember to `static type`_ your code or else it will
     probably fail ``mypy`` tests.
 
+*   You can run npm's script ``spell-md-interactive`` for handling all spelling mistakes before
+    testing.
+    You can also choose to run ``spell-md-report`` to print a full report instead of handling the
+    spelling mistakes one-by-one.
+    *   `markdown-spellcheck`_ dictionary is the file ``.spelling``.
+
 NPM Scripts
 -----------
 
