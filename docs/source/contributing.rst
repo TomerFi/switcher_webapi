@@ -56,6 +56,9 @@ Configuration files
 
 *   ``pylintrc`` is the configuration file for `Pylint Code Analysis`_ linting python scripts.
 
+*   ``pyproject.toml`` is designated to be the main configuration file for python based on PEP518_
+    (not fully operative in this project yet).
+
 *   ``tox.ini`` is the configuration file for `Tox Testing Automation`_ testing the python code.
 
 Docker
@@ -239,6 +242,13 @@ Environments and Tools
 
 *   *Python Package*: pylint_ for linting python scripts residing in ``pyscripts``.
     *   pylint_ is configured with ``pylintrc``.
+
+*   *Python Package*: black_ for formatting python scripts residing in ``pyscripts``.
+
+    *   black_ is still in beta phase, from this project point-of-view it's in examination,
+        therefore erros are ignored in ``tox`` and it's not yet configured with ``circleci``.
+
+    *   black_ is configured with ``pyproject.toml``.
 
 *   *Python Package*: mypy_ for checking static typing tests against python scripts residing in
     ``pyscripts``.
@@ -439,3 +449,5 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _Docker: https://www.docker.com/
 .. _Slack Channel: https://tomfi.slack.com/messages/CK4DK2Z5G
 .. _CII Best Practices: https://bestpractices.coreinfrastructure.org/en/projects/2891
+.. _black: https://pypi.org/project/black/
+.. _PEP518: https://www.python.org/dev/peps/pep-0518/

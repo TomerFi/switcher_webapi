@@ -85,6 +85,9 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `pylintrc` is the configuration file for [Pylint Code Analysis](https://www.pylint.org/)
     linting python scripts.
 
+-   `pyproject.toml` is designated to be the main configuration file for python based on
+    [PEP518](https://www.python.org/dev/peps/pep-0518/) (not fully operative in this project yet).
+
 -   `tox.ini` is the configuration file for [Tox Testing Automation](https://tox.readthedocs.io/en/latest/)
     testing the python code.
 
@@ -180,7 +183,8 @@ will receive a notification and publish the image metadata.
 -   Python's [nodeenv](https://pypi.org/project/nodeenv/), a tool that enables us to create a
     Node.js virtual environment in resemblance to [virtualenv](https://pypi.org/project/virtualenv/),
     the tool also allows combining [nodeenv](https://pypi.org/project/nodeenv/) within
-    [virtualenv](https://pypi.org/project/virtualenv/), which is exactly what we're doing with `tox`.
+    [virtualenv](https://pypi.org/project/virtualenv/), which is exactly what we're doing with
+    `tox`.
 
 -   [Docker](https://www.docker.com/), as some of the testing automations are
     performed within a run-once docker container.
@@ -254,6 +258,14 @@ will receive a notification and publish the image metadata.
 -   *Python Package*: [pylint](https://pypi.org/project/pylint/) for linting python scripts
     residing in [pyscripts](pyscripts/).
     -   [pylint](https://pypi.org/project/pylint/) is configured with [pylintrc](pylintrc).
+
+-   *Python Package*: [black](https://pypi.org/project/black/) for formatting python scripts
+    residing in [pyscripts](pyscripts/).
+    -   [black](https://pypi.org/project/black/) is still in beta phase, from this project
+        point-of-view it's in examination therefore erros are ignored in `tox` and it's
+        not yet configured with `circleci`.
+
+    -   [black](https://pypi.org/project/black/) is configured with [pyproject.toml](pyproject.toml).
 
 -   *Python Package*: [mypy](https://pypi.org/project/mypy/) for checking static typing
     tests against python scripts residing in [pyscripts](pyscripts/).
