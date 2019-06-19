@@ -92,10 +92,10 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `Dockerfile` is the instruction file for building the *docker image*.
 
 ### Python
--   `.pyscripts` is where *python* scripts are stored.
+-   `pyscripts` is where *python* scripts are stored.
 
 ### Shell
--   `.shellscripts` is where *shell* scripts are stored.
+-   `shellscripts` is where *shell* scripts are stored.
 
 ### Ignore files
 -   `.dockerignore` used for controlling what goes in the *docker image*.
