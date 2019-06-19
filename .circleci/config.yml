@@ -156,6 +156,13 @@ commands:
           name: Remark - md lint
           command: npm run lint-md
 
+  md-spell:
+    description: Run npm's markdown-spellcheck against md files
+    steps:
+      - run:
+          name: Markdown Spellcheck
+          command: npm run spell-md-report
+
   yml-lint:
     description: Run npm's prettier module against yml files
     steps:
@@ -245,6 +252,14 @@ jobs:
       - checkout
       - prepare-node
       - md-lint
+
+  md-spell-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - md-spell
 
   docs-linters-job:
     executor:
@@ -372,9 +387,13 @@ workflows:
     jobs:
       - md-lint-job
 
-      - docs-linters-job:
+      - md-spell-job:
           requires:
             - md-lint-job
+
+      - docs-linters-job:
+          requires:
+            - md-spell-job
 
       - sphinx-build-job:
           requires:
