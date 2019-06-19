@@ -23,6 +23,7 @@ Makefile
 mypy.ini
 package.json
 pylintrc
+pyproject.toml
 requirements_docs.txt
 requirements_test.txt
 tox.ini

@@ -18,6 +18,7 @@ VERSION
 *.ini
 *.py
 *.sh
+*.toml
 *cache
 *pycache*
 src
