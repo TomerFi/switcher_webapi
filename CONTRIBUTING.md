@@ -186,13 +186,13 @@ will receive a notification and publish the image metadata.
     [virtualenv](https://pypi.org/project/virtualenv/), which is exactly what we're doing with
     `tox`.
 
--   [Docker](https://www.docker.com/), as some of the testing automations are
+-   [Docker](https://www.docker.com/), as some of the testing automation are
     performed within a run-once docker container.
 
 -   [Tox](https://tox.readthedocs.io/en/latest/) for automating unit testing in your
     local environment.
     -   Please install [Tox](https://tox.readthedocs.io/en/latest/) if you want to perform
-        local testing automations.
+        local testing automation.
 
     -   Tox utilizes Python's [virtualenv](https://pypi.org/project/virtualenv/).
 
@@ -262,7 +262,7 @@ will receive a notification and publish the image metadata.
 -   *Python Package*: [black](https://pypi.org/project/black/) for formatting python scripts
     residing in [pyscripts](pyscripts/).
     -   [black](https://pypi.org/project/black/) is still in beta phase, from this project
-        point-of-view it's in examination therefore erros are ignored in `tox` and it's
+        point-of-view it's in examination therefore errors are ignored in `tox` and it's
         not yet configured with `circleci`.
 
     -   [black](https://pypi.org/project/black/) is configured with [pyproject.toml](pyproject.toml).
@@ -315,7 +315,7 @@ Then you can execute the scripts from the same path.
     against the [package.json](package.json) file.
 
 ### Shell Scripts
-The shell scripts in `shellscripts` were wriiten for `bash` and not for `sh`.
+The shell scripts in `shellscripts` were written for `bash` and not for `sh`.
 -   `bash shellscripts/container-structure-test-verify.sh` will verify the existence of
     [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
     and execute it. The script will `exit 0` if the tool doesn't exists so it will not fail `tox`.
