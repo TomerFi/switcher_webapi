@@ -60,7 +60,7 @@ Configuration files
     (not fully operative in this project yet).
 
 *   ``.spelling`` is the dictionary/ignore file used by both `markdown-spellcheck`_ and vale_.
-    Case-insenstive words in this file will not raise a spelling mistake error.
+    Case-insensitive words in this file will not raise a spelling mistake error.
 
 *   ``.vale.ini`` is the configuration for vale_.
 
@@ -86,6 +86,7 @@ Ignore files
 
 *   ``.dockerignore`` used for controlling what goes in the *docker image*.
 *   ``.gitignore`` used for controlling what will not be pushed to *github*.
+*   ``.reamrkignore`` used for ignoring specific files or folders from *reamrk-lint*.
 
 Requirement files
 -----------------
@@ -231,6 +232,8 @@ Environments and Tools
     *   `remark-lint`_ uses a couple of presets and tools, all can be found under the dependencies
         key in ``package.json``.
 
+    *   `remark-lint`_ ignore list is the file ``.remarkignore``.
+
     *   `remark-lint`_ is configured with ``.remarkrc``.
 
 *   *NPM Package*: `markdown-spellcheck`_ for checking the project *markdown* files for spelling
@@ -371,7 +374,7 @@ Shell Scripts
         for validating the ``.circleci/config.yml`` file.
 
     *   argument ``vale-rstdocs`` will execute the docker image `jdkato/vale`_ checking for
-        spelling or syntax misakes in restructured text file residing in ``docs/source``.
+        spelling or syntax mistakes in restructured text file residing in ``docs/source``.
 
 Makefile
 --------

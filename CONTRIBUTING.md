@@ -110,6 +110,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 ### Ignore files
 -   `.dockerignore` used for controlling what goes in the *docker image*.
 -   `.gitignore` used for controlling what will not be pushed to *github*.
+-   `.reamrkignore` used for ignoring specific files or folders from *reamrk-lint*.
 
 ### Requirement files
 -   `requirements.txt` is a list of python requirements for running the solution.
@@ -223,8 +224,8 @@ will receive a notification and publish the image metadata.
     files residing in [docs/source](docs/source) used to create the documentation site.
     -   doc8 is configured with [doc8.ini](doc8.ini).
 
--   *Docker Image*: [jdkato/vale](https://hub.docker.com/r/jdkato/vale) for linting reStructured Text
-    files residing in [docs/source](docs/source) for spelling/syntax mistakes.
+-   *Docker Image*: [jdkato/vale](https://hub.docker.com/r/jdkato/vale) for linting reStructured
+    Text files residing in [docs/source](docs/source) for spelling/syntax mistakes.
     -   [jdkato/vale](https://hub.docker.com/r/jdkato/vale) vocabulary file is [.spelling](.spelling).
     -   [jdkato/vale](https://hub.docker.com/r/jdkato/vale) is configured with [.vale.ini](.vale.ini).
 
@@ -236,8 +237,11 @@ will receive a notification and publish the image metadata.
 -   *NPM Package*: [remark-lint](https://www.npmjs.com/package/remark-lint) which is a plugin for
     [remark](https://www.npmjs.com/package/remark) and the [remark-cli](https://www.npmjs.com/package/remark-cli)
     command line tool for linting markdown files residing at the `base path` and in `.github`.
+
     -   [remark-lint](https://www.npmjs.com/package/remark-lint) uses a couple of presets and tools,
         all can be found under the dependencies key in [package.json](package.json).
+
+    -   [remark-lint](https://www.npmjs.com/package/remark-lint) ignore list is the file [.remarkignore](.remarkignore).
 
     -   [remark-lint](https://www.npmjs.com/package/remark-lint) is configured with [.remarkrc](.remarkrc).
 
