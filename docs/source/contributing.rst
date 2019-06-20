@@ -183,7 +183,7 @@ Environments and Tools
     to virtualenv_, the tool also allows combining nodeenv inside virtualenv_, which is exactly
     what we're doing with ``tox``.
 
-*   Docker_, as some of the testing automations are performed within a run-once docker container.
+*   Docker_, as some of the testing automation are performed within a run-once docker container.
 
 *   Tox_ for automating unit testing in your local environment.
     *   Tox utilizes Python's virtualenv_.
@@ -254,7 +254,7 @@ Environments and Tools
 *   *Python Package*: black_ for formatting python scripts residing in ``pyscripts``.
 
     *   black_ is still in beta phase, from this project point-of-view it's in examination,
-        therefore erros are ignored in ``tox`` and it's not yet configured with ``circleci``.
+        therefore errors are ignored in ``tox`` and it's not yet configured with ``circleci``.
 
     *   black_ is configured with ``pyproject.toml``.
 
@@ -328,7 +328,7 @@ Shell Scripts
 
 .. note::
 
-   The shell scripts in ``shellscripts`` were wriiten for ``bash`` and not for ``sh``.
+   The shell scripts in ``shellscripts`` were written for ``bash`` and not for ``sh``.
 
 *   ``bash shellscripts/container-structure-test-verify.sh`` will verify the existence of
     `container-structure-test`_ and execute it. The script will ``exit 0`` if the tool doesn't
@@ -362,7 +362,7 @@ Makefile
 
 Using the ``Makefile`` is highly recommended, especially in regards to docker operations.
 Try ``make help`` to list all the available tasks:
-*   ``make docker-build`` will build image from realative ``Dockerfile``.
+*   ``make docker-build`` will build image from relative ``Dockerfile``.
 
 *   ``make docker-build-testing-image`` will build image from relative ``Dockerfile`` using
     a testing tag.
