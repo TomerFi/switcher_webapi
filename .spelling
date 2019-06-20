@@ -28,6 +28,7 @@ flake8
 github
 googlecontainertools
 hadolint
+isort
 jdkato
 joblint
 json

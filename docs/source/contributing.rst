@@ -282,6 +282,9 @@ Environments and Tools
 
     *   `container-structure-test`_ is configured with ``container_structure.yml``.
 
+*   *Python Package*: isort_ for sorting imports. isort_ runs automatically with tox in ``no-fail``
+    mode for recommendations only.
+
 *   *Python Package*: bandit_ for finding common security issues with against the scripts residing
     in ``pyscripts``.
     *   bandit_ is configured with ``bandit.yml``.
@@ -530,3 +533,4 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _proselint: https://github.com/amperser/proselint
 .. _write-good: https://github.com/btford/write-good
 .. _joblint: https://github.com/rowanmanning/joblint
+.. _isort: https://pypi.org/project/isort/

@@ -294,6 +294,10 @@ will receive a notification and publish the image metadata.
     -   [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
         is configured with [container_structure.yml](container_structure.yml).
 
+-   *Python Package*: [isort](https://pypi.org/project/isort/) for sorting imports.
+    [isort](https://pypi.org/project/isort/) runs automatically with tox in `no-fail` mode for
+    recommendations only.
+
 -   *Python Package*: [bandit](https://pypi.org/project/bandit/) for finding common security
     issues with against the scripts residing in [pyscripts](pyscripts/).
     -   [bandit](https://pypi.org/project/bandit/) is configured with [bandit.yml](bandit.yml).
