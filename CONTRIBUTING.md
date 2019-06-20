@@ -163,8 +163,9 @@ the npm requirements listed in the *package.json* file.
 
 ### Snyk
 [Snyk](https://snyk.io) is keeping an eye out for vulnerabilities in our
-[npm dependencies](https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255)
-and in our [pypi dependencies](https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358).
+[npm dependencies](https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255),
+our [pypi dependencies](https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358)
+and our [docker image dependencies](https://app.snyk.io/org/tomerfi/project/efb45c0a-f64b-4db5-8976-966508b78cd8).
 
 ## Continuous Deployment
 ### Docker Hub
@@ -238,7 +239,6 @@ will receive a notification and publish the image metadata.
 -   *NPM Package*: [remark-lint](https://www.npmjs.com/package/remark-lint) which is a plugin for
     [remark](https://www.npmjs.com/package/remark) and the [remark-cli](https://www.npmjs.com/package/remark-cli)
     command line tool for linting markdown files residing at the `base path` and in `.github`.
-
     -   [remark-lint](https://www.npmjs.com/package/remark-lint) uses a couple of presets and tools,
         all can be found under the dependencies key in [package.json](package.json).
 
@@ -253,9 +253,7 @@ will receive a notification and publish the image metadata.
 
 -   *NPM Package*: [prettier](https://www.npmjs.com/package/prettier) for validating yml files
     syntax against all existing yml files.
-
     -   [prettier](https://www.npmjs.com/package/prettier) ignore list is the file [.prettierignore](.prettierignore).
-
     -   [prettier](https://www.npmjs.com/package/prettier) is configured with [.prettierrc.yml](.prettierrc.yml).
 
 -   *Docker Image*: [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) is used

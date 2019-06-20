@@ -147,8 +147,8 @@ David-DM
 Snyk
 ----
 
-Snyk_ is keeping an eye out for vulnerabilities in our `npm dependencies`_ and in our
-`pypi dependencies`_.
+Snyk_ is keeping an eye out for vulnerabilities in our `npm dependencies`_,
+our  `pypi dependencies`_ and our `docker image dependencies`_.
 
 Continuous Deployment
 ^^^^^^^^^^^^^^^^^^^^^
@@ -504,3 +504,4 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _pypi dependencies: https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358
 .. _vale: https://errata-ai.github.io/vale/
 .. _jdkato/vale: https://hub.docker.com/r/jdkato/vale
+.. _docker image dependencies: https://app.snyk.io/org/tomerfi/project/efb45c0a-f64b-4db5-8976-966508b78cd8
