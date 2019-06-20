@@ -31,6 +31,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
     -   [CircleCi](#circleci)
     -   [Requires-io](#requires-io)
     -   [David-DM](#david-dm)
+    -   [Snyk](#snyk)
 
 -   [Continuous Deployment](#continuous-deployment)
     -   [Docker Hub](#docker-hub)
@@ -151,6 +152,11 @@ is keeping an eye for versions updates upon the python requirements listed in th
 ### David-DM
 [David-DM](https://david-dm.org/TomerFi/switcher_webapi) is keeping an eye for versions updates upon
 the npm requirements listed in the *package.json* file.
+
+### Snyk
+[Snyk](https://snyk.io) is keeping an eye out for vulnerabilities in our
+[npm dependencies](https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255)
+and in our [pypi dependencies](https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358).
 
 ## Continuous Deployment
 ### Docker Hub
@@ -399,7 +405,7 @@ especially in regards to docker operations, try `make help` to list all the avai
 
 ## Chat
 Feel free to join the project's public [Slack Channel](https://tomfi.slack.com/messages/CK4DK2Z5G)</br>
-GitHub, Codacy and Docker Hub are integrated with the channel and keep its members updated.
+GitHub, Codacy Docker Hub and Snyk are integrated with the channel and keep its members updated.
 
 ## Best Practices
 This project tries to follow the [CII Best Practices](https://bestpractices.coreinfrastructure.org/en/projects/2891) guidelines.

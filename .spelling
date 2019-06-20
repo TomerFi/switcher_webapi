@@ -64,6 +64,7 @@ semvar
 sexualized
 shellcheck
 shellscripts
+snyk
 sphinx-rtd-theme
 stdout
 test_server.py

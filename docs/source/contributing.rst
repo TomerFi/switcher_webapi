@@ -137,6 +137,12 @@ David-DM
 `David-DM`_ is keeping an eye for versions updates upon the npm requirements listed in the
 *package.json* file.
 
+Snyk
+----
+
+Snyk_ is keeping an eye out for vulnerabilities in our `npm dependencies`_ and in our
+`pypi dependencies`_.
+
 Continuous Deployment
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -395,7 +401,7 @@ Chat
 ^^^^
 
 Feel free to join the project's public `Slack Channel`_.
-GitHub, Codacy and Docker Hub are integrated with the channel and keeping its members updated.
+GitHub, Codacy Docker Hub and Snyk are integrated with the channel and keeping its members updated.
 
 Best Practices
 ^^^^^^^^^^^^^^
@@ -470,3 +476,6 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _black: https://pypi.org/project/black/
 .. _PEP518: https://www.python.org/dev/peps/pep-0518/
 .. _markdown-spellcheck: https://www.npmjs.com/package/markdown-spellcheck
+.. _snyk: https://snyk.io
+.. _npm dependencies: https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255
+.. _pypi dependencies: https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358
