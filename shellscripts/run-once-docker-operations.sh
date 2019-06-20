@@ -18,6 +18,7 @@ display_usage() {
     echo "usage: $0 check-shellscripts"
     echo "usage: $0 generate-changelog"
     echo "usage: $0 circleci-validate"
+    echo "usage: $0 vale-rstdocs"
 }
 
 if command -v docker > /dev/null
@@ -33,15 +34,18 @@ then
       elif [ "$1" = "check-shellscripts" ]
       then
         # shellcheck disable=SC2046
-        docker run --rm -it -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+        docker run --rm -it -v "$PWD/shellscripts/:/mnt/:ro" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
       elif [ "$1" = "generate-changelog" ]
       then
-        docker run --rm -it -v "$PWD:/usr/local/src/your-app" ferrarimarco/github-changelog-generator:latest --user tomerfi --project switcher_webapi --no-issues --no-unreleased --no-pull-requests
+        docker run --rm -it -v "$PWD:/usr/local/src/your-app:ro" ferrarimarco/github-changelog-generator:latest --user tomerfi --project switcher_webapi --no-issues --no-unreleased --no-pull-requests
         sed -i '$d' CHANGELOG.md
         sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' CHANGELOG.md
       elif [ "$1" = "circleci-validate" ]
       then
-        docker run --rm -it -v "$PWD/.circleci/:/.circleci/" circleci/circleci-cli:alpine config validate
+        docker run --rm -it -v "$PWD/.circleci/:/.circleci/:ro" circleci/circleci-cli:alpine config validate
+      elif [ "$1" = "vale-rstdocs" ]
+      then
+        docker run --rm -it -v "$PWD/.vale.ini:/.vale.ini:ro" -v "$PWD/docs:/docs:ro" -w /docs jdkato/vale:latest --sort --config /.vale.ini .
       fi
     fi
 else
