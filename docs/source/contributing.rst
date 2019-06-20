@@ -138,6 +138,20 @@ Both will of course push their results into the PR conversation.
 Some of the steps are considered required and may prevent the PR from being merged.
 But no worries, everything is fixable.
 
+CodeCov
+-------
+
+CodeCov_ is keeping tabs on our code coverage.
+When a report is uploaded (by CircleCi_), CodeCov_ will check our code coverage and push its
+conclusions to *github*.
+
+Codacy
+------
+
+Codacy_ is here to check the quality of our code.
+When a report is uploaded (by CircleCi_), Codacy_ will check our code quality and push its
+conclusions to *github*.
+
 Requires-io
 -----------
 

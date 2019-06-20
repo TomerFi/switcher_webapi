@@ -29,6 +29,8 @@ Please feel free to contribute, even to this contributing guideline file, if you
 
 -   [Continuous Integration](#continuous-integration)
     -   [CircleCi](#circleci)
+    -   [CodeCov](#codecov)
+    -   [Codacy](#codacy)
     -   [Requires-io](#requires-io)
     -   [David-DM](#david-dm)
     -   [Snyk](#snyk)
@@ -158,6 +160,19 @@ Both will of course push their results into the PR conversation.
 
 Some of the steps are considered required and may prevent the PR from being merged.
 But no worries, everything is fixable.
+
+### CodeCov
+[CodeCov](https://codecov.io/gh/TomerFi/switcher_webapi) is keeping tabs on our code coverage.
+When a report is uploaded (by [CircleCi](https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev)),
+[CodeCov](https://codecov.io/gh/TomerFi/switcher_webapi) will check our code coverage and push its
+conclusions to *github*.
+
+### Codacy
+[Codacy](https://app.codacy.com/project/TomerFi/switcher_webapi/dashboard) is here to check the
+quality of our code.
+When a report is uploaded (by [CircleCi](https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev)),
+[Codacy](https://app.codacy.com/project/TomerFi/switcher_webapi/dashboard) will check our code
+quality and push its conclusions to *github*.
 
 ### Requires-io
 [Requires.io](https://requires.io/github/TomerFi/switcher_webapi/requirements/?branch=dev)
