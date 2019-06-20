@@ -63,6 +63,7 @@ readthedocs.io.
 remarkignore
 remarkrc
 remark-cli
+requirements.txt
 requirements_test.txt
 rst
 rtd

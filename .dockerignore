@@ -40,5 +40,5 @@ tox.ini
 !LICENSE
 !README.md
 !requirements.txt
-!requirements_constraints.txt
+!requirements_prod.txt
 !VERSION

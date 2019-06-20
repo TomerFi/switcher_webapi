@@ -102,17 +102,17 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
-            pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
-            pip install -q --progress-bar off -r requirements_docs.txt -c requirements_constraints.txt
+            pip install -q --progress-bar off -r requirements_prod.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements_test.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements_docs.txt -c requirements.txt
       - save_cache:
-          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
             - ./venv
 

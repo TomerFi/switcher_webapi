@@ -44,10 +44,10 @@ pyscripts/helpers.py \
 pyscripts/mappings.py \
 pyscripts/request_handlers.py \
 pyscripts/start_server.py \
-requirements.txt \
-requirements_constraints.txt ./
+requirements_prod.txt \
+requirements.txt ./
 
-RUN pip install -r requirements.txt -c requirements_constraints.txt
+RUN pip install -r requirements_prod.txt -c requirements.txt
 
 EXPOSE 8000
 

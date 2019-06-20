@@ -116,9 +116,9 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `.remarkignore` used for ignoring specific files or folders from *remark-lint*.
 
 ### Requirement files
--   `requirements.txt` is a list of python requirements for running the solution.
+-   `requirements.txt` is a list of python requirements constraints.
 
--   `requirements_constraints.txt` is a list of python requirements constraints.
+-   `requirements_prod.txt` is a list of python requirements for running the solution.
 
 -   `requirements_docs.txt` is a list of python requirements for testing and building the
     documentation.
@@ -341,6 +341,11 @@ For automated local tests, use `tox`.
 > for packaging handling.
 
 Here are some guidelines (recommendations) for contributing to the `switcher_webapi` project:
+-   If you add a python dependency, for order keeping and for [Snyk](https://snyk.io)'s sake,
+    Please add the dependency with the fixed version to [requirements.txt](requirements.txt),
+    And add with no version statement in any or all of the other requirements file based on the
+    dependency use case.
+
 -   If you add a new file, please consider is it should be listed within any or all of
     the [ignore files](#ignore-files).
 
