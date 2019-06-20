@@ -70,7 +70,8 @@ commands:
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
             docker pull circleci/circleci-cli:alpine
-            docker save -o "$filename" circleci/circleci-cli:alpine hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker pull jdkato/vale:latest
+            docker save -o "$filename" jdkato/vale:latest circleci/circleci-cli:alpine hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
@@ -138,6 +139,13 @@ commands:
       - run:
           name: Run container-structure-test
           command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
+
+  docs-spell:
+    description: Run one-time container for vale linter against docs/source/ rst files
+    steps:
+      - run:
+          name: Run vale docker
+          command: bash shellscripts/run-once-docker-operations.sh vale-rstdocs
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
@@ -269,6 +277,14 @@ jobs:
       - prepare-python
       - docs-lint
 
+  docs-spell-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - docs-spell
+
   sphinx-build-job:
     executor:
       name: python-docker
@@ -391,12 +407,18 @@ workflows:
           requires:
             - md-lint-job
 
+      - docs-spell-job:
+          requires:
+            - md-lint-job
+            - md-spell-job
+
       - docs-linters-job:
           requires:
-            - md-spell-job
+            - docs-spell-job
 
       - sphinx-build-job:
           requires:
+            - docs-spell-job
             - docs-linters-job
 
   # Build and test the docker images
