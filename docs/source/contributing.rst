@@ -59,6 +59,11 @@ Configuration files
 *   ``pyproject.toml`` is designated to be the main configuration file for python based on PEP518_
     (not fully operative in this project yet).
 
+*   ``.spelling`` is the dictionary/ignore file used by both `markdown-spellcheck`_ and vale_.
+    Case-insenstive words in this file will not raise a spelling mistake error.
+
+*   ``.vale.ini`` is the configuration for vale_.
+
 *   ``tox.ini`` is the configuration file for `Tox Testing Automation`_ testing the python code.
 
 Docker
@@ -202,9 +207,17 @@ Environments and Tools
 
 *   *NPM Package*: `package-json-validator`_ for validating the ``package.json`` file.
 
-*   *Python Module*: doc8_ for checking restructured Text (rst) files residing in ``docs/source``
+*   *Python Module*: doc8_ for checking restructured text (rst) files residing in ``docs/source``
     and used to create the documentation site.
+
     *   doc8 is configured with ``doc8.ini``.
+
+*   *Docker Image*: `jdkato/vale`_ for linting restructured text files residing in ``docs/source``
+    for spelling/syntax mistakes.
+
+    *   `jdkato/vale`_ ignore file is ``.spelling``.
+
+    *   `jdkato/vale`_ is configured with ``.vale.ini``.
 
 *   *Python Module*: sphinx_ for building the documentation site from the restructured Text (rst)
     files residing in ``docs/source``.
@@ -357,6 +370,9 @@ Shell Scripts
     *   **argument**: ``circleci-validate`` will execute the docker image `circleci/circleci-cli`_
         for validating the ``.circleci/config.yml`` file.
 
+    *   argument ``vale-rstdocs`` will execute the docker image `jdkato/vale`_ checking for
+        spelling or syntax misakes in restructured text file residing in ``docs/source``.
+
 Makefile
 --------
 
@@ -479,3 +495,5 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _snyk: https://snyk.io
 .. _npm dependencies: https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255
 .. _pypi dependencies: https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358
+.. _vale: https://errata-ai.github.io/vale/
+.. _jdkato/vale: https://hub.docker.com/r/jdkato/vale

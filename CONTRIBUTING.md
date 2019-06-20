@@ -89,6 +89,12 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `pyproject.toml` is designated to be the main configuration file for python based on
     [PEP518](https://www.python.org/dev/peps/pep-0518/) (not fully operative in this project yet).
 
+-   `.spelling` is the dictionary/ignore file used by both [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
+    and [vale](https://errata-ai.github.io/vale/).
+    Case-insenstive words in this file will not raise a spelling mistake error.
+
+-   `.vale.ini` is the configuration for [vale](https://errata-ai.github.io/vale/).
+
 -   `tox.ini` is the configuration file for [Tox Testing Automation](https://tox.readthedocs.io/en/latest/)
     testing the python code.
 
@@ -216,6 +222,11 @@ will receive a notification and publish the image metadata.
 -   *Python Module*: [doc8](https://pypi.org/project/doc8/) for checking restructured Text (rst)
     files residing in [docs/source](docs/source) used to create the documentation site.
     -   doc8 is configured with [doc8.ini](doc8.ini).
+
+-   *Docker Image*: [jdkato/vale](https://hub.docker.com/r/jdkato/vale) for linting reStructured Text
+    files residing in [docs/source](docs/source) for spelling/syntax mistakes.
+    -   [jdkato/vale](https://hub.docker.com/r/jdkato/vale) vocabulary file is [.spelling](.spelling).
+    -   [jdkato/vale](https://hub.docker.com/r/jdkato/vale) is configured with [.vale.ini](.vale.ini).
 
 -   *Python Module*: [sphinx](https://pypi.org/project/Sphinx/) for building the documentation
     site from the restructured Text (rst) files residing in [docs/source](docs/source).
@@ -365,6 +376,10 @@ The shell scripts in `shellscripts` were written for `bash` and not for `sh`.
     -   argument `circleci-validate` will execute the docker image
         [circleci/circleci-cli](https://hub.docker.com/r/circleci/circleci-cli)
         for validating the [.circleci/config.yml](.circleci/config.yml) file.
+
+    -   argument `vale-rstdocs` will execute the docker image
+        [jdkato/vale](https://hub.docker.com/r/jdkato/vale) checking for
+        spelling or syntax misakes in restructured text file residing in [docs/source](docs/source).
 
 ### Makefile
 Using the [Makefile](Makefile) is highly recommended,
