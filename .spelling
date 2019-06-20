@@ -57,6 +57,7 @@ requires.io
 requires-io
 readme.md
 readthedocs.io.
+remarkignore
 remarkrc
 remark-cli
 requirements_test.txt
@@ -76,6 +77,7 @@ tomer
 tox
 tox.ini
 uvloop
+vale.ini
 validator
 virtualenv
 webapp

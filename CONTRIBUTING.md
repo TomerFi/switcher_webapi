@@ -91,7 +91,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 
 -   `.spelling` is the dictionary/ignore file used by both [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
     and [vale](https://errata-ai.github.io/vale/).
-    Case-insenstive words in this file will not raise a spelling mistake error.
+    Case-insensitive words in this file will not raise a spelling mistake error.
 
 -   `.vale.ini` is the configuration for [vale](https://errata-ai.github.io/vale/).
 
@@ -110,7 +110,8 @@ Please feel free to contribute, even to this contributing guideline file, if you
 ### Ignore files
 -   `.dockerignore` used for controlling what goes in the *docker image*.
 -   `.gitignore` used for controlling what will not be pushed to *github*.
--   `.reamrkignore` used for ignoring specific files or folders from *reamrk-lint*.
+-   `.prettierignore` used for ignoring specific files or folders from *prettier*.
+-   `.remarkignore` used for ignoring specific files or folders from *remark-lint*.
 
 ### Requirement files
 -   `requirements.txt` is a list of python requirements for running the solution.
@@ -252,6 +253,9 @@ will receive a notification and publish the image metadata.
 
 -   *NPM Package*: [prettier](https://www.npmjs.com/package/prettier) for validating yml files
     syntax against all existing yml files.
+
+    -   [prettier](https://www.npmjs.com/package/prettier) ignore list is the file [.prettierignore](.prettierignore).
+
     -   [prettier](https://www.npmjs.com/package/prettier) is configured with [.prettierrc.yml](.prettierrc.yml).
 
 -   *Docker Image*: [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) is used
@@ -383,7 +387,7 @@ The shell scripts in `shellscripts` were written for `bash` and not for `sh`.
 
     -   argument `vale-rstdocs` will execute the docker image
         [jdkato/vale](https://hub.docker.com/r/jdkato/vale) checking for
-        spelling or syntax misakes in restructured text file residing in [docs/source](docs/source).
+        spelling or syntax mistakes in restructured text file residing in [docs/source](docs/source).
 
 ### Makefile
 Using the [Makefile](Makefile) is highly recommended,
