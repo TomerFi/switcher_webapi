@@ -45,7 +45,7 @@ then
         docker run --rm -it -v "$PWD/.circleci/:/.circleci/:ro" circleci/circleci-cli:alpine config validate
       elif [ "$1" = "vale-rstdocs" ]
       then
-        docker run --rm -it -v "$PWD/.vale.ini:/.vale.ini:ro" -v "$PWD/docs:/docs:ro" -w /docs jdkato/vale:latest --sort --config /.vale.ini .
+        docker run --rm -it -v "$PWD/.vale.ini:/.vale.ini:ro" -v "$PWD/.spelling:/.spelling:ro" -v "$PWD/docs:/docs:ro" -w /docs jdkato/vale:latest --sort --config /.vale.ini .
       fi
     fi
 else
