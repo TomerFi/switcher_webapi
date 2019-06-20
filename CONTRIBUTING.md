@@ -131,6 +131,13 @@ manages our dependencies, scripts and some metadata.
 -   `docs/sources` is where the *rst files* for creating the [Sphinx Documentation](http://www.sphinx-doc.org/en/master/)
     are stored for build, deployment and hosting by [Read the Docs](https://readthedocs.org/).
 
+-   `docs/sources/vale_styles` is where the [vale styles](https://errata-ai.github.io/vale/styles/)
+    for [vale](https://errata-ai.github.io/vale/) linter are stored.
+    Out of the box, [vale](https://errata-ai.github.io/vale/) comes with three pre-configured
+    plugins: [proselint](https://github.com/amperser/proselint), [write-good](https://github.com/btford/write-good) and [joblint](https://github.com/rowanmanning/joblint).
+    The [docs/sources/vale_styles/18F](docs/sources/vale_styles/18F) and [docs/sources/vale_styles/docs](docs/sources/vale_styles/docs)
+    plugins were manually added from the [vale repository](https://github.com/errata-ai/vale/tree/master/docs/styles).
+
 -   `docs/Makefile` the basic *Makefile* for [Sphinx](http://www.sphinx-doc.org/en/master/)
     documentation generator. From the [docs](docs/) path, type `make html` and
     [sphinx](http://www.sphinx-doc.org/en/master/) will create the documentation site locally in

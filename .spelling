@@ -29,6 +29,7 @@ github
 googlecontainertools
 hadolint
 jdkato
+joblint
 json
 koalaman
 makefile
@@ -46,6 +47,7 @@ pre
 pre-installed
 prettierignore
 prettierrc.yml
+proselint
 pyscripts
 pylint
 pylintrc
@@ -77,6 +79,7 @@ tomer
 tox
 tox.ini
 uvloop
+vale_styles
 vale.ini
 validator
 virtualenv

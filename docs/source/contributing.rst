@@ -112,6 +112,12 @@ Documentation
 *   ``docs/sources`` is where the *rst files* for creating the `Sphinx Documentation`_ are stored
     for build, deployment and hosting by `Read the Docs`_.
 
+*   ``docs/sources/vale_styles`` is where the `vale styles`_ for vale_ linter are stored.
+    Out of the box, vale_ comes with three pre-configured plugins: proselint_, `write-good`_ and
+    joblint_.
+    The ``docs/sources/vale_styles/18F`` and ``docs/sources/vale_styles/docs`` plugins were
+    manually added from the `vale repository`_.
+
 *   ``docs/Makefile`` the basic *Makefile* for Sphinx_ documentation generator.
     From the ``docs`` path, type ``make html`` and sphinx_ will create the documentation site
     locally in ``docs/build``.
@@ -503,5 +509,10 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _npm dependencies: https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255
 .. _pypi dependencies: https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358
 .. _vale: https://errata-ai.github.io/vale/
+.. _vale styles: https://errata-ai.github.io/vale/styles/
+.. _vale repository: https://github.com/errata-ai/vale/tree/master/docs/styles
 .. _jdkato/vale: https://hub.docker.com/r/jdkato/vale
 .. _docker image dependencies: https://app.snyk.io/org/tomerfi/project/efb45c0a-f64b-4db5-8976-966508b78cd8
+.. _proselint: https://github.com/amperser/proselint
+.. _write-good: https://github.com/btford/write-good
+.. _joblint: https://github.com/rowanmanning/joblint
