@@ -33,7 +33,7 @@
   },
   "scripts": {
     "lint-md": "remark --rc-path .remarkrc --ignore-path .remarkignore --frail . .github",
-    "lint-yml": "prettier --config .prettierrc.yml --check *.yml **/*.yml",
+    "lint-yml": "prettier --config .prettierrc.yml --ignore-path .prettierignore --check *.yml **/*.yml",
     "validate-pkg": "pjv --filenmae package.json --spec npm --warnings --recommendations",
     "spell-md-interactive": "mdspell --en-us --ignore-numbers --ignore-acronyms '*.md' '.github/**/*.md'",
     "spell-md-report": "mdspell --en-us --ignore-numbers --ignore-acronyms --report '*.md' '.github/**/*.md'"
