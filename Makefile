@@ -66,8 +66,8 @@ docker-build-no-cache: ## build image from Dockerfile with no caching.
   --build-arg VERSION=$(CODE_VERSION) \
   -t $(FULL_IMAGE_NAME) .
 
-structure-test: ## run the container-structure-test tool against the built image (must be build first) using the relative container_structure.yml file
-	bash shellscripts/container-structure-test-verify.sh container_structure.yml $(FULL_IMAGE_NAME)
+structure-test: ## run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
+	bash shellscripts/container-structure-test-verify.sh container_structure.yml $(strip $(IMAGE_NAME)):testing
 
 docker-build-structure-test: ## build the image and test the container structure
 docker-build-structure-test: docker-build structure-test
