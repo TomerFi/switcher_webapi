@@ -19,7 +19,7 @@ The image version used:
 > -f '{{ index .Config.Labels "org.label-schema.version" }}'
 > ```
 
-**Runtine environment information**
+**Runtime environment information**
 Detailed information about the runtime environment for docker.
 
 **Reproduce**
