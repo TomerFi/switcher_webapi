@@ -24,3 +24,4 @@ sanic==19.6.0
 sphinx==2.1.2
 sphinx-rtd-theme==0.4.3
 uvloop==0.12.2
+yamllint==1.16.0

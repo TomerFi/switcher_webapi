@@ -36,8 +36,7 @@ Configuration files
 *   ``.coveragerc`` is the configuration file for `Coverage.py`_ creating coverage reports with
     the `pytest-cov plugin`_.
 
-*   ``.prettierrc.yml`` is the configuration for `Prettier Opinionated Code Formatter`_ linting
-    various file types (yml).
+*   ``.yamllint`` is the configuration for `yamllint A Linter for YAML Files`_ linting yml files.
 
 *   ``.remarkrc`` is the configuration file for `remark-lint`_ plugin for Remark_ linting md files.
 
@@ -86,7 +85,6 @@ Ignore files
 
 *   ``.dockerignore`` used for controlling what goes in the *docker image*.
 *   ``.gitignore`` used for controlling what will not be pushed to *github*.
-*   ``.prettierignore`` used for ignoring specific files or folders from *prettier*.
 *   ``.remarkignore`` used for ignoring specific files or folders from *remark-lint*.
 
 Requirement files
@@ -262,11 +260,8 @@ Environments and Tools
 
     *   `markdown-spellcheck`_ dictionary file is ``.spelling``.
 
-*   *NPM Package*: prettier_ for validating yml files syntax against all existing yml files.
-
-    *   prettier_ ignore list is the file ``.prettierignore``.
-
-    *   prettier_ is configured with ``.prettierrc.yml``.
+*   *Python Package*: yamllint_ for linting the project yml files.
+    *   yamllint_ is configured with ``.yamllint``.
 
 *   *Docker Image*: `koalaman/shellcheck`_ is used for checking shell script residing in
     ``shellscripts``.
@@ -360,8 +355,6 @@ From the ``package.json`` file path, run ``npm install``,
 Then you can execute the scripts from the same path.
 
 *   ``npm run lint-md`` will `run remark`_ against *markdown* files.
-
-*   ``npm run lint-yml`` will `run prettier`_ against *yml* files.
 
 *   ``npm run validate-pkg`` will run `package-json-validator`_ against the ``package.json`` file.
 
@@ -539,3 +532,5 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _write-good: https://github.com/btford/write-good
 .. _joblint: https://github.com/rowanmanning/joblint
 .. _isort: https://pypi.org/project/isort/
+.. _yamllint A Linter for YAML Files: https://yamllint.readthedocs.io/en/stable/index.html
+.. _yamllint: https://pypi.org/project/yamllint/

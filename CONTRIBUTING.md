@@ -64,8 +64,8 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `.coveragerc` is the configuration file for [Coverage.py](https://coverage.readthedocs.io/en/v4.5.x/)
     creating coverage reports with the [pytest-cov plugin](https://pytest-cov.readthedocs.io/en/latest/).
 
--   `.prettierrc.yml` is the configuration for [Prettier Opinionated Code Formatter](https://prettier.io/)
-    linting various file types (yml).
+-   `.yamllint` is the configuration for [yamllint A Linter for YAML Files](https://yamllint.readthedocs.io/en/stable/index.html)
+    linting yml files.
 
 -   `.remarkrc` is the configuration file for [remark-lint](https://github.com/remarkjs/remark-lint)
     plugin for [Remark](https://remark.js.org/) linting *markdown* files.
@@ -112,7 +112,6 @@ Please feel free to contribute, even to this contributing guideline file, if you
 ### Ignore files
 -   `.dockerignore` used for controlling what goes in the *docker image*.
 -   `.gitignore` used for controlling what will not be pushed to *github*.
--   `.prettierignore` used for ignoring specific files or folders from *prettier*.
 -   `.remarkignore` used for ignoring specific files or folders from *remark-lint*.
 
 ### Requirement files
@@ -273,10 +272,9 @@ will receive a notification and publish the image metadata.
     -   [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck) dictionary file
         is [.spelling](.spelling).
 
--   *NPM Package*: [prettier](https://www.npmjs.com/package/prettier) for validating yml files
-    syntax against all existing yml files.
-    -   [prettier](https://www.npmjs.com/package/prettier) ignore list is the file [.prettierignore](.prettierignore).
-    -   [prettier](https://www.npmjs.com/package/prettier) is configured with [.prettierrc.yml](.prettierrc.yml).
+-   *Python Package*: [yamllint](https://pypi.org/project/yamllint/) for linting the project yml
+    files.
+    -   [yamllint](https://pypi.org/project/yamllint/) is configured with [.yamllint](.yamllint.yml).
 
 -   *Docker Image*: [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) is used
     for checking shell script residing in [shellscripts](shellscripts/).
@@ -370,8 +368,6 @@ Before using the scrips, you need to install the dependencies.</br>
 From the [package.json](package.json) file path, run `npm install`,
 Then you can execute the scripts from the same path.
 -   `npm run lint-md` will run [remark](https://remark.js.org/) against *markdown* files.
-
--   `npm run lint-yml` will run [prettier](https://prettier.io/) against *yml* files.
 
 -   `npm run validate-pkg` will run [package-json-validator](https://www.npmjs.com/package/package-json-validator)
     against the [package.json](package.json) file.

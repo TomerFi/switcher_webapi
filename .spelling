@@ -46,8 +46,6 @@ package.json
 package-json-validator
 pre
 pre-installed
-prettierignore
-prettierrc.yml
 proselint
 pyscripts
 pylint
@@ -88,4 +86,5 @@ validator
 virtualenv
 webapp
 webapi
+yamllint
 yml

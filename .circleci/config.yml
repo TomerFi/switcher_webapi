@@ -172,16 +172,16 @@ commands:
           name: Markdown Spellcheck
           command: npm run spell-md-report
 
-  yml-lint:
-    description: Run npm's prettier module against yml files
-    steps:
-      - run:
-          name: Prettier - yml lint
-          command: npm run lint-yml
-
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
   ######################################################################################################
+  yml-lint:
+    description: Run pypi yamllint against yml files
+    steps:
+      - run:
+          name: Yamllint
+          command: yamllint --config-file .yamllint  --format colored --strict .
+
   docs-lint:
     description: Run python doc8 linter against docs/source/*.rst
     steps:
@@ -332,10 +332,10 @@ jobs:
 
   yml-lint-job:
     executor:
-      name: node-docker
+      name: python-docker
     steps:
       - checkout
-      - prepare-node
+      - prepare-python
       - yml-lint
 
   shellscripts-check-job:
