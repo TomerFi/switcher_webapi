@@ -71,9 +71,8 @@ commands:
             mkdir -p docker-cache
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
-            docker pull circleci/circleci-cli:alpine
             docker pull jdkato/vale:latest
-            docker save -o "$filename" jdkato/vale:latest circleci/circleci-cli:alpine hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker save -o "$filename" jdkato/vale:latest hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
