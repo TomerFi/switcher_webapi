@@ -22,7 +22,8 @@
   "contributors": [],
   "engines": {},
   "files": [
-    ".remarkrc"
+    ".remarkrc",
+    ".remarkignore"
   ],
   "directories": {
     "doc": "docs"
