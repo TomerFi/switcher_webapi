@@ -280,6 +280,9 @@ Environments and Tools
 *   *Python Package*: isort_ for sorting imports. isort_ runs automatically with tox in ``no-fail``
     mode for recommendations only.
 
+*   *Python Package*: isort_ for sorting python imports.
+    *   isort_ is configured with ``pyproject.toml``.
+
 *   *Python Package*: bandit_ for finding common security issues with against the scripts residing
     in ``pyscripts``.
     *   bandit_ is configured with ``bandit.yml``.
