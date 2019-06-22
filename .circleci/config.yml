@@ -213,6 +213,13 @@ commands:
             sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
             rm -r sphinxtemp
 
+  isort-imports:
+    description: Validate python imports order and style with isort
+    steps:
+      - run:
+          name: Isort
+          command: isort --check-only --recursive .
+
   check-security:
     description: Run python bandit against py files
     steps:
@@ -364,7 +371,15 @@ jobs:
       - prepare-machine
       - shellscripts-check
 
-  security-job:
+  isort-imports-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-python
+      - isort-imports
+
+  check-security-job:
     executor:
       name: python-docker
     steps:
@@ -460,12 +475,15 @@ workflows:
 
       - shellscripts-check-job
 
-      - security-job:
+      - isort-imports-job
+
+      - check-security-job:
           requires:
             - pkg-validate-job
             - enforce-requirements-fixed-versions-job
             - yml-lint-job
             - shellscripts-check-job
+            - isort-imports-job
 
       - code-lint-job:
           requires:
@@ -479,7 +497,7 @@ workflows:
 
       - unittests-job:
           requires:
-            - security-job
+            - check-security-job
             - code-lint-job
             - mypy-job
 
