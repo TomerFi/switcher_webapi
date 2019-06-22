@@ -4,19 +4,18 @@ from asyncio import get_running_loop
 from datetime import timedelta
 from typing import Dict, List, Optional
 
-from aioswitcher.api import messages, SwitcherV2Api
+from aioswitcher.api import SwitcherV2Api, messages
 from aioswitcher.consts import (COMMAND_OFF, COMMAND_ON, DAY_TO_INT_DICT,
                                 DISABLE_SCHEDULE, ENABLE_SCHEDULE,
                                 SCHEDULE_CREATE_DATA_FORMAT, WEEKDAY_TUP)
 from aioswitcher.errors import CalculationError, DecodingError, EncodingError
+from aioswitcher.schedules import calc_next_run_for_schedule
 from aioswitcher.tools import (create_weekdays_value,
                                timedelta_str_to_schedule_time)
-from aioswitcher.schedules import calc_next_run_for_schedule
-
 from sanic.exceptions import InvalidUsage, ServerError, ServiceUnavailable
 from sanic.log import logger
-from sanic.response import HTTPResponse, json
 from sanic.request import Request
+from sanic.response import HTTPResponse, json
 
 import consts
 

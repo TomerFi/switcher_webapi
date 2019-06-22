@@ -1,7 +1,7 @@
 """Fixtures and mockings for unit testing the Switcher WebAPI."""
 
-from asyncio import (AbstractEventLoop, Future, get_event_loop,
-                     set_event_loop, StreamReader, StreamWriter)
+from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
+                     get_event_loop, set_event_loop)
 from typing import Any, Generator
 
 from aioswitcher.api import messages
@@ -15,8 +15,8 @@ from uvloop import new_event_loop
 import consts
 from helpers import get_local_ip_address, get_next_weekday
 from start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
-                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID,
-                          CONF_THROTTLE, sanic_app)
+                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID, CONF_THROTTLE,
+                          sanic_app)
 
 
 @fixture(name='sanic_test_app', scope='session')

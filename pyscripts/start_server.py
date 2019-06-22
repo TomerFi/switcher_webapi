@@ -10,16 +10,17 @@ from asyncio_throttle import Throttler
 from sanic import Sanic
 from sanic.exceptions import SanicException, ServerError
 from sanic.log import logger
-from sanic.response import HTTPResponse, text
 from sanic.request import Request
+from sanic.response import HTTPResponse, text
 from uvloop import new_event_loop
 
 import mappings
-from request_handlers import (
-    create_schedule_handler, delete_schedule_handler, disable_schedule_handler,
-    enable_schedule_handler, get_schedules_handler, get_state_handler,
-    set_auto_shutdown_handler, set_device_name_handler, turn_off_handler,
-    turn_on_handler)
+from request_handlers import (create_schedule_handler, delete_schedule_handler,
+                              disable_schedule_handler,
+                              enable_schedule_handler, get_schedules_handler,
+                              get_state_handler, set_auto_shutdown_handler,
+                              set_device_name_handler, turn_off_handler,
+                              turn_on_handler)
 
 CONF_PHONE_ID = 'PHONE_ID'
 CONF_DEVICE_ID = 'DEVICE_ID'

@@ -7,9 +7,8 @@ from asynctest import MagicMock, patch
 from bs4 import BeautifulSoup
 
 import consts
-from helpers import get_local_ip_address, get_next_weekday
 import mappings
-
+from helpers import get_local_ip_address, get_next_weekday
 
 BASE_URL_FORMAT = (
     'http://' + get_local_ip_address()
