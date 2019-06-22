@@ -53,10 +53,8 @@ Configuration files
 
 *   ``package.json`` is npm's `package manager file`_ for managing dependencies, scripts and etc.
 
-*   ``pylintrc`` is the configuration file for `Pylint Code Analysis`_ linting python scripts.
-
-*   ``pyproject.toml`` is designated to be the main configuration file for python based on PEP518_
-    (not fully operative in this project yet).
+*   ``pyproject.toml`` is designated to be the main configuration file for python based on
+    PEP518_, not fully operative in this project yet.
 
 *   ``.spelling`` is the dictionary/ignore file used by both `markdown-spellcheck`_ and vale_.
     Case-insensitive words in this file will not raise a spelling mistake error.
@@ -280,23 +278,16 @@ Environments and Tools
 *   *Python Package*: isort_ for sorting imports. isort_ runs automatically with tox in ``no-fail``
     mode for recommendations only.
 
-*   *Python Package*: isort_ for sorting python imports.
-    *   isort_ is configured with ``pyproject.toml``.
-
 *   *Python Package*: bandit_ for finding common security issues with against the scripts residing
     in ``pyscripts``.
     *   bandit_ is configured with ``bandit.yml``.
 
+*   *Python Package*: isort_ for sorting python imports.
+    *   isort_ is configured with ``pyproject.toml``.
+
 *   *Python Package*: flake8_ for checking python scripts residing in ``pyscripts``.
 
-*   *Python Package*: pylint_ for linting python scripts residing in ``pyscripts``.
-    *   pylint_ is configured with ``pylintrc``.
-
 *   *Python Package*: black_ for formatting python scripts residing in ``pyscripts``.
-
-    *   black_ is still in beta phase, from this project point-of-view it's in examination,
-        therefore errors are ignored in ``tox`` and it's not yet configured with ``circleci``.
-
     *   black_ is configured with ``pyproject.toml``.
 
 *   *Python Package*: mypy_ for checking static typing tests against python scripts residing in
@@ -474,7 +465,6 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _Doc8 Style Checker: https://github.com/openstack/doc8
 .. _MyPy Static Type Checker: https://mypy.readthedocs.io/en/latest/index.html
 .. _package manager file: https://docs.npmjs.com/files/package.json
-.. _Pylint Code Analysis: https://www.pylint.org/
 .. _Tox Testing Automation: https://tox.readthedocs.io/en/latest/
 .. _specified by npm: https://docs.npmjs.com/files/package.json
 .. _Sphinx Documentation: http://www.sphinx-doc.org/en/master/
@@ -507,7 +497,6 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _container-structure-test: https://github.com/GoogleContainerTools/container-structure-test
 .. _bandit: https://pypi.org/project/bandit/
 .. _flake8: https://pypi.org/project/flake8/
-.. _pylint: https://pypi.org/project/pylint/
 .. _mypy: https://pypi.org/project/mypy/
 .. _pytest: https://pypi.org/project/pytest/
 .. _ferrarimarco/github-changelog-generator: https://hub.docker.com/r/ferrarimarco/github-changelog-generator

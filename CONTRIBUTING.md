@@ -85,11 +85,8 @@ Please feel free to contribute, even to this contributing guideline file, if you
 -   `package.json` is npm's [package manager file](https://docs.npmjs.com/files/package.json)
     for managing dependencies, scripts and etc.
 
--   `pylintrc` is the configuration file for [Pylint Code Analysis](https://www.pylint.org/)
-    linting python scripts.
-
 -   `pyproject.toml` is designated to be the main configuration file for python based on
-    [PEP518](https://www.python.org/dev/peps/pep-0518/) (not fully operative in this project yet).
+    [PEP518](https://www.python.org/dev/peps/pep-0518/), not fully operative in this project yet.
 
 -   `.spelling` is the dictionary/ignore file used by both [markdown-spellcheck](https://www.npmjs.com/package/markdown-spellcheck)
     and [vale](https://errata-ai.github.io/vale/).
@@ -292,26 +289,19 @@ will receive a notification and publish the image metadata.
     -   [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test)
         is configured with [container_structure.yml](container_structure.yml).
 
--   *Python Package*: [isort](https://pypi.org/project/isort/) for sorting python imports.
-    -   [isort](https://pypi.org/project/isort/) is configured with [pyproject.toml](pyproject.toml).
-
 -   *Python Package*: [bandit](https://pypi.org/project/bandit/) for finding common security
     issues with against the scripts residing in [pyscripts](pyscripts/).
     -   [bandit](https://pypi.org/project/bandit/) is configured with [bandit.yml](bandit.yml).
 
+-   *Python Package*: [isort](https://pypi.org/project/isort/) for sorting python imports.
+    -   [isort](https://pypi.org/project/isort/) is configured with [pyproject.toml](pyproject.toml).
+
+
 -   *Python Package*: [flake8](https://pypi.org/project/flake8/) for checking python scripts
     residing in [pyscripts](pyscripts/).
 
--   *Python Package*: [pylint](https://pypi.org/project/pylint/) for linting python scripts
-    residing in [pyscripts](pyscripts/).
-    -   [pylint](https://pypi.org/project/pylint/) is configured with [pylintrc](pylintrc).
-
 -   *Python Package*: [black](https://pypi.org/project/black/) for formatting python scripts
     residing in [pyscripts](pyscripts/).
-    -   [black](https://pypi.org/project/black/) is still in beta phase, from this project
-        point-of-view it's in examination therefore errors are ignored in `tox` and it's
-        not yet configured with `circleci`.
-
     -   [black](https://pypi.org/project/black/) is configured with [pyproject.toml](pyproject.toml).
 
 -   *Python Package*: [mypy](https://pypi.org/project/mypy/) for checking static typing

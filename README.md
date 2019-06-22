@@ -3,7 +3,7 @@
 
 | Stage     | Badges                                                                              |
 | --------- | ----------------------------------------------------------------------------------- |
-| `Code`    | [![codecov]][0] [![codacy]][1]                                                      | 
+| `Code`    | [![codecov]][0] [![codacy]][1] [![code-style-black]][15]                            | 
 | `Builds`  | [![circleci]][2] [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] |
 | `Pypi`    | [![requires-io]][5] [![snyk-python]][6]                                             |
 | `Npm`     | [![david-dm-dev-package-json-dependencies-status]][7] [![snyk-npm]][8]              |
@@ -33,12 +33,14 @@ hosted with *readthedocs.io.*
 [12]: https://github.com/TomerFi/switcher_webapi
 [13]: https://bestpractices.coreinfrastructure.org/projects/2891
 [14]: https://tomfi.slack.com/messages/CK4DK2Z5G
+[15]: https://black.readthedocs.io/en/stable/
 
 <!-- Badges Links -->
 [cii-best-practices]: https://bestpractices.coreinfrastructure.org/projects/2891/badge
 [circleci]: https://circleci.com/gh/TomerFi/switcher_webapi.svg?style=shield
 [codacy]: https://api.codacy.com/project/badge/Grade/bc33021329894d75943f8d0fe77b95a5
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
+[code-style-black]: https://img.shields.io/badge/code%20style-black-000000.svg
 [david-dm-dev-package-json-dependencies-status]: https://david-dm.org/TomerFi/switcher_webapi/status.svg
 [microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
 [microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg

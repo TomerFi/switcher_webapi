@@ -4,6 +4,7 @@ asynctest
 asyncio_throttle
 bandit
 beautifulsoup4
+black
 codecov
 codacy-coverage
 flake8
@@ -11,7 +12,6 @@ flake8-docstrings
 isort
 mypy
 mypy-extensions
-pylint
 pytest
 pytz
 pytest-cov

@@ -213,13 +213,6 @@ commands:
             sphinx-build -W -b html -d sphinxtemp/doctrees docs/source sphinxtemp/html
             rm -r sphinxtemp
 
-  isort-imports:
-    description: Validate python imports order and style with isort
-    steps:
-      - run:
-          name: Isort
-          command: isort --check-only --recursive .
-
   check-security:
     description: Run python bandit against py files
     steps:
@@ -230,14 +223,15 @@ commands:
             bandit -rvc bandit.yml pyscripts docs/source/conf.py -l -ii
 
   run-code-lint:
-    description: Run python flake8 and pylint againt py files
+    description: Run python isort, flake8 and black against py files
     steps:
       - run:
           name: Linters
           command: |
             . venv/bin/activate
-            flake8 --statistics --count --doctests --verbose pyscripts/ docs/source/
-            pylint --disable fixme --rcfile pylintrc pyscripts/ docs/source/conf.py
+            isort --check-only --recursive .
+            flake8 --statistics --count --doctests pyscripts/ docs/source/
+            black --check pyscripts/ docs/source/
 
   run-mypy:
     description: Run mypy type-checking againt py files
@@ -371,14 +365,6 @@ jobs:
       - prepare-machine
       - shellscripts-check
 
-  isort-imports-job:
-    executor:
-      name: python-docker
-    steps:
-      - checkout
-      - prepare-python
-      - isort-imports
-
   check-security-job:
     executor:
       name: python-docker
@@ -475,15 +461,12 @@ workflows:
 
       - shellscripts-check-job
 
-      - isort-imports-job
-
       - check-security-job:
           requires:
             - pkg-validate-job
             - enforce-requirements-fixed-versions-job
             - yml-lint-job
             - shellscripts-check-job
-            - isort-imports-job
 
       - code-lint-job:
           requires:
