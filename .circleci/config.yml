@@ -127,9 +127,9 @@ commands:
           name: Verify requirements files
           command: |
             bash -c "if [[ $(grep -Pc '\S' requirements.txt) != $(grep -c '=\|<\|>' requirements.txt) ]]; then exit 1; fi"
-            grep -qv == {toxinidir}/requirements_docs.txt
-            grep -qv == {toxinidir}/requirements_prod.txt
-            grep -qv == {toxinidir}/requirements_test.txt
+            grep -qv == requirements_docs.txt
+            grep -qv == requirements_prod.txt
+            grep -qv == requirements_test.txt
 
   dockerfile-lint:
     description: Run one-time container for hadolint linter against Dockerfile
