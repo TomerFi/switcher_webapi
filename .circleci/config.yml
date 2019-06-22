@@ -191,7 +191,7 @@ commands:
     steps:
       - run:
           name: Yamllint
-          command: yamllint --config-file .yamllint  --format colored --strict .
+          command: yamllint --config-file .yamllint --format colored --strict .
 
   docs-lint:
     description: Run python doc8 linter against docs/source/*.rst

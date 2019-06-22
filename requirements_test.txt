@@ -19,3 +19,4 @@ pytest-sanic
 sanic
 toml
 uvloop
+yamllint
