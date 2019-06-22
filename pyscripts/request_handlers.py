@@ -152,8 +152,7 @@ async def get_schedules_handler(
                             consts.KEY_START_TIME: schedule_obj.start_time,
                             consts.KEY_END_TIME: schedule_obj.end_time,
                             consts.KEY_DURATION: schedule_obj.duration,
-                            consts.KEY_SCHEDULE_DATA:
-                                schedule_obj.schedule_data,
+                            consts.KEY_SCHEDULE_DATA: schedule_obj.schedule_data,  # noqa: E501
                             consts.KEY_NEXT_RUN: next_run,
                         }
                     )

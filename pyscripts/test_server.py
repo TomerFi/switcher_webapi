@@ -282,8 +282,7 @@ async def test_set_auto_shutdown_request(
                 bs4scrap = BeautifulSoup(body, "html.parser")
                 assert (
                     bs4scrap.text
-                    ==
-                    "Error: One of the arguments hours or minutes is missing."
+                    == "Error: One of the arguments hours or minutes is missing."  # noqa: E501
                 )
 
             set_auto_shutdown_response.msg_type = ResponseMessageType.STATE
