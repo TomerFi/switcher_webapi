@@ -17,6 +17,8 @@ For full install and usage instructions,
 Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io)
 hosted with [readthedocs.io](https://readthedocs.org/).
 
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/TomerFi)
+
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
 [1]: https://www.codacy.com/app/TomerFi/switcher_webapi?utm_source=github.com&utm_medium=referral&utm_content=TomerFi/switcher_webapi&utm_campaign=Badge_Grade
