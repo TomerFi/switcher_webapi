@@ -441,15 +441,19 @@ especially in regards to docker operations, try `make help` to list all the avai
     environment variables file and its content.
 
 ## Chat
-Feel free to join the project's public [Slack Channel](https://tomfi.slack.com/messages/CK4DK2Z5G)</br>
+Feel free to join the project's public
+[Slack Channel](https://tomfi.slack.com/messages/CK4DK2Z5G)</br>
 GitHub, Codacy Docker Hub and Snyk are integrated with the channel and keep its members updated.
 
 ## Best Practices
 This project tries to follow the [CII Best Practices](https://bestpractices.coreinfrastructure.org/en/projects/2891) guidelines.
 
-That's not an easy task and I'm not sure achieving 100% is even possible for this specific project.</br>
-At the time writing this, the project has achieved 42% (The writing of this file was actually according one to those guidelines).</br>
+That's not an easy task and I'm not sure achieving 100% is even possible for this specific
+project.</br>
+At the time writing this, the project has achieved 42% (The writing of this file was actually
+according one to those guidelines).</br>
 Any contribution bumping up this percentage will be gladly embraced.
 
 ## Code of Conduct
-The [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) can also be found [here](https://switcher-webapi.readthedocs.io/en/stable/conduct.html).
+The [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) can also be found
+[here](https://switcher-webapi.readthedocs.io/en/stable/conduct.html).
