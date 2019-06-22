@@ -11,7 +11,7 @@ Used as a rest api wrapper for aioswitcher_.
 .. _aioswitcher: https://pypi.org/project/aioswitcher/
 
 If you're using the `Switcher water heater`_
-and you want to wrap a rest api around it...
+and you want to wrap a rest api around it…
 you came to the right place!
 
 .. _Switcher water heater: https://switcher.co.il/

@@ -1,3 +1,5 @@
+# yamllint disable rule:line-length
+
 version: 2.1
 
 #####################
@@ -69,7 +71,8 @@ commands:
             mkdir -p docker-cache
             docker pull hadolint/hadolint:v1.16.3
             docker pull koalaman/shellcheck:v0.6.0
-            docker save -o "$filename" hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker pull jdkato/vale:latest
+            docker save -o "$filename" jdkato/vale:latest hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
@@ -100,36 +103,47 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -q --progress-bar off -r requirements.txt -c requirements_constraints.txt
-            pip install -q --progress-bar off -r requirements_test.txt -c requirements_constraints.txt
-            pip install -q --progress-bar off -r requirements_docs.txt -c requirements_constraints.txt
+            pip install -q --progress-bar off -r requirements_prod.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements_test.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements_docs.txt -c requirements.txt
       - save_cache:
-          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}-{{ checksum "requirements_test.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
           paths:
             - ./venv
 
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
   ######################################################################################################
-  hadolint-docker:
+  enforce-requirements-fixed-versions:
+    description: Enforce python requirements are fixed version and are onyl handled in requirements.txt
+    steps:
+      - run:
+          name: Verify requirements files
+          command: |
+            bash -c "if [[ $(grep -Pc '\S' requirements.txt) != $(grep -c '=\|<\|>' requirements.txt) ]]; then exit 1; fi"
+            grep -qv == requirements_docs.txt
+            grep -qv == requirements_prod.txt
+            grep -qv == requirements_test.txt
+
+  dockerfile-lint:
     description: Run one-time container for hadolint linter against Dockerfile
     steps:
       - run:
           name: Run hadolint docker
-          command: docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile
+          command: bash shellscripts/run-once-docker-operations.sh lint-dockerfile
 
-  shellcheck-docker:
+  shellscripts-check:
     description: Run one-time container for shellcheck linter against shellscripts/*.sh
     steps:
       - run:
           name: Run shellcheck docker
-          command: docker run --rm -v "$PWD/shellscripts/:/mnt/" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
+          command: bash shellscripts/run-once-docker-operations.sh check-shellscripts
 
   run-container-structure-test:
     description: Run the GoogleContainerTools/container-structure-test tool
@@ -138,27 +152,50 @@ commands:
           name: Run container-structure-test
           command: ./google-container-tools/container-structure-test test --force --config container_structure.yml --verbosity debug --image tomerfi/switcher_webapi:testing
 
+  docs-spell:
+    description: Run one-time container for vale linter against docs/source/ rst files
+    steps:
+      - run:
+          name: Run vale docker
+          command: bash shellscripts/run-once-docker-operations.sh vale-rstdocs
+
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
   ######################################################################################################
-  md-linter:
+  pkg-validate:
+    description: Run npm's package-json-validate for validating the package.json file
+    steps:
+      - run:
+          name: Pjv - package.json
+          command: npm run validate-pkg
+
+  md-lint:
     description: Run npm's remark and remark-lint plugins against md files
     steps:
       - run:
           name: Remark - md lint
           command: npm run lint-md
 
-  yml-linter:
-    description: Run npm's prettier module against yml files
+  md-spell:
+    description: Run npm's markdown-spellcheck against md files
     steps:
       - run:
-          name: Prettier - yml lint
-          command: npm run lint-yml
+          name: Markdown Spellcheck
+          command: npm run spell-md-report
 
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
   ######################################################################################################
-  run-docs-linters:
+  yml-lint:
+    description: Run pypi yamllint against yml files
+    steps:
+      - run:
+          name: Yamllint
+          command: |
+            . venv/bin/activate
+            yamllint --config-file .yamllint --format colored --strict .
+
+  docs-lint:
     description: Run python doc8 linter against docs/source/*.rst
     steps:
       - run:
@@ -187,15 +224,16 @@ commands:
             . venv/bin/activate
             bandit -rvc bandit.yml pyscripts docs/source/conf.py -l -ii
 
-  run-code-linters:
-    description: Run python flake8 and pylint againt py files
+  run-code-lint:
+    description: Run python isort, flake8 and black against py files
     steps:
       - run:
           name: Linters
           command: |
             . venv/bin/activate
-            flake8 --statistics --count --doctests --verbose pyscripts/ docs/source/
-            pylint --disable fixme --rcfile pylintrc pyscripts/ docs/source/conf.py
+            isort --check-only --recursive pyscripts/ docs/source/
+            flake8 --statistics --count --doctests pyscripts/ docs/source/
+            black --check pyscripts/ docs/source/
 
   run-mypy:
     description: Run mypy type-checking againt py files
@@ -230,13 +268,21 @@ jobs:
   #############################################
   ### Jobs for the docs-lint-build workflow ###
   #############################################
-  md-linter-job:
+  md-lint-job:
     executor:
       name: node-docker
     steps:
       - checkout
       - prepare-node
-      - md-linter
+      - md-lint
+
+  md-spell-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - md-spell
 
   docs-linters-job:
     executor:
@@ -244,7 +290,15 @@ jobs:
     steps:
       - checkout
       - prepare-python
-      - run-docs-linters
+      - docs-lint
+
+  docs-spell-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - docs-spell
 
   sphinx-build-job:
     executor:
@@ -254,32 +308,16 @@ jobs:
       - prepare-python
       - sphinx-build
 
-  #############################################
-  ### Jobs for the code-lint-test workflow ####
-  #############################################
-  yml-linter-job:
-    executor:
-      name: node-docker
-    steps:
-      - checkout
-      - prepare-node
-      - yml-linter
-
-  shellcheck-docker-job:
+  ###############################################
+  ### Jobs for the docker-build-test workflow ###
+  ###############################################
+  dockerfile-lint-job:
     executor:
       name: machine-docker
     steps:
       - checkout
       - prepare-machine
-      - shellcheck-docker
-
-  hadolint-docker-job:
-    executor:
-      name: machine-docker
-    steps:
-      - checkout
-      - prepare-machine
-      - hadolint-docker
+      - dockerfile-lint
 
   docker-build-test-structure-job:
     executor:
@@ -295,7 +333,41 @@ jobs:
           extra_build_args: '--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=testref --build-arg VERSION=testing'
       - run-container-structure-test
 
-  security-job:
+  #############################################
+  ### Jobs for the code-lint-test workflow ####
+  #############################################
+  pkg-validate-job:
+    executor:
+      name: node-docker
+    steps:
+      - checkout
+      - prepare-node
+      - pkg-validate
+
+  enforce-requirements-fixed-versions-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - enforce-requirements-fixed-versions
+
+  yml-lint-job:
+    executor:
+      name: python-docker
+    steps:
+      - checkout
+      - prepare-python
+      - yml-lint
+
+  shellscripts-check-job:
+    executor:
+      name: machine-docker
+    steps:
+      - checkout
+      - prepare-machine
+      - shellscripts-check
+
+  check-security-job:
     executor:
       name: python-docker
     steps:
@@ -303,13 +375,13 @@ jobs:
       - prepare-python
       - check-security
 
-  code-linters-job:
+  code-lint-job:
     executor:
       name: python-docker
     steps:
       - checkout
       - prepare-python
-      - run-code-linters
+      - run-code-lint
 
   mypy-job:
     executor:
@@ -351,51 +423,67 @@ workflows:
   # Lint and build the documantation site files
   docs-lint-build:
     jobs:
-      - md-linter-job
+      - md-lint-job
+
+      - md-spell-job:
+          requires:
+            - md-lint-job
+
+      - docs-spell-job:
+          requires:
+            - md-lint-job
+            - md-spell-job
 
       - docs-linters-job:
           requires:
-            - md-linter-job
+            - docs-spell-job
 
       - sphinx-build-job:
           requires:
+            - docs-spell-job
             - docs-linters-job
 
   # Build and test the docker images
   docker-build-test:
     jobs:
-      - hadolint-docker-job
+      - dockerfile-lint-job
 
       - docker-build-test-structure-job:
           requires:
-            - hadolint-docker-job
+            - dockerfile-lint-job
 
   # Lint and the test the code and scripts
   code-lint-test:
     jobs:
-      - yml-linter-job
+      - pkg-validate-job
 
-      - shellcheck-docker-job
+      - enforce-requirements-fixed-versions-job
 
-      - security-job:
+      - yml-lint-job
+
+      - shellscripts-check-job
+
+      - check-security-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - pkg-validate-job
+            - enforce-requirements-fixed-versions-job
+            - yml-lint-job
+            - shellscripts-check-job
 
-      - code-linters-job:
+      - code-lint-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - yml-lint-job
+            - shellscripts-check-job
 
       - mypy-job:
           requires:
-            - yml-linter-job
-            - shellcheck-docker-job
+            - yml-lint-job
+            - shellscripts-check-job
 
       - unittests-job:
           requires:
-            - security-job
-            - code-linters-job
+            - check-security-job
+            - code-lint-job
             - mypy-job
 
       - coverage-reports-job:

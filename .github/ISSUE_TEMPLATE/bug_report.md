@@ -1,14 +1,12 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+labels: Bug
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+A clear and concise Description of what the bug is.
 
 **Docker image version**
 The image version used:
@@ -21,8 +19,11 @@ The image version used:
 > -f '{{ index .Config.Labels "org.label-schema.version" }}'
 > ```
 
+**Runtime environment information**
+Detailed information about the runtime environment for docker.
+
 **Reproduce**
-Steps to reproduce the behavior:
+Steps to reproduce the behavior.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

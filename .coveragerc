@@ -8,5 +8,5 @@ precision = 2
 # show_missing = true
 skip_covered = true
 exclude_lines =
-    if __name__ == '__main__':
+    if __name__ == "__main__":
 

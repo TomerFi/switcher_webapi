@@ -1,7 +1,8 @@
 """Fixtures and mockings for unit testing the Switcher WebAPI."""
 
-from asyncio import (AbstractEventLoop, Future, get_event_loop,
-                     set_event_loop, StreamReader, StreamWriter)
+# fmt: off
+from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
+                     get_event_loop, set_event_loop)
 from typing import Any, Generator
 
 from aioswitcher.api import messages
@@ -15,24 +16,26 @@ from uvloop import new_event_loop
 import consts
 from helpers import get_local_ip_address, get_next_weekday
 from start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
-                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID,
-                          CONF_THROTTLE, sanic_app)
+                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID, CONF_THROTTLE,
+                          sanic_app)
+
+# fmt: on
 
 
-@fixture(name='sanic_test_app', scope='session')
+@fixture(name="sanic_test_app", scope="session")
 def mock_sanic_test_app() -> Generator[Sanic, Any, None]:
     """Fixture for creating a test instance on the sanic app."""
     test_app = sanic_app
-    test_app.config[CONF_PHONE_ID] = '1234'
-    test_app.config[CONF_DEVICE_ID] = 'ab1c2d'
-    test_app.config[CONF_DEVICE_PASSWORD] = '12345678'
-    test_app.config[CONF_DEVICE_IP_ADDR] = '192.168.100.157'
-    test_app.config[CONF_THROTTLE] = '0.5'
+    test_app.config[CONF_PHONE_ID] = "1234"
+    test_app.config[CONF_DEVICE_ID] = "ab1c2d"
+    test_app.config[CONF_DEVICE_PASSWORD] = "12345678"
+    test_app.config[CONF_DEVICE_IP_ADDR] = "192.168.100.157"
+    test_app.config[CONF_THROTTLE] = "0.5"
 
     yield test_app
 
 
-@fixture(name='loop', scope='session')
+@fixture(name="loop", scope="session")
 def mock_loop() -> Generator[AbstractEventLoop, Any, None]:
     """Fixture for running an event loop."""
     set_event_loop(new_event_loop())
@@ -40,29 +43,34 @@ def mock_loop() -> Generator[AbstractEventLoop, Any, None]:
     yield loop
 
 
-@fixture(name='test_client', scope='session', autouse=True)
+@fixture(name="test_client", scope="session", autouse=True)
 def mock_test_client(
-        loop: AbstractEventLoop, sanic_test_app: Sanic
-        ) -> Generator[None, None, AbstractEventLoop]:
+    loop: AbstractEventLoop, sanic_test_app: Sanic
+) -> Generator[None, None, AbstractEventLoop]:
     """Fixture for stating server in the event loop."""
     return loop.run_until_complete(
         sanic_test_app.create_server(
-            host=get_local_ip_address(), port=consts.TEST_SERVER_PORT,
-            return_asyncio_server=True))
+            host=get_local_ip_address(),
+            port=consts.TEST_SERVER_PORT,
+            return_asyncio_server=True,
+        )
+    )
 
 
-@fixture(name='tcp_connection', scope='session', autouse=True)
+@fixture(name="tcp_connection", scope="session", autouse=True)
 def mock_tcp_connection() -> Generator[None, Any, None]:
     """Fixture for mocking asyncio.open_connection."""
-    with patch('aioswitcher.api.open_connection',
-               return_value=(Mock(StreamReader), Mock(StreamWriter))):
+    with patch(
+        "aioswitcher.api.open_connection",
+        return_value=(Mock(StreamReader), Mock(StreamWriter)),
+    ):
         yield
 
 
-@fixture(name='switcher_api_context_manager', scope='session', autouse=True)
+@fixture(name="switcher_api_context_manager", scope="session", autouse=True)
 def mock_switcher_api_context_manager() -> Generator[None, Any, None]:
     """Fixture for mocking the SwitcherV2Api context manager."""
-    with patch('aioswitcher.api.SwitcherV2Api'):
+    with patch("aioswitcher.api.SwitcherV2Api"):
         yield
 
 
@@ -73,12 +81,14 @@ def mock_control_response() -> Generator[MagicMock, Any, None]:
     mock_response.successful = True
     mock_response.msg_type = messages.ResponseMessageType.CONTROL
 
-    with patch('request_handlers.messages.SwitcherV2ControlResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2ControlResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
-@fixture(name='get_state_response')
+@fixture(name="get_state_response")
 def mock_get_state_response() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the get_state response."""
     mock_future_response = MagicMock(messages.SwitcherV2StateResponseMSG)
@@ -94,12 +104,14 @@ def mock_get_state_response() -> Generator[MagicMock, Any, None]:
     mock_initial_response.init_future = Future()
     mock_initial_response.init_future.set_result(mock_future_response)
 
-    with patch('request_handlers.messages.SwitcherV2StateResponseMSG',
-               new=mock_initial_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2StateResponseMSG",
+        new=mock_initial_response,
+    ) as patcher:
         yield patcher
 
 
-@fixture(name='schedule_object')
+@fixture(name="schedule_object")
 def mock_schedule_object() -> Generator[None, None, SwitcherV2Schedule]:
     """Fixture for the aioswitcher.schedules.SwitcherV2Schedule object."""
     mock_object = MagicMock(SwitcherV2Schedule)
@@ -118,9 +130,10 @@ def mock_schedule_object() -> Generator[None, None, SwitcherV2Schedule]:
     return mock_initial_response
 
 
-@fixture(name='get_schedules_response')
+@fixture(name="get_schedules_response")
 def mock_get_schedules_response(
-        schedule_object) -> Generator[MagicMock, Any, None]:
+    schedule_object
+) -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the get_schedules response."""
     mock_response = MagicMock(messages.SwitcherV2GetScheduleResponseMSG)
     mock_response.successful = True
@@ -128,8 +141,10 @@ def mock_get_schedules_response(
     mock_response.get_schedules = [schedule_object]
     mock_response.msg_type = messages.ResponseMessageType.GET_SCHEDULES
 
-    with patch('request_handlers.messages.SwitcherV2GetScheduleResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2GetScheduleResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
@@ -140,8 +155,10 @@ def mock_set_auto_shutdown_response() -> Generator[MagicMock, Any, None]:
     mock_response.successful = True
     mock_response.msg_type = messages.ResponseMessageType.AUTO_OFF
 
-    with patch('request_handlers.messages.SwitcherV2SetAutoOffResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2SetAutoOffResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
@@ -152,8 +169,10 @@ def mock_set_device_name_response() -> Generator[MagicMock, Any, None]:
     mock_response.successful = True
     mock_response.msg_type = messages.ResponseMessageType.UPDATE_NAME
 
-    with patch('request_handlers.messages.SwitcherV2UpdateNameResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2UpdateNameResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
@@ -161,15 +180,17 @@ def mock_set_device_name_response() -> Generator[MagicMock, Any, None]:
 def mock_disable_enable_schedule_request() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the disable_enable_schedule response."""
     mock_response = MagicMock(
-        messages.SwitcherV2DisableEnableScheduleResponseMSG)
+        messages.SwitcherV2DisableEnableScheduleResponseMSG
+    )
     mock_response.successful = True
-    mock_response.msg_type = \
+    mock_response.msg_type = (
         messages.ResponseMessageType.DISABLE_ENABLE_SCHEDULE
+    )
 
     with patch(
-            ('request_handlers.messages.'
-             + 'SwitcherV2DisableEnableScheduleResponseMSG'),
-            new=mock_response) as patcher:
+        "request_handlers.messages.SwitcherV2DisableEnableScheduleResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
@@ -180,8 +201,10 @@ def mock_delete_schedule_request() -> Generator[MagicMock, Any, None]:
     mock_response.successful = True
     mock_response.msg_type = messages.ResponseMessageType.DELETE_SCHEDULE
 
-    with patch('request_handlers.messages.SwitcherV2DeleteScheduleResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2DeleteScheduleResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
 
 
@@ -192,6 +215,8 @@ def mock_create_schedule_request() -> Generator[MagicMock, Any, None]:
     mock_response.successful = True
     mock_response.msg_type = messages.ResponseMessageType.CREATE_SCHEDULE
 
-    with patch('request_handlers.messages.SwitcherV2CreateScheduleResponseMSG',
-               new=mock_response) as patcher:
+    with patch(
+        "request_handlers.messages.SwitcherV2CreateScheduleResponseMSG",
+        new=mock_response,
+    ) as patcher:
         yield patcher
