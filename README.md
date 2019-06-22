@@ -15,7 +15,7 @@ If you're using the [Switcher Water Heater](https://switcher.co.il/) and you wan
 
 For full install and usage instructions,
 Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io)
-hosted with [readthedocs.io](https://readthedocs.io).
+hosted with [readthedocs.io](https://readthedocs.org/).
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
