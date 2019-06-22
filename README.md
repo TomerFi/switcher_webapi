@@ -3,7 +3,7 @@
 
 | Stage     | Badges                                                                              |
 | --------- | ----------------------------------------------------------------------------------- |
-| `Code`    | [![codecov]][0] [![codacy]][1] [![code-style-black]][15]                            | 
+| `Code`    | [![codecov]][0] [![codacy]][1] [![code-style-black]][15] [![checked-with-mypy]][16] | 
 | `Builds`  | [![circleci]][2] [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] |
 | `Pypi`    | [![requires-io]][5] [![snyk-python]][6]                                             |
 | `Npm`     | [![david-dm-dev-package-json-dependencies-status]][7] [![snyk-npm]][8]              |
@@ -34,8 +34,10 @@ hosted with *readthedocs.io.*
 [13]: https://bestpractices.coreinfrastructure.org/projects/2891
 [14]: https://tomfi.slack.com/messages/CK4DK2Z5G
 [15]: https://black.readthedocs.io/en/stable/
+[16]: http://mypy-lang.org/
 
 <!-- Badges Links -->
+[checked-with-mypy]: http://www.mypy-lang.org/static/mypy_badge.svg
 [cii-best-practices]: https://bestpractices.coreinfrastructure.org/projects/2891/badge
 [circleci]: https://circleci.com/gh/TomerFi/switcher_webapi.svg?style=shield
 [codacy]: https://api.codacy.com/project/badge/Grade/bc33021329894d75943f8d0fe77b95a5
