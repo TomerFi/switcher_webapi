@@ -1,5 +1,5 @@
-Contributing to **switcher_webapi**
-***********************************
+Contributing
+************
 
 First off, thank you for taking the time to contribute.
 
@@ -12,6 +12,7 @@ First off, thank you for taking the time to contribute.
    You can find the `module repository here`_.
 
 Contributing is pretty straight-forward:
+
 *   Fork the repository
 *   Commit your changes
 *   Create a pull request against the **dev** branch

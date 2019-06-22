@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.2.5](https://github.com/tomerfi/switcher_webapi/tree/0.2.5) (2019-06-23)
+
+[Full Changelog](https://github.com/tomerfi/switcher_webapi/compare/0.2.4...0.2.5)
+
 ## [0.2.4](https://github.com/tomerfi/switcher_webapi/tree/0.2.4) (2019-06-16)
 
 [Full Changelog](https://github.com/tomerfi/switcher_webapi/compare/0.2.3...0.2.4)
