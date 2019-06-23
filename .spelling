@@ -20,6 +20,7 @@ dev
 doc8
 doc8.ini
 dockerfile
+docstrings
 figenblat
 http
 faq
