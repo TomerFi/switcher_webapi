@@ -318,6 +318,7 @@ Guidelines
    with ``Makefile`` and in ``package.json`` for packaging handling.
 
 Here are some guidelines (recommendations) for contributing to the ``switcher_webapi`` project:
+*   `Code docstrings documentation is here`_.
 
 *   If you add a python dependency, for order keeping and for Snyk_'s sake,
     Please add the dependency with the fixed version to ``requirements.txt``,
@@ -455,6 +456,7 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _aioswitcher pypi module: https://pypi.org/project/aioswitcher/
 .. _module repository here: https://github.com/TomerFi/aioswitcher
 .. _CircleCi Continuous Integration and Deployment Services: https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev
+.. _Code docstrings documentation is here: codedocs.html
 .. _CodeCov Code Coverage: https://codecov.io/gh/TomerFi/switcher_webapi
 .. _Coverage.py: https://coverage.readthedocs.io/en/v4.5.x/
 .. _pytest-cov plugin: https://pytest-cov.readthedocs.io/en/latest/
