@@ -1,4 +1,8 @@
-"""Sanic server for the Switcher WebAPI."""
+"""Sanic server for the Switcher WebAPI.
+
+.. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
+
+"""
 
 # fmt: off
 from argparse import ArgumentParser
@@ -43,7 +47,27 @@ def _wrapped_partial(func, *args, **kwargs):
 
 @sanic_app.listener("before_server_start")
 def before_start(app: Sanic, loop: AbstractEventLoop) -> None:
-    """Use for preparing data and register mappings before start."""
+    """Use for preparing data and register mappings before start.
+
+    This function is annotated with
+    ``sanic.Sanic.listener("before_server_start")``.
+
+    It is called by ``Sanic`` just before the server starts.
+    Its job is:
+
+    .. hlist::
+       :columns: 1
+
+       * Gather the initial data for running the server.
+       * Register a middleware for aquiring a throttler for all requests.
+       * Add routes using the ``mappings module`` and the
+         ``request_handlers module``.
+
+    Args:
+      app: the running ``sanic`` app.
+      loop: the main event loop.
+
+    """
     app.config[CONF_PHONE_ID] = "0000{}".format(app.config[CONF_PHONE_ID])[-4:]
     app.config[CONF_DEVICE_ID] = (
         "000000{}".format(app.config[CONF_DEVICE_ID])
@@ -67,7 +91,27 @@ def before_start(app: Sanic, loop: AbstractEventLoop) -> None:
 
     @app.middleware("request")
     async def requests_middleware(request: Request) -> None:
-        """Use for aquiring a throttle as a middleware for all requests."""
+        """Use for aquiring a throttle as a middleware for all requests.
+
+        This function is annotated with
+        ```sanic.Sanic.middleware("request")``.
+
+        It is called by ``Sanic`` for every incoming request.
+
+        Its job is to aquire ``asyncio_throttle.Throttler`` for
+        throttling requests.
+
+        Args:
+          request: the incoming request object.
+
+        Note:
+            This function cannot be included in the code docs.
+
+            It's a nested function that exists only in the local scope.
+
+            Sphinx-autodoc is unable to access it.
+
+        """
         await request_throttler.acquire()
 
     kwargs_dict = {
@@ -140,7 +184,19 @@ def before_start(app: Sanic, loop: AbstractEventLoop) -> None:
 
 @sanic_app.exception(ServerError)
 def timeout(request: Request, exception: SanicException) -> HTTPResponse:
-    """Use as custom handler for logging internal service errors."""
+    """Use as custom handler for logging internal service errors.
+
+    This function is annotated with ```sanic.Sanic.exception(ServerError)``.
+
+    It is called by ``Sanic`` for every ``ServerError`` exception.
+
+    Its job is to log the exception and return a code 500 response.
+
+    Args:
+      request: the incoming request object.
+      exception: the exception thrown.
+
+    """
     logger.error(exception)
     return text("Internal service failure, please check logs.", 500)
 

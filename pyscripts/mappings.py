@@ -1,4 +1,8 @@
-"""Url mappings for the Switcher WebAPI."""
+"""Url mappings for the Switcher WebAPI project are located here.
+
+.. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
+
+"""
 
 URL_MAPPING_GET_STATE = "/switcher/get_state"
 URL_MAPPING_TURN_ON = "/switcher/turn_on"

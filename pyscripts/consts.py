@@ -1,4 +1,8 @@
-"""Constants for the Switcher WebAPI."""
+"""Various constants and test values for the Switcher WebAPI project.
+
+.. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
+
+"""
 
 TEST_SERVER_PORT = 8271
 

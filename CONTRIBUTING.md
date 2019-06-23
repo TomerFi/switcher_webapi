@@ -328,6 +328,8 @@ For automated local tests, use `tox`.
 > for packaging handling.
 
 Here are some guidelines (recommendations) for contributing to the `switcher_webapi` project:
+-   Code docstrings documentation [here](codedocs.html)
+
 -   If you add a python dependency, for order keeping and for [Snyk](https://snyk.io)'s sake,
     Please add the dependency with the fixed version to [requirements.txt](requirements.txt),
     And add with no version statement in any or all of the other requirements file based on the
