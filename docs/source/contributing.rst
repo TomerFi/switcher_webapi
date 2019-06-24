@@ -181,8 +181,11 @@ image based on the ``Dockerfile`` instructions file and tag it twice:
 Read the Docs
 -------------
 
-By hook configuration, for every *git-release-tag* `Read the Docs`_ will build the documentation
-site based on the ``docs/source`` and host it with the `stable tag`_.
+By hook configuration, for every ``git-release-tag`` and push to the ``dev`` branch
+`Read the Docs`_ will build the documentation site based on ``docs/source`` and host
+it with the following tags:
+*   `stable tag`_ is for the release snapshot.
+*   `latest tag`_ is for the dev branch.
 
 Metadata
 --------
@@ -481,6 +484,7 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _David-DM: https://david-dm.org/TomerFi/switcher_webapi
 .. _Docker Hub Cloud: https://hub.docker.com/r/tomerfi/switcher_webapi/builds
 .. _stable tag: https://switcher-webapi.readthedocs.io/en/stable
+.. _latest tag: https://switcher-webapi.readthedocs.io/en/latest
 .. _Docker Hub: https://hub.docker.com/r/tomerfi/switcher_webapi
 .. _MicroBadger: https://microbadger.com/images/tomerfi/switcher_webapi
 .. _Python 3.7: https://www.python.org/downloads/
