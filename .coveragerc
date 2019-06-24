@@ -9,4 +9,4 @@ precision = 2
 skip_covered = true
 exclude_lines =
     if __name__ == "__main__":
-
+    raise ServerError
