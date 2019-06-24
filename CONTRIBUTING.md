@@ -193,13 +193,13 @@ will build the image based on the Dockerfile instructions file and tag it twice:
 -   latest
 
 ### Read the Docs
-By hook configuration, for every `git-release-tag` and push to the `dev` branch
-[Read the Docs](https://readthedocs.org) will build the documentation site based on
-[docs/source](docs/source) and host it with the following tags:
--   `stable` tag [here](https://switcher-webapi.readthedocs.io/en/stable/) is for the release
-    snapshot.
+By hook configuration, [Read the Docs](https://readthedocs.org) will build the documentation site
+based on [docs/source](docs/source) and host it:
+-   `stable` tag [here](https://switcher-webapi.readthedocs.io/en/stable/) will be built for every
+    release snapshot.
 
--   `latest` tag [here](https://switcher-webapi.readthedocs.io/en/latest/) is for the dev branch.
+-   `latest` tag [here](https://switcher-webapi.readthedocs.io/en/latest/) will be built for every
+    push the dev branch, so it'll reflect unreleased changes.
 
 ### Metadata
 By hook configuration, for every *docker image* build by [Docker Hub](https://hub.docker.com/r/tomerfi/switcher_webapi)
