@@ -187,6 +187,11 @@ it with the following tags:
 *   `stable tag`_ is for the release snapshot.
 *   `latest tag`_ is for the dev branch.
 
+By hook configuration, `Read the Docs`_ will build the documentation site based on ``docs/source``
+and host it:
+*   `stable tag`_ will be built for every release snapshot.
+*   `latest tag`_ will be built for every push the dev branch, so it'll reflect unreleased changes.
+
 Metadata
 --------
 

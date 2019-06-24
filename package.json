@@ -1,6 +1,6 @@
 {
   "name": "switcher_webapi",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "REST api wrapper for the aioswitcher pypi module running in a Docker image, used to integrate with the Switcher water heater.",
   "keywords": [
     "smarthome",
