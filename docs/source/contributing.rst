@@ -5,7 +5,7 @@ First off, thank you for taking the time to contribute.
 
 .. note::
 
-   This repository hosts a docker image wrapping a Rest API around the `aioswitcher pypi module`_.
+   This repository is a docker image wrapping a python Rest API around the `aioswitcher pypi module`_.
 
    If your contribution is a more of a *core contribution*, please consider maybe
    it belongs to the integrating module and not the wrapping docker.
@@ -165,7 +165,7 @@ Snyk
 ----
 
 Snyk_ is keeping an eye out for vulnerabilities in our `npm dependencies`_,
-our  `pypi dependencies`_ and our `docker image dependencies`_.
+our  `pypi requirements`_ and our *docker image dependencies*.
 
 Continuous Deployment
 ^^^^^^^^^^^^^^^^^^^^^
@@ -506,7 +506,6 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _flake8: https://pypi.org/project/flake8/
 .. _mypy: https://pypi.org/project/mypy/
 .. _pytest: https://pypi.org/project/pytest/
-.. _ferrarimarco/github-changelog-generator: https://hub.docker.com/r/ferrarimarco/github-changelog-generator
 .. _circleci/circleci-cli: https://hub.docker.com/r/circleci/circleci-cli
 .. _Pytest, Full-featured Python testing tool: https://docs.pytest.org/en/latest/
 .. _semvar: https://semver.org/
@@ -520,13 +519,12 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _PEP518: https://www.python.org/dev/peps/pep-0518/
 .. _markdown-spellcheck: https://www.npmjs.com/package/markdown-spellcheck
 .. _snyk: https://snyk.io
-.. _npm dependencies: https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255
-.. _pypi dependencies: https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358
+.. _npm dependencies: https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=package.json
+.. _pypi requirements: https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=requirements.txt
 .. _vale: https://errata-ai.github.io/vale/
 .. _vale styles: https://errata-ai.github.io/vale/styles/
 .. _vale repository: https://github.com/errata-ai/vale/tree/master/docs/styles
 .. _jdkato/vale: https://hub.docker.com/r/jdkato/vale
-.. _docker image dependencies: https://app.snyk.io/org/tomerfi/project/efb45c0a-f64b-4db5-8976-966508b78cd8
 .. _proselint: https://github.com/amperser/proselint
 .. _write-good: https://github.com/btford/write-good
 .. _joblint: https://github.com/rowanmanning/joblint
