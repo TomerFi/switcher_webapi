@@ -22,13 +22,12 @@ doc8.ini
 dockerfile
 docstrings
 figenblat
-http
 faq
-ferrarimarco
 flake8
 github
 googlecontainertools
 hadolint
+http
 isort
 jdkato
 joblint
