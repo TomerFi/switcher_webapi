@@ -396,11 +396,6 @@ The shell scripts in `shellscripts` were written for `bash` and not for `sh`.
         [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) for checking
         the shell scripts residing in [shellscripts](shellscripts/).
 
-    -   argument `generate-changelog` will execute the docker image
-        [ferrarimarco/github-changelog-generator](https://hub.docker.com/r/ferrarimarco/github-changelog-generator)
-        for generating a simple [CHANGELOG.md](CHANGELOG.md) based on `git-release-tags`,
-        the created file can be later used as a manual base for updating the documentation site.
-
     -   argument `circleci-validate` will execute the docker image
         [circleci/circleci-cli](https://hub.docker.com/r/circleci/circleci-cli)
         for validating the [.circleci/config.yml](.circleci/config.yml) file.

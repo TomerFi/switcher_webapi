@@ -394,11 +394,6 @@ Shell Scripts
     *   **argument**: ``check-shellscripts`` will execute the docker image `koalaman/shellcheck`_
         for checking the shell scripts residing in ``shellscripts``.
 
-    *   **argument**: ``generate-changelog`` will execute the docker image
-        `ferrarimarco/github-changelog-generator`_ for generating a simple ``CHANGELOG.md`` based
-        on ``git-release-tags``.
-        The created file can be later used as a manual base for updating the documentation site.
-
     *   **argument**: ``circleci-validate`` will execute the docker image `circleci/circleci-cli`_
         for validating the ``.circleci/config.yml`` file.
 

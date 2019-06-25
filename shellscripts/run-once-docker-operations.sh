@@ -16,7 +16,6 @@ display_usage() {
     echo -e "please provide the operation you want to execute.\n"
     echo "usage: $0 lint-dockerfile"
     echo "usage: $0 check-shellscripts"
-    echo "usage: $0 generate-changelog"
     echo "usage: $0 circleci-validate"
     echo "usage: $0 vale-rstdocs"
 }
@@ -35,11 +34,6 @@ then
       then
         # shellcheck disable=SC2046
         docker run --rm -it -v "$PWD/shellscripts/:/mnt/:ro" koalaman/shellcheck:v0.6.0 $(ls -A1 shellscripts)
-      elif [ "$1" = "generate-changelog" ]
-      then
-        docker run --rm -it -v "$PWD:/usr/local/src/your-app:ro" ferrarimarco/github-changelog-generator:latest --user tomerfi --project switcher_webapi --no-issues --no-unreleased --no-pull-requests
-        sed -i '$d' CHANGELOG.md
-        sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' CHANGELOG.md
       elif [ "$1" = "circleci-validate" ]
       then
         docker run --rm -it -v "$PWD/.circleci/:/.circleci/:ro" circleci/circleci-cli:alpine config validate
