@@ -1,8 +1,8 @@
 # Contributing to `switcher_webapi`
 
-First off, thank you for taking the time to contribute.
+:clap: First off, thank you for taking the time to contribute. :clap:
 
-> **Note**: This repository hosts a docker image wrapping a Rest API around the
+> **Note**: This repository is a docker image wrapping a python Rest API around the
 > `aioswitcher` pypi module.
 >
 > If your contribution is a more of a *core contribution*, please consider maybe
@@ -181,9 +181,9 @@ the npm requirements listed in the *package.json* file.
 
 ### Snyk
 [Snyk](https://snyk.io) is keeping an eye out for vulnerabilities in our
-[npm dependencies](https://app.snyk.io/org/tomerfi/project/87072022-903c-4190-9a21-58c005f20255),
-our [pypi dependencies](https://app.snyk.io/org/tomerfi/project/e06f1010-493f-45be-bb84-a80ddba9d358)
-and our [docker image dependencies](https://app.snyk.io/org/tomerfi/project/efb45c0a-f64b-4db5-8976-966508b78cd8).
+[npm dependencies](https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=package.json),
+our [pypi requirements](https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=requirements.txt)
+and our *docker image dependencies*.
 
 ## Continuous Deployment
 ### Docker Hub
@@ -395,11 +395,6 @@ The shell scripts in `shellscripts` were written for `bash` and not for `sh`.
     -   argument `check-shellscripts` will execute the docker image
         [koalaman/shellcheck](https://hub.docker.com/r/koalaman/shellcheck) for checking
         the shell scripts residing in [shellscripts](shellscripts/).
-
-    -   argument `generate-changelog` will execute the docker image
-        [ferrarimarco/github-changelog-generator](https://hub.docker.com/r/ferrarimarco/github-changelog-generator)
-        for generating a simple [CHANGELOG.md](CHANGELOG.md) based on `git-release-tags`,
-        the created file can be later used as a manual base for updating the documentation site.
 
     -   argument `circleci-validate` will execute the docker image
         [circleci/circleci-cli](https://hub.docker.com/r/circleci/circleci-cli)

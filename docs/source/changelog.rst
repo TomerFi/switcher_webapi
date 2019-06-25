@@ -1,6 +1,14 @@
 Change Log
 **********
 
+0.2.7_ (2019-06-25)
+^^^^^^^^^^^^^^^^^^^
+
+`0.2.7 Full Changelog`_
+
+- Updated dependencies and requirements
+- Documentation fix-ups
+
 0.2.6_ (2019-06-24)
 ^^^^^^^^^^^^^^^^^^^
 
@@ -77,6 +85,8 @@ Change Log
 
 -  Pre-release
 
+.. _0.2.7: https://github.com/tomerfi/switcher_webapi/tree/0.2.7
+.. _0.2.7 Full Changelog: https://github.com/tomerfi/switcher_webapi/compare/0.2.6...0.2.7
 .. _0.2.6: https://github.com/tomerfi/switcher_webapi/tree/0.2.6
 .. _0.2.6 Full Changelog: https://github.com/tomerfi/switcher_webapi/compare/0.2.5...0.2.6
 .. _0.2.5: https://github.com/tomerfi/switcher_webapi/tree/0.2.5
