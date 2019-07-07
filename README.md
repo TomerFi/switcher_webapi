@@ -1,4 +1,5 @@
 <!--lint disable maximum-heading-length-->
+![tomfi-repo-logo](https://raw.githubusercontent.com/tomerfi/tomerfi.github.io/master/images/TomFiRepoWhite.png)
 # Switcher Water Heater Unofficial Docker-based WebAPI [![shields-io-maintenance]][12] [![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10] [![self-hosted-slack-channel]][14] [![cii-best-practices]][13] 
 
 | Stage     | Badges                                                                              |
