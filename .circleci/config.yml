@@ -232,7 +232,7 @@ commands:
           command: |
             . venv/bin/activate
             isort --check-only --recursive pyscripts/ docs/source/
-            flake8 --statistics --count --doctests pyscripts/ docs/source/
+            flake8 --ignore D413 --statistics --count --doctests pyscripts/ docs/source/
             black --check pyscripts/ docs/source/
 
   run-mypy:
