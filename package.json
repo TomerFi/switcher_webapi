@@ -36,21 +36,19 @@
     "lint-md": "remark --rc-path .remarkrc --ignore-path .remarkignore --frail . .github",
     "validate-pkg": "pjv --filenmae package.json --spec npm --warnings --recommendations",
     "spell-md-interactive": "mdspell --en-us --ignore-numbers --ignore-acronyms '*.md' '.github/**/*.md'",
-    "spell-md-report": "mdspell --en-us --ignore-numbers --ignore-acronyms --report '*.md' '.github/**/*.md'",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "spell-md-report": "mdspell --en-us --ignore-numbers --ignore-acronyms --report '*.md' '.github/**/*.md'"
   },
   "dependencies": {
+    "lodash": "4.17.15",
     "markdown-spellcheck": "1.3.1",
+    "marked": "0.7.0",
     "package-json-validator": "0.6.3",
     "remark-cli": "7.0.0",
     "remark-frontmatter": "1.3.2",
     "remark-lint": "6.0.5",
     "remark-preset-lint-consistent": "2.0.3",
     "remark-preset-lint-markdown-style-guide": "2.1.3",
-    "remark-preset-lint-recommended": "3.0.3",
-    "snyk": "^1.192.0"
+    "remark-preset-lint-recommended": "3.0.3"
   },
-  "private": true,
-  "snyk": true
+  "private": true
 }
