@@ -1,13 +1,13 @@
 <!--lint disable maximum-heading-length-->
-![tomfi-repo-logo](https://raw.githubusercontent.com/tomerfi/tomerfi.github.io/master/images/TomFiRepoWhite.png)
-# Switcher Water Heater Unofficial Docker-based WebAPI [![shields-io-maintenance]][12] [![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10] [![self-hosted-slack-channel]][14] [![cii-best-practices]][13] 
+![tomfi-repo-logo](https://media.githubusercontent.com/media/TomerFi/portfolio/gh-pages/images/TomFiRepoWhite.png)
+# Switcher Water Heater Unofficial Docker-based WebAPI [![shields-io-maintenance]][12] [![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10] [![self-hosted-slack-channel]][14] [![cii-best-practices]][13]
 
-| Stage     | Badges                                                                              |
-| --------- | ----------------------------------------------------------------------------------- |
-| `Code`    | [![codecov]][0] [![codacy]][1] [![code-style-black]][15] [![checked-with-mypy]][16] | 
-| `Builds`  | [![circleci]][2] [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] |
-| `Pypi`    | [![requires-io]][5] [![snyk-python]][6]                                             |
-| `Npm`     | [![david-dm-dev-package-json-dependencies-status]][7] [![snyk-npm]][8]              |
+| Stage     | Badges                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------- |
+| `Code`    | [![codecov]][0] [![codacy]][1] [![code-style-black]][15] [![checked-with-mypy]][16]               |
+| `Builds`  | [![circleci]][2] [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4]               |
+| `Pypi`    | [![requires-io]][5] [![snyk-python]][6]                                                           |
+| `Npm`     | [![david-dm-dev-package-json-dependencies-status]][7] [![snyk-npm]][8] [![greenkeeper-badge]][17] |
 
 An asynchronous [sanic webapp](https://pypi.org/project/sanic/) running inside a [python docker image](https://hub.docker.com/_/python) using [uvloop](https://pypi.org/project/uvloop/) as the event loop.</br>
 Used as a rest api wrapper for [aioswitcher](https://pypi.org/project/aioswitcher/).</br>
@@ -18,7 +18,7 @@ For full install and usage instructions,
 Please check out the [Switcher water heater WebAPI documentation](https://switcher-webapi.readthedocs.io)
 hosted with [readthedocs.io](https://readthedocs.org/).
 
-[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/TomerFi) [![Greenkeeper badge](https://badges.greenkeeper.io/TomerFi/switcher_webapi.svg)](https://greenkeeper.io/)
+[![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/TomerFi)
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
@@ -38,6 +38,7 @@ hosted with [readthedocs.io](https://readthedocs.org/).
 [14]: https://tomfi.slack.com/messages/CK4DK2Z5G
 [15]: https://black.readthedocs.io/en/stable/
 [16]: http://mypy-lang.org/
+[17]: https://greenkeeper.io/
 
 <!-- Badges Links -->
 [checked-with-mypy]: http://www.mypy-lang.org/static/mypy_badge.svg
@@ -47,6 +48,7 @@ hosted with [readthedocs.io](https://readthedocs.org/).
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [code-style-black]: https://img.shields.io/badge/code%20style-black-000000.svg
 [david-dm-dev-package-json-dependencies-status]: https://david-dm.org/TomerFi/switcher_webapi/status.svg
+[greenkeeper-badge]: https://badges.greenkeeper.io/TomerFi/switcher_webapi.svg
 [microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
 [microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg
 [read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=stable
