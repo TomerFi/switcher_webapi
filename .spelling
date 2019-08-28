@@ -26,6 +26,7 @@ faq
 flake8
 github
 googlecontainertools
+greenkeeper-badge
 hadolint
 http
 isort
