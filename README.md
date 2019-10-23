@@ -1,6 +1,7 @@
 <!--lint disable maximum-heading-length-->
 ![tomfi-repo-logo](https://media.githubusercontent.com/media/TomerFi/portfolio/gh-pages/images/TomFiRepoWhite.png)
 # Switcher Water Heater Unofficial Docker-based WebAPI [![shields-io-maintenance]][12] [![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10] [![self-hosted-slack-channel]][14] [![cii-best-practices]][13]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTomerFi%2Fswitcher_webapi.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FTomerFi%2Fswitcher_webapi?ref=badge_shield)
 
 | Stage     | Badges                                                                                            |
 | --------- | ------------------------------------------------------------------------------------------------- |
@@ -59,3 +60,6 @@ hosted with [readthedocs.io](https://readthedocs.org/).
 [shields-io-maintenance]: https://img.shields.io/badge/Maintained%3F-yes-green.svg
 [snyk-npm]: https://snyk.io//test/github/TomerFi/switcher_webapi/badge.svg?targetFile=package.json
 [snyk-python]: https://snyk.io//test/github/TomerFi/switcher_webapi/badge.svg?targetFile=requirements.txt
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTomerFi%2Fswitcher_webapi.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTomerFi%2Fswitcher_webapi?ref=badge_large)
