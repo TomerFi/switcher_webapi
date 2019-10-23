@@ -6,6 +6,7 @@ behavior
 behaviors
 changelog
 changelog.md
+ci
 circleci
 circleci-cli
 cli
@@ -29,12 +30,14 @@ googlecontainertools
 greenkeeper-badge
 hadolint
 http
+io
 isort
 jdkato
 joblint
 json
 koalaman
 makefile
+md
 metadata
 microbadger
 mypy
