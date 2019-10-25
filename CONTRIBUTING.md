@@ -13,7 +13,7 @@ Contributing is pretty straight-forward:
 -   Fork the repository
 -   Commit your changes
 -   Create a pull request against the `dev` branch
-  
+
 Please feel free to contribute, even to this contributing guideline file, if you see fit.
 
 **Content**
@@ -33,7 +33,6 @@ Please feel free to contribute, even to this contributing guideline file, if you
     -   [Codacy](#codacy)
     -   [Requires-io](#requires-io)
     -   [David-DM](#david-dm)
-    -   [Snyk](#snyk)
 
 -   [Continuous Deployment](#continuous-deployment)
     -   [Docker Hub](#docker-hub)
@@ -48,10 +47,6 @@ Please feel free to contribute, even to this contributing guideline file, if you
     -   [NPM Scripts](#npm-scripts)
     -   [Shell Scripts](#shell-scripts)
     -   [Makefile](#makefile)
-
--   [Chat](#chat)
-
--   [Best Practices](#best-practices)
 
 -   [Code of Conduct](#code-of-conduct)
 
@@ -178,12 +173,6 @@ is keeping an eye for versions updates upon the python requirements listed in th
 ### David-DM
 [David-DM](https://david-dm.org/TomerFi/switcher_webapi) is keeping an eye for versions updates upon
 the npm requirements listed in the *package.json* file.
-
-### Snyk
-[Snyk](https://snyk.io) is keeping an eye out for vulnerabilities in our
-[npm dependencies](https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=package.json),
-our [pypi requirements](https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=requirements.txt)
-and our *docker image dependencies*.
 
 ## Continuous Deployment
 ### Docker Hub
@@ -334,7 +323,7 @@ For automated local tests, use `tox`.
 Here are some guidelines (recommendations) for contributing to the `switcher_webapi` project:
 -   Code docstrings documentation [here](codedocs.html)
 
--   If you add a python dependency, for order keeping and for [Snyk](https://snyk.io)'s sake,
+-   If you add a python dependency, for legacy support,
     Please add the dependency with the fixed version to [requirements.txt](requirements.txt),
     And add with no version statement in any or all of the other requirements file based on the
     dependency use case.
@@ -440,20 +429,6 @@ especially in regards to docker operations, try `make help` to list all the avai
 
 -   `make verify-environment-file` will verify the existence of the required
     environment variables file and its content.
-
-## Chat
-Feel free to join the project's public
-[Slack Channel](https://tomfi.slack.com/messages/CK4DK2Z5G)</br>
-GitHub, Codacy Docker Hub and Snyk are integrated with the channel and keep its members updated.
-
-## Best Practices
-This project tries to follow the [CII Best Practices](https://bestpractices.coreinfrastructure.org/en/projects/2891) guidelines.
-
-That's not an easy task and I'm not sure achieving 100% is even possible for this specific
-project.</br>
-At the time writing this, the project has achieved 42% (The writing of this file was actually
-according one to those guidelines).</br>
-Any contribution bumping up this percentage will be gladly embraced.
 
 ## Code of Conduct
 The [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) can also be found
