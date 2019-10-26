@@ -4,13 +4,13 @@
 # (Optional)                                                           #
 # EXPOSED_PORT=8000                                                    #
 # CONF_THROTTLE=5.0                                                    #
-#                                                     					       #
+#                                                     				   #
 # (Mandatory)                                                          #
 # CONF_DEVICE_IP_ADDR=192.168.100.157                                  #
 # CONF_PHONE_ID=1234                                                   #
 # CONF_DEVICE_ID=ab1c2d                                                #
 # CONF_DEVICE_PASSWORD=12345678                                        #
-#																																	     #
+#																	   #
 # change the source file name by passing env_vars=another_file to make #
 ########################################################################
 
@@ -67,7 +67,7 @@ docker-build-no-cache: ## build image from Dockerfile with no caching.
   -t $(FULL_IMAGE_NAME) .
 
 structure-test: ## run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
-	bash shellscripts/container-structure-test-verify.sh container_structure.yml $(strip $(IMAGE_NAME)):testing
+	sh shellscripts/container-structure-test-verify.sh container_structure.yml $(strip $(IMAGE_NAME)):testing
 
 docker-build-structure-test: ## build the image and test the container structure
 docker-build-structure-test: docker-build structure-test
@@ -98,7 +98,7 @@ docker-build-no-cache-and-run: ## build image from Dockerfile with no caching an
 docker-build-no-cache-and-run: docker-build-no-cache docker-run
 
 push-description: ## push the relative README.md file as full description to docker hub, requires username and password arguments
-	bash shellscripts/push-docker-description.sh $(strip $(username)) $(strip $(password)) $(strip $(IMAGE_NAME))
+	sh shellscripts/push-docker-description.sh $(strip $(username)) $(strip $(password)) $(strip $(IMAGE_NAME))
 
 verify-environment-file: ## verify the existence of the required environment variables file.
 ifndef CONF_DEVICE_IP_ADDR

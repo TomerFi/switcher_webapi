@@ -161,12 +161,6 @@ David-DM
 `David-DM`_ is keeping an eye for versions updates upon the npm requirements listed in the
 *package.json* file.
 
-Snyk
-----
-
-Snyk_ is keeping an eye out for vulnerabilities in our `npm dependencies`_,
-our  `pypi requirements`_ and our *docker image dependencies*.
-
 Continuous Deployment
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -328,7 +322,7 @@ Guidelines
 Here are some guidelines (recommendations) for contributing to the ``switcher_webapi`` project:
 *   `Code docstrings documentation is here`_.
 
-*   If you add a python dependency, for order keeping and for Snyk_'s sake,
+*   If you add a python dependency, for legacy support,
     Please add the dependency with the fixed version to ``requirements.txt``,
     And add with no version statement in any or all of the other requirements file based on the
     dependency use case.
@@ -440,22 +434,6 @@ Try ``make help`` to list all the available tasks:
 *   ``make verify-environment-file`` will verify the existence of the required environment
     variables file and its content.
 
-Chat
-^^^^
-
-Feel free to join the project's public `Slack Channel`_.
-GitHub, Codacy Docker Hub and Snyk are integrated with the channel and keeping its members updated.
-
-Best Practices
-^^^^^^^^^^^^^^
-
-This project tries to follow the `CII Best Practices`_ guidelines.
-That's not an easy task and I'm not sure achieving 100% is even possible for this specific project.
-At the time writing this, the project has achieved 42%.
-(The writing of this file was actually according one to those guidelines).
-
-Any contribution bumping up this percentage will be gladly embraced.
-
 .. _aioswitcher pypi module: https://pypi.org/project/aioswitcher/
 .. _module repository here: https://github.com/TomerFi/aioswitcher
 .. _CircleCi Continuous Integration and Deployment Services: https://circleci.com/gh/TomerFi/switcher_webapi/tree/dev
@@ -513,14 +491,9 @@ Any contribution bumping up this percentage will be gladly embraced.
 .. _run remark: https://remark.js.org/
 .. _run prettier: https://prettier.io/
 .. _Docker: https://www.docker.com/
-.. _Slack Channel: https://tomfi.slack.com/messages/CK4DK2Z5G
-.. _CII Best Practices: https://bestpractices.coreinfrastructure.org/en/projects/2891
 .. _black: https://pypi.org/project/black/
 .. _PEP518: https://www.python.org/dev/peps/pep-0518/
 .. _markdown-spellcheck: https://www.npmjs.com/package/markdown-spellcheck
-.. _snyk: https://snyk.io
-.. _npm dependencies: https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=package.json
-.. _pypi requirements: https://snyk.io/test/github/TomerFi/switcher_webapi?targetFile=requirements.txt
 .. _vale: https://errata-ai.github.io/vale/
 .. _vale styles: https://errata-ai.github.io/vale/styles/
 .. _vale repository: https://github.com/errata-ai/vale/tree/master/docs/styles

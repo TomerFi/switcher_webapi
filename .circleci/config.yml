@@ -69,10 +69,10 @@ commands:
             filename=docker-cache/saved_images.tar
             if [[ -f "$filename" ]]; then docker load < "$filename"; fi
             mkdir -p docker-cache
-            docker pull hadolint/hadolint:v1.16.3
-            docker pull koalaman/shellcheck:v0.6.0
+            docker pull hadolint/hadolint:v1.17.2
+            docker pull koalaman/shellcheck:v0.7.0
             docker pull jdkato/vale:latest
-            docker save -o "$filename" jdkato/vale:latest hadolint/hadolint:v1.16.3 koalaman/shellcheck:v0.6.0
+            docker save -o "$filename" jdkato/vale:latest hadolint/hadolint:v1.17.2 koalaman/shellcheck:v0.7.0
 
       - save_cache:
           key: v1-switcher-webapi-machine-{{ .Branch }}-{{ checksum "Dockerfile" }}-{{ checksum ".dockerignore" }}
@@ -103,47 +103,34 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -q --progress-bar off -r requirements_prod.txt -c requirements.txt
-            pip install -q --progress-bar off -r requirements_test.txt -c requirements.txt
-            pip install -q --progress-bar off -r requirements_docs.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements.txt
       - save_cache:
-          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - ./venv
 
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
   ######################################################################################################
-  enforce-requirements-fixed-versions:
-    description: Enforce python requirements are fixed version and are onyl handled in requirements.txt
-    steps:
-      - run:
-          name: Verify requirements files
-          command: |
-            bash -c "if [[ $(grep -Pc '\S' requirements.txt) != $(grep -c '=\|<\|>' requirements.txt) ]]; then exit 1; fi"
-            grep -qv == requirements_docs.txt
-            grep -qv == requirements_prod.txt
-            grep -qv == requirements_test.txt
-
   dockerfile-lint:
     description: Run one-time container for hadolint linter against Dockerfile
     steps:
       - run:
           name: Run hadolint docker
-          command: bash shellscripts/run-once-docker-operations.sh lint-dockerfile
+          command: docker run --rm -i hadolint/hadolint:v1.17.2 < Dockerfile
 
   shellscripts-check:
     description: Run one-time container for shellcheck linter against shellscripts/*.sh
     steps:
       - run:
           name: Run shellcheck docker
-          command: bash shellscripts/run-once-docker-operations.sh check-shellscripts
+          command: docker run --rm -it -v $PWD/shellscripts/:/mnt/:ro koalaman/shellcheck:v0.7.0 -P container-structure-test-verify.sh push-docker-description.sh
 
   run-container-structure-test:
     description: Run the GoogleContainerTools/container-structure-test tool
@@ -157,7 +144,7 @@ commands:
     steps:
       - run:
           name: Run vale docker
-          command: bash shellscripts/run-once-docker-operations.sh vale-rstdocs
+          command: docker run --rm -it -v $PWD/.vale.ini:/.vale.ini:ro -v $PWD/.spelling:/.spelling:ro -v $PWD/docs:/docs:ro -w /docs jdkato/vale:latest --sort --config /.vale.ini
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
@@ -167,21 +154,21 @@ commands:
     steps:
       - run:
           name: Pjv - package.json
-          command: npm run validate-pkg
+          command: npm run validate:pkg
 
   md-lint:
     description: Run npm's remark and remark-lint plugins against md files
     steps:
       - run:
           name: Remark - md lint
-          command: npm run lint-md
+          command: npm run lint:md
 
   md-spell:
     description: Run npm's markdown-spellcheck against md files
     steps:
       - run:
           name: Markdown Spellcheck
-          command: npm run spell-md-report
+          command: npm run spell:md
 
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
@@ -202,7 +189,7 @@ commands:
           name: Doc8
           command: |
             . venv/bin/activate
-            doc8 --config doc8.ini docs/source
+            doc8 --allow-long-titles --max-line-length 100 -e .rst docs/source
 
   sphinx-build:
     description: Verify build docs with python sphinx by building into temp directory
@@ -231,9 +218,9 @@ commands:
           name: Linters
           command: |
             . venv/bin/activate
-            isort --check-only --recursive pyscripts/ docs/source/
+            isort -w 79 --check-only --recursive pyscripts/ docs/source/
             flake8 --ignore D413,W503 --statistics --count --doctests pyscripts/ docs/source/
-            black --check pyscripts/ docs/source/
+            black --line-length 79 --target-version py37 --check pyscripts/ docs/source/
 
   run-mypy:
     description: Run mypy type-checking againt py files
@@ -242,7 +229,7 @@ commands:
           name: Mypy
           command: |
             . venv/bin/activate
-            mypy --config-file mypy.ini pyscripts/ docs/source/conf.py
+            mypy --ignore-missing-imports --follow-imports silent pyscripts/ docs/source/conf.py
 
   run-tests-with-coverage:
     description: Run pytest test cases with coverage report against py files
@@ -343,13 +330,6 @@ jobs:
       - checkout
       - prepare-node
       - pkg-validate
-
-  enforce-requirements-fixed-versions-job:
-    executor:
-      name: machine-docker
-    steps:
-      - checkout
-      - enforce-requirements-fixed-versions
 
   yml-lint-job:
     executor:
@@ -457,8 +437,6 @@ workflows:
     jobs:
       - pkg-validate-job
 
-      - enforce-requirements-fixed-versions-job
-
       - yml-lint-job
 
       - shellscripts-check-job
@@ -466,7 +444,6 @@ workflows:
       - check-security-job:
           requires:
             - pkg-validate-job
-            - enforce-requirements-fixed-versions-job
             - yml-lint-job
             - shellscripts-check-job
 
