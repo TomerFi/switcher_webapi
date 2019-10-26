@@ -20,7 +20,7 @@ pytest-cov==2.8.1
 pytest-sanic==1.1.2
 pytz==2019.3
 sanic==19.9.0
-sphinx==2.2.0
+sphinx==2.2.1
 sphinx-rtd-theme==0.4.3
 toml==0.10.0
 uvloop==0.13.0
