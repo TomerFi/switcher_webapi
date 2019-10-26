@@ -25,9 +25,6 @@ fileExistenceTests:
   - name: "test_server.py shouldExist: false"
     path: /srv/switcher_webapi/test_server.py
     shouldExist: false
-  - name: "requirements_prod.txt shouldExist: true"
-    path: /srv/switcher_webapi/requirements_prod.txt
-    shouldExist: true
   - name: "requirements.txt shouldExist: true"
     path: /srv/switcher_webapi/requirements.txt
     shouldExist: true

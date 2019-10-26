@@ -17,27 +17,22 @@ shellscripts
 .remarkrc
 .spelling
 .vale.ini
+.yamllint
 bandit.yml
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 container_structure.yml
 CONTRIBUTING.md
-doc8.ini
 Dockerfile
 Makefile
 mypy.ini
 package-lock.json
 package.json
-pyproject.toml
-requirements_docs.txt
-requirements_test.txt
 tox.ini
-yamllint
 
 # Don't ignore
 !pyscripts
 !LICENSE
 !README.md
 !requirements.txt
-!requirements_prod.txt
 !VERSION

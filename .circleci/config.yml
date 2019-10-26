@@ -103,34 +103,21 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
+            - v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: Create the venv, install all requirements and save to cache
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -q --progress-bar off -r requirements_prod.txt -c requirements.txt
-            pip install -q --progress-bar off -r requirements_test.txt -c requirements.txt
-            pip install -q --progress-bar off -r requirements_docs.txt -c requirements.txt
+            pip install -q --progress-bar off -r requirements.txt
       - save_cache:
-          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements_prod.txt" }}-{{ checksum "requirements_test.txt" }}
+          key: v1-switcher-webapi-python-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - ./venv
 
   ######################################################################################################
   ### Commands running inside the machine-docker executer after running  the prepare-machine command ###
   ######################################################################################################
-  enforce-requirements-fixed-versions:
-    description: Enforce python requirements are fixed version and are onyl handled in requirements.txt
-    steps:
-      - run:
-          name: Verify requirements files
-          command: |
-            bash -c "if [[ $(grep -Pc '\S' requirements.txt) != $(grep -c '=\|<\|>' requirements.txt) ]]; then exit 1; fi"
-            grep -qv == requirements_docs.txt
-            grep -qv == requirements_prod.txt
-            grep -qv == requirements_test.txt
-
   dockerfile-lint:
     description: Run one-time container for hadolint linter against Dockerfile
     steps:
@@ -167,21 +154,21 @@ commands:
     steps:
       - run:
           name: Pjv - package.json
-          command: npm run validate-pkg
+          command: npm run validate:pkg
 
   md-lint:
     description: Run npm's remark and remark-lint plugins against md files
     steps:
       - run:
           name: Remark - md lint
-          command: npm run lint-md
+          command: npm run lint:md
 
   md-spell:
     description: Run npm's markdown-spellcheck against md files
     steps:
       - run:
           name: Markdown Spellcheck
-          command: npm run spell-md-report
+          command: npm run spell:md
 
   ######################################################################################################
   #### Commands running inside the python-docker executer after running the prepare-python command #####
@@ -344,13 +331,6 @@ jobs:
       - prepare-node
       - pkg-validate
 
-  enforce-requirements-fixed-versions-job:
-    executor:
-      name: machine-docker
-    steps:
-      - checkout
-      - enforce-requirements-fixed-versions
-
   yml-lint-job:
     executor:
       name: python-docker
@@ -457,8 +437,6 @@ workflows:
     jobs:
       - pkg-validate-job
 
-      - enforce-requirements-fixed-versions-job
-
       - yml-lint-job
 
       - shellscripts-check-job
@@ -466,7 +444,6 @@ workflows:
       - check-security-job:
           requires:
             - pkg-validate-job
-            - enforce-requirements-fixed-versions-job
             - yml-lint-job
             - shellscripts-check-job
 

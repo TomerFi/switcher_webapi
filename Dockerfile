@@ -44,10 +44,9 @@ pyscripts/helpers.py \
 pyscripts/mappings.py \
 pyscripts/request_handlers.py \
 pyscripts/start_server.py \
-requirements_prod.txt \
 requirements.txt ./
 
-RUN pip install -r requirements_prod.txt -c requirements.txt
+RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
