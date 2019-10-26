@@ -30,7 +30,7 @@
     "url": "https://github.com/TomerFi/switcher_webapi.git"
   },
   "scripts": {
-    "lint:dockerfile": "docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile",
+    "lint:dockerfile": "docker run --rm -i hadolint/hadolint:v1.17.2 < Dockerfile",
     "lint:md": "remark --rc-path .remarkrc --ignore-path .remarkignore --frail . .github",
     "lint:rst": "docker run --rm -it -v %CD%/.vale.ini:/.vale.ini:ro -v %CD%/.spelling:/.spelling:ro -v %CD%/docs:/docs:ro -w /docs jdkato/vale:latest --sort --config \"/.vale.ini\" .",
     "lint:shellscripts": "docker run --rm -it -v %CD%/shellscripts/:/mnt/:ro koalaman/shellcheck:v0.7.0 -P container-structure-test-verify.sh push-docker-description.sh",
