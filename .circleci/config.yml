@@ -123,14 +123,14 @@ commands:
     steps:
       - run:
           name: Run hadolint docker
-          command: bash shellscripts/run-once-docker-operations.sh lint-dockerfile
+          command: docker run --rm -i hadolint/hadolint:v1.16.3 < Dockerfile
 
   shellscripts-check:
     description: Run one-time container for shellcheck linter against shellscripts/*.sh
     steps:
       - run:
           name: Run shellcheck docker
-          command: bash shellscripts/run-once-docker-operations.sh check-shellscripts
+          command: docker run --rm -it -v $PWD/shellscripts/:/mnt/:ro koalaman/shellcheck:v0.7.0 -P container-structure-test-verify.sh push-docker-description.sh
 
   run-container-structure-test:
     description: Run the GoogleContainerTools/container-structure-test tool
@@ -144,7 +144,7 @@ commands:
     steps:
       - run:
           name: Run vale docker
-          command: bash shellscripts/run-once-docker-operations.sh vale-rstdocs
+          command: docker run --rm -it -v $PWD/.vale.ini:/.vale.ini:ro -v $PWD/.spelling:/.spelling:ro -v $PWD/docs:/docs:ro -w /docs jdkato/vale:latest --sort --config /.vale.ini
 
   ######################################################################################################
   ###### Commands running inside the node-docker executer after running the prepare-node command #######
