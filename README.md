@@ -11,7 +11,7 @@ Please check out the [documentation][4].
 [1]: https://dependabot.com
 [2]: https://circleci.com/gh/TomerFi/switcher_webapi
 [3]: https://hub.docker.com/r/tomerfi/switcher_webapi/builds
-[4]: https://switcher-webapi.tomfi.info/en/stable/?badge=stable
+[4]: https://switcher-webapi.tomfi.info
 [9]: https://microbadger.com/images/tomerfi/switcher_webapi
 [10]: https://hub.docker.com/r/tomerfi/switcher_webapi
 [11]: https://github.com/TomerFi/switcher_webapi/blob/dev/LICENSE
@@ -21,6 +21,6 @@ Please check out the [documentation][4].
 [dependabot-status]: https://api.dependabot.com/badges/status?host=github&repo=TomerFi/switcher_webapi
 [microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
 [microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg
-[read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=stable
+[read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=latest
 [shields-io-docker-cloud-build-status]: https://img.shields.io/docker/cloud/build/tomerfi/switcher_webapi.svg?logo=docker
 [shields-io-docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker
