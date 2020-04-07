@@ -2,9 +2,58 @@
 
 [![circleci]][2] [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
 
-An asynchronous [sanic webapp](https://pypi.org/project/sanic/) running inside a [python docker image](https://hub.docker.com/_/python) using [uvloop](https://pypi.org/project/uvloop/) as the event loop.</br>
-Used as a REST API wrapper for [aioswitcher](https://pypi.org/project/aioswitcher/).</br>
+REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/) for integrating with
+the [Switcher Water Heater](https://www.switcher.co.il/).</br>
 Please check out the [documentation][4].
+
+## Docker
+
+```shell
+docker run -d -p 8000:8000 \
+-e CONF_DEVICE_IP_ADDR=192.168.100.157 \
+-e CONF_PHONE_ID=1234 \
+-e CONF_DEVICE_ID=ab1c2d \
+-e CONF_DEVICE_PASSWORD=12345678 \
+--name switcher_webapi tomerfi/switcher_webapi:latest"
+```
+
+You can also add another optional environment variable:
+
+```shell
+-e CONF_THROTTLE=5.0
+```
+
+for setting the throttle time between consecutive requests,
+this is optional and the default value is **5.0**.
+
+## Docker Compose
+
+Here's an example of running the container using *docker-compose* setting the
+environment variables in a designated file.
+
+```yaml
+# docker-compose.yml
+version: "3.7"
+
+services:
+    switcher_api:
+    image: tomerfi/switcher_webapi:latest
+    container_name: "switcher_webapi"
+    env_file:
+        - .env_vars
+    ports:
+        - 8000:8000
+    restart: unless-stopped
+```
+
+```ini
+# .env_vars
+CONF_DEVICE_IP_ADDR=192.168.100.157
+CONF_PHONE_ID=1234
+CONF_DEVICE_ID=ab1c2d
+CONF_DEVICE_PASSWORD=12345678
+CONF_THROTTLE=5.0
+```
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
