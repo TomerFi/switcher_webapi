@@ -108,7 +108,7 @@ def mock_disable_enable_schedule_request() -> Generator[MagicMock, Any, None]:
 
 @fixture(name="get_schedules_response")
 def mock_get_schedules_response(
-    schedule_object
+    schedule_object,
 ) -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the get_schedules response.
 
@@ -186,7 +186,7 @@ def mock_sanic_test_app() -> Generator[Sanic, Any, None]:
     test_app.config[CONF_DEVICE_ID] = "ab1c2d"
     test_app.config[CONF_DEVICE_PASSWORD] = "12345678"
     test_app.config[CONF_DEVICE_IP_ADDR] = "192.168.100.157"
-    test_app.config[CONF_THROTTLE] = "0.5"
+    test_app.config[CONF_THROTTLE] = "0.1"
 
     yield test_app
 

@@ -47,7 +47,7 @@ URL_CREATE_SCHEDULE = BASE_URL_FORMAT.format(
 
 
 async def test_create_schedule_request(
-    create_schedule_response: MagicMock
+    create_schedule_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/create_schedule request.
 
@@ -278,7 +278,7 @@ async def test_create_schedule_request(
 
 
 async def test_delete_schedule_request(
-    delete_schedule_response: MagicMock
+    delete_schedule_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/delete_schedule request.
 
@@ -339,7 +339,7 @@ async def test_delete_schedule_request(
 
 
 async def test_disable_schedule_request(
-    disable_enable_schedule_response: MagicMock
+    disable_enable_schedule_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/disable_schedule request.
 
@@ -414,7 +414,7 @@ async def test_disable_schedule_request(
 
 
 async def test_enable_schedule_request(
-    disable_enable_schedule_response: MagicMock
+    disable_enable_schedule_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/enable_schedule request.
 
@@ -489,7 +489,7 @@ async def test_enable_schedule_request(
 
 
 async def test_get_schedules_request(
-    get_schedules_response: MagicMock
+    get_schedules_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/get_schedules request.
 
@@ -590,7 +590,7 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
 
 
 async def test_set_auto_shutdown_request(
-    set_auto_shutdown_response: MagicMock
+    set_auto_shutdown_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/set_auto_shutdown request.
 
@@ -661,7 +661,7 @@ async def test_set_auto_shutdown_request(
 
 
 async def test_set_device_name_request(
-    set_device_name_response: MagicMock
+    set_device_name_response: MagicMock,
 ) -> None:
     """Unit test-cases for /switcher/set_device_name request.
 
