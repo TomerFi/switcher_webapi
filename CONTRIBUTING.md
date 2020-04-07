@@ -18,6 +18,7 @@ Contributing is pretty straight-forward:
 Please feel free to contribute, even to this contributing guideline file, if you see fit.
 
 - [Documentation](#documentation)
+- [Container Structure](#container-structure)
 - [Testing](#testing)
 - [Code of Conduct](#code-of-conduct)
 
@@ -29,6 +30,16 @@ Please feel free to contribute, even to this contributing guideline file, if you
   documentation generator. From the [docs](docs/) path, type `make html` and
   [sphinx](http://www.sphinx-doc.org) will create the documentation site locally in
   `docs/build`.
+
+## Container Structure
+
+The container content is validated with
+[container-structure-test](https://github.com/GoogleContainerTools/container-structure-test),
+configured with [container_structure.yml](container_structure.yml).
+
+```shell
+container-structure-test test --force --config container_structure.yml --verbosity info --image tomerfi/switcher_webapi:latest
+```
 
 ## Testing
 
