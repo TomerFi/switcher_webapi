@@ -2,11 +2,11 @@
 
 :clap: First off, thank you for taking the time to contribute. :clap:
 
-> **Note**: This repository is a docker image wrapping a python Rest API around the
+> **Note**: This repository is a docker image wrapping a Python REST API server around the
 > `aioswitcher` pypi module.
 >
-> If your contribution is a more of a *core contribution*, please consider maybe
-> it belongs to the integrating module and not the wrapping docker.
+> If your contribution is a more of a *core contribution*,</br>
+> Please consider perhaps it belongs to the integrating module and not the wrapping docker.</br>
 > You can find the module repository [here](https://github.com/TomerFi/aioswitcher).
 
 Contributing is pretty straight-forward:
@@ -48,9 +48,24 @@ Use the designated [Makefile](Makefile) [Make](https://www.gnu.org/software/make
 ```shell
 # display a self explanatory help message.
 make help
+```
 
-# will build a testing version of the docker and structure test it.
-make docker-full-structure-testing
+```text
+help:  Show this help.
+docker-build:  build image from Dockerfile.
+docker-build-testing-image:  build image from Dockerfile using a testing tag.
+docker-remove-testing-image:  remove the testing image (must be build first).
+docker-build-no-cache:  build image from Dockerfile with no caching.
+structure-test:  run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
+docker-build-structure-test:  build the image and test the container structure
+docker-build-no-cache-structure-test:  build the image and test the container structure
+docker-full-structure-testing:  build the image with the testing tag and remove after structure test
+docker-tag-latest:  add latest tag before pushing the latest version
+docker-run:  run the built image as a container (must be built first).
+docker-build-and-run:  build image from Dockerfile and run as container.
+docker-build-no-cache-and-run:  build image from Dockerfile with no caching and run as container.
+push-description:  push the relative README.md file as full description to docker hub, requires username and password arguments
+verify-environment-file:  verify the existence of the required environment variables file.
 ```
 
 ## Testing
@@ -68,7 +83,9 @@ For automated local tests, use [Tox](https://tox.readthedocs.io).
 
 The container content is validated with
 [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test),
-configured with [container_structure.yml](container_structure.yml).
+configured with [container_structure.yml](container_structure.yml).</br>
+
+> Using the [Makefile](Makefile) can achive the same in a cleaner way.
 
 ```shell
 container-structure-test test --force --config container_structure.yml --verbosity info --image tomerfi/switcher_webapi:latest

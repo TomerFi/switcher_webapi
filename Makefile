@@ -1,4 +1,4 @@
-########################################################################
+# ******************************************************************** #
 # .env_vars file contains following keys, example:                     #
 # -------------------------------------------------------------------- #
 # (Optional)                                                           #
@@ -12,7 +12,7 @@
 # CONF_DEVICE_PASSWORD=12345678                                        #
 #																	   #
 # change the source file name by passing env_vars=another_file to make #
-########################################################################
+# ******************************************************************** #
 
 EXPOSED_PORT ?= 8000
 CONF_THROTTLE ?= 5.0
@@ -67,7 +67,7 @@ docker-build-no-cache: ## build image from Dockerfile with no caching.
   -t $(FULL_IMAGE_NAME) .
 
 structure-test: ## run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
-	container-structure-test test --force --config container_structure.yml --verbosity info --image $(strip $(IMAGE_NAME)):testing
+	sh shellscripts/container-structure-test-verify.sh container_structure.yml $(strip $(IMAGE_NAME)):testing
 
 docker-build-structure-test: ## build the image and test the container structure
 docker-build-structure-test: docker-build structure-test
@@ -114,6 +114,3 @@ ifndef CONF_DEVICE_PASSWORD
 	$(error Mandatory configuration value CONF_DEVICE_PASSWORD was not provided, can't run container.)
 endif
 	$(info Safe to run image (assuming the provided information is infact correct).)
-
-######################################################################
-######################################################################
