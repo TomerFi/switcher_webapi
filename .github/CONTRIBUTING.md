@@ -85,7 +85,7 @@ The container content is validated with
 [container-structure-test](https://github.com/GoogleContainerTools/container-structure-test),
 configured with [container_structure.yml](container_structure.yml).</br>
 
-> Using the [Makefile](Makefile) can achive the same in a cleaner way.
+> Using the [Makefile](Makefile) can achieve the same in a cleaner way.
 
 ```shell
 container-structure-test test --force --config container_structure.yml --verbosity info --image tomerfi/switcher_webapi:latest
