@@ -37,10 +37,3 @@ jobs:
           tags: latest,${{ steps.getSemver.outputs.semver }}
           # yamllint disable-line rule:line-length
           build_args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=${{ steps.getSemver.outputs.semver }}
-
-      - name: Update docker hub description
-        uses: peter-evans/dockerhub-description@v2
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          DOCKERHUB_REPOSITORY: tomerfi/switcher_webapi
