@@ -3,9 +3,9 @@
 from os import path as os_path
 from sys import path as sys_path
 
-sys_path.insert(0, os_path.abspath("../../pyscripts"))
+sys_path.insert(0, os_path.abspath("../pyscripts"))
 
-with open("../../VERSION", "r") as version_file:
+with open("../VERSION", "r") as version_file:
     version = version_file.readline()
 
 project = "Switcher Webapi"
