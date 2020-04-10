@@ -1,0 +1,42 @@
+---
+name: DockerTest
+
+on:
+  pull_request:
+    branch: dev
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    name: Verify docker image
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2
+
+      - name: Lint Dockerfile
+        uses: reviewdog/action-hadolint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          level: error
+
+      - name: Get current date
+        id: getDate
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Build docker image (no push)
+        uses: docker/build-push-action@v1
+        with:
+          repository: tomerfi/switcher_webapi
+          tags: testing
+          build_args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
+          push: false
+
+      - name: Test container structure
+        uses: brpaz/structure-tests-action@v1
+        with:
+            image: tomerfi/switcher_webapi:testing
+            configFile: container_structure.yml
+
+      - name: Delete docker image
+        run: docker image rm tomerfi/switcher_webapi:testing
