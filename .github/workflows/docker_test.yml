@@ -29,14 +29,15 @@ jobs:
         with:
           repository: tomerfi/switcher_webapi
           tags: testing
-          build_args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
+          build_args: |
+            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
           push: false
 
       - name: Test container structure
         uses: brpaz/structure-tests-action@v1
         with:
-            image: tomerfi/switcher_webapi:testing
-            configFile: container_structure.yml
+          image: tomerfi/switcher_webapi:testing
+          configFile: container_structure.yml
 
       - name: Delete docker image
         run: docker image rm tomerfi/switcher_webapi:testing
