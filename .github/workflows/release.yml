@@ -24,9 +24,9 @@ jobs:
         id: getDate
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
-      - name: Get semantiv version from file
+      - name: Get semantic version from file
         id: getSemver
-        run: echo "::set-output name=semver::$(cat VERSION | tr -d " \t\n\r" )"
+        run: echo "::set-output name=semver::$(cat VERSION | tr -d ' \t\n\r' )"
 
       - name: Build docker image and push to Docker Hub
         uses: docker/build-push-action@v1

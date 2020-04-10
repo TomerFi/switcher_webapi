@@ -1,7 +1,7 @@
 # Switcher Boiler Unofficial REST API</br>[![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10]
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
-[![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
+[![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
 
 REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/) for integrating with
 the [Switcher Water Heater](https://www.switcher.co.il/).</br>
@@ -68,7 +68,6 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
 [1]: https://dependabot.com
 [2]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%PythonTest
-[3]: https://hub.docker.com/r/tomerfi/switcher_webapi/builds
 [4]: https://switcher-webapi.tomfi.info
 [5]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%DockerTest
 [9]: https://microbadger.com/images/tomerfi/switcher_webapi
@@ -82,5 +81,4 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
 [microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg
 [read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=latest
-[shields-io-docker-cloud-build-status]: https://img.shields.io/docker/cloud/build/tomerfi/switcher_webapi.svg?logo=docker
 [shields-io-docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker
