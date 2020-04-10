@@ -19,7 +19,7 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Label if has conflicts
-        uses: mschilde/auto-label-merge-conflicts
+        uses: mschilde/auto-label-merge-conflicts@master
         with:
           CONFLICT_LABEL_NAME: "conflicts"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
