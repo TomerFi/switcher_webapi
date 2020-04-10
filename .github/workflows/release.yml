@@ -35,7 +35,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           tags: latest,${{ steps.getSemver.outputs.semver }}
-          build_args: |
-            VCS_REF=$GITHUB_SHA,
-            BUILD_DATE=${{ steps.getDate.outputs.date }},
-            VERSION=${{ steps.getSemver.outputs.semver }}
+          # yamllint disable-line rule:line-length
+          build_args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=${{ steps.getSemver.outputs.semver }}
