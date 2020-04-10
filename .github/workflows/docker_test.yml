@@ -34,7 +34,7 @@ jobs:
           push: false
 
       - name: Test container structure
-        uses: brpaz/structure-tests-action@v1
+        uses: brpaz/structure-tests-action@v1.1.2
         with:
           image: tomerfi/switcher_webapi:testing
           configFile: container_structure.yml
