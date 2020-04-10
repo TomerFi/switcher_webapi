@@ -33,6 +33,5 @@ jobs:
           username: ${{ secrets.GH_DOCKER_USERNAME }}
           password: ${{ secrets.GH_DOCKER_PASSWORD }}
           registry: docker.pkg.github.com/tomerfi/switcher_webapi
-          tags: latest
-          build_args: |
-            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=latest
+          tags: dev
+          build_args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=dev
