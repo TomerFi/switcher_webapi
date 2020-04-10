@@ -1,6 +1,6 @@
 # Switcher Boiler Unofficial REST API</br>[![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10]
 
-[![gh-python-status]][2] [![gh-docker-status]][5]</br>
+[![gh-python-status]][2] [![gh-docker-status]][5] [![gh-shell-status]][6] [![gh-docs-status]][7]</br>
 [![shields-io-docker-cloud-build-status]][3] [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
 
 REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/) for integrating with
@@ -71,14 +71,18 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [3]: https://hub.docker.com/r/tomerfi/switcher_webapi/builds
 [4]: https://switcher-webapi.tomfi.info
 [5]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%DockerTest
+[6]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%ShellTest
+[7]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%DocsTest
 [9]: https://microbadger.com/images/tomerfi/switcher_webapi
 [10]: https://hub.docker.com/r/tomerfi/switcher_webapi
 [11]: https://github.com/TomerFi/switcher_webapi/blob/dev/LICENSE
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [dependabot-status]: https://api.dependabot.com/badges/status?host=github&repo=TomerFi/switcher_webapi
+[gh-docs-status]: https://github.com/TomerFi/switcher_webapi/workflows/DocsTest/badge.svg
 [gh-docker-status]: https://github.com/TomerFi/switcher_webapi/workflows/DockerTest/badge.svg
 [gh-python-status]: https://github.com/TomerFi/switcher_webapi/workflows/PythonTest/badge.svg
+[gh-shell-status]: https://github.com/TomerFi/switcher_webapi/workflows/ShellTest/badge.svg
 [microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
 [microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg
 [read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=latest
