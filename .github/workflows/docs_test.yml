@@ -27,6 +27,6 @@ jobs:
           level: error
 
       - name: Sphinx build documentation site
-        uses: ammaraskar/sphinx-action@v0.3
+        uses: ammaraskar/sphinx-action
         with:
           docs-folder: "docs/"
