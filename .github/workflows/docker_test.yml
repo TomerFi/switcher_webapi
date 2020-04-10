@@ -30,7 +30,9 @@ jobs:
           repository: tomerfi/switcher_webapi
           tags: testing
           build_args: |
-            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
+            VCS_REF=$GITHUB_SHA,
+            BUILD_DATE=${{ steps.getDate.outputs.date }},
+            VERSION=testing
           push: false
 
       - name: Test container structure

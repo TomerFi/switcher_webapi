@@ -35,4 +35,6 @@ jobs:
           registry: docker.pkg.github.com/tomerfi/switcher_webapi
           tags: latest
           build_args: |
-            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=latest
+            VCS_REF=$GITHUB_SHA,
+            BUILD_DATE=${{ steps.getDate.outputs.date }},
+            VERSION=latest

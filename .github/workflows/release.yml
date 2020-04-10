@@ -19,4 +19,23 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
-          title: Pre-Release ${{ github.ref }}
+
+      - name: Get current date
+        id: getDate
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Get semantiv version from file
+        id: getSemver
+        run: echo "::set-output name=semver::$(cat VERSION | tr -d " \t\n\r" )"
+
+      - name: Build docker image and push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          repository: tomerfi/switcher_webapi
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          tags: latest,${{ steps.getSemver.outputs.semver }}
+          build_args: |
+            VCS_REF=$GITHUB_SHA,
+            BUILD_DATE=${{ steps.getDate.outputs.date }},
+            VERSION=${{ steps.getSemver.outputs.semver }}
