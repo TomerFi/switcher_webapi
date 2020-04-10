@@ -97,9 +97,6 @@ docker-build-and-run: docker-build docker-run
 docker-build-no-cache-and-run: ## build image from Dockerfile with no caching and run as container.
 docker-build-no-cache-and-run: docker-build-no-cache docker-run
 
-push-description: ## push the relative README.md file as full description to docker hub, requires username and password arguments
-	sh shellscripts/push-docker-description.sh $(strip $(username)) $(strip $(password)) $(strip $(IMAGE_NAME))
-
 verify-environment-file: ## verify the existence of the required environment variables file.
 ifndef CONF_DEVICE_IP_ADDR
 	$(error Mandatory configuration value CONF_DEVICE_IP_ADDR was not provided, can't run container.)

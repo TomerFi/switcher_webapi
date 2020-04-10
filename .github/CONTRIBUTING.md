@@ -65,7 +65,6 @@ docker-tag-latest:  add latest tag before pushing the latest version
 docker-run:  run the built image as a container (must be built first).
 docker-build-and-run:  build image from Dockerfile and run as container.
 docker-build-no-cache-and-run:  build image from Dockerfile with no caching and run as container.
-push-description:  push the relative README.md file as full description to docker hub, requires username and password arguments
 verify-environment-file:  verify the existence of the required environment variables file.
 ```
 
