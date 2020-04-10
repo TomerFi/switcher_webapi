@@ -1,0 +1,38 @@
+---
+name: PreRelease
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    name: Build pre-release and publish to GitHub
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@v1.0.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: latest
+          prerelease: true
+          title: latest
+
+      - name: Get current date
+        id: getDate
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Build docker image (no push)
+        uses: docker/build-push-action@v1
+        with:
+          repository: switcher_webapi
+          username: ${{ secrets.GH_DOCKER_USERNAME }}
+          password: ${{ secrets.GH_DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com/tomerfi/switcher_webapi
+          tags: latest
+          build_args: |
+            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=latest

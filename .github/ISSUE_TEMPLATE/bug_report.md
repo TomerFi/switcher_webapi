@@ -4,6 +4,7 @@ about: Create a report to help us improve
 labels: Bug
 
 ---
+# Bug Report
 
 **Describe the bug**
 A clear and concise Description of what the bug is.

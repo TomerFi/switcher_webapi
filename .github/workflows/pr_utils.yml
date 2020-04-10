@@ -1,0 +1,30 @@
+---
+name: PullRequestsUtils
+
+on: pull_request
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    name: Pull request triage
+    steps:
+      - name: Label pr based on content
+        uses: actions/labeler@v2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Auto assign reviewers
+        uses: kentaro-m/auto-assign-action@v1.1.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Label if has conflicts
+        uses: mschilde/auto-label-merge-conflicts@master
+        with:
+          CONFLICT_LABEL_NAME: "conflicts"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Mark WIP pr as pending.
+        uses: wip/action@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

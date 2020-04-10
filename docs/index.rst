@@ -4,14 +4,10 @@ Welcome to Switcher water heater WebAPI documentation!
 .. toctree::
    :maxdepth: 1
 
-   what
+   install
    prerequisites
    notes
-   install
    usage
-   credits
    license
-   changelog
-   conduct
-   contributing
+   credits
    codedocs

@@ -1,0 +1,22 @@
+---
+name: Release
+
+on:
+  push:
+    tags:
+      - '[0-9].[0-9].[0-9]'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Build release and publish to Docker Hub
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@v1.0.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          title: Pre-Release ${{ github.ref }}

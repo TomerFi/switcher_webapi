@@ -1,0 +1,83 @@
+---
+name: PythonTest
+
+on:
+  pull_request:
+    branch: dev
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.8]
+    name: Verify project with Python ${{ matrix.python }}
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2
+
+      - name: Cache pip repository
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pypoetry
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}-${{ matrix.python }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.python }}-pip-
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install dependencies
+        run: pip install -rrequirements.txt
+
+      - name: Lint yaml files
+        run: yamllint --config-file .yamllint --format colored --strict .
+
+      - name: Security check code with bandit
+        run: bandit -rvc .bandit src/ tests/ docs/ -l -ii
+
+      - name: Validate imports with isort
+        run: isort -w 79 --check-only --recursive pyscripts/ docs/
+
+      - name: Lint code with flake8
+        run: flake8 --ignore D413,W503 --statistics --count --doctests pyscripts/ docs/
+
+      - name: Check code style with black
+        run: black --line-length 79 --check pyscripts/ docs/
+
+      - name: Check static typing with mypy
+        run: mypy --ignore-missing-imports --follow-imports silent pyscripts/ docs/
+
+      - name: Lint rst files
+        run: doc8 --allow-long-titles --max-line-length 100 docs
+
+      - name: Perform unit tests with coverage report
+        run: pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage.xml
+
+      - name: Upload coverage report as artifact
+        if: matrix.python == 3.8
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage-report
+          path: ./coverage.xml
+
+  coverage:
+    runs-on: ubuntu-latest
+    name: Push coverage report to CodeCov
+    needs: [verify]
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2
+
+      - name: Download coverage report from artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage-report
+
+      - name: Push to CodeCov
+        uses: codecov/codecov-action@v1
+        with:
+          file: coverage-report/coverage.xml
+          fail_ci_if_error: true

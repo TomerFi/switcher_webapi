@@ -1,4 +1,4 @@
-########################################################################
+# ******************************************************************** #
 # .env_vars file contains following keys, example:                     #
 # -------------------------------------------------------------------- #
 # (Optional)                                                           #
@@ -12,7 +12,7 @@
 # CONF_DEVICE_PASSWORD=12345678                                        #
 #																	   #
 # change the source file name by passing env_vars=another_file to make #
-########################################################################
+# ******************************************************************** #
 
 EXPOSED_PORT ?= 8000
 CONF_THROTTLE ?= 5.0
@@ -114,6 +114,3 @@ ifndef CONF_DEVICE_PASSWORD
 	$(error Mandatory configuration value CONF_DEVICE_PASSWORD was not provided, can't run container.)
 endif
 	$(info Safe to run image (assuming the provided information is infact correct).)
-
-######################################################################
-######################################################################
