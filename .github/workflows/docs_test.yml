@@ -25,9 +25,3 @@ jobs:
           locale: "US"
           reporter: github-pr-check
           level: error
-
-      - name: Sphinx build documentation site
-        uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "docs/"
-          build-command: "sphinx-build -W -vv -c conf.py . _build"
