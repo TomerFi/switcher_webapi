@@ -24,7 +24,6 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 WORKDIR /srv/switcher_webapi
 
 COPY LICENSE \
-pyscripts/conftest.py \
 pyscripts/consts.py \
 pyscripts/helpers.py \
 pyscripts/mappings.py \

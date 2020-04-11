@@ -5,9 +5,9 @@ fileExistenceTests:
   - name: "LICENSE shouldExist: true"
     path: /srv/switcher_webapi/LICENSE
     shouldExist: true
-  - name: "conftest.py shouldExist: true"
+  - name: "conftest.py shouldExist: false"
     path: /srv/switcher_webapi/conftest.py
-    shouldExist: true
+    shouldExist: false
   - name: "consts.py shouldExist: true"
     path: /srv/switcher_webapi/consts.py
     shouldExist: true
