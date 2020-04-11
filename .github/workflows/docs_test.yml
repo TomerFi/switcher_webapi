@@ -30,4 +30,4 @@ jobs:
         uses: urlstechie/urlchecker-action@0.1.9
         with:
           file_types: .md,.py,.rst
-          force_pass : false
+          force_pass: false
