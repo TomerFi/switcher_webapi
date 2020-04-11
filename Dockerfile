@@ -15,7 +15,7 @@ org.opencontainers.image.version=$VERSION \
 org.opencontainers.image.revision=$VCS_REF \
 org.opencontainers.image.vendor="https://switcher.co.il/" \
 org.opencontainers.image.licenses="MIT" \
-org.opencontainers.image.ref.name=v$VERSION \
+org.opencontainers.image.ref.name=$VERSION \
 org.opencontainers.image.title="tomerfi/switcher_webapi" \
 org.opencontainers.image.description="Switcher Water Heater Unofficial REST API"
 
