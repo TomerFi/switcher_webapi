@@ -15,7 +15,7 @@ docker run -d -p 8000:8000 \
 -e CONF_PHONE_ID=1234 \
 -e CONF_DEVICE_ID=ab1c2d \
 -e CONF_DEVICE_PASSWORD=12345678 \
---name switcher_webapi tomerfi/switcher_webapi:latest"
+--name switcher_webapi tomerfi/switcher_webapi:latest
 ```
 
 You can also add another optional environment variable:
