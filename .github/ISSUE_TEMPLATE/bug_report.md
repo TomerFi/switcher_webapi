@@ -17,7 +17,7 @@ The image version used:
 >
 > ```shell
 > docker image inspect tomerfi/switcher_webapi:latest \
-> -f '{{ index .Config.Labels "org.label-schema.version" }}'
+> -f '{{ index .Config.Labels "org.opencontainers.image.version" }}'
 > ```
 
 **Runtime environment information**
