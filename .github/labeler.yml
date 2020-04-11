@@ -1,4 +1,3 @@
 ---
 pyscripts: pyscripts/**/*
-shellscripts: shellscripts/**/*
 docs: docs/**/*

@@ -1,4 +1,4 @@
-# Switcher Boiler Unofficial REST API</br>[![microbadger-docker-version]][9] [![microbadger-docker-license]][11] [![shields-io-docker-pulls]][10]
+# Switcher Water Heater Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10] [![license-badge]][3]
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
 [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
@@ -68,17 +68,16 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
 [1]: https://dependabot.com
 [2]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%PythonTest
+[3]: https://github.com/TomerFi/switcher_webapi
 [4]: https://switcher-webapi.tomfi.info
 [5]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%DockerTest
-[9]: https://microbadger.com/images/tomerfi/switcher_webapi
 [10]: https://hub.docker.com/r/tomerfi/switcher_webapi
-[11]: https://github.com/TomerFi/switcher_webapi/blob/dev/LICENSE
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [dependabot-status]: https://api.dependabot.com/badges/status?host=github&repo=TomerFi/switcher_webapi
 [gh-docker-status]: https://github.com/TomerFi/switcher_webapi/workflows/DockerTest/badge.svg
 [gh-python-status]: https://github.com/TomerFi/switcher_webapi/workflows/PythonTest/badge.svg
-[microbadger-docker-license]: https://images.microbadger.com/badges/license/tomerfi/switcher_webapi.svg
-[microbadger-docker-version]: https://images.microbadger.com/badges/version/tomerfi/switcher_webapi.svg
+[license-badge]: https://img.shields.io/github/license/tomerfi/switcher_webapi
 [read-the-docs]: https://readthedocs.org/projects/switcher-webapi/badge/?version=latest
-[shields-io-docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker
+[shields-io-docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
+[shields-io-docker-version]: https://img.shields.io/docker/v/tomerfi/switcher_webapi?color=%230A6799&logo=docker

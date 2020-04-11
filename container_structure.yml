@@ -5,9 +5,9 @@ fileExistenceTests:
   - name: "LICENSE shouldExist: true"
     path: /srv/switcher_webapi/LICENSE
     shouldExist: true
-  - name: "conftest.py shouldExist: true"
+  - name: "conftest.py shouldExist: false"
     path: /srv/switcher_webapi/conftest.py
-    shouldExist: true
+    shouldExist: false
   - name: "consts.py shouldExist: true"
     path: /srv/switcher_webapi/consts.py
     shouldExist: true
@@ -37,39 +37,39 @@ fileContentTests:
 
 metadataTest:
   labels:
-    - key: "org.label-schema.build-date"
+    - key: "org.opencontainers.image.created"
       value: "."
       isRegex: true
-    - key: "org.label-schema.name"
+    - key: "org.opencontainers.image.authors"
       value: "."
       isRegex: true
-    - key: "org.label-schema.description"
+    - key: "org.opencontainers.image.url"
       value: "."
       isRegex: true
-    - key: "org.label-schema.url"
+    - key: "org.opencontainers.image.documentation"
       value: "."
       isRegex: true
-    - key: "org.label-schema.vcs-url"
+    - key: "org.opencontainers.image.source"
       value: "."
       isRegex: true
-    - key: "org.label-schema.vcs-ref"
+    - key: "org.opencontainers.image.version"
       value: "."
       isRegex: true
-    - key: "org.label-schema.version"
+    - key: "org.opencontainers.image.revision"
       value: "."
       isRegex: true
-    - key: "org.label-schema.schema-version"
+    - key: "org.opencontainers.image.vendor"
       value: "."
       isRegex: true
-    - key: "org.label-schema.docker.cmd"
-      value: "."
-      isRegex: true
-    - key: "org.label-schema.docker.params"
-      value: "."
-      isRegex: true
-    - key: "license"
+    - key: "org.opencontainers.image.licenses"
       value: "MIT"
-    - key: "maintainer"
+    - key: "org.opencontainers.image.ref.name"
+      value: "."
+      isRegex: true
+    - key: "org.opencontainers.image.title"
+      value: "."
+      isRegex: true
+    - key: "org.opencontainers.image.description"
       value: "."
       isRegex: true
   exposedPorts: ["8000"]
