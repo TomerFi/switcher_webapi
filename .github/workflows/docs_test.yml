@@ -28,3 +28,6 @@ jobs:
 
       - name: Check links in markdown files
         uses: urlstechie/urlchecker-action@0.1.9
+        with:
+          file_types: .md,.py,.rst
+          force_pass : false
