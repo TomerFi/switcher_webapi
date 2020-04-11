@@ -20,7 +20,7 @@ fileExistenceTests:
   - name: "request_handlers.py shouldExist: true"
     path: /srv/switcher_webapi/request_handlers.py
     shouldExist: true
-  - name: "start_server.py.py shouldExist: true"
+  - name: "start_server.py shouldExist: true"
     path: /srv/switcher_webapi/start_server.py
     shouldExist: true
   - name: "test_server.py shouldExist: false"
