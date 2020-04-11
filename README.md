@@ -1,4 +1,4 @@
-# Switcher Boiler Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10]
+# Switcher Water Heater Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10]
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
 [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]

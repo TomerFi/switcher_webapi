@@ -17,7 +17,7 @@ org.opencontainers.image.vendor="https://switcher.co.il/" \
 org.opencontainers.image.licenses="MIT" \
 org.opencontainers.image.ref.name=v$VERSION \
 org.opencontainers.image.title="tomerfi/switcher_webapi" \
-org.opencontainers.image.description="Unofficial WebAPI integration with the switcher water heater."
+org.opencontainers.image.description="Switcher Water Heater Unofficial REST API"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
