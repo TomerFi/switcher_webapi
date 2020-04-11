@@ -36,6 +36,7 @@ KEY_STATE = "state"
 KEY_START_TIME = "start_time"
 KEY_SUCCESSFUL = "successful"
 KEY_TIME_LEFT = "time_left"
+KEY_TIME_ON = "time_on"
 
 PARAM_DAYS = "days"
 PARAM_HOURS = "hours"

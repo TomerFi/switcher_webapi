@@ -553,6 +553,7 @@ async def get_state_handler(
                     consts.KEY_SUCCESSFUL: state_response.successful,
                     consts.KEY_STATE: state_response.state,
                     consts.KEY_TIME_LEFT: state_response.time_left,
+                    consts.KEY_TIME_ON: state_response.time_on,
                     consts.KEY_AUTO_OFF: state_response.auto_off,
                     consts.KEY_POWER_CONSUMPTION: state_response.power,
                     consts.KEY_ELECTRIC_CURRENT: state_response.current,
