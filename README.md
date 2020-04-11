@@ -58,7 +58,7 @@ CONF_THROTTLE=5.0
 
 ## Contributing
 
-The contributing guidlines are [here](.github/CONTRIBUTING.md)
+The contributing guidelines are [here](.github/CONTRIBUTING.md)
 
 ## Code of Conduct
 
