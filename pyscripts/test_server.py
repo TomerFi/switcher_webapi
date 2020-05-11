@@ -562,6 +562,7 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
                 assert body[consts.KEY_SUCCESSFUL]
                 assert body[consts.KEY_STATE] == STATE_ON
                 assert body[consts.KEY_TIME_LEFT] == consts.DUMMY_TIME_LEFT
+                assert body[consts.KEY_TIME_ON] == consts.DUMMY_TIME_ON
                 assert body[consts.KEY_AUTO_OFF] == consts.DUMMY_AUTO_OFF
                 assert body[consts.KEY_POWER_CONSUMPTION] == (
                     consts.DUMMY_POWER_CONSUMPTION

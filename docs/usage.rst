@@ -23,6 +23,7 @@ get_state
      "successful": true,
      "state": "on",
      "time_left": "00:47:25",
+     "time_on": "00:12:35",
      "auto_off": "01:30:00",
      "power_consumption": 2669,
      "electric_current": 12.3

@@ -144,6 +144,7 @@ def mock_get_state_response() -> Generator[MagicMock, Any, None]:
     mock_future_response.successful = True
     mock_future_response.state = STATE_ON
     mock_future_response.time_left = consts.DUMMY_TIME_LEFT
+    mock_future_response.time_on = consts.DUMMY_TIME_ON
     mock_future_response.auto_off = consts.DUMMY_AUTO_OFF
     mock_future_response.power = consts.DUMMY_POWER_CONSUMPTION
     mock_future_response.current = consts.DUMMY_ELECTRIC_CURRENT
