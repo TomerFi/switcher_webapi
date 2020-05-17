@@ -27,7 +27,7 @@ def get_next_weekday(is_iso: bool = False) -> int:
       is_iso: If true, Monday=1 and Sunday=7. Else Monday=0 and Sunday=6.
 
     Returns:
-      The int value represnting the the next weekday (tommorow).
+      The int value represnting the the next weekday (tomorrow).
 
     """
     max_day = 7 if is_iso else 6
