@@ -1,0 +1,12 @@
+{
+	"name": "swapi dev container",
+	"dockerFile": "Dockerfile",
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"python.pythonPath": "/usr/local/bin/python"
+	},
+	"extensions": [
+		"ms-python.python",
+		"ms-azuretools.vscode-docker"
+	]
+}

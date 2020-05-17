@@ -36,7 +36,7 @@ jobs:
         run: yamllint --config-file .yamllint --format colored --strict .
 
       - name: Security check code with bandit
-        run: bandit -rvc .bandit src/ tests/ docs/ -l -ii
+        run: bandit -rvc .bandit pyscripts/ docs/ -l -ii
 
       - name: Validate imports with isort
         run: isort --check-only --recursive pyscripts/ docs/
