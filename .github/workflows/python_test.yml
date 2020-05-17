@@ -30,7 +30,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Install dependencies
-        run: pip install -rrequirements.txt
+        run: pip install -rrequirements.txt -r.devcontainer/requirements.txt
 
       - name: Lint yaml files
         run: yamllint --config-file .yamllint --format colored --strict .
