@@ -1,0 +1,100 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install build requirements",
+            "type": "shell",
+            "command": "pip install -rrequirements.txt",
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            }
+        },
+        {
+            "label": "Install docs requirements",
+            "type": "shell",
+            "command": "pip install -rrequirements.txt",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/docs"
+            }
+        },
+        {
+            "label": "Perform unit tests",
+            "type": "shell",
+            "command": "pytest -vs --cov --cov-config=.coveragerc",
+            "group": {
+              "kind": "test",
+              "isDefault": true
+            },
+            "dependsOn": ["Install build requirements"]
+        },
+        {
+            "label": "Lint yaml files",
+            "type": "shell",
+            "command": "yamllint --config-file .yamllint --format colored --strict .",
+            "group": "test"
+        },
+        {
+            "label": "Security check with bandit",
+            "type": "shell",
+            "command": "bandit -rvc .bandit pyscripts/ docs/ -l -ii",
+            "group": "test"
+        },
+        {
+            "label": "Validate imports with isort",
+            "type": "shell",
+            "command": "isort --check-only --recursive pyscripts/ docs/",
+            "group": "test",
+            "dependsOn": ["Install build requirements"]
+        },
+        {
+            "label": "Lint code with flake8",
+            "type": "shell",
+            "command": "flake8 --statistics --count --doctests pyscripts/ docs/",
+            "group": "test"
+        },
+        {
+            "label": "Check code style with black",
+            "type": "shell",
+            "command": "black --line-length 79 --check pyscripts/ docs/",
+            "group": "test"
+        },
+        {
+            "label": "Check static typing with mypy",
+            "type": "shell",
+            "command": "mypy --ignore-missing-imports --follow-imports silent pyscripts/ docs/",
+            "group": "test"
+        },
+        {
+            "label": "Lint rst files",
+            "type": "shell",
+            "command": "doc8 --allow-long-titles --max-line-length 100 docs",
+            "group": "test"
+        },
+        {
+            "label": "Lint markdown files",
+            "type": "shell",
+            "command": "markdownlint **/*.md",
+            "group": "test"
+        },
+        {
+            "label": "Check spelling in rst and md files",
+            "type": "shell",
+            "command": "misspell -error -locale=US -source=text *.md **/*.rst",
+            "group": "test"
+        },
+        {
+            "label": "Lint Dockerfile with hadolint",
+            "type": "shell",
+            "command": "hadolint Dockerfile",
+            "group": "test"
+        },
+        {
+            "label": "Lint devcontainer Dockerfile",
+            "type": "shell",
+            "command": "hadolint .devcontainer/Dockerfile",
+            "group": "test"
+        }
+    ]
+  }
