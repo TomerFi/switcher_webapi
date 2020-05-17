@@ -193,7 +193,7 @@ get_schedules
          "end_time": "18:00",
          "duration": "1:00:00",
          "schedule_data": "0101020160a6c95c70b4c95c",
-         "next_run": "Due tommorow at 17:00"
+         "next_run": "Due tomorrow at 17:00"
        }
      ]
    }

@@ -22,6 +22,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 - [Docker Build](#docker-build)
 - [Testing](#testing)
   - [Python Test Framework](#python-test-framework)
+  - [Local Testing](#local-testing)
   - [Container Structure Test](#container-structure-test)
 - [Code of Conduct](#code-of-conduct)
 
@@ -77,7 +78,11 @@ The file [pyscripts/test_server.py](../pyscripts/test_server.py) holds the vario
 web server, the file [pyscripts/test_server.py](../pyscripts/conftest.py) holds the various mocks and
 fixtures used to testing.
 
-For automated local tests, use [Tox](https://tox.readthedocs.io).
+### Local Testing
+
+For automated local tests, use [Tox](https://tox.readthedocs.io).</br>
+Vscode users, can use the tasks from the [tasks.json](../.vscode/tasks.json) inside a container
+created with [devcontainer.json](../.devcontainer/devcontainer.json).
 
 ### Container Structure Test
 

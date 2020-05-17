@@ -1,10 +1,12 @@
+<!-- markdownlint-disable line-length -->
 # Switcher Water Heater Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10] [![license-badge]][3]
+<!-- markdownlint-enable line-length -->
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
 [![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
 
-REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/) for integrating with
-the [Switcher Water Heater](https://www.switcher.co.il/).</br>
+REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/)
+for integrating with the [Switcher Water Heater](https://www.switcher.co.il/).</br>
 Please check out the [documentation][4].
 
 ## Docker

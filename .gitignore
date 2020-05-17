@@ -1,8 +1,4 @@
-##########################
-### Custom for project ###
-##########################
-.env_vars
-node_modules
+# Project specific conf is at the bottom.
 
 ########################################################################
 ### https://github.com/github/gitignore/blob/master/Python.gitignore ###
@@ -130,3 +126,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+##########################
+### Custom for project ###
+##########################
+!.env
+.env_vars
