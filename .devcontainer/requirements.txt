@@ -2,7 +2,7 @@ aiohttp==3.6.2
 aioswitcher==1.2.0
 asynctest==0.13.0
 bandit==1.6.2
-beautifulsoup4==4.9.0
+beautifulsoup4==4.9.1
 black==19.10b0
 codecov==2.0.22
 doc8==0.8.0
