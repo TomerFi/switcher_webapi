@@ -12,7 +12,7 @@ isort==4.3.21
 mypy==0.780
 pygments==2.6.1
 pytest==5.4.3
-pytest-cov==2.9.0
+pytest-cov==2.10.0
 pytest-sanic==1.6.1
 tox==3.15.2
 yamllint==1.23.0
