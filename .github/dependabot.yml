@@ -36,3 +36,15 @@ updates:
       - "TomerFi"
     labels:
       - "dependabot"
+
+  - package-ecosystem: "docker"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "daily"
+    target-branch: "dev"
+    reviewers:
+      - "TomerFi"
+    assignees:
+      - "TomerFi"
+    labels:
+      - "dependabot"
