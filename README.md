@@ -3,7 +3,7 @@
 <!-- markdownlint-enable line-length -->
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
-[![read-the-docs]][4] [![codecov]][0] [![dependabot-status]][1]
+[![read-the-docs]][4] [![codecov]][0]
 
 REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/)
 for integrating with the [Switcher Water Heater](https://www.switcher.co.il/).</br>
@@ -68,7 +68,6 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
-[1]: https://dependabot.com
 [2]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%PythonTest
 [3]: https://github.com/TomerFi/switcher_webapi
 [4]: https://switcher-webapi.tomfi.info
@@ -76,7 +75,6 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [10]: https://hub.docker.com/r/tomerfi/switcher_webapi
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
-[dependabot-status]: https://api.dependabot.com/badges/status?host=github&repo=TomerFi/switcher_webapi
 [gh-docker-status]: https://github.com/TomerFi/switcher_webapi/workflows/DockerTest/badge.svg
 [gh-python-status]: https://github.com/TomerFi/switcher_webapi/workflows/PythonTest/badge.svg
 [license-badge]: https://img.shields.io/github/license/tomerfi/switcher_webapi
