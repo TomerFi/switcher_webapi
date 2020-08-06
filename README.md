@@ -1,5 +1,5 @@
 <!-- markdownlint-disable line-length -->
-# Switcher Water Heater Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10] [![license-badge]][3]
+# Switcher Water Heater Unofficial REST API</br>[![shields-io-docker-version]][10] [![shields-io-docker-pulls]][10] [![license-badge]][3] [![conventional-commits]][1]
 <!-- markdownlint-enable line-length -->
 
 [![gh-python-status]][2] [![gh-docker-status]][5]</br>
@@ -68,6 +68,7 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
+[1]: https://conventionalcommits.org
 [2]: https://github.com/TomerFi/switcher_webapi/actions?query=workflow%PythonTest
 [3]: https://github.com/TomerFi/switcher_webapi
 [4]: https://switcher-webapi.tomfi.info
@@ -75,6 +76,7 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [10]: https://hub.docker.com/r/tomerfi/switcher_webapi
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
+[conventional-commits]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
 [gh-docker-status]: https://github.com/TomerFi/switcher_webapi/workflows/DockerTest/badge.svg
 [gh-python-status]: https://github.com/TomerFi/switcher_webapi/workflows/PythonTest/badge.svg
 [license-badge]: https://img.shields.io/github/license/tomerfi/switcher_webapi
