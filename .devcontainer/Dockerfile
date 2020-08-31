@@ -10,19 +10,19 @@ ENV SHELL=/bin/bash \
 
 # Install nodejs (includes npm)
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y --no-install-recommends nodejs=14.3.0-1nodesource1 \
+    && apt-get install -y --no-install-recommends nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install golang
 WORKDIR /opt/go
-RUN curl -sOL https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz \
-    && tar -C /opt -xf go1.14.2.linux-amd64.tar.gz \
-    && rm go1.14.2.linux-amd64.tar.gz \
+RUN curl -sOL https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz \
+    && tar -C /opt -xf go1.14.4.linux-amd64.tar.gz \
+    && rm go1.14.4.linux-amd64.tar.gz \
     && bin/go env -w GOPATH=/opt/gopath GO111MODULE=on
 
 # Install hadolint
-RUN curl -sL https://github.com/hadolint/hadolint/releases/download/v1.17.6/hadolint-Linux-x86_64 \
+RUN curl -sL https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-Linux-x86_64 \
         -o /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
 
@@ -32,7 +32,7 @@ COPY requirements.txt ./
 # Install modules, requirements, dependencies, packages, libraries etc.
 RUN \
     # Install node modules
-    npm install -g markdownlint-cli@0.23.1 \
+    npm install -g markdownlint-cli@0.23.2 \
     # Install golang modules
     && go get -u github.com/client9/misspell/cmd/misspell@v0.3.4 \
     # Install python dependencies
