@@ -45,7 +45,5 @@ RUN \
         @commitlint/config-conventional@9.0.1 \
     # Install golang modules
     && go get -u github.com/client9/misspell/cmd/misspell@v0.3.4 \
-    # upgrade pip
-    && pip install --upgrade pip \
     # Install python dependencies
     && pip install --no-cache-dir -r requirements.txt
