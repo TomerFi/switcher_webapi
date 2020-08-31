@@ -6,8 +6,8 @@
             "type": "shell",
             "command": "pip install -rrequirements.txt",
             "group": {
-              "kind": "build",
-              "isDefault": true
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
@@ -24,8 +24,8 @@
             "type": "shell",
             "command": "pytest -vs --cov --cov-config=.coveragerc",
             "group": {
-              "kind": "test",
-              "isDefault": true
+                "kind": "test",
+                "isDefault": true
             },
             "dependsOn": ["Install build requirements"]
         },
@@ -97,4 +97,4 @@
             "group": "test"
         }
     ]
-  }
+}

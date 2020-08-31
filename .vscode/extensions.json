@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "davidanson.vscode-markdownlint",
+        "shardulm94.trailing-spaces",
+        "coenraads.bracket-pair-colorizer-2",
+        "oderwat.indent-rainbow",
+        "wakatime.vscode-wakatime",
+        "bierner.markdown-emoji",
+        "njpwerner.autodocstring",
+        "lextudio.restructuredtext"
+    ]
+}
