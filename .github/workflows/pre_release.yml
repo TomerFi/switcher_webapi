@@ -27,7 +27,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Build docker image and push to GPR
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           repository: switcher_webapi
           username: ${{ secrets.GH_DOCKER_USERNAME }}
