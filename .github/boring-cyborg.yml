@@ -1,0 +1,10 @@
+# https://probot.github.io/apps/boring-cyborg/
+---
+labelPRBasedOnFilePath:
+  pyscripts:
+    - pyscripts/**/*
+  docs:
+    - docs/**/*
+
+firstIssueWelcomeComment: >
+  Thanks for opening your first issue here! Be sure to follow the issue template!
