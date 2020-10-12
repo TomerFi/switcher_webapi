@@ -31,7 +31,6 @@ jobs:
             VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
           tags: tomerfi/switcher_webapi:testing
 
-
       - name: Test container structure
         uses: brpaz/structure-tests-action@v1.1.2
         with:

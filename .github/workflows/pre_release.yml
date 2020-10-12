@@ -28,7 +28,7 @@ jobs:
 
       - name: Login to GPR
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+        uses: docker/login-action@v1.4.1
         with:
           registry: docker.pkg.github.com
           username: ${{ secrets.GH_DOCKER_USERNAME }}
