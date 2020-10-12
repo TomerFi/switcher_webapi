@@ -46,6 +46,7 @@ jobs:
           tags: tomerfi/switcher_webapi:testing
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          load: true
 
       - name: Test container structure
         uses: brpaz/structure-tests-action@v1.1.2
