@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          tags: tomerfi/switcher_webapi:dev
+          tags: ghcr.io/tomerfi/switcher_webapi:dev
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
