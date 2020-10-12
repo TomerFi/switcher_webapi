@@ -28,6 +28,9 @@ jobs:
         id: getSemver
         run: echo "::set-output name=semver::$(cat VERSION | tr -d ' \t\n\r' )"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1.0.1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1.0.2
 
