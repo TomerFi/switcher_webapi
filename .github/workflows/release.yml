@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create release
+        if: github.event_name != 'pull_request'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,6 +34,14 @@ jobs:
         uses: docker/setup-buildx-action@v1.0.2
         with:
           driver-opts: image=moby/buildkit:buildx-stable-1
+
+      - name: Cache Docker layers
+        if: github.event_name != 'pull_request'
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: ${{ runner.os }}-buildx-
 
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
@@ -54,3 +63,5 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=${{ steps.getSemver.outputs.semver }}
           push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
