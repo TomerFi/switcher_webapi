@@ -63,3 +63,5 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=${{ steps.getSemver.outputs.semver }}
           push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
