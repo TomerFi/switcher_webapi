@@ -25,13 +25,11 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Build docker image (no push)
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
-          repository: tomerfi/switcher_webapi
-          tags: testing
-          build_args: |
+          build-args: |
             VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
-          push: false
+          tags: tomerfi/switcher_webapi:testing
 
       - name: Test container structure
         uses: brpaz/structure-tests-action@v1.1.2
