@@ -24,11 +24,16 @@ jobs:
         id: getDate
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.0.2
+
       - name: Build docker image (no push)
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=testing
+            VCS_REF=${{ github.sha }}
+            BUILD_DATE=${{ steps.getDate.outputs.date }}
+            VERSION=testing
           tags: tomerfi/switcher_webapi:testing
 
       - name: Test container structure

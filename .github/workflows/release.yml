@@ -46,6 +46,8 @@ jobs:
           tags: |
             tomerfi/switcher_webapi:latest
             tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
-          # yamllint disable-line rule:line-length
-          build-args: VCS_REF=$GITHUB_SHA,BUILD_DATE=${{ steps.getDate.outputs.date }},VERSION=${{ steps.getSemver.outputs.semver }}
+          build-args: |
+            VCS_REF=${{ github.sha }}
+            BUILD_DATE=${{ steps.getDate.outputs.date }}
+            VERSION=${{ steps.getSemver.outputs.semver }}
           push: true
