@@ -1,5 +1,5 @@
 aioswitcher==1.2.1
 asyncio_throttle==1.0.1
 pytz==2020.1
-sanic==19.12.2
+sanic==19.12.3
 uvloop==0.14.0
