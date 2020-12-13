@@ -17,6 +17,21 @@ updates:
       prefix: "build"
       include: "scope"
 
+  - package-ecosystem: "pip"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "daily"
+    target-branch: "dev"
+    reviewers:
+      - "TomerFi"
+    assignees:
+      - "TomerFi"
+    labels:
+      - "dependabot"
+    commit-message:
+      prefix: "build"
+      include: "scope"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
