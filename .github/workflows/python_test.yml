@@ -42,7 +42,7 @@ jobs:
         run: bandit -rvc .bandit pyscripts/ docs/ -l -ii
 
       - name: Validate imports with isort
-        run: isort --check-only --recursive pyscripts/ docs/
+        run: isort --check-only pyscripts/ docs/
 
       - name: Lint code with flake8
         run: flake8 --statistics --count --doctests pyscripts/ docs/
