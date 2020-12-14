@@ -4,14 +4,13 @@
 
 """
 
+import consts
+import mappings
 from aiohttp import ClientSession
 from aioswitcher.api.messages import ResponseMessageType
 from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from asynctest import MagicMock, patch
 from bs4 import BeautifulSoup
-
-import consts
-import mappings
 from helpers import get_local_ip_address, get_next_weekday
 
 BASE_URL_FORMAT = (
