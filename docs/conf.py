@@ -33,7 +33,6 @@ autodoc_mock_imports = [
     "aiohttp",
     "aioswitcher",
     "asyncio_throttle",
-    "asynctest",
     "bs4",
     "pytest",
     "sanic",
