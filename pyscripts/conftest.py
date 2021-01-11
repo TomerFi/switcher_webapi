@@ -6,7 +6,7 @@
 
 # fmt: off
 from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
-                     get_event_loop, set_event_loop)
+                     get_event_loop, new_event_loop, set_event_loop)
 from typing import Any, Generator
 
 import consts
@@ -20,7 +20,6 @@ from sanic import Sanic
 from start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
                           CONF_DEVICE_PASSWORD, CONF_PHONE_ID, CONF_THROTTLE,
                           sanic_app)
-from uvloop import new_event_loop
 
 # fmt: on
 
