@@ -6,7 +6,8 @@
 
 # fmt: off
 from argparse import ArgumentParser
-from asyncio import AbstractEventLoop, get_event_loop, set_event_loop
+from asyncio import (AbstractEventLoop, get_event_loop, new_event_loop,
+                     set_event_loop)
 from functools import partial, update_wrapper
 from sys import exit as sys_exit
 from typing import Optional
@@ -24,7 +25,6 @@ from sanic.exceptions import SanicException, ServerError
 from sanic.log import logger
 from sanic.request import Request
 from sanic.response import HTTPResponse, text
-from uvloop import new_event_loop
 
 # fmt: on
 

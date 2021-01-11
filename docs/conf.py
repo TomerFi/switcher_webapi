@@ -37,5 +37,4 @@ autodoc_mock_imports = [
     "bs4",
     "pytest",
     "sanic",
-    "uvloop",
 ]
