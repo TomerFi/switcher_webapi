@@ -8,12 +8,12 @@
 from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
                      get_event_loop, new_event_loop, set_event_loop)
 from typing import Any, Generator
+from unittest.mock import MagicMock, Mock, patch
 
 import consts
 from aioswitcher.api import messages
 from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from aioswitcher.schedules import SwitcherV2Schedule
-from asynctest import MagicMock, Mock, patch
 from helpers import get_local_ip_address, get_next_weekday
 from pytest import fixture
 from sanic import Sanic
