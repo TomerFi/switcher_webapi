@@ -4,6 +4,7 @@
 
 """
 
+from sys import platform
 from unittest.mock import MagicMock, patch
 
 import consts
@@ -13,6 +14,7 @@ from aioswitcher.api.messages import ResponseMessageType
 from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from bs4 import BeautifulSoup
 from helpers import get_local_ip_address, get_next_weekday
+from pytest import mark
 
 BASE_URL_FORMAT = (
     "http://"
@@ -488,6 +490,10 @@ async def test_enable_schedule_request(
                 assert consts.KEY_MESSAGE in body
 
 
+@mark.skipif(
+    platform == "win32",
+    reason="byte time from get_schedules_response mock not working on linux",
+)
 async def test_get_schedules_request(
     get_schedules_response: MagicMock,
 ) -> None:
