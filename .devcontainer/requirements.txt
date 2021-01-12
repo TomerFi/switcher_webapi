@@ -1,5 +1,5 @@
 aiohttp==3.7.3
-aioswitcher==1.2.1
+aioswitcher==1.2.2
 asynctest==0.13.0
 bandit==1.7.0
 beautifulsoup4==4.9.3
