@@ -1,5 +1,5 @@
 ---
-name: DocsTest
+name: Pull request docs
 
 on: pull_request
 
