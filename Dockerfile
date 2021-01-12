@@ -24,11 +24,7 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 WORKDIR /srv/switcher_webapi
 
 COPY LICENSE \
-pyscripts/consts.py \
-pyscripts/helpers.py \
-pyscripts/mappings.py \
-pyscripts/request_handlers.py \
-pyscripts/start_server.py \
+src/switcher_webapi/*.py \
 requirements.txt ./
 
 RUN pip install -r requirements.txt

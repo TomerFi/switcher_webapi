@@ -4,51 +4,48 @@ Code Documentation
 Application run scripts
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-pyscripts/request_handlers.py
------------------------------
+src/switcher_webapi/request_handlers.py
+---------------------------------------
 
 .. automodule:: request_handlers
     :members:
     :private-members:
 
-pyscripts/start_server.py
--------------------------
+src/switcher_webapi/start_server.py
+-----------------------------------
 
 .. automodule:: start_server
+    :members:
+
+src/switcher_webapi/consts.py
+-----------------------------
+
+.. automodule:: consts
+    :undoc-members:
+
+src/switcher_webapi/mappings.py
+-------------------------------
+
+.. automodule:: mappings
+    :undoc-members:
+
+src/switcher_webapi/helpers.py
+------------------------------
+
+.. automodule:: helpers
     :members:
 
 Unit testing scripts
 ^^^^^^^^^^^^^^^^^^^^
 
-pyscripts/conftest.py
+src/tests/conftest.py
 ---------------------
 
 .. automodule:: conftest
     :members:
 
-pyscripts/helpers.py
----------------------
-
-.. automodule:: helpers
-    :members:
-
-pyscripts/test_server.py
+src/tests/test_server.py
 ------------------------
 
 .. automodule:: test_server
     :members:
-
-Shared scripts
-^^^^^^^^^^^^^^
-
-pyscripts/consts.py
--------------------
-
-.. automodule:: consts
-    :undoc-members:
-
-pyscripts/mappings.py
-----------------------
-
-.. automodule:: mappings
-    :undoc-members:

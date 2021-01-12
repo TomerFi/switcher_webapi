@@ -10,16 +10,17 @@ from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
 from typing import Any, Generator
 from unittest.mock import MagicMock, Mock, patch
 
-import consts
 from aioswitcher.api import messages
 from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from aioswitcher.schedules import SwitcherV2Schedule
-from helpers import get_local_ip_address, get_next_weekday
 from pytest import fixture
 from sanic import Sanic
-from start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
-                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID, CONF_THROTTLE,
-                          sanic_app)
+
+from switcher_webapi import consts
+from switcher_webapi.helpers import get_local_ip_address, get_next_weekday
+from switcher_webapi.start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
+                                          CONF_DEVICE_PASSWORD, CONF_PHONE_ID,
+                                          CONF_THROTTLE, sanic_app)
 
 # fmt: on
 
@@ -37,7 +38,7 @@ def mock_control_response() -> Generator[MagicMock, Any, None]:
     mock_response.msg_type = messages.ResponseMessageType.CONTROL
 
     with patch(
-        "request_handlers.messages.SwitcherV2ControlResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2ControlResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -56,7 +57,7 @@ def mock_create_schedule_request() -> Generator[MagicMock, Any, None]:
     mock_response.msg_type = messages.ResponseMessageType.CREATE_SCHEDULE
 
     with patch(
-        "request_handlers.messages.SwitcherV2CreateScheduleResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2CreateScheduleResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -75,7 +76,7 @@ def mock_delete_schedule_request() -> Generator[MagicMock, Any, None]:
     mock_response.msg_type = messages.ResponseMessageType.DELETE_SCHEDULE
 
     with patch(
-        "request_handlers.messages.SwitcherV2DeleteScheduleResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2DeleteScheduleResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -98,7 +99,7 @@ def mock_disable_enable_schedule_request() -> Generator[MagicMock, Any, None]:
     )
 
     with patch(
-        "request_handlers.messages.SwitcherV2DisableEnableScheduleResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2DisableEnableScheduleResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -124,7 +125,7 @@ def mock_get_schedules_response(
     mock_response.msg_type = messages.ResponseMessageType.GET_SCHEDULES
 
     with patch(
-        "request_handlers.messages.SwitcherV2GetScheduleResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2GetScheduleResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -153,7 +154,7 @@ def mock_get_state_response() -> Generator[MagicMock, Any, None]:
     mock_initial_response.init_future.set_result(mock_future_response)
 
     with patch(
-        "request_handlers.messages.SwitcherV2StateResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2StateResponseMSG",
         new=mock_initial_response,
     ) as patcher:
         yield patcher
@@ -227,7 +228,7 @@ def mock_set_auto_shutdown_response() -> Generator[MagicMock, Any, None]:
     mock_response.msg_type = messages.ResponseMessageType.AUTO_OFF
 
     with patch(
-        "request_handlers.messages.SwitcherV2SetAutoOffResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2SetAutoOffResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher
@@ -246,7 +247,7 @@ def mock_set_device_name_response() -> Generator[MagicMock, Any, None]:
     mock_response.msg_type = messages.ResponseMessageType.UPDATE_NAME
 
     with patch(
-        "request_handlers.messages.SwitcherV2UpdateNameResponseMSG",
+        "switcher_webapi.request_handlers.messages.SwitcherV2UpdateNameResponseMSG",  # noqa:501
         new=mock_response,
     ) as patcher:
         yield patcher

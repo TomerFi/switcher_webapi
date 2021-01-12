@@ -39,19 +39,19 @@ jobs:
         run: yamllint --config-file .yamllint --format colored --strict .
 
       - name: Security check code with bandit
-        run: bandit -rvc .bandit pyscripts/ docs/ -l -ii
+        run: bandit -rvc .bandit setup.py src/ docs/ -l -ii
 
       - name: Validate imports with isort
-        run: isort --check-only pyscripts/ docs/
+        run: isort --check-only setup.py src/ docs/
 
       - name: Lint code with flake8
-        run: flake8 --statistics --count --doctests pyscripts/ docs/
+        run: flake8 --statistics --count --doctests setup.py src/ docs/
 
       - name: Check code style with black
-        run: black --line-length 79 --check pyscripts/ docs/
+        run: black --line-length 79 --check setup.py setup.py src/ docs/
 
       - name: Check static typing with mypy
-        run: mypy --ignore-missing-imports --follow-imports silent pyscripts/ docs/
+        run: mypy --ignore-missing-imports --follow-imports silent setup.py src/ docs/
 
       - name: Lint rst files
         run: doc8 --allow-long-titles --max-line-length 100 docs
