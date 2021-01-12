@@ -27,7 +27,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 - [Code of Conduct](#code-of-conduct)
 
 > **Important Note**: the project's `semver` is set in the [VERSION](../VERSION) file as it is used
-> by both [Makefile](../Makefile) and [docs/conf.py](../docs/conf.py).
+> by [setup.py](../setup.py), [Makefile](../Makefile), and [docs/conf.py](../docs/conf.py).
 
 ## Documentation
 
@@ -40,7 +40,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 
 ## Python Code
 
-It's basically a web server, start with [pyscripts/start_server.py](../pyscripts/start_server.py),
+It's basically a web server, start with [src/switcher_webapi/start_server.py](../src/switcher_webapi/start_server.py),
 and follow the [docs](https://switcher-webapi.tomfi.info). The file names are pretty self explanatory.
 
 ## Docker Build
@@ -74,8 +74,8 @@ verify-environment-file:  verify the existence of the required environment varia
 ### Python Test Framework
 
 Testing is performed with [Pytest, Full-featured Python testing tool](https://docs.pytest.org).</br>
-The file [pyscripts/test_server.py](../pyscripts/test_server.py) holds the various test cases for the
-web server, the file [pyscripts/test_server.py](../pyscripts/conftest.py) holds the various mocks and
+The file [src/tests/test_server.py](../src/tests/test_server.py) holds the various test cases for the
+web server, the file [src/tests/conftest.py](../src/tests/conftest.py) holds the various mocks and
 fixtures used to testing.
 
 ### Local Testing

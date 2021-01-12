@@ -1,8 +1,10 @@
 # https://probot.github.io/apps/boring-cyborg/
 ---
 labelPRBasedOnFilePath:
-  pyscripts:
-    - pyscripts/**/*
+  tests:
+    - src/tests/**/*
+  src:
+    - src/*
   docs:
     - docs/**/*
 

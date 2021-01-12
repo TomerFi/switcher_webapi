@@ -6,7 +6,7 @@ Makefile
 tox.ini
 
 # Don't ignore
-!pyscripts
+!src
 !LICENSE
 !README.md
 !requirements.txt

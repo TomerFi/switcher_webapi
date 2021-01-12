@@ -9,7 +9,6 @@ from asyncio import get_running_loop
 from datetime import timedelta
 from typing import Dict, List, Optional
 
-import consts
 from aioswitcher.api import SwitcherV2Api, messages
 from aioswitcher.consts import (COMMAND_OFF, COMMAND_ON, DAY_TO_INT_DICT,
                                 DISABLE_SCHEDULE, ENABLE_SCHEDULE,
@@ -22,6 +21,8 @@ from sanic.exceptions import InvalidUsage, ServerError, ServiceUnavailable
 from sanic.log import logger
 from sanic.request import Request
 from sanic.response import HTTPResponse, json
+
+from switcher_webapi import consts
 
 # fmt: on
 
