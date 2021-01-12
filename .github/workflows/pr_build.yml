@@ -1,16 +1,16 @@
 ---
-name: PythonTest
+name: Pull request build
 
 on:
   pull_request:
     branch: dev
 
 jobs:
-  verify:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.8, 3.9]
+        python: [3.9]
     name: Verify project with Python ${{ matrix.python }}
     steps:
       - name: Source checkout
@@ -60,7 +60,6 @@ jobs:
         run: pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage.xml
 
       - name: Upload coverage report as artifact
-        if: matrix.python == 3.8
         uses: actions/upload-artifact@v2.2.2
         with:
           name: coverage-report
@@ -69,7 +68,7 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     name: Push coverage report to CodeCov
-    needs: [verify]
+    needs: [build]
     steps:
       - name: Source checkout
         uses: actions/checkout@v2
