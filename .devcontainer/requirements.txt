@@ -1,5 +1,5 @@
 aiohttp==3.7.3
-aioswitcher==1.2.1
+aioswitcher==1.2.2
 bandit==1.7.0
 beautifulsoup4==4.9.3
 black==20.8b1
