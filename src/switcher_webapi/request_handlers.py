@@ -22,7 +22,7 @@ from sanic.log import logger
 from sanic.request import Request
 from sanic.response import HTTPResponse, json
 
-from switcher_webapi import consts
+from . import consts
 
 # fmt: on
 
