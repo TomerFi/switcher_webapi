@@ -3,7 +3,6 @@
 .. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
 
 """
-
 # fmt: off
 from asyncio import get_running_loop
 from datetime import timedelta

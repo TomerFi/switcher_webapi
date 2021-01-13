@@ -39,19 +39,19 @@ jobs:
         run: yamllint --config-file .yamllint --format colored --strict .
 
       - name: Security check code with bandit
-        run: bandit -rvc .bandit setup.py src/ docs/ -l -ii
+        run: bandit -rvc .bandit setup.py switcher_webapi/ docs/ -l -ii
 
       - name: Validate imports with isort
-        run: isort --check-only setup.py src/ docs/
+        run: isort --check-only setup.py switcher_webapi/ docs/
 
       - name: Lint code with flake8
-        run: flake8 --statistics --count --doctests setup.py src/ docs/
+        run: flake8 --statistics --count --doctests setup.py switcher_webapi/ docs/
 
       - name: Check code style with black
-        run: black --line-length 79 --check setup.py setup.py src/ docs/
+        run: black --line-length 79 --check setup.py setup.py switcher_webapi/ docs/
 
       - name: Check static typing with mypy
-        run: mypy --ignore-missing-imports --follow-imports silent setup.py src/ docs/
+        run: mypy --ignore-missing-imports --follow-imports silent setup.py switcher_webapi/ docs/
 
       - name: Lint rst files
         run: doc8 --allow-long-titles --max-line-length 100 docs

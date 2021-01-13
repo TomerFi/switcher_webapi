@@ -4,6 +4,7 @@
 
 """
 
+# fmt: off
 from sys import platform
 from unittest.mock import MagicMock, patch
 
@@ -15,6 +16,8 @@ from pytest import mark
 
 from switcher_webapi import consts, mappings
 from switcher_webapi.helpers import get_local_ip_address, get_next_weekday
+
+# fmt: on
 
 BASE_URL_FORMAT = (
     "http://"

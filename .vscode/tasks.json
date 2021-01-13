@@ -38,32 +38,32 @@
         {
             "label": "Security check with bandit",
             "type": "shell",
-            "command": "bandit -rvc .bandit setup.py src/ docs/ -l -ii",
+            "command": "bandit -rvc .bandit setup.py switcher_webapi/ docs/ -l -ii",
             "group": "test"
         },
         {
             "label": "Validate imports with isort",
             "type": "shell",
-            "command": "isort --check-only setup.py src/ docs/",
+            "command": "isort --check-only setup.py switcher_webapi/ docs/",
             "group": "test",
             "dependsOn": ["Install build requirements"]
         },
         {
             "label": "Lint code with flake8",
             "type": "shell",
-            "command": "flake8 --statistics --count --doctests setup.py src/ docs/",
+            "command": "flake8 --statistics --count --doctests setup.py switcher_webapi/ docs/",
             "group": "test"
         },
         {
             "label": "Check code style with black",
             "type": "shell",
-            "command": "black --line-length 79 --check setup.py src/ docs/",
+            "command": "black --line-length 79 --check setup.py switcher_webapi/ docs/",
             "group": "test"
         },
         {
             "label": "Check static typing with mypy",
             "type": "shell",
-            "command": "mypy --ignore-missing-imports --follow-imports silent setup.py src/ docs/",
+            "command": "mypy --ignore-missing-imports --follow-imports silent setup.py switcher_webapi/ docs/",
             "group": "test"
         },
         {

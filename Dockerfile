@@ -21,14 +21,14 @@ org.opencontainers.image.description="Switcher Water Heater Unofficial REST API"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
-WORKDIR /srv/switcher_webapi
+WORKDIR /usr/switcher_webapi
 
 COPY LICENSE \
-src/switcher_webapi/*.py \
+switcher_webapi \
 requirements.txt ./
 
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "python -u start_server.py -p 8000"]
+CMD ["/bin/sh", "-c", "python -m switcher_webapi.start_server -p 8000"]

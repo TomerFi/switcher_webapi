@@ -3,9 +3,9 @@
 "scope: project":
   - ./*
 "scope: tests":
-  - src/tests/**/*
+  - tests/**/*
 "scope: sources":
-  - src/**/*
+  - switcher_webapi/**/*
 "scope: docs":
   - docs/**/*
 "scope: ci":

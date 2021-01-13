@@ -40,7 +40,7 @@ Please feel free to contribute, even to this contributing guideline file, if you
 
 ## Python Code
 
-It's basically a web server, start with [src/switcher_webapi/start_server.py](../src/switcher_webapi/start_server.py),
+It's basically a web server, start with [switcher_webapi/start_server.py](../switcher_webapi/start_server.py),
 and follow the [docs](https://switcher-webapi.tomfi.info). The file names are pretty self explanatory.
 
 ## Docker Build
@@ -74,8 +74,8 @@ verify-environment-file:  verify the existence of the required environment varia
 ### Python Test Framework
 
 Testing is performed with [Pytest, Full-featured Python testing tool](https://docs.pytest.org).</br>
-The file [src/tests/test_server.py](../src/tests/test_server.py) holds the various test cases for the
-web server, the file [src/tests/conftest.py](../src/tests/conftest.py) holds the various mocks and
+The file [tests/test_server.py](../tests/test_server.py) holds the various test cases for the
+web server, the file [tests/conftest.py](../tests/conftest.py) holds the various mocks and
 fixtures used to testing.
 
 ### Local Testing

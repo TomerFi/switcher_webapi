@@ -3,36 +3,36 @@ schemaVersion: "2.0.0"
 
 fileExistenceTests:
   - name: "LICENSE shouldExist: true"
-    path: /srv/switcher_webapi/LICENSE
+    path: /usr/switcher_webapi/LICENSE
     shouldExist: true
   - name: "conftest.py shouldExist: false"
-    path: /srv/switcher_webapi/conftest.py
+    path: /usr/switcher_webapi/conftest.py
     shouldExist: false
   - name: "consts.py shouldExist: true"
-    path: /srv/switcher_webapi/consts.py
+    path: /usr/switcher_webapi/consts.py
     shouldExist: true
   - name: "helpers.py shouldExist: true"
-    path: /srv/switcher_webapi/helpers.py
+    path: /usr/switcher_webapi/helpers.py
     shouldExist: true
   - name: "mappings.py shouldExist: true"
-    path: /srv/switcher_webapi/mappings.py
+    path: /usr/switcher_webapi/mappings.py
     shouldExist: true
   - name: "request_handlers.py shouldExist: true"
-    path: /srv/switcher_webapi/request_handlers.py
+    path: /usr/switcher_webapi/request_handlers.py
     shouldExist: true
   - name: "start_server.py shouldExist: true"
-    path: /srv/switcher_webapi/start_server.py
+    path: /usr/switcher_webapi/start_server.py
     shouldExist: true
   - name: "test_server.py shouldExist: false"
-    path: /srv/switcher_webapi/test_server.py
+    path: /usr/switcher_webapi/test_server.py
     shouldExist: false
   - name: "requirements.txt shouldExist: true"
-    path: /srv/switcher_webapi/requirements.txt
+    path: /usr/switcher_webapi/requirements.txt
     shouldExist: true
 
 fileContentTests:
   - name: "LICENSE is MIT"
-    path: /srv/switcher_webapi/LICENSE
+    path: /usr/switcher_webapi/LICENSE
     expectedContents: ["MIT License.*"]
 
 metadataTest:
@@ -74,5 +74,5 @@ metadataTest:
       isRegex: true
   exposedPorts: ["8000"]
   entrypoint: []
-  cmd: ["/bin/sh", "-c", "python -u start_server.py -p 8000"]
-  workdir: "/srv/switcher_webapi"
+  cmd: ["/bin/sh", "-c", "python -m switcher_webapi.start_server -p 8000"]
+  workdir: "/usr/switcher_webapi"

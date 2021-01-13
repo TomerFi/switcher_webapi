@@ -3,7 +3,6 @@
 .. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
 
 """
-
 # fmt: off
 from argparse import ArgumentParser
 from asyncio import (AbstractEventLoop, get_event_loop, new_event_loop,
