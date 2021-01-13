@@ -50,6 +50,8 @@ URL_CREATE_SCHEDULE = BASE_URL_FORMAT.format(
     mappings.URL_MAPPING_CREATE_SCHEDULE
 )
 
+BS_FEATURES = "html.parser"
+
 
 async def test_create_schedule_request(
     create_schedule_response: MagicMock,
@@ -97,7 +99,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Unknown start_hours, accepts 0 to 23."
@@ -117,7 +119,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Unknown start_minutes, accepts 0 to 59."
@@ -137,7 +139,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Unknown stop_hours, accepts 0 to 23."
@@ -157,7 +159,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Unknown stop_minutes, accepts 0 to 59."
@@ -176,7 +178,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text == "Error: Argument start_hours is missing."
                 )
@@ -194,7 +196,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument start_minutes is missing."
@@ -213,7 +215,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text == "Error: Argument stop_hours is missing."
                 )
@@ -231,7 +233,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text == "Error: Argument stop_minutes is missing."
                 )
@@ -250,7 +252,7 @@ async def test_create_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Unrecognized day requests, check documentation."
@@ -259,7 +261,7 @@ async def test_create_schedule_request(
             async with session.put(URL_CREATE_SCHEDULE) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert bs4scrap.text == "Error: Json body is missing."
 
             create_schedule_response.msg_type = ResponseMessageType.STATE
@@ -318,7 +320,7 @@ async def test_delete_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument schedule_id accepts values 0-7."
@@ -328,7 +330,7 @@ async def test_delete_schedule_request(
                 assert response.status == 400
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text == "Error: Argument schedule_id is missing."
                 )
@@ -387,7 +389,7 @@ async def test_disable_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument schedule_data is length is no 24."
@@ -397,7 +399,7 @@ async def test_disable_schedule_request(
                 assert response.status == 400
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument schedule_data is missing."
@@ -462,7 +464,7 @@ async def test_enable_schedule_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument schedule_data is length is no 24."
@@ -472,7 +474,7 @@ async def test_enable_schedule_request(
                 assert response.status == 400
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Argument schedule_data is missing."
@@ -593,7 +595,7 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
                 assert response.status == 503
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text == "Error: Failed to get response from api."
                 )
@@ -643,7 +645,7 @@ async def test_set_auto_shutdown_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Auto shutdown can be set between 1 and 3 hours."
@@ -653,7 +655,7 @@ async def test_set_auto_shutdown_request(
                 assert response.status == 400
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: One of the arguments hours or minutes is missing."  # noqa: E501
@@ -684,9 +686,10 @@ async def test_set_device_name_request(
         return_value=set_device_name_response,
     ):
         async with ClientSession() as session:
+            DEVICE_NAME = "new device name"
             async with session.post(
                 URL_SET_DEVICE_NAME,
-                params={consts.PARAM_NAME: "new device name"},
+                params={consts.PARAM_NAME: DEVICE_NAME},
             ) as response:
                 assert response.status == 200
 
@@ -695,7 +698,7 @@ async def test_set_device_name_request(
 
             async with session.post(
                 URL_SET_DEVICE_NAME,
-                **{"json": {consts.PARAM_NAME: "new device name"}},
+                **{"json": {consts.PARAM_NAME: DEVICE_NAME}},
             ) as response:
                 assert response.status == 200
 
@@ -707,7 +710,7 @@ async def test_set_device_name_request(
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Only accepts name with length between 2 and 32."
@@ -717,7 +720,7 @@ async def test_set_device_name_request(
                 assert response.status == 400
 
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert bs4scrap.text == "Error: Argument name is missing."
 
             set_device_name_response.msg_type = ResponseMessageType.STATE
@@ -799,7 +802,7 @@ async def test_turn_on_request(control_response: MagicMock) -> None:
             ) as response:
                 assert response.status == 400
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
                     bs4scrap.text
                     == "Error: Can only accept timer for 1 to 180 minutes."
@@ -824,7 +827,7 @@ async def test_turn_on_request(control_response: MagicMock) -> None:
             ) as response:
                 assert response.status == 500
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert bs4scrap.h1.text == "Internal Server Error"
 
             async with session.post(
@@ -832,5 +835,5 @@ async def test_turn_on_request(control_response: MagicMock) -> None:
             ) as response:
                 assert response.status == 500
                 body = await response.text()
-                bs4scrap = BeautifulSoup(body, "html.parser")
+                bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert bs4scrap.h1.text == "Internal Server Error"
