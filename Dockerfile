@@ -23,9 +23,9 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 WORKDIR /usr/switcher_webapi
 
-COPY LICENSE \
-switcher_webapi \
-requirements.txt ./
+COPY LICENSE requirements.txt ./
+
+COPY switcher_webapi switcher_webapi
 
 RUN pip install -r requirements.txt
 

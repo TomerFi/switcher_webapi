@@ -5,27 +5,21 @@ fileExistenceTests:
   - name: "LICENSE shouldExist: true"
     path: /usr/switcher_webapi/LICENSE
     shouldExist: true
-  - name: "conftest.py shouldExist: false"
-    path: /usr/switcher_webapi/conftest.py
-    shouldExist: false
   - name: "consts.py shouldExist: true"
-    path: /usr/switcher_webapi/consts.py
+    path: /usr/switcher_webapi/switcher_webapi/consts.py
     shouldExist: true
   - name: "helpers.py shouldExist: true"
-    path: /usr/switcher_webapi/helpers.py
+    path: /usr/switcher_webapi/switcher_webapi/helpers.py
     shouldExist: true
   - name: "mappings.py shouldExist: true"
-    path: /usr/switcher_webapi/mappings.py
+    path: /usr/switcher_webapi/switcher_webapi/mappings.py
     shouldExist: true
   - name: "request_handlers.py shouldExist: true"
-    path: /usr/switcher_webapi/request_handlers.py
+    path: /usr/switcher_webapi/switcher_webapi/request_handlers.py
     shouldExist: true
   - name: "start_server.py shouldExist: true"
-    path: /usr/switcher_webapi/start_server.py
+    path: /usr/switcher_webapi/switcher_webapi/start_server.py
     shouldExist: true
-  - name: "test_server.py shouldExist: false"
-    path: /usr/switcher_webapi/test_server.py
-    shouldExist: false
   - name: "requirements.txt shouldExist: true"
     path: /usr/switcher_webapi/requirements.txt
     shouldExist: true
