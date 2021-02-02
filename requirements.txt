@@ -1,4 +1,4 @@
 aioswitcher==1.2.2
 asyncio_throttle==1.0.1
-pytz==2020.5
+pytz==2021.1
 sanic==19.12.4
