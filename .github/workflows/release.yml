@@ -37,7 +37,7 @@ jobs:
 
       - name: Cache Docker layers
         if: github.event_name != 'pull_request'
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
