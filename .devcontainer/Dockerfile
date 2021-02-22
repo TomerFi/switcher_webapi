@@ -1,5 +1,5 @@
 # Base image is is python's image
-FROM python:3.9.1
+FROM python:3.9.2
 
 # Set shell with pipline fail return
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
