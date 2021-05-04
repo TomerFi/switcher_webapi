@@ -9,7 +9,7 @@ flake8==3.9.1
 flake8-docstrings==1.6.0
 isort==5.8.0
 mypy==0.812
-pygments==2.8.1
+pygments==2.9.0
 pytest==6.2.3
 pytest-cov==2.11.1
 pytest-sanic==1.6.2
