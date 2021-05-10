@@ -5,7 +5,7 @@ coverage:
     changes: off
     project:
       default:
-        target: 60%
+        target: 90%
         threshold: 2
 
 comment:
