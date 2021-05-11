@@ -2,7 +2,7 @@ aiohttp==3.7.4
 aioswitcher==1.2.2
 bandit==1.7.0
 beautifulsoup4==4.9.3
-black==21.5b0
+black==21.5b1
 codecov==2.1.11
 doc8==0.8.1
 flake8==3.9.2
