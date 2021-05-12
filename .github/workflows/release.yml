@@ -12,7 +12,7 @@ jobs:
     name: Build release and publish to Docker Hub
     steps:
       - name: Source checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Create release
         if: github.event_name != 'pull_request'
