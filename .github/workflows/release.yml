@@ -52,7 +52,7 @@ jobs:
 
       - name: Build docker image and push to DockerHub
         if: github.event_name != 'pull_request'
-        uses: docker/build-push-action@v2.4.0
+        uses: docker/build-push-action@v2.5.0
         with:
           context: .
           tags: |
