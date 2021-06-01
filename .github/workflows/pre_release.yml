@@ -19,9 +19,9 @@ jobs:
         uses: marvinpinto/action-automatic-releases@v1.2.0
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: latest
+          automatic_release_tag: early-access
           prerelease: true
-          title: latest
+          title: early-access
 
       - name: Get current date
         id: getDate
@@ -54,11 +54,11 @@ jobs:
         uses: docker/build-push-action@v2.5.0
         with:
           context: .
-          tags: ghcr.io/tomerfi/switcher_webapi:dev
+          tags: ghcr.io/tomerfi/switcher_webapi:early-access
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
-            VERSION=dev
+            VERSION=early-access
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
