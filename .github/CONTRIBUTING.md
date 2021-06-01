@@ -81,8 +81,6 @@ fixtures used to testing.
 ### Local Testing
 
 For automated local tests, use [Tox](https://tox.readthedocs.io).</br>
-Vscode users, can use the tasks from the [tasks.json](../.vscode/tasks.json) inside a container
-created with [devcontainer.json](../.devcontainer/devcontainer.json).
 
 ### Container Structure Test
 

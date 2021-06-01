@@ -15,19 +15,6 @@ updates:
       prefix: "build"
       include: "scope"
 
-  - package-ecosystem: "pip"
-    directory: "/.devcontainer"
-    schedule:
-      interval: "daily"
-    target-branch: "dev"
-    assignees:
-      - "TomerFi"
-    labels:
-      - "type: dependencies"
-    commit-message:
-      prefix: "build"
-      include: "scope"
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -43,19 +30,6 @@ updates:
 
   - package-ecosystem: "docker"
     directory: "/"
-    schedule:
-      interval: "daily"
-    target-branch: "dev"
-    assignees:
-      - "TomerFi"
-    labels:
-      - "type: dependencies"
-    commit-message:
-      prefix: "build"
-      include: "scope"
-
-  - package-ecosystem: "docker"
-    directory: "/.devcontainer"
     schedule:
       interval: "daily"
     target-branch: "dev"

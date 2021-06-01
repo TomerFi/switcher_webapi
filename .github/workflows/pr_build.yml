@@ -34,7 +34,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install dependencies
-        run: pip install -rrequirements.txt -r.devcontainer/requirements.txt
+        run: pip install -rrequirements.txt -rrequirements_test.txt
 
       - name: Lint yaml files
         run: yamllint --config-file .yamllint --format colored --strict .
