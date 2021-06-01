@@ -58,7 +58,18 @@ jobs:
         run: doc8 --allow-long-titles --max-line-length 100 docs
 
       - name: Perform unit tests with coverage report
-        run: pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage.xml
+        run: |
+          pytest -vs --cov \
+          --cov-config=.coveragerc \
+          --cov-report=xml:coverage.xml \
+          --junit-xml junit.xml
+
+      - name: Publish unit test report to GitHub
+        uses: EnricoMi/publish-unit-test-result-action@v1.17
+        if: always()
+        with:
+          test_changes_limit: 0
+          files: junit.xml
 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v2.2.3
