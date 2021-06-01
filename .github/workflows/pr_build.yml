@@ -2,8 +2,9 @@
 name: Pull request build
 
 on:
-  pull_request:
-    branch: dev
+  pull_request_target:
+    branches:
+      - dev
 
 jobs:
   build:
@@ -14,7 +15,7 @@ jobs:
     name: Verify project with Python ${{ matrix.python }}
     steps:
       - name: Source checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v2.2.2
@@ -22,7 +23,7 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Cache pip repository
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}-${{ matrix.python }}
@@ -33,7 +34,7 @@ jobs:
         run: pip install --upgrade pip
 
       - name: Install dependencies
-        run: pip install -rrequirements.txt -r.devcontainer/requirements.txt
+        run: pip install -rrequirements.txt -rrequirements_test.txt
 
       - name: Lint yaml files
         run: yamllint --config-file .yamllint --format colored --strict .
@@ -57,7 +58,18 @@ jobs:
         run: doc8 --allow-long-titles --max-line-length 100 docs
 
       - name: Perform unit tests with coverage report
-        run: pytest -vs --cov --cov-config=.coveragerc --cov-report=xml:coverage.xml
+        run: |
+          pytest -vs --cov \
+          --cov-config=.coveragerc \
+          --cov-report=xml:coverage.xml \
+          --junit-xml junit.xml
+
+      - name: Publish unit test report to GitHub
+        uses: EnricoMi/publish-unit-test-result-action@v1.17
+        if: always()
+        with:
+          test_changes_limit: 0
+          files: junit.xml
 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v2.2.3
@@ -71,7 +83,7 @@ jobs:
     needs: [build]
     steps:
       - name: Source checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Download coverage report from artifacts
         uses: actions/download-artifact@v2
@@ -79,7 +91,7 @@ jobs:
           name: coverage-report
 
       - name: Push to CodeCov
-        uses: codecov/codecov-action@v1.4.0
+        uses: codecov/codecov-action@v1.5.0
         with:
           file: coverage.xml
           fail_ci_if_error: true
