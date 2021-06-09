@@ -8,7 +8,7 @@ doc8==0.8.1
 flake8==3.9.2
 flake8-docstrings==1.6.0
 isort==5.8.0
-mypy==0.812
+mypy==0.901
 pygments==2.9.0
 pytest==6.2.4
 pytest-cov==2.12.1
