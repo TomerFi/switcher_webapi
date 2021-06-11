@@ -26,6 +26,7 @@ jobs:
         uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
+          # yamllint disable-line rule:line-length
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/requirements_test.txt') }}-${{ matrix.python }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.python }}-pip-
