@@ -66,7 +66,7 @@ jobs:
           --junit-xml junit.xml
 
       - name: Publish unit test report to GitHub
-        uses: EnricoMi/publish-unit-test-result-action@v1.17
+        uses: EnricoMi/publish-unit-test-result-action@v1.18
         if: always()
         with:
           test_changes_limit: 0
