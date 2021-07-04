@@ -28,8 +28,8 @@ from aioswitcher.consts import STATE_ON, WEEKDAY_TUP
 from bs4 import BeautifulSoup
 from pytest import mark
 
-from switcher_webapi import consts, mappings
-from switcher_webapi.helpers import get_local_ip_address, get_next_weekday
+from .. import consts, mappings
+from ..helpers import get_local_ip_address, get_next_weekday
 
 # fmt: on
 
@@ -77,7 +77,7 @@ async def test_create_schedule_request(
         ``SwitcherV2CreateScheduleResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.create_schedule",
+        "app.request_handlers.SwitcherV2Api.create_schedule",
         return_value=create_schedule_response,
     ):
         async with ClientSession() as session:
@@ -308,7 +308,7 @@ async def test_delete_schedule_request(
         ``SwitcherV2DeleteScheduleResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.delete_schedule",
+        "app.request_handlers.SwitcherV2Api.delete_schedule",
         return_value=delete_schedule_response,
     ):
         async with ClientSession() as session:
@@ -369,7 +369,7 @@ async def test_disable_schedule_request(
         ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
+        "app.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
         return_value=disable_enable_schedule_response,
     ):
         async with ClientSession() as session:
@@ -444,7 +444,7 @@ async def test_enable_schedule_request(
         ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
+        "app.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
         return_value=disable_enable_schedule_response,
     ):
         async with ClientSession() as session:
@@ -523,7 +523,7 @@ async def test_get_schedules_request(
         ``SwitcherV2GetScheduleResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.get_schedules",
+        "app.request_handlers.SwitcherV2Api.get_schedules",
         return_value=get_schedules_response,
     ):
         async with ClientSession() as session:
@@ -576,7 +576,7 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
         ``SwitcherV2StateResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.get_state",
+        "app.request_handlers.SwitcherV2Api.get_state",
         return_value=get_state_response,
     ) as patcher:
         async with ClientSession() as session:
@@ -626,7 +626,7 @@ async def test_set_auto_shutdown_request(
 
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.set_auto_shutdown",
+        "app.request_handlers.SwitcherV2Api.set_auto_shutdown",
         return_value=set_auto_shutdown_response,
     ):
         async with ClientSession() as session:
@@ -696,7 +696,7 @@ async def test_set_device_name_request(
         ``SwitcherV2UpdateNameResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.set_device_name",
+        "app.request_handlers.SwitcherV2Api.set_device_name",
         return_value=set_device_name_response,
     ):
         async with ClientSession() as session:
@@ -756,7 +756,7 @@ async def test_turn_off_request(control_response: MagicMock) -> None:
         ``SwitcherV2ControlResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.control_device",
+        "app.request_handlers.SwitcherV2Api.control_device",
         return_value=control_response,
     ):
         async with ClientSession() as session:
@@ -788,7 +788,7 @@ async def test_turn_on_request(control_response: MagicMock) -> None:
         ``SwitcherV2ControlResponseMSG`` object.
     """
     with patch(
-        "switcher_webapi.request_handlers.SwitcherV2Api.control_device",
+        "app.request_handlers.SwitcherV2Api.control_device",
         return_value=control_response,
     ):
         async with ClientSession() as session:
