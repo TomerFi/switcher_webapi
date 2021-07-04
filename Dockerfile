@@ -39,10 +39,10 @@ WORKDIR /usr/switcher_webapi
 
 COPY LICENSE requirements.txt ./
 
-COPY switcher_webapi switcher_webapi
+COPY app ./
 
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "python -m switcher_webapi.start_server -p 8000"]
+CMD ["/bin/sh", "-c", "python -m start_server -p 8000"]
