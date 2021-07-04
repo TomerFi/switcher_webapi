@@ -1,13 +1,2 @@
-# Ignore
-.*
-container_structure.yml
-Dockerfile
-Makefile
-tox.ini
-
-# Don't ignore
-!src
-!LICENSE
-!README.md
-!requirements.txt
-!VERSION
+*/tests*
+*/__pycache__*

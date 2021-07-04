@@ -6,23 +6,26 @@ fileExistenceTests:
     path: /usr/switcher_webapi/LICENSE
     shouldExist: true
   - name: "consts.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi/consts.py
+    path: /usr/switcher_webapi/consts.py
     shouldExist: true
   - name: "helpers.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi/helpers.py
+    path: /usr/switcher_webapi/helpers.py
     shouldExist: true
   - name: "mappings.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi/mappings.py
+    path: /usr/switcher_webapi/mappings.py
     shouldExist: true
   - name: "request_handlers.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi/request_handlers.py
+    path: /usr/switcher_webapi/request_handlers.py
     shouldExist: true
   - name: "start_server.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi/start_server.py
+    path: /usr/switcher_webapi/start_server.py
     shouldExist: true
   - name: "requirements.txt shouldExist: true"
     path: /usr/switcher_webapi/requirements.txt
     shouldExist: true
+  - name: "tests shouldExist: false"
+    path: /usr/switcher_webapi/tests/
+    shouldExist: false
 
 fileContentTests:
   - name: "LICENSE is Apache-2.0"
@@ -68,5 +71,5 @@ metadataTest:
       isRegex: true
   exposedPorts: ["8000"]
   entrypoint: []
-  cmd: ["/bin/sh", "-c", "python -m switcher_webapi.start_server -p 8000"]
+  cmd: ["/bin/sh", "-c", "python start_server -p 8000"]
   workdir: "/usr/switcher_webapi"
