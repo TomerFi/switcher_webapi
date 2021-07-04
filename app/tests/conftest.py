@@ -18,9 +18,15 @@
 
 """
 
-# fmt: off
-from asyncio import (AbstractEventLoop, Future, StreamReader, StreamWriter,
-                     get_event_loop, new_event_loop, set_event_loop)
+from asyncio import (
+    AbstractEventLoop,
+    Future,
+    StreamReader,
+    StreamWriter,
+    get_event_loop,
+    new_event_loop,
+    set_event_loop,
+)
 from typing import Any, Generator
 from unittest.mock import MagicMock, Mock, patch
 
@@ -32,11 +38,14 @@ from sanic import Sanic
 
 from .. import consts
 from ..helpers import get_local_ip_address, get_next_weekday
-from ..start_server import (CONF_DEVICE_ID, CONF_DEVICE_IP_ADDR,
-                            CONF_DEVICE_PASSWORD, CONF_PHONE_ID,
-                            CONF_THROTTLE, sanic_app)
-
-# fmt: on
+from ..start_server import (
+    CONF_DEVICE_ID,
+    CONF_DEVICE_IP_ADDR,
+    CONF_DEVICE_PASSWORD,
+    CONF_PHONE_ID,
+    CONF_THROTTLE,
+    sanic_app,
+)
 
 
 @fixture(name="control_response")
@@ -44,7 +53,7 @@ def mock_control_response() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the control response.
 
     Yields:
-      Mocked ``SwitcherV2ControlResponseMSG`` object.
+        Mocked ``SwitcherV2ControlResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2ControlResponseMSG)
@@ -63,7 +72,7 @@ def mock_create_schedule_request() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the create_schedule response.
 
     Yields:
-      Mocked ``SwitcherV2CreateScheduleResponseMSG`` object.
+        Mocked ``SwitcherV2CreateScheduleResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2CreateScheduleResponseMSG)
@@ -82,7 +91,7 @@ def mock_delete_schedule_request() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the delete_schedule response.
 
     Yields:
-      Mocked ``SwitcherV2DeleteScheduleResponseMSG`` object.
+        Mocked ``SwitcherV2DeleteScheduleResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2DeleteScheduleResponseMSG)
@@ -101,16 +110,12 @@ def mock_disable_enable_schedule_request() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the disable_enable_schedule response.
 
     Yields:
-      Mocked ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
+        Mocked ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
 
     """
-    mock_response = MagicMock(
-        messages.SwitcherV2DisableEnableScheduleResponseMSG
-    )
+    mock_response = MagicMock(messages.SwitcherV2DisableEnableScheduleResponseMSG)
     mock_response.successful = True
-    mock_response.msg_type = (
-        messages.ResponseMessageType.DISABLE_ENABLE_SCHEDULE
-    )
+    mock_response.msg_type = messages.ResponseMessageType.DISABLE_ENABLE_SCHEDULE
 
     with patch(
         "app.request_handlers.messages.SwitcherV2DisableEnableScheduleResponseMSG",  # noqa:501
@@ -126,10 +131,10 @@ def mock_get_schedules_response(
     """Fixture for mocking the get_schedules response.
 
     Args:
-      schedule_object: Fixture of mocked ``SwitcherV2Schedule`` object.
+        schedule_object: Fixture of mocked ``SwitcherV2Schedule`` object.
 
     Yields:
-      Mocked ``SwitcherV2GetScheduleResponseMSG`` object.
+        Mocked ``SwitcherV2GetScheduleResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2GetScheduleResponseMSG)
@@ -150,7 +155,7 @@ def mock_get_state_response() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the get_state response.
 
     Yields:
-      Mocked ``SwitcherV2StateResponseMSG`` object.
+        Mocked ``SwitcherV2StateResponseMSG`` object.
 
     """
     mock_future_response = MagicMock(messages.SwitcherV2StateResponseMSG)
@@ -179,7 +184,7 @@ def mock_loop() -> Generator[AbstractEventLoop, Any, None]:
     """Fixture for running an event loop.
 
     Yields:
-      Test event loop for running test server.
+        Test event loop for running test server.
 
     """
     set_event_loop(new_event_loop())
@@ -192,7 +197,7 @@ def mock_sanic_test_app() -> Generator[Sanic, Any, None]:
     """Fixture for creating a test instance on the sanic app.
 
     Yields:
-      Test sanic application for mocking testing server.
+        Test sanic application for mocking testing server.
 
     """
     test_app = sanic_app
@@ -210,7 +215,7 @@ def mock_schedule_object() -> Generator[None, None, SwitcherV2Schedule]:
     """Fixture for the aioswitcher.schedules.SwitcherV2Schedule object.
 
     Returns:
-      Mocked ``SwitcherV2Schedule`` object.
+        Mocked ``SwitcherV2Schedule`` object.
 
     """
     mock_object = MagicMock(SwitcherV2Schedule)
@@ -234,7 +239,7 @@ def mock_set_auto_shutdown_response() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the set_auto_shutdown response.
 
     Yields:
-      Mocked ``SwitcherV2SetAutoOffResponseMSG`` object.
+        Mocked ``SwitcherV2SetAutoOffResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2SetAutoOffResponseMSG)
@@ -253,7 +258,7 @@ def mock_set_device_name_response() -> Generator[MagicMock, Any, None]:
     """Fixture for mocking the set_device_name response.
 
     Yields:
-      Mocked ``SwitcherV2UpdateNameResponseMSG`` object.
+        Mocked ``SwitcherV2UpdateNameResponseMSG`` object.
 
     """
     mock_response = MagicMock(messages.SwitcherV2UpdateNameResponseMSG)
@@ -291,11 +296,11 @@ def mock_test_client(
     """Fixture for starting server in the event loop.
 
     Args:
-      loop: Fixture of mocked ``AbstractEventLoop`` object.
-      sanic_test_app: Fixture of mocked ``Sanic`` object.
+        loop: Fixture of mocked ``AbstractEventLoop`` object.
+        sanic_test_app: Fixture of mocked ``Sanic`` object.
 
     Returns:
-      An event loop with a running server.
+        An event loop with a running server.
 
     """
     return loop.run_until_complete(

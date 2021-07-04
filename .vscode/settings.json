@@ -1,0 +1,3 @@
+{
+    "python.pythonPath": "${workspaceFolder}\\.tox\\py39\\Scripts\\python.exe",
+}

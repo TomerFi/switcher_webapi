@@ -18,7 +18,6 @@
 
 """
 
-# fmt: off
 from sys import platform
 from unittest.mock import MagicMock, patch
 
@@ -31,38 +30,20 @@ from pytest import mark
 from .. import consts, mappings
 from ..helpers import get_local_ip_address, get_next_weekday
 
-# fmt: on
-
 BASE_URL_FORMAT = (
-    "http://"
-    + get_local_ip_address()
-    + ":"
-    + str(consts.TEST_SERVER_PORT)
-    + "{}"
+    "http://" + get_local_ip_address() + ":" + str(consts.TEST_SERVER_PORT) + "{}"
 )
 
 URL_GET_STATE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_GET_STATE)
 URL_TURN_ON = BASE_URL_FORMAT.format(mappings.URL_MAPPING_TURN_ON)
 URL_TURN_OFF = BASE_URL_FORMAT.format(mappings.URL_MAPPING_TURN_OFF)
 URL_GET_SCHEDULES = BASE_URL_FORMAT.format(mappings.URL_MAPPING_GET_SCHEDULES)
-URL_SET_AUTO_SHUTDOWN = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_SET_AUTO_SHUTDOWN
-)
-URL_SET_DEVICE_NAME = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_SET_DEVICE_NAME
-)
-URL_ENABLE_SCHEDULE = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_ENABLE_SCHEDULE
-)
-URL_DISABLE_SCHEDULE = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_DISABLE_SCHEDULE
-)
-URL_DELETE_SCHEDULE = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_DELETE_SCHEDULE
-)
-URL_CREATE_SCHEDULE = BASE_URL_FORMAT.format(
-    mappings.URL_MAPPING_CREATE_SCHEDULE
-)
+URL_SET_AUTO_SHUTDOWN = BASE_URL_FORMAT.format(mappings.URL_MAPPING_SET_AUTO_SHUTDOWN)
+URL_SET_DEVICE_NAME = BASE_URL_FORMAT.format(mappings.URL_MAPPING_SET_DEVICE_NAME)
+URL_ENABLE_SCHEDULE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_ENABLE_SCHEDULE)
+URL_DISABLE_SCHEDULE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_DISABLE_SCHEDULE)
+URL_DELETE_SCHEDULE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_DELETE_SCHEDULE)
+URL_CREATE_SCHEDULE = BASE_URL_FORMAT.format(mappings.URL_MAPPING_CREATE_SCHEDULE)
 
 BS_FEATURES = "html.parser"
 
@@ -73,8 +54,8 @@ async def test_create_schedule_request(
     """Unit test-cases for /switcher/create_schedule request.
 
     Args:
-      create_schedule_response: fixture of mocked
-        ``SwitcherV2CreateScheduleResponseMSG`` object.
+        create_schedule_response: fixture of mocked
+            ``SwitcherV2CreateScheduleResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.create_schedule",
@@ -114,10 +95,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Unknown start_hours, accepts 0 to 23."
-                )
+                assert bs4scrap.text == "Error: Unknown start_hours, accepts 0 to 23."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -134,10 +112,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Unknown start_minutes, accepts 0 to 59."
-                )
+                assert bs4scrap.text == "Error: Unknown start_minutes, accepts 0 to 59."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -154,10 +129,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Unknown stop_hours, accepts 0 to 23."
-                )
+                assert bs4scrap.text == "Error: Unknown stop_hours, accepts 0 to 23."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -174,10 +146,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Unknown stop_minutes, accepts 0 to 59."
-                )
+                assert bs4scrap.text == "Error: Unknown stop_minutes, accepts 0 to 59."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -193,9 +162,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text == "Error: Argument start_hours is missing."
-                )
+                assert bs4scrap.text == "Error: Argument start_hours is missing."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -211,10 +178,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Argument start_minutes is missing."
-                )
+                assert bs4scrap.text == "Error: Argument start_minutes is missing."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -230,9 +194,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text == "Error: Argument stop_hours is missing."
-                )
+                assert bs4scrap.text == "Error: Argument stop_hours is missing."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -248,9 +210,7 @@ async def test_create_schedule_request(
                 assert response.status == 400
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text == "Error: Argument stop_minutes is missing."
-                )
+                assert bs4scrap.text == "Error: Argument stop_minutes is missing."
 
             async with session.put(
                 URL_CREATE_SCHEDULE,
@@ -304,8 +264,8 @@ async def test_delete_schedule_request(
     """Unit test-cases for /switcher/delete_schedule request.
 
     Args:
-      delete_schedule_response: fixture of mocked
-        ``SwitcherV2DeleteScheduleResponseMSG`` object.
+        delete_schedule_response: fixture of mocked
+            ``SwitcherV2DeleteScheduleResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.delete_schedule",
@@ -336,8 +296,7 @@ async def test_delete_schedule_request(
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
-                    bs4scrap.text
-                    == "Error: Argument schedule_id accepts values 0-7."
+                    bs4scrap.text == "Error: Argument schedule_id accepts values 0-7."
                 )
 
             async with session.delete(URL_DELETE_SCHEDULE) as response:
@@ -345,9 +304,7 @@ async def test_delete_schedule_request(
 
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text == "Error: Argument schedule_id is missing."
-                )
+                assert bs4scrap.text == "Error: Argument schedule_id is missing."
 
             delete_schedule_response.msg_type = ResponseMessageType.STATE
             async with session.delete(
@@ -365,8 +322,8 @@ async def test_disable_schedule_request(
     """Unit test-cases for /switcher/disable_schedule request.
 
     Args:
-      disable_enable_schedule_response: fixture of mocked
-        ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
+        disable_enable_schedule_response: fixture of mocked
+            ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
@@ -375,9 +332,7 @@ async def test_disable_schedule_request(
         async with ClientSession() as session:
             async with session.patch(
                 URL_DISABLE_SCHEDULE,
-                params={
-                    consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                },
+                params={consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA},
             ) as response:
                 assert response.status == 200
 
@@ -386,11 +341,7 @@ async def test_disable_schedule_request(
 
             async with session.patch(
                 URL_DISABLE_SCHEDULE,
-                **{
-                    "json": {
-                        consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                    }
-                },
+                **{"json": {consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA}},
             ) as response:
                 assert response.status == 200
 
@@ -405,8 +356,7 @@ async def test_disable_schedule_request(
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
-                    bs4scrap.text
-                    == "Error: Argument schedule_data is length is no 24."
+                    bs4scrap.text == "Error: Argument schedule_data is length is no 24."
                 )
 
             async with session.patch(URL_DISABLE_SCHEDULE) as response:
@@ -414,19 +364,12 @@ async def test_disable_schedule_request(
 
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Argument schedule_data is missing."
-                )
+                assert bs4scrap.text == "Error: Argument schedule_data is missing."
 
-            disable_enable_schedule_response.msg_type = (
-                ResponseMessageType.STATE
-            )
+            disable_enable_schedule_response.msg_type = ResponseMessageType.STATE
             async with session.patch(
                 URL_DISABLE_SCHEDULE,
-                params={
-                    consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                },
+                params={consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA},
             ) as response:
                 assert response.status == 200
                 body = await response.json()
@@ -440,8 +383,8 @@ async def test_enable_schedule_request(
     """Unit test-cases for /switcher/enable_schedule request.
 
     Args:
-      disable_enable_schedule_response: fixture of mocked
-        ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
+        disable_enable_schedule_response: fixture of mocked
+            ``SwitcherV2DisableEnableScheduleResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.disable_enable_schedule",  # noqa:501
@@ -450,9 +393,7 @@ async def test_enable_schedule_request(
         async with ClientSession() as session:
             async with session.patch(
                 URL_ENABLE_SCHEDULE,
-                params={
-                    consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                },
+                params={consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA},
             ) as response:
                 assert response.status == 200
 
@@ -461,11 +402,7 @@ async def test_enable_schedule_request(
 
             async with session.patch(
                 URL_ENABLE_SCHEDULE,
-                **{
-                    "json": {
-                        consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                    }
-                },
+                **{"json": {consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA}},
             ) as response:
                 assert response.status == 200
 
@@ -480,8 +417,7 @@ async def test_enable_schedule_request(
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
                 assert (
-                    bs4scrap.text
-                    == "Error: Argument schedule_data is length is no 24."
+                    bs4scrap.text == "Error: Argument schedule_data is length is no 24."
                 )
 
             async with session.patch(URL_ENABLE_SCHEDULE) as response:
@@ -489,19 +425,12 @@ async def test_enable_schedule_request(
 
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text
-                    == "Error: Argument schedule_data is missing."
-                )
+                assert bs4scrap.text == "Error: Argument schedule_data is missing."
 
-            disable_enable_schedule_response.msg_type = (
-                ResponseMessageType.STATE
-            )
+            disable_enable_schedule_response.msg_type = ResponseMessageType.STATE
             async with session.patch(
                 URL_ENABLE_SCHEDULE,
-                params={
-                    consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA
-                },
+                params={consts.PARAM_SCHEDULE_DATA: consts.DUMMY_SCHEDULE_DATA},
             ) as response:
                 assert response.status == 200
                 body = await response.json()
@@ -519,8 +448,8 @@ async def test_get_schedules_request(
     """Unit test-cases for /switcher/get_schedules request.
 
     Args:
-      get_schedules_response: fixture of mocked
-        ``SwitcherV2GetScheduleResponseMSG`` object.
+        get_schedules_response: fixture of mocked
+            ``SwitcherV2GetScheduleResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.get_schedules",
@@ -572,8 +501,8 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
     """Unit test-cases for /switcher/get_state request.
 
     Args:
-      get_state_response: fixture of mocked
-        ``SwitcherV2StateResponseMSG`` object.
+        get_state_response: fixture of mocked
+            ``SwitcherV2StateResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.get_state",
@@ -610,9 +539,7 @@ async def test_get_state_request(get_state_response: MagicMock) -> None:
 
                 body = await response.text()
                 bs4scrap = BeautifulSoup(body, BS_FEATURES)
-                assert (
-                    bs4scrap.text == "Error: Failed to get response from api."
-                )
+                assert bs4scrap.text == "Error: Failed to get response from api."
 
 
 async def test_set_auto_shutdown_request(
@@ -621,8 +548,8 @@ async def test_set_auto_shutdown_request(
     """Unit test-cases for /switcher/set_auto_shutdown request.
 
     Args:
-      set_auto_shutdown_response: fixture of mocked
-        ``SwitcherV2SetAutoOffResponseMSG`` object.
+        set_auto_shutdown_response: fixture of mocked
+            ``SwitcherV2SetAutoOffResponseMSG`` object.
 
     """
     with patch(
@@ -692,8 +619,8 @@ async def test_set_device_name_request(
     """Unit test-cases for /switcher/set_device_name request.
 
     Args:
-      set_device_name_response: fixture of mocked
-        ``SwitcherV2UpdateNameResponseMSG`` object.
+        set_device_name_response: fixture of mocked
+            ``SwitcherV2UpdateNameResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.set_device_name",
@@ -752,8 +679,8 @@ async def test_turn_off_request(control_response: MagicMock) -> None:
     """Unit test-cases for /switcher/turn_off request.
 
     Args:
-      control_response: fixture of mocked
-        ``SwitcherV2ControlResponseMSG`` object.
+        control_response: fixture of mocked
+            ``SwitcherV2ControlResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.control_device",
@@ -784,8 +711,8 @@ async def test_turn_on_request(control_response: MagicMock) -> None:
     """Unit test-cases for /switcher/turn_on request.
 
     Args:
-      control_response: fixture of mocked
-        ``SwitcherV2ControlResponseMSG`` object.
+        control_response: fixture of mocked
+            ``SwitcherV2ControlResponseMSG`` object.
     """
     with patch(
         "app.request_handlers.SwitcherV2Api.control_device",

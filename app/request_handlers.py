@@ -17,27 +17,29 @@
 .. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
 
 """
-# fmt: off
 from asyncio import get_running_loop
 from datetime import timedelta
 from typing import Dict, List, Optional
 
 from aioswitcher.api import SwitcherV2Api, messages
-from aioswitcher.consts import (COMMAND_OFF, COMMAND_ON, DAY_TO_INT_DICT,
-                                DISABLE_SCHEDULE, ENABLE_SCHEDULE,
-                                SCHEDULE_CREATE_DATA_FORMAT, WEEKDAY_TUP)
+from aioswitcher.consts import (
+    COMMAND_OFF,
+    COMMAND_ON,
+    DAY_TO_INT_DICT,
+    DISABLE_SCHEDULE,
+    ENABLE_SCHEDULE,
+    SCHEDULE_CREATE_DATA_FORMAT,
+    WEEKDAY_TUP,
+)
 from aioswitcher.errors import CalculationError, DecodingError, EncodingError
 from aioswitcher.schedules import calc_next_run_for_schedule
-from aioswitcher.tools import (create_weekdays_value,
-                               timedelta_str_to_schedule_time)
+from aioswitcher.tools import create_weekdays_value, timedelta_str_to_schedule_time
 from sanic.exceptions import InvalidUsage, ServerError, ServiceUnavailable
 from sanic.log import logger
 from sanic.request import Request
 from sanic.response import HTTPResponse, json
 
 from . import consts
-
-# fmt: on
 
 ExceptionSet = (CalculationError, DecodingError, EncodingError)
 
@@ -52,14 +54,14 @@ async def _create_raw_schedule_data(
     """Use as helper creating raw schedule data for creating schedules.
 
     Args:
-      schedule_days: selected days for the schedule to run in.
-      start_hours: hour to start the device at.
-      start_minutes: minutes to start the device at.
-      stop_hours: hour to stop the device at.
-      stop_minutes: minutes to stop the device at.
+        schedule_days: selected days for the schedule to run in.
+        start_hours: hour to start the device at.
+        start_minutes: minutes to start the device at.
+        stop_hours: hour to stop the device at.
+        stop_minutes: minutes to stop the device at.
 
     Returns:
-      Raw schedule data needed for creating the requested schedule.
+        Raw schedule data needed for creating the requested schedule.
 
     """
     running_loop = get_running_loop()
@@ -78,13 +80,13 @@ async def _parse_schedule_body(body: Dict) -> str:
     """Use as helper parsing body of create schedule requests.
 
     Args:
-      body: json body of the create schedule requests.
+        body: json body of the create schedule requests.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when missing a mandatory argument.
+        sanic.exceptions.InvalidUsage: when missing a mandatory argument.
 
     Returns:
-      Schedule data object needed for creating the new schedules.
+        Schedule data object needed for creating the new schedules.
 
     """
     recurring = False
@@ -109,9 +111,7 @@ async def _parse_schedule_body(body: Dict) -> str:
     else:
         raise InvalidUsage("Argument stop_minutes is missing.", 400)
 
-    _validate_time_integers(
-        start_hours, start_minutes, stop_hours, stop_minutes
-    )
+    _validate_time_integers(start_hours, start_minutes, stop_hours, stop_minutes)
 
     schedule_days = [0]
     if recurring:
@@ -127,21 +127,19 @@ def _validate_day_to_int(day: str) -> int:
     """Use as helper converting string weekday to int for creating schedules.
 
     Args:
-      day: string represntation of the weekday.
+        day: string represntation of the weekday.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when encounterd unknown weekday string.
+        sanic.exceptions.InvalidUsage: when encounterd unknown weekday string.
 
     Returns:
-      The in represntation of the weekday.
+        The in represntation of the weekday.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     """
     if day not in WEEKDAY_TUP:
-        raise InvalidUsage(
-            "Unrecognized day requests, check documentation.", 400
-        )
+        raise InvalidUsage("Unrecognized day requests, check documentation.", 400)
     return DAY_TO_INT_DICT[day]
 
 
@@ -151,13 +149,13 @@ def _validate_time_integers(
     """Use as helper validating time arguments of creating schedule requests.
 
     Args:
-      start_hours: hour to start the device at (0-23).
-      start_minutes: minutes to start the device at (0-59).
-      stop_hours: hour to stop the device at (0-23).
-      stop_minutes: minutes to stop the device at (0-59).
+        start_hours: hour to start the device at (0-23).
+        start_minutes: minutes to start the device at (0-59).
+        stop_hours: hour to stop the device at (0-23).
+        stop_minutes: minutes to stop the device at (0-59).
 
     Raises:
-      sanic.exceptions.InvalidUsage: when the validation failes.
+        sanic.exceptions.InvalidUsage: when the validation failes.
 
     """
     if start_hours < 0 or start_hours > 23:
@@ -180,22 +178,22 @@ async def create_schedule_handler(
     """Use for handling requests to /switcher/create_schedule.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.ServerError: when encounterd an error.
+        sanic.exceptions.ServerError: when encounterd an error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Warning:
-      Accepts json body only, no query parameters allowed.
+        Accepts json body only, no query parameters allowed.
 
     """
     try:
@@ -215,8 +213,7 @@ async def create_schedule_handler(
 
         if (
             response
-            and response.msg_type
-            == messages.ResponseMessageType.CREATE_SCHEDULE
+            and response.msg_type == messages.ResponseMessageType.CREATE_SCHEDULE
         ):
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
@@ -239,23 +236,23 @@ async def delete_schedule_handler(
     """Use for handling requests to /switcher/delete_schedule.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when encounterd unknown weekday.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when encounterd unknown weekday.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -279,8 +276,7 @@ async def delete_schedule_handler(
 
         if (
             response
-            and response.msg_type
-            == messages.ResponseMessageType.DELETE_SCHEDULE
+            and response.msg_type == messages.ResponseMessageType.DELETE_SCHEDULE
         ):
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
@@ -303,23 +299,23 @@ async def disable_schedule_handler(
     """Use for handling requests to /switcher/disable_schedule.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when encounterd faulty data.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when encounterd faulty data.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -330,9 +326,7 @@ async def disable_schedule_handler(
         else:
             raise InvalidUsage("Argument schedule_data is missing.", 400)
         if len(schedule_data) != 24:
-            raise InvalidUsage(
-                "Argument schedule_data is length is no 24.", 400
-            )
+            raise InvalidUsage("Argument schedule_data is length is no 24.", 400)
         updated_schedule_data = (
             schedule_data[0:2] + DISABLE_SCHEDULE + schedule_data[4:]
         )
@@ -344,9 +338,7 @@ async def disable_schedule_handler(
             device_id,
             device_password,
         ) as swapi:
-            response = await swapi.disable_enable_schedule(
-                updated_schedule_data
-            )
+            response = await swapi.disable_enable_schedule(updated_schedule_data)
 
         if (
             response
@@ -374,23 +366,23 @@ async def enable_schedule_handler(
     """Use for handling requests to /switcher/enable_schedule.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when encounterd faulty data.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when encounterd faulty data.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -401,12 +393,8 @@ async def enable_schedule_handler(
         else:
             raise InvalidUsage("Argument schedule_data is missing.", 400)
         if len(schedule_data) != 24:
-            raise InvalidUsage(
-                "Argument schedule_data is length is no 24.", 400
-            )
-        updated_schedule_data = (
-            schedule_data[0:2] + ENABLE_SCHEDULE + schedule_data[4:]
-        )
+            raise InvalidUsage("Argument schedule_data is length is no 24.", 400)
+        updated_schedule_data = schedule_data[0:2] + ENABLE_SCHEDULE + schedule_data[4:]
 
         async with SwitcherV2Api(
             get_running_loop(),
@@ -415,9 +403,7 @@ async def enable_schedule_handler(
             device_id,
             device_password,
         ) as swapi:
-            response = await swapi.disable_enable_schedule(
-                updated_schedule_data
-            )
+            response = await swapi.disable_enable_schedule(updated_schedule_data)
 
         if (
             response
@@ -445,22 +431,22 @@ async def get_schedules_handler(
     """Use for handling requests to /switcher/get_schedules.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the configured schedules on the device.
+        Json object represnting the configured schedules on the device.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -522,22 +508,22 @@ async def get_state_handler(
     """Use for handling requests to /switcher/get_state.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the current state of the device.
+        Json object represnting the current state of the device.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -592,23 +578,23 @@ async def set_auto_shutdown_handler(
     """Use for handling requests to /switcher/set_auto_shutdown.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when requested is not 59-180 minutes.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when requested is not 59-180 minutes.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -627,17 +613,11 @@ async def set_auto_shutdown_handler(
             hours = int(request.json[consts.PARAM_HOURS])
             minutes = int(request.json[consts.PARAM_MINUTES])
         else:
-            raise InvalidUsage(
-                "One of the arguments hours or minutes is missing.", 400
-            )
+            raise InvalidUsage("One of the arguments hours or minutes is missing.", 400)
 
-        time_guard = (hours * 60 if hours > 0 else 0) + (
-            minutes if minutes > 0 else 0
-        )
+        time_guard = (hours * 60 if hours > 0 else 0) + (minutes if minutes > 0 else 0)
         if time_guard < 59 or time_guard > 180:
-            raise InvalidUsage(
-                "Auto shutdown can be set between 1 and 3 hours.", 400
-            )
+            raise InvalidUsage("Auto shutdown can be set between 1 and 3 hours.", 400)
 
         time_to_off_timedelta = timedelta(hours=hours, minutes=minutes)
 
@@ -650,10 +630,7 @@ async def set_auto_shutdown_handler(
         ) as swapi:
             response = await swapi.set_auto_shutdown(time_to_off_timedelta)
 
-        if (
-            response
-            and response.msg_type == messages.ResponseMessageType.AUTO_OFF
-        ):
+        if response and response.msg_type == messages.ResponseMessageType.AUTO_OFF:
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
             {
@@ -662,9 +639,7 @@ async def set_auto_shutdown_handler(
             }
         )
     except ExceptionSet as exc:
-        raise ServerError(
-            "Failed setting auto shutdown on device.", 500
-        ) from exc
+        raise ServerError("Failed setting auto shutdown on device.", 500) from exc
 
 
 async def set_device_name_handler(
@@ -677,23 +652,23 @@ async def set_device_name_handler(
     """Use for handling requests to /switcher/set_device_name.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when name length is no 2-32 characters.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when name length is no 2-32 characters.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -704,9 +679,7 @@ async def set_device_name_handler(
         else:
             raise InvalidUsage("Argument name is missing.", 400)
         if len(name) < 2 or len(name) > 32:
-            raise InvalidUsage(
-                "Only accepts name with length between 2 and 32.", 400
-            )
+            raise InvalidUsage("Only accepts name with length between 2 and 32.", 400)
 
         async with SwitcherV2Api(
             get_running_loop(),
@@ -717,10 +690,7 @@ async def set_device_name_handler(
         ) as swapi:
             response = await swapi.set_device_name(name)
 
-        if (
-            response
-            and response.msg_type == messages.ResponseMessageType.UPDATE_NAME
-        ):
+        if response and response.msg_type == messages.ResponseMessageType.UPDATE_NAME:
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
             {
@@ -742,22 +712,22 @@ async def turn_off_handler(
     """Use for handling requests to /switcher/turn_off.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -770,10 +740,7 @@ async def turn_off_handler(
         ) as swapi:
             response = await swapi.control_device(COMMAND_OFF)
 
-        if (
-            response
-            and response.msg_type == messages.ResponseMessageType.CONTROL
-        ):
+        if response and response.msg_type == messages.ResponseMessageType.CONTROL:
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
             {
@@ -795,23 +762,23 @@ async def turn_on_handler(
     """Use for handling requests to /switcher/turn_on.
 
     Args:
-      request: ``sanic``'s request object.
-      ip_address: the local ip address.
-      phone_id: the extracted phone id.
-      device_id: the extracted device id.
-      device_password: the extracted device password.
+        request: ``sanic``'s request object.
+        ip_address: the local ip address.
+        phone_id: the extracted phone id.
+        device_id: the extracted device id.
+        device_password: the extracted device password.
 
     Raises:
-      sanic.exceptions.InvalidUsage: when timer is no 1-180 minutes.
-      sanic.exceptions.ServerError: when encounterd any error.
+        sanic.exceptions.InvalidUsage: when timer is no 1-180 minutes.
+        sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-      Json object represnting the request status.
+        Json object represnting the request status.
 
-      More information is available in the ``Usage`` section.
+        More information is available in the ``Usage`` section.
 
     Note:
-      Accepts arguments as json body or query parameters.
+        Accepts arguments as json body or query parameters.
 
     """
     try:
@@ -822,9 +789,7 @@ async def turn_on_handler(
             minutes = str(request.json[consts.PARAM_MINUTES])
         if minutes and (int(minutes) < 1 or int(minutes) > 180):
             logger.info("Invalid usage, timer requested is %s", minutes)
-            raise InvalidUsage(
-                "Can only accept timer for 1 to 180 minutes.", 400
-            )
+            raise InvalidUsage("Can only accept timer for 1 to 180 minutes.", 400)
         async with SwitcherV2Api(
             get_running_loop(),
             ip_address,
@@ -837,10 +802,7 @@ async def turn_on_handler(
             else:
                 response = await swapi.control_device(COMMAND_ON)
 
-        if (
-            response
-            and response.msg_type == messages.ResponseMessageType.CONTROL
-        ):
+        if response and response.msg_type == messages.ResponseMessageType.CONTROL:
             return json({consts.KEY_SUCCESSFUL: response.successful})
         return json(
             {

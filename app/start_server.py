@@ -17,10 +17,9 @@
 .. codeauthor:: Tomer Figenblat <tomer.figenblat@gmail.com>
 
 """
-# fmt: off
+
 from argparse import ArgumentParser
-from asyncio import (AbstractEventLoop, get_event_loop, new_event_loop,
-                     set_event_loop)
+from asyncio import AbstractEventLoop, get_event_loop, new_event_loop, set_event_loop
 from functools import partial, update_wrapper
 from sys import exit as sys_exit
 from typing import Optional
@@ -33,15 +32,18 @@ from sanic.request import Request
 from sanic.response import HTTPResponse, text
 
 from . import mappings
-from .request_handlers import (create_schedule_handler,
-                               delete_schedule_handler,
-                               disable_schedule_handler,
-                               enable_schedule_handler, get_schedules_handler,
-                               get_state_handler, set_auto_shutdown_handler,
-                               set_device_name_handler, turn_off_handler,
-                               turn_on_handler)
-
-# fmt: on
+from .request_handlers import (
+    create_schedule_handler,
+    delete_schedule_handler,
+    disable_schedule_handler,
+    enable_schedule_handler,
+    get_schedules_handler,
+    get_state_handler,
+    set_auto_shutdown_handler,
+    set_device_name_handler,
+    turn_off_handler,
+    turn_on_handler,
+)
 
 CONF_PHONE_ID = "PHONE_ID"
 CONF_DEVICE_ID = "DEVICE_ID"
@@ -70,38 +72,32 @@ def before_start(app: Sanic, loop: AbstractEventLoop) -> None:
     Its job is:
 
     .. hlist::
-       :columns: 1
+        :columns: 1
 
        * Gather the initial data for running the server.
        * Register a middleware for aquiring a throttler for all requests.
        * Add routes using the ``mappings module`` and the
-         ``request_handlers module``.
+            ``request_handlers module``.
 
     Args:
-      app: the running ``sanic`` app.
-      loop: the main event loop.
+        app: the running ``sanic`` app.
+        loop: the main event loop.
 
     """
     app.config[CONF_PHONE_ID] = "0000{}".format(app.config[CONF_PHONE_ID])[-4:]
-    app.config[CONF_DEVICE_ID] = (
-        "000000{}".format(app.config[CONF_DEVICE_ID])
-    )[-6:]
+    app.config[CONF_DEVICE_ID] = ("000000{}".format(app.config[CONF_DEVICE_ID]))[-6:]
     app.config[CONF_DEVICE_PASSWORD] = (
         "00000000{}".format(app.config[CONF_DEVICE_PASSWORD])
     )[-8:]
     app.config[CONF_THROTTLE] = (
-        float(app.config[CONF_THROTTLE])
-        if CONF_THROTTLE in app.config
-        else 5.0
+        float(app.config[CONF_THROTTLE]) if CONF_THROTTLE in app.config else 5.0
     )
 
     app.config.REQUEST_TIMEOUT = 10
     app.config.RESPONSE_TIMEOUT = 10
     app.config.GRACEFUL_SHUTDOWN_TIMEOUT = 10
 
-    request_throttler = Throttler(
-        rate_limit=1, period=app.config[CONF_THROTTLE]
-    )
+    request_throttler = Throttler(rate_limit=1, period=app.config[CONF_THROTTLE])
 
     @app.middleware("request")
     async def requests_middleware(request: Request) -> None:
@@ -116,7 +112,7 @@ def before_start(app: Sanic, loop: AbstractEventLoop) -> None:
         throttling requests.
 
         Args:
-          request: the incoming request object.
+            request: the incoming request object.
 
         Note:
             This function cannot be included in the code docs.
@@ -207,8 +203,8 @@ def timeout(request: Request, exception: SanicException) -> HTTPResponse:
     Its job is to log the exception and return a code 500 response.
 
     Args:
-      request: the incoming request object.
-      exception: the exception thrown.
+        request: the incoming request object.
+        exception: the exception thrown.
 
     """
     logger.error(exception)

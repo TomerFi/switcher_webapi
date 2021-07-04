@@ -28,7 +28,7 @@ def get_local_ip_address() -> str:
     """Use for getting the local host's ip address.
 
     Returns:
-      The local ip address.
+        The local ip address.
 
     """
     return gethostbyname(gethostname())
@@ -38,10 +38,10 @@ def get_next_weekday(is_iso: bool = False) -> int:
     """Use for getting next day weekday.
 
     Args:
-      is_iso: If true, Monday=1 and Sunday=7. Else Monday=0 and Sunday=6.
+        is_iso: If true, Monday=1 and Sunday=7. Else Monday=0 and Sunday=6.
 
     Returns:
-      The int value represnting the the next weekday (tomorrow).
+        The int value represnting the the next weekday (tomorrow).
 
     """
     max_day = 7 if is_iso else 6
