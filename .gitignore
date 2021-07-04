@@ -72,7 +72,8 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docsbuild/
+*/docsbuild/
 
 # PyBuilder
 target/
@@ -132,3 +133,7 @@ dmypy.json
 ##########################
 !.env
 .env_vars
+
+# coverage reports
+coverage.xml
+junit.xml

@@ -188,7 +188,7 @@ async def create_schedule_handler(
         sanic.exceptions.ServerError: when encounterd an error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -247,7 +247,7 @@ async def delete_schedule_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -310,7 +310,7 @@ async def disable_schedule_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -377,7 +377,7 @@ async def enable_schedule_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -441,7 +441,7 @@ async def get_schedules_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the configured schedules on the device.
+        Json object representing the configured schedules on the device.
 
         More information is available in the ``Usage`` section.
 
@@ -518,7 +518,7 @@ async def get_state_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the current state of the device.
+        Json object representing the current state of the device.
 
         More information is available in the ``Usage`` section.
 
@@ -589,7 +589,7 @@ async def set_auto_shutdown_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -663,7 +663,7 @@ async def set_device_name_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -722,7 +722,7 @@ async def turn_off_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
@@ -773,7 +773,7 @@ async def turn_on_handler(
         sanic.exceptions.ServerError: when encounterd any error.
 
     Returns:
-        Json object represnting the request status.
+        Json object representing the request status.
 
         More information is available in the ``Usage`` section.
 
