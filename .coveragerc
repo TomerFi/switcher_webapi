@@ -1,5 +1,6 @@
 [run]
-source = switcher_webapi/
+source = app/
+omit = app/tests/*
 
 [report]
 fail_under = 90.00
