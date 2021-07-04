@@ -5,8 +5,8 @@ coverage:
     changes: off
     project:
       default:
-        target: 90%
-        threshold: 2
+        branches:
+          - dev
 
 comment:
   layout: diff
