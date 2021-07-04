@@ -25,9 +25,9 @@ fileExistenceTests:
     shouldExist: true
 
 fileContentTests:
-  - name: "LICENSE is MIT"
+  - name: "LICENSE is Apache-2.0"
     path: /usr/switcher_webapi/LICENSE
-    expectedContents: ["MIT License.*"]
+    expectedContents: ["Apache License.*Version 2.0.*"]
 
 metadataTest:
   labels:
@@ -56,7 +56,7 @@ metadataTest:
       value: "."
       isRegex: true
     - key: "org.opencontainers.image.licenses"
-      value: "MIT"
+      value: "Apache-2.0"
     - key: "org.opencontainers.image.ref.name"
       value: "."
       isRegex: true

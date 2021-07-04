@@ -8,6 +8,5 @@ Welcome to Switcher water heater WebAPI documentation!
    prerequisites
    notes
    usage
-   license
    credits
    codedocs
