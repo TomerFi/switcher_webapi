@@ -17,38 +17,26 @@
 from os import path as os_path
 from sys import path as sys_path
 
-sys_path.insert(0, os_path.abspath("../src"))
-sys_path.insert(0, os_path.abspath("../tests"))
+sys_path.insert(0, os_path.abspath("../app"))
 
 with open("../VERSION", "r") as version_file:
-    version = version_file.readline()
+    version_from_file = version_file.readline()
 
 project = "Switcher Webapi"
-copyright = "2019, Tomer Figenblat"
-author = "Tomer Figenblat"
-release = version
+copyright = author = "Tomer Figenblat"
+release = version = version_from_file
+
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "sphinxcontrib.spelling",
 ]
-exclude_patterns = ["_build"]
-pygments_style = "sphinx"
-html_theme = "sphinx_rtd_theme"
+
+exclude_patterns = ["docsbuild"]
 language = "en"
-show_authors = False
-linkcheck_anchors = True
+html_theme = "insegel"
+html_baseurl = "switcher-webapi.tomfi.info"
 
-# sphinx.ext.todo configuration
-todo_include_todos = True
-
-# autodoc configuration
-autodoc_mock_imports = [
-    "aiohttp",
-    "aioswitcher",
-    "asyncio_throttle",
-    "bs4",
-    "pytest",
-    "sanic",
-]
+autodoc_default_options = {"members": True}
+autodoc_typehints = "description"
