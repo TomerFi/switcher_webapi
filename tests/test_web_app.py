@@ -12,4 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Rest services for controlling the switcher water heater test cases."""
+"""Test cases for the web application."""
+
+from assertpy import assert_that
+
+
+def test_dummy():
+    assert_that(True).is_true()
