@@ -12,10 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Test cases for the web application."""
-
-from assertpy import assert_that
-
-
-def test_dummy():
-    assert_that(True).is_true()
+"""Aiohttp rest services integrating with Switcher devices."""
