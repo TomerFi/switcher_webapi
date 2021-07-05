@@ -73,7 +73,7 @@ docker-tag-latest: ## add latest tag before pushing the latest version
 	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest
 
 docker-run: ## run the built image as a container (must be built first).
-docker-run: docker run -d -p :8000 --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
+	docker run -d -p :8000 --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
 
 docker-build-and-run: ## build image from Dockerfile and run as container.
 docker-build-and-run: docker-build docker-run

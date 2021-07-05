@@ -6,11 +6,14 @@ fileExistenceTests:
     path: /usr/switcher_webapi/LICENSE
     shouldExist: true
   - name: "helpers.py shouldExist: true"
-    path: /usr/switcher_webapi/switcher_webapi.py
+    path: /usr/switcher_webapi/webapp.py
     shouldExist: true
   - name: "requirements.txt shouldExist: true"
     path: /usr/switcher_webapi/requirements.txt
     shouldExist: true
+  - name: "tests shouldExist: false"
+    path: /usr/switcher_webapi/tests/
+    shouldExist: false
 
 
 fileContentTests:
@@ -57,5 +60,5 @@ metadataTest:
       isRegex: true
   exposedPorts: ["8000"]
   entrypoint: []
-  cmd: ["/bin/sh", "-c", "python switcher_webapi.py -p 8000"]
+  cmd: ["/bin/sh", "-c", "python webapp.py -p 8000"]
   workdir: "/usr/switcher_webapi"
