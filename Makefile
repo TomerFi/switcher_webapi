@@ -1,25 +1,16 @@
-# ******************************************************************** #
-# .env_vars file contains following keys, example:                     #
-# -------------------------------------------------------------------- #
-# (Optional)                                                           #
-# EXPOSED_PORT=8000                                                    #
-# CONF_THROTTLE=5.0                                                    #
-#                                                     				   #
-# (Mandatory)                                                          #
-# CONF_DEVICE_IP_ADDR=192.168.100.157                                  #
-# CONF_PHONE_ID=1234                                                   #
-# CONF_DEVICE_ID=ab1c2d                                                #
-# CONF_DEVICE_PASSWORD=12345678                                        #
-#																	   #
-# change the source file name by passing env_vars=another_file to make #
-# ******************************************************************** #
-
-EXPOSED_PORT ?= 8000
-CONF_THROTTLE ?= 5.0
-
-env_vars ?= .env_vars
-include $(env_vars)
-export $(shell sed 's/=.*//' $(env_vars))
+# Copyright Tomer Figenblat.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 default: help
 
@@ -45,16 +36,16 @@ FULL_IMAGE_NAME = $(strip $(IMAGE_NAME):$(CODE_VERSION))
 docker-build: ## build image from Dockerfile.
 	docker build \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
-  --build-arg BUILD_DATE=$(CURRENT_DATE) \
-  --build-arg VERSION=$(CODE_VERSION) \
-  -t $(FULL_IMAGE_NAME) .
+	--build-arg BUILD_DATE=$(CURRENT_DATE) \
+	--build-arg VERSION=$(CODE_VERSION) \
+	-t $(FULL_IMAGE_NAME) .
 
 docker-build-testing-image: ## build image from Dockerfile using a testing tag.
 	docker build \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
-  --build-arg BUILD_DATE=$(CURRENT_DATE) \
-  --build-arg VERSION=testing \
-  -t $(strip $(IMAGE_NAME)):testing .
+	--build-arg BUILD_DATE=$(CURRENT_DATE) \
+	--build-arg VERSION=testing \
+	-t $(strip $(IMAGE_NAME)):testing .
 
 docker-remove-testing-image: ## remove the testing image (must be build first).
 	docker image rm $(strip $(IMAGE_NAME)):testing
@@ -62,9 +53,9 @@ docker-remove-testing-image: ## remove the testing image (must be build first).
 docker-build-no-cache: ## build image from Dockerfile with no caching.
 	docker build --no-cache \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
-  --build-arg BUILD_DATE=$(CURRENT_DATE) \
-  --build-arg VERSION=$(CODE_VERSION) \
-  -t $(FULL_IMAGE_NAME) .
+	--build-arg BUILD_DATE=$(CURRENT_DATE) \
+	--build-arg VERSION=$(CODE_VERSION) \
+	-t $(FULL_IMAGE_NAME) .
 
 structure-test: ## run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
 	container-structure-test test --force --config container_structure.yml --verbosity info --image $(strip $(IMAGE_NAME)):testing
@@ -72,7 +63,7 @@ structure-test: ## run the container-structure-test tool against the built testi
 docker-build-structure-test: ## build the image and test the container structure
 docker-build-structure-test: docker-build structure-test
 
-docker-build-no-cache-structure-test: ## build the image and test the container structure
+docker-build-no-cache-structure-test: ## build the image with no caching and test the container structure
 docker-build-no-cache-structure-test: docker-build-no-cache structure-test
 
 docker-full-structure-testing: ## build the image with the testing tag and remove after structure test
@@ -82,32 +73,10 @@ docker-tag-latest: ## add latest tag before pushing the latest version
 	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest
 
 docker-run: ## run the built image as a container (must be built first).
-docker-run:	verify-environment-file
-	docker run -d -p $(EXPOSED_PORT):8000 \
-	-e CONF_DEVICE_IP_ADDR=$(CONF_DEVICE_IP_ADDR) \
-  -e CONF_PHONE_ID=$(CONF_PHONE_ID) \
-  -e CONF_DEVICE_ID=$(CONF_DEVICE_ID) \
-  -e CONF_DEVICE_PASSWORD=$(CONF_DEVICE_PASSWORD) \
-  -e CONF_THROTTLE=$(CONF_THROTTLE) \
-  --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
+docker-run: docker run -d -p :8000 --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
 
 docker-build-and-run: ## build image from Dockerfile and run as container.
 docker-build-and-run: docker-build docker-run
 
 docker-build-no-cache-and-run: ## build image from Dockerfile with no caching and run as container.
 docker-build-no-cache-and-run: docker-build-no-cache docker-run
-
-verify-environment-file: ## verify the existence of the required environment variables file.
-ifndef CONF_DEVICE_IP_ADDR
-	$(error Mandatory configuration value CONF_DEVICE_IP_ADDR was not provided, can't run container.)
-endif
-ifndef CONF_PHONE_ID
-	$(error Mandatory configuration value CONF_PHONE_ID was not provided, can't run container.)
-endif
-ifndef CONF_DEVICE_ID
-	$(error Mandatory configuration value CONF_DEVICE_ID was not provided, can't run container.)
-endif
-ifndef CONF_DEVICE_PASSWORD
-	$(error Mandatory configuration value CONF_DEVICE_PASSWORD was not provided, can't run container.)
-endif
-	$(info Safe to run image (assuming the provided information is infact correct).)
