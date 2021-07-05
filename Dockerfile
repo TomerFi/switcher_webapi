@@ -37,12 +37,10 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 WORKDIR /usr/switcher_webapi
 
-COPY LICENSE requirements.txt ./
-
-COPY app ./
+COPY LICENSE switcher_webapi.py requirements.txt ./
 
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "python -m start_server -p 8000"]
+CMD ["/bin/sh", "-c", "python switcher_webapi.py -p 8000"]

@@ -1,6 +1,5 @@
-aiohttp==3.7.4.post0
+assertpy==1.1
 bandit==1.7.0
-beautifulsoup4==4.9.3
 black==21.6b0
 doc8==0.8.1
 flake8==3.9.2
@@ -8,8 +7,7 @@ flake8-docstrings==1.6.0
 isort==5.9.1
 mypy==0.910
 pytest==6.2.4
+pytest-aiohttp==0.3.0
 pytest-cov==2.12.1
-pytest-sanic==1.6.2
 pytest-sugar==0.9.4
-types-pytz==2021.1.0
 yamllint==1.26.1

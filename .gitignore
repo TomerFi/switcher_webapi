@@ -137,3 +137,6 @@ dmypy.json
 # coverage reports
 coverage.xml
 junit.xml
+
+# vscode http extension requests file
+test_requests.http
