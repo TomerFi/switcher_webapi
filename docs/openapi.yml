@@ -1,0 +1,156 @@
+---
+openapi: 3.0.0
+info:
+  title: Switcher Webapi
+  description: Dockerized rest service integrating with Switcher devices
+
+paths:
+  /switcher/get_state:
+    get:
+      summary: Get a device state
+      description: Returns the current state of a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON object representing the current state of the selected device
+          content:
+            application/json:
+              examples:
+                "Water heater device ON":
+                  value:
+                    state: "ON"
+                    time_left: 01:15:32
+                    time_on: 00:14:28
+                    auto_shutdown: 02:30:00
+                    power_consumption: 1274
+                    electric_current: 16.4
+                "Water heater device OFF":
+                  value:
+                    state: "OFF"
+                    time_left: 00:00:00
+                    time_on: 00:00:00
+                    auto_shutdown: 02:30:00
+                    power_consumption: 0
+                    electric_current: 0.0
+                "Power plug device ON":
+                  value:
+                    state: "ON"
+                    time_on: 00:14:28
+                    power_consumption: 1274
+                    electric_current: 16.4
+                "Power plug device OFF":
+                  value:
+                    state: "OFF"
+                    time_on: 00:00:00
+                    power_consumption: 0
+                    electric_current: 0.0
+
+  /switcher/turn_on:
+    post:
+      summary: Turn on a device
+      description: Turn a device on, optionally setting an off timer for supporting devices
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+        - in: query
+          name: minutes
+          description: minutes to set as off timer
+          schema:
+            type: integer
+          example:
+            90
+      responses:
+        "200":
+          description: A empty JSON object
+
+  /switcher/turn_off:
+    post:
+      summary: Turn off a device
+      description: Turn a device off
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A empty JSON object
+
+  /switcher/set_name:
+    patch:
+      summary: Set a device name
+      description: Set the name of a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+        - in: query
+          name: name
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "MySwitcherDevice"
+      responses:
+        "200":
+          description: A empty JSON object
