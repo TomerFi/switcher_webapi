@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D2D2D" />
+  
+  <title>Switcher Webapi :: Switcher Webapi 1.0.0-dev documentation</title>
+  
+
+  <link rel="icon" type="image/png" sizes="32x32" href="_static/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="_static/img/favicon-16x16.png">
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+
+  <link rel="stylesheet" href="_static/css/insegel.css"/>
+
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'',
+        VERSION:'1.0.0-dev',
+        LANGUAGE:'en',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+    };
+  </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+
+  <script src="https://email.tl.fortawesome.com/c/eJxNjUEOgyAQAF8jR7Kw6wIHDh7sP1Cw2mgxgmn6-3JsMqc5zEQfE8dkxOY1KKMUOI3ACFKRJpSW2AAp7ontYIaxI6i7XPJVwyeVfCQ550Os3jLrGSNOLgbdAy6s0PBk2TFNjEbsfq31LB0OnX407pJa5v2faRadwSW63mn5KuLyR9j2tgx3zecanl-55R_-jjPs"></script>
+
+</head>
+
+<body>
+  <div id="insegel-container">
+    <header>
+      <div id="logo-container">
+          
+          <a href="#"><img src="_static/img/logo.svg"></a>
+          
+
+      </div>
+      <div id="project-container">
+        <h1>Switcher Webapi Documentation</h1>
+      </div>
+    </header>
+
+    <div id="content-container">
+
+      <div id="main-content-container">
+        <div id="main-content-header">
+          <h1>Switcher Webapi 1.0.0-dev
+ documentation</h1>
+        </div>
+        <div id="main-content">
+          
+  <section id="welcome-to-switcher-water-heater-webapi-documentation">
+<h1>Welcome to Switcher water heater WebAPI documentation!<a class="headerlink" href="#welcome-to-switcher-water-heater-webapi-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-install"></span><section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run -d -p <span class="m">8000</span>:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
+</pre></div>
+</div>
+</section>
+<span id="document-apidocs"></span><section id="api-documentation">
+<h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="http get">
+<dt class="sig sig-object http" id="get--switcher-get_state">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/switcher/get_state</span></span><a class="headerlink" href="#get--switcher-get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Get a device state</strong></p>
+<p>Returns the current state of a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/switcher/get_state?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- <p>A JSON object representing the current state of the selected device</p>
+<p><strong>Water heater device ON:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_left&quot;</span><span class="p">:</span> <span class="s2">&quot;01:15:32&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:14:28&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;auto_shutdown&quot;</span><span class="p">:</span> <span class="s2">&quot;02:30:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">1274</span><span class="p">,</span>
+    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">16.4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Water heater device OFF:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;OFF&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_left&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;auto_shutdown&quot;</span><span class="p">:</span> <span class="s2">&quot;02:30:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Power plug device ON:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;ON&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:14:28&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">1274</span><span class="p">,</span>
+    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">16.4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Power plug device OFF:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;OFF&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when failed to get the current device state:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;an error of some type was raised&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--switcher-turn_on">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/switcher/turn_on</span></span><a class="headerlink" href="#post--switcher-turn_on" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Turn on a device</strong></p>
+<p>Turn a device on, optionally setting an off timer for supporting devices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+<li><p><strong>minutes</strong> (<em>integer</em>) -- minutes to set as off timer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when failed to turn on the device:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;an error of some type was raised&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--switcher-turn_off">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/switcher/turn_off</span></span><a class="headerlink" href="#post--switcher-turn_off" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Turn off a device</strong></p>
+<p>Turn a device off</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when failed to turn off the device:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;an error of some type was raised&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http patch">
+<dt class="sig sig-object http" id="patch--switcher-set_name">
+<span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/switcher/set_name</span></span><a class="headerlink" href="#patch--switcher-set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Set a device name</strong></p>
+<p>Set the name of a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+<li><p><strong>name</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when deserializing the `name` key:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;name&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http patch">
+<dt class="sig sig-object http" id="patch--switcher-set_auto_shutdown">
+<span class="sig-name descname"><span class="pre">PATCH</span> </span><span class="sig-name descname"><span class="pre">/switcher/set_auto_shutdown</span></span><a class="headerlink" href="#patch--switcher-set_auto_shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Set auto shutdown</strong></p>
+<p>Set the auto shutdown configuration for a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+<li><p><strong>hours</strong> (<em>integer</em>) -- the hours value for the timedelta
+(Required)</p></li>
+<li><p><strong>minutes</strong> (<em>integer</em>) -- the minutes value for the timedelta, optional</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when deserializing the `hours` key:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;hours&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt class="sig sig-object http" id="get--switcher-get_schedules">
+<span class="sig-name descname"><span class="pre">GET</span> </span><span class="sig-name descname"><span class="pre">/switcher/get_schedules</span></span><a class="headerlink" href="#get--switcher-get_schedules" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Get a device schedules</strong></p>
+<p>Returns the schedules configured on a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/switcher/get_schedules?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- <p>A JSON array of the schedules</p>
+<p><strong>Multiple schedules found on a Tuesday:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;schedule_id&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;recurring&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;days&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;FRIDAY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SUNDAY&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;MONDAY&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;start_time&quot;</span><span class="p">:</span> <span class="s2">&quot;23:00&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;end_time&quot;</span><span class="p">:</span> <span class="s2">&quot;23:30&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="s2">&quot;0:30:00&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;Due next Friday at 23:00&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">&quot;schedule_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;recurring&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;days&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="nt">&quot;start_time&quot;</span><span class="p">:</span> <span class="s2">&quot;22:45&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;end_time&quot;</span><span class="p">:</span> <span class="s2">&quot;23:30&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;duration&quot;</span><span class="p">:</span> <span class="s2">&quot;0:45:00&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;display&quot;</span><span class="p">:</span> <span class="s2">&quot;Due today at 22:45&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when failed to get the current device state:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;an error of some type was raised&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http delete">
+<dt class="sig sig-object http" id="delete--switcher-delete_schedule">
+<span class="sig-name descname"><span class="pre">DELETE</span> </span><span class="sig-name descname"><span class="pre">/switcher/delete_schedule</span></span><a class="headerlink" href="#delete--switcher-delete_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Delete a schedule</strong></p>
+<p>Delete an existing schedule from a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+<li><p><strong>schedule</strong> (<em>string</em>) -- the schedule id for deletion
+(Required)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when deserializing the `schedule` key:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;schedule&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt class="sig sig-object http" id="post--switcher-create_schedule">
+<span class="sig-name descname"><span class="pre">POST</span> </span><span class="sig-name descname"><span class="pre">/switcher/create_schedule</span></span><a class="headerlink" href="#post--switcher-create_schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Create a schedule</strong></p>
+<p>Create a new schedule on a device</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- the id of the selected device
+(Required)</p></li>
+<li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
+(Required)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/switcher/create_schedule?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;17:00&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="s2">&quot;18:30&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;days&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;Wednesday&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Saturday&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
+<p><strong>Example for error when deserializing the `start` key:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">500</span> <span class="ne">Internal Server Error</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;start&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</div>
+</section>
+
+
+        </div>
+      </div>
+
+      <div id="side-menu-container">
+
+        <div id="search" role="search">
+</div>
+
+        <div id="side-menu" role="navigation">
+
+          
+  
+  
+    <div class="local-toc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-install">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-apidocs">API Documentation</a></li>
+</ul>
+</div>
+  
+
+
+        </div>
+
+        
+
+      </div>
+
+    </div>
+
+<footer>
+    <div id="footer-info">
+        <ul id="build-details">
+            
+                <li class="footer-element">
+                    
+                </li>
+            
+
+            
+
+            
+        </ul>
+        <div id="credit">
+            created with <a href="http://sphinx-doc.org/">Sphinx</a> and <a href="https://github.com/Autophagy/insegel">Insegel</a>
+
+        </div>
+    </div>
+
+    <a id="menu-toggle" class="fa fa-bars" aria-hidden="true"></a>
+
+    <script type="text/javascript">
+      $("#menu-toggle").click(function() {
+        $("#menu-toggle").toggleClass("toggled");
+        $("#side-menu-container").slideToggle(300);
+      });
+    </script>
+
+</footer> 
+
+</div>
+
+</body>
+</html>
