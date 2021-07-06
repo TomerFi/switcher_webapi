@@ -5,8 +5,4 @@ Welcome to Switcher water heater WebAPI documentation!
    :maxdepth: 1
 
    install
-   prerequisites
-   notes
-   usage
-   credits
-   codedocs
+   apidocs

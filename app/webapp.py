@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Rest service implemented with aiohttp for intetgrating the Switcher smart devices."""
+"""Rest service implemented with aiohttp for integrating the Switcher smart devices."""
 
 from argparse import ArgumentParser
 from datetime import timedelta
