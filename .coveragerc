@@ -6,4 +6,6 @@ omit = app/tests/*
 fail_under = 90.00
 precision = 2
 # show_missing = true
-# skip_covered = true
+skip_covered = true
+exclude_lines =
+    if __name__ == "__main__":

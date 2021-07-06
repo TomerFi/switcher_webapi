@@ -73,7 +73,7 @@ async def test_successful_get_state_get_request(
     api_disconnect,
     api_client,
 ):
-    # stub get_state to return mock state response
+    # stub get_state to return mock response
     get_state.return_value = response_mock
     # send get request for get_state endpoint: /switcher/get_state?id=ab1c2d&ip=1.2.3.4
     response = await api_client.get(webapp.ENDPOINT_GET_STATE + fake_device_qparams)
@@ -119,7 +119,7 @@ async def test_successful_turn_on_post_request(
     query_params,
     expected_values,
 ):
-    # stub control_device to return mock state response
+    # stub control_device to return mock response
     control_device.return_value = response_mock
     # send post request for turn_on endpoint: /switcher/turn_on?id=ab1c2d&ip=1.2.3.4...
     response = await api_client.post(webapp.ENDPOINT_TURN_ON + fake_device_qparams + query_params)
@@ -158,7 +158,7 @@ async def test_successful_turn_off_post_request(
     api_disconnect,
     api_client,
 ):
-    # stub control_device to return mock state response
+    # stub control_device to return mock response
     control_device.return_value = response_mock
     # send post request for turn_off endpoint: /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
     response = await api_client.post(webapp.ENDPOINT_TURN_OFF + fake_device_qparams)
@@ -197,7 +197,7 @@ async def test_successful_set_name_patch_request(
     api_disconnect,
     api_client,
 ):
-    # stub set_device_name to return mock state response
+    # stub set_device_name to return mock response
     set_device_name.return_value = response_mock
     # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
     response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName")
@@ -260,7 +260,7 @@ async def test_successful_set_auto_shutdown_patch_request(
     query_params,
     expected_timedelta,
 ):
-    # stub set_auto_shutdown to return mock state response
+    # stub set_auto_shutdown to return mock response
     set_auto_shutdown.return_value = response_mock
     # send patch request for set_auto_shutdown endpoint: /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4...
     response = await api_client.patch(webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + query_params)
@@ -299,6 +299,47 @@ async def test_erroneous_set_auto_shutdown_patch_request(
     # verify mocks calling
     api_connect.assert_called_once()  # connect is always called
     set_auto_shutdown.assert_called_once_with(timedelta(hours=2))
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "blabla"})
+
+
+@patch("aioswitcher.api.SwitcherApi.get_schedules")
+async def test_successful_get_schedules_get_request(
+    get_schedules,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # stub mock response to return a set of two mock schedules
+    schedule1 = schedule2 = Mock()
+    response_mock.schedules = {schedule1, schedule2}
+    # stub get_schedules to return mock response
+    get_schedules.return_value = response_mock
+    # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
+    response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    api_connect.assert_called_once()  # connect is always called
+    get_schedules.assert_called_once_with()
+    response_serializer.assert_called_once_with(schedule1)
+    response_serializer.assert_called_once_with(schedule2)
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherApi.get_schedules", side_effect=Exception("blabla"))
+async def test_erroneous_get_schedules_get_request(
+    get_schedules, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
+    response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    api_connect.assert_called_once()  # connect is always called
+    get_schedules.assert_called_once_with()
     response_serializer.assert_not_called()
     api_disconnect.assert_called_once()  # diconnect is always called
     # assert the expected response
