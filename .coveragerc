@@ -1,5 +1,9 @@
+[run]
+source = app
+omit = app/tests/*
+
 [report]
 fail_under = 90.00
 precision = 2
 # show_missing = true
-skip_covered = true
+# skip_covered = true
