@@ -135,9 +135,10 @@ async def get_schedules(request: web.Request) -> web.Response:
 @routes.delete(ENDPOINT_DELETE_SCHEDULE)
 async def delete_schedule(request: web.Request) -> web.Response:
     """Use to delete an existing schedule."""
+    schedule_id = request.query[KEY_SCHEDULE]
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         return web.json_response(
-            _serialize_object(await swapi.delete_schedule(request.query[KEY_SCHEDULE]))
+            _serialize_object(await swapi.delete_schedule(schedule_id))
         )
 
 
