@@ -203,3 +203,42 @@ async def test_erroneous_turn_off_post_request(
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
+
+
+@patch("aioswitcher.api.SwitcherApi.set_device_name")
+async def test_successful_set_name_patch_request(
+    set_device_name,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # stub set_device_name to return mock state response
+    set_device_name.return_value = response_mock
+    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
+    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName")
+    # verify mocks calling
+    api_connect.assert_called_once()  # connect is always called
+    set_device_name.assert_called_once_with("newFakedName")
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherApi.set_device_name", side_effect=Exception("blabla"))
+async def test_erroneous_set_name_patch_request(
+    set_device_name, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
+    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName")
+    # verify mocks calling
+    api_connect.assert_called_once()  # connect is always called
+    set_device_name.assert_called_once_with("newFakedName")
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "blabla"})
