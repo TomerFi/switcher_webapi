@@ -322,6 +322,7 @@ async def test_successful_get_schedules_get_request(
     get_schedules.return_value = response_mock
     # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
     response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    # verify mocks calling
     api_connect.assert_called_once()  # connect is always called
     get_schedules.assert_called_once_with()
     response_serializer.assert_called_once_with(schedule1)
@@ -338,8 +339,64 @@ async def test_erroneous_get_schedules_get_request(
 ):
     # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
     response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    # verify mocks calling
     api_connect.assert_called_once()  # connect is always called
     get_schedules.assert_called_once_with()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "blabla"})
+
+
+@patch("aioswitcher.api.SwitcherApi.delete_schedule")
+async def test_successful_delete_schedule_delete_request(
+    delete_schedule,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # stub get_schedules to return mock response
+    delete_schedule.return_value = response_mock
+    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
+    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5")
+    # verify mocks calling
+    api_connect.assert_called_once()  # connect is always called
+    delete_schedule.assert_called_once_with("5")
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()  # diconnect is always called
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherApi.delete_schedule")
+async def test_delete_schedule_with_faulty_no_schedule_delete_request(
+    delete_schedule, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
+    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams)
+    # verify mocks calling
+    api_connect.assert_not_called()
+    delete_schedule.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_not_called()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "'schedule'"})
+
+
+@patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
+async def test_errorneous_delete_schedule_delete_request(
+    delete_schedule, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
+    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5")
+    # verify mocks calling
+    api_connect.assert_called_once()  # connect is always called
+    delete_schedule.assert_called_once_with("5")
     response_serializer.assert_not_called()
     api_disconnect.assert_called_once()  # diconnect is always called
     # assert the expected response
