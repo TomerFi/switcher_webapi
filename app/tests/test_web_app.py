@@ -227,6 +227,22 @@ async def test_erroneous_set_name_patch_request(
     assert_that(await response.json()).contains_entry({"error": "blabla"})
 
 
+@patch("aioswitcher.api.SwitcherApi.set_device_name")
+async def test_set_name_faulty_no_name_patch_request(
+    set_device_name, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4
+    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams)
+    # verify mocks calling
+    api_connect.assert_not_called()
+    set_device_name.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_not_called()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "'name'"})
+
+
 @mark.parametrize("query_params,expected_timedelta", [
     # &hours=2
     ("&" + webapp.KEY_HOURS + "=2", timedelta(hours=2)),
@@ -256,6 +272,22 @@ async def test_successful_set_auto_shutdown_patch_request(
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherApi.set_auto_shutdown")
+async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
+    set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
+):
+    # send patch request for set_auto_shutdown endpoint: /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
+    response = await api_client.patch(webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams)
+    # verify mocks calling
+    api_connect.assert_not_called()
+    set_auto_shutdown.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_not_called()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "'hours'"})
 
 
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown", side_effect=Exception("blabla"))
