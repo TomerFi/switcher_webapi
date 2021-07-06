@@ -102,9 +102,10 @@ async def turn_off(request: web.Request) -> web.Response:
 @routes.patch(ENDPOINT_SET_NAME)
 async def set_name(request: web.Request) -> web.Response:
     """Use to set the device's name."""
+    name = request.query[KEY_NAME]
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         return web.json_response(
-            _serialize_object(await swapi.set_device_name(request.query[KEY_NAME]))
+            _serialize_object(await swapi.set_device_name(name))
         )
 
 
