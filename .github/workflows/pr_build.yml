@@ -6,82 +6,139 @@ on:
     branches:
       - dev
 
+env:
+  MAIN_PY_VER: 3.9
+
 jobs:
-  build:
+  lint-docs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3.9]
-    name: Verify project with Python ${{ matrix.python }}
+    name: Lint documentation files
     steps:
       - name: Source checkout
         uses: actions/checkout@v2.3.4
 
-      - name: Set up Python ${{ matrix.python }}
+      - name: Lint markdown files
+        uses: prologic/action-markdownlint@v0.1.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-check
+          level: error
+
+      - name: Check for spelling mistakes
+        uses: reviewdog/action-misspell@v1.8.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          locale: "US"
+          reporter: github-pr-check
+          level: error
+
+  build-app:
+    runs-on: ubuntu-latest
+    needs: [lint-docs]
+    name: Build project
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ env.MAIN_PY_VER }}
 
       - name: Cache pip repository
         uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
           # yamllint disable-line rule:line-length
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/requirements_test.txt') }}-${{ matrix.python }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.python }}-pip-
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}-${{ env.MAIN_PY_VER }}
 
-      - name: Upgrade pip
-        run: pip install --upgrade pip
-
-      - name: Install dependencies
-        run: pip install -rrequirements.txt -rrequirements_test.txt
-
-      - name: Lint yaml files
-        run: yamllint --config-file .yamllint --format colored --strict .
-
-      - name: Security check code with bandit
-        run: bandit -rvc .bandit setup.py switcher_webapi/ docs/ -l -ii
-
-      - name: Validate imports with isort
-        run: isort --check-only setup.py switcher_webapi/ docs/
-
-      - name: Lint code with flake8
-        run: flake8 --statistics --count --doctests setup.py switcher_webapi/ docs/
-
-      - name: Check code style with black
-        run: black --line-length 79 --check setup.py setup.py switcher_webapi/ docs/
-
-      - name: Check static typing with mypy
-        run: mypy --ignore-missing-imports --follow-imports silent setup.py switcher_webapi/ docs/
-
-      - name: Lint rst files
-        run: doc8 --allow-long-titles --max-line-length 100 docs
-
-      - name: Perform unit tests with coverage report
+      - name: Prepare python environment
         run: |
-          pytest -vs --cov \
-          --cov-config=.coveragerc \
-          --cov-report=xml:coverage.xml \
-          --junit-xml junit.xml
+          pip install --upgrade pip
+          pip install -r requirements.txt -r requirements_test.txt
 
-      - name: Publish unit test report to GitHub
-        uses: EnricoMi/publish-unit-test-result-action@v1.18
-        if: always()
-        with:
-          test_changes_limit: 0
-          files: junit.xml
+      - name: Install deno runtime
+        uses: denoland/setup-deno@v1.1.0
 
-      - name: Upload coverage report as artifact
+      - name: Check license headers on source files
+        run: deno run --unstable --allow-read https://deno.land/x/license_checker@v3.1.3/main.ts
+
+      - name: Lint project with python linters
+        run: |
+          bandit -r -x app/tests/* app/ docs/
+          black --check app/ docs/
+          flake8 --count --statistics app/ docs/
+          isort --check-only app/ docs/
+          mypy --ignore-missing-imports app/ docs/
+          doc8 docs/
+          yamllint --format colored --strict .
+
+      - name: Test project
+        run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
+
+      - name: Push coverage and test reports as artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: coverage-report
-          path: ./coverage.xml
+          name: reports
+          if-no-files-found: error
+          path: |
+            ./coverage.xml
+            ./junit.xml
 
-  coverage:
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: [lint-docs]
+    name: Build docker
+    steps:
+      - name: Source checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Lint Dockerfile
+        uses: luke142367/Docker-Lint-Action@v1.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current date
+        id: getDate
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.4.1
+        with:
+          driver-opts: image=moby/buildkit:buildx-stable-1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2.1.6
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Build docker image (no push)
+        uses: docker/build-push-action@v2.6.1
+        with:
+          build-args: |
+            VCS_REF=${{ github.sha }}
+            BUILD_DATE=${{ steps.getDate.outputs.date }}
+            VERSION=testing
+          tags: tomerfi/switcher_webapi:testing
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+          load: true
+
+      - name: Test container structure
+        uses: brpaz/structure-tests-action@v1.1.2
+        with:
+          image: tomerfi/switcher_webapi:testing
+          configFile: container_structure.yml
+
+      - name: Delete docker image
+        run: docker image rm tomerfi/switcher_webapi:testing
+
+  report:
     runs-on: ubuntu-latest
     name: Push coverage report to CodeCov
-    needs: [build]
+    needs: [build-app, build-docker]
     steps:
       - name: Source checkout
         uses: actions/checkout@v2.3.4
@@ -89,10 +146,18 @@ jobs:
       - name: Download coverage report from artifacts
         uses: actions/download-artifact@v2
         with:
-          name: coverage-report
+          name: reports
+          path: reports
+
+      - name: Report test summary
+        uses: EnricoMi/publish-unit-test-result-action@v1.18
+        if: always()
+        with:
+          test_changes_limit: 0
+          files: reports/junit.xml
 
       - name: Push to CodeCov
         uses: codecov/codecov-action@v1.5.2
         with:
-          file: coverage.xml
+          file: reports/coverage.xml
           fail_ci_if_error: true
