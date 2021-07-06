@@ -104,9 +104,7 @@ async def set_name(request: web.Request) -> web.Response:
     """Use to set the device's name."""
     name = request.query[KEY_NAME]
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
-        return web.json_response(
-            _serialize_object(await swapi.set_device_name(name))
-        )
+        return web.json_response(_serialize_object(await swapi.set_device_name(name)))
 
 
 @routes.patch(ENDPOINT_SET_AUTO_SHUTDOWN)
@@ -147,16 +145,15 @@ async def create_schedule(request: web.Request) -> web.Response:
     """Use to create a new schedule."""
     weekdays = dict(map(lambda d: (d.value, d), Days))
     body = await request.json()
+    start_time = body[KEY_START]
+    stop_time = body[KEY_STOP]
+    selected_days = (
+        set([weekdays[d] for d in body[KEY_DAYS]]) if body.get(KEY_DAYS) else set()
+    )
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         return web.json_response(
             _serialize_object(
-                await swapi.create_schedule(
-                    body[KEY_START],
-                    body[KEY_STOP],
-                    set([weekdays[d] for d in body[KEY_DAYS]])
-                    if body.get(KEY_DAYS)
-                    else set(),
-                )
+                await swapi.create_schedule(start_time, stop_time, selected_days)
             )
         )
 

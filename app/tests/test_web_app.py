@@ -19,6 +19,7 @@ from unittest.mock import AsyncMock, Mock, patch
 
 from aiohttp import web
 from aioswitcher.api import Command
+from aioswitcher.schedule import Days
 from assertpy import assert_that
 from pytest import fixture, mark
 
@@ -431,6 +432,105 @@ async def test_errorneous_delete_schedule_delete_request(
     # verify mocks calling
     api_connect.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": "blabla"})
+
+
+@mark.parametrize("json_body,expected_values", [
+    (
+        {
+            webapp.KEY_START: "14:00",
+            webapp.KEY_STOP: "15:30"
+        },
+        ("14:00", "15:30", set())
+    ),
+    (
+        {
+            webapp.KEY_START: "13:30",
+            webapp.KEY_STOP: "14:00",
+            webapp.KEY_DAYS: ["Sunday", "Monday", "Friday"]
+        },
+        ("13:30", "14:00", {Days.SUNDAY, Days.MONDAY, Days.FRIDAY})
+    ),
+    (
+        {
+            webapp.KEY_START: "18:15",
+            webapp.KEY_STOP: "19:00",
+            webapp.KEY_DAYS: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        },
+        ("18:15", "19:00", {Days.SUNDAY, Days.MONDAY, Days.TUESDAY, Days.WEDNESDAY, Days.THURSDAY, Days.FRIDAY, Days.SATURDAY})
+    ),
+])
+@patch("aioswitcher.api.SwitcherApi.create_schedule")
+async def test_successful_create_schedule_post_request(
+    api_create_schedule,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    json_body,
+    expected_values,
+):
+    # stub api_delete_schedule to return mock response
+    api_create_schedule.return_value = response_mock
+    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    # send post request for create schedule endpoint
+    response = await api_client.post(uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    api_create_schedule.assert_called_once_with(expected_values[0], expected_values[1], expected_values[2])
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize("missing_key_json_body,expected_error_msg", [
+    ({webapp.KEY_START: "18:15"}, "'stop'"),
+    ({webapp.KEY_STOP: "19:00"}, "'start'"),
+])
+@patch("aioswitcher.api.SwitcherApi.create_schedule")
+async def test_create_schedule_with_faulty_missing_key_post_request(
+    api_create_schedule,
+    response_serializer,
+    api_connect,
+    api_disconnect,
+    api_client,
+    missing_key_json_body,
+    expected_error_msg,
+):
+    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    # send post request for create schedule endpoint
+    response = await api_client.post(uri, json=missing_key_json_body)
+    # verify mocks calling
+    api_connect.assert_not_called()
+    api_create_schedule.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_not_called()
+    # assert expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry({"error": expected_error_msg})
+
+
+@patch("aioswitcher.api.SwitcherApi.create_schedule", side_effect=Exception("blabla"))
+async def test_errorneous_create_schedule(
+    api_create_schedule, response_serializer, api_connect, api_disconnect, api_client
+):
+    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    json_body = {webapp.KEY_START: "11:00", webapp.KEY_STOP: "11:15"}
+    # send post request for create schedule endpoint
+    response = await api_client.post(uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    api_create_schedule.assert_called_once_with("11:00", "11:15", set())
     response_serializer.assert_not_called()
     api_disconnect.assert_called_once()
     # assert the expected response
