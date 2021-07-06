@@ -66,22 +66,24 @@ def response_mock():
 
 @patch("aioswitcher.api.SwitcherApi.get_state")
 async def test_successful_get_state_get_request(
-    get_state,
+    api_get_state,
     response_serializer,
     response_mock,
     api_connect,
     api_disconnect,
     api_client,
 ):
-    # stub get_state to return mock response
-    get_state.return_value = response_mock
-    # send get request for get_state endpoint: /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.get(webapp.ENDPOINT_GET_STATE + fake_device_qparams)
+    # stub api_get_state to return mock response
+    api_get_state.return_value = response_mock
+    # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_GET_STATE + fake_device_qparams
+    # send get request for get_state endpoint
+    response = await api_client.get(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    get_state.assert_called_once_with()
+    api_connect.assert_called_once()
+    api_get_state.assert_called_once_with()
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -89,15 +91,17 @@ async def test_successful_get_state_get_request(
 
 @patch("aioswitcher.api.SwitcherApi.get_state", side_effect=Exception("blabla"))
 async def test_erroneous_get_state_get_request(
-    get_state, response_serializer, api_connect, api_disconnect, api_client
+    api_get_state, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send get request for get_state endpoint: /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.get(webapp.ENDPOINT_GET_STATE + fake_device_qparams)
+    # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_GET_STATE + fake_device_qparams
+    # send get request for get_state endpoint
+    response = await api_client.get(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    get_state.assert_called_once_with()
+    api_connect.assert_called_once()
+    api_get_state.assert_called_once_with()
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -110,7 +114,7 @@ async def test_erroneous_get_state_get_request(
 ])
 @patch("aioswitcher.api.SwitcherApi.control_device")
 async def test_successful_turn_on_post_request(
-    control_device,
+    api_control_device,
     response_serializer,
     response_mock,
     api_connect,
@@ -119,15 +123,17 @@ async def test_successful_turn_on_post_request(
     query_params,
     expected_values,
 ):
-    # stub control_device to return mock response
-    control_device.return_value = response_mock
-    # send post request for turn_on endpoint: /switcher/turn_on?id=ab1c2d&ip=1.2.3.4...
-    response = await api_client.post(webapp.ENDPOINT_TURN_ON + fake_device_qparams + query_params)
+    # stub api_control_device to return mock response
+    api_control_device.return_value = response_mock
+    # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4...
+    uri = webapp.ENDPOINT_TURN_ON + fake_device_qparams + query_params
+    # send post request for turn_on endpoint
+    response = await api_client.post(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    control_device.assert_called_once_with(expected_values[0], expected_values[1])
+    api_connect.assert_called_once()
+    api_control_device.assert_called_once_with(expected_values[0], expected_values[1])
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -135,15 +141,17 @@ async def test_successful_turn_on_post_request(
 
 @patch("aioswitcher.api.SwitcherApi.control_device", side_effect=Exception("blabla"))
 async def test_erroneous_turn_on_post_request(
-    control_device, response_serializer, api_connect, api_disconnect, api_client
+    api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send post request for turn_on endpoint: /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.post(webapp.ENDPOINT_TURN_ON + fake_device_qparams)
+    # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_TURN_ON + fake_device_qparams
+    # send post request for turn_on endpoint
+    response = await api_client.post(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    control_device.assert_called_once_with(Command.ON, 0)
+    api_connect.assert_called_once()
+    api_control_device.assert_called_once_with(Command.ON, 0)
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -151,22 +159,24 @@ async def test_erroneous_turn_on_post_request(
 
 @patch("aioswitcher.api.SwitcherApi.control_device")
 async def test_successful_turn_off_post_request(
-    control_device,
+    api_control_device,
     response_serializer,
     response_mock,
     api_connect,
     api_disconnect,
     api_client,
 ):
-    # stub control_device to return mock response
-    control_device.return_value = response_mock
-    # send post request for turn_off endpoint: /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.post(webapp.ENDPOINT_TURN_OFF + fake_device_qparams)
+    # stub api_control_device to return mock response
+    api_control_device.return_value = response_mock
+    # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_TURN_OFF + fake_device_qparams
+    # send post request for turn_off endpoint
+    response = await api_client.post(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    control_device.assert_called_once_with(Command.OFF)
+    api_connect.assert_called_once()
+    api_control_device.assert_called_once_with(Command.OFF)
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -174,15 +184,17 @@ async def test_successful_turn_off_post_request(
 
 @patch("aioswitcher.api.SwitcherApi.control_device", side_effect=Exception("blabla"))
 async def test_erroneous_turn_off_post_request(
-    control_device, response_serializer, api_connect, api_disconnect, api_client
+    api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send post request for turn_off endpoint: /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.post(webapp.ENDPOINT_TURN_OFF + fake_device_qparams)
+    # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_TURN_OFF + fake_device_qparams
+    # send post request for turn_off endpoint
+    response = await api_client.post(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    control_device.assert_called_once_with(Command.OFF)
+    api_connect.assert_called_once()
+    api_control_device.assert_called_once_with(Command.OFF)
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -190,22 +202,24 @@ async def test_erroneous_turn_off_post_request(
 
 @patch("aioswitcher.api.SwitcherApi.set_device_name")
 async def test_successful_set_name_patch_request(
-    set_device_name,
+    api_set_device_name,
     response_serializer,
     response_mock,
     api_connect,
     api_disconnect,
     api_client,
 ):
-    # stub set_device_name to return mock response
-    set_device_name.return_value = response_mock
-    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName")
+    # stub api_set_device_name to return mock response
+    api_set_device_name.return_value = response_mock
+    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
+    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName"
+    # send patch request for set_name endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    set_device_name.assert_called_once_with("newFakedName")
+    api_connect.assert_called_once()
+    api_set_device_name.assert_called_once_with("newFakedName")
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -213,15 +227,17 @@ async def test_successful_set_name_patch_request(
 
 @patch("aioswitcher.api.SwitcherApi.set_device_name", side_effect=Exception("blabla"))
 async def test_erroneous_set_name_patch_request(
-    set_device_name, response_serializer, api_connect, api_disconnect, api_client
+    api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName")
+    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
+    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName"
+    # send patch request for set_name endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    set_device_name.assert_called_once_with("newFakedName")
+    api_connect.assert_called_once()
+    api_set_device_name.assert_called_once_with("newFakedName")
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -229,13 +245,15 @@ async def test_erroneous_set_name_patch_request(
 
 @patch("aioswitcher.api.SwitcherApi.set_device_name")
 async def test_set_name_faulty_no_name_patch_request(
-    set_device_name, response_serializer, api_connect, api_disconnect, api_client
+    api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send patch request for set_name endpoint: /switcher/set_name?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.patch(webapp.ENDPOINT_SET_NAME + fake_device_qparams)
+    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams
+    # send patch request for set_name endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
     api_connect.assert_not_called()
-    set_device_name.assert_not_called()
+    api_set_device_name.assert_not_called()
     response_serializer.assert_not_called()
     api_disconnect.assert_not_called()
     # assert the expected response
@@ -251,7 +269,7 @@ async def test_set_name_faulty_no_name_patch_request(
 ])
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown")
 async def test_successful_set_auto_shutdown_patch_request(
-    set_auto_shutdown,
+    api_set_auto_shutdown,
     response_serializer,
     response_mock,
     api_connect,
@@ -260,15 +278,17 @@ async def test_successful_set_auto_shutdown_patch_request(
     query_params,
     expected_timedelta,
 ):
-    # stub set_auto_shutdown to return mock response
-    set_auto_shutdown.return_value = response_mock
-    # send patch request for set_auto_shutdown endpoint: /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4...
-    response = await api_client.patch(webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + query_params)
+    # stub api_set_auto_shutdown to return mock response
+    api_set_auto_shutdown.return_value = response_mock
+    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4...
+    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + query_params
+    # send patch request for set_auto_shutdown endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    set_auto_shutdown.assert_called_once_with(expected_timedelta)
+    api_connect.assert_called_once()
+    api_set_auto_shutdown.assert_called_once_with(expected_timedelta)
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -276,13 +296,15 @@ async def test_successful_set_auto_shutdown_patch_request(
 
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown")
 async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
-    set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
+    api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send patch request for set_auto_shutdown endpoint: /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
-    response = await api_client.patch(webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams)
+    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams
+    # send patch request for set_auto_shutdown endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
     api_connect.assert_not_called()
-    set_auto_shutdown.assert_not_called()
+    api_set_auto_shutdown.assert_not_called()
     response_serializer.assert_not_called()
     api_disconnect.assert_not_called()
     # assert the expected response
@@ -292,15 +314,17 @@ async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
 
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown", side_effect=Exception("blabla"))
 async def test_erroneous_set_auto_shutdown_patch_request(
-    set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
+    api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send patch request for set_auto_shutdown endpoint: /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
-    response = await api_client.patch(webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + "&" + webapp.KEY_HOURS + "=2")
+    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
+    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + "&" + webapp.KEY_HOURS + "=2"
+    # send patch request for set_auto_shutdown endpoint
+    response = await api_client.patch(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    set_auto_shutdown.assert_called_once_with(timedelta(hours=2))
+    api_connect.assert_called_once()
+    api_set_auto_shutdown.assert_called_once_with(timedelta(hours=2))
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -308,7 +332,7 @@ async def test_erroneous_set_auto_shutdown_patch_request(
 
 @patch("aioswitcher.api.SwitcherApi.get_schedules")
 async def test_successful_get_schedules_get_request(
-    get_schedules,
+    api_get_schedules,
     response_serializer,
     response_mock,
     api_connect,
@@ -318,16 +342,18 @@ async def test_successful_get_schedules_get_request(
     # stub mock response to return a set of two mock schedules
     schedule1 = schedule2 = Mock()
     response_mock.schedules = {schedule1, schedule2}
-    # stub get_schedules to return mock response
-    get_schedules.return_value = response_mock
-    # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    # stub api_get_schedules to return mock response
+    api_get_schedules.return_value = response_mock
+    # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams
+    # send get request for get_schedules endpoint
+    response = await api_client.get(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    get_schedules.assert_called_once_with()
+    api_connect.assert_called_once()
+    api_get_schedules.assert_called_once_with()
     response_serializer.assert_called_once_with(schedule1)
     response_serializer.assert_called_once_with(schedule2)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains(fake_serialized_data)
@@ -335,15 +361,17 @@ async def test_successful_get_schedules_get_request(
 
 @patch("aioswitcher.api.SwitcherApi.get_schedules", side_effect=Exception("blabla"))
 async def test_erroneous_get_schedules_get_request(
-    get_schedules, response_serializer, api_connect, api_disconnect, api_client
+    api_get_schedules, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send get request for get_schedules endpoint: /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.get(webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams)
+    # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams
+    # send get request for get_schedules endpoint
+    response = await api_client.get(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    get_schedules.assert_called_once_with()
+    api_connect.assert_called_once()
+    api_get_schedules.assert_called_once_with()
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
@@ -351,22 +379,24 @@ async def test_erroneous_get_schedules_get_request(
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule")
 async def test_successful_delete_schedule_delete_request(
-    delete_schedule,
+    api_delete_schedule,
     response_serializer,
     response_mock,
     api_connect,
     api_disconnect,
     api_client,
 ):
-    # stub get_schedules to return mock response
-    delete_schedule.return_value = response_mock
-    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5")
+    # stub api_delete_schedule to return mock response
+    api_delete_schedule.return_value = response_mock
+    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
+    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5"
+    # send delete request for delete_schedule endpoint
+    response = await api_client.delete(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    delete_schedule.assert_called_once_with("5")
+    api_connect.assert_called_once()
+    api_delete_schedule.assert_called_once_with("5")
     response_serializer.assert_called_once_with(response_mock)
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
@@ -374,13 +404,15 @@ async def test_successful_delete_schedule_delete_request(
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule")
 async def test_delete_schedule_with_faulty_no_schedule_delete_request(
-    delete_schedule, response_serializer, api_connect, api_disconnect, api_client
+    api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams)
+    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
+    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams
+    # send delete request for delete_schedule endpoint
+    response = await api_client.delete(uri)
     # verify mocks calling
     api_connect.assert_not_called()
-    delete_schedule.assert_not_called()
+    api_delete_schedule.assert_not_called()
     response_serializer.assert_not_called()
     api_disconnect.assert_not_called()
     # assert the expected response
@@ -390,15 +422,17 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
 async def test_errorneous_delete_schedule_delete_request(
-    delete_schedule, response_serializer, api_connect, api_disconnect, api_client
+    api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # send delete request for delete_schedule endpoint: /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    response = await api_client.delete(webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5")
+    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
+    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5"
+    # send delete request for delete_schedule endpoint
+    response = await api_client.delete(uri)
     # verify mocks calling
-    api_connect.assert_called_once()  # connect is always called
-    delete_schedule.assert_called_once_with("5")
+    api_connect.assert_called_once()
+    api_delete_schedule.assert_called_once_with("5")
     response_serializer.assert_not_called()
-    api_disconnect.assert_called_once()  # diconnect is always called
+    api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
     assert_that(await response.json()).contains_entry({"error": "blabla"})
