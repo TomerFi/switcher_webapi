@@ -25,7 +25,7 @@ from pytest import fixture, mark
 
 from .. import webapp
 
-fake_device_qparams = "?" + webapp.KEY_ID + "=ab1c2d&" + webapp.KEY_IP + "=1.2.3.4"
+fake_device_qparams = f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
 fake_serialized_data = {"fake": "return_dict"}
 
 
@@ -77,7 +77,7 @@ async def test_successful_get_state_get_request(
     # stub api_get_state to return mock response
     api_get_state.return_value = response_mock
     # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_GET_STATE + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
     # send get request for get_state endpoint
     response = await api_client.get(uri)
     # verify mocks calling
@@ -95,7 +95,7 @@ async def test_erroneous_get_state_get_request(
     api_get_state, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_GET_STATE + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
     # send get request for get_state endpoint
     response = await api_client.get(uri)
     # verify mocks calling
@@ -108,11 +108,14 @@ async def test_erroneous_get_state_get_request(
     assert_that(await response.json()).contains_entry({"error": "blabla"})
 
 
-@mark.parametrize("query_params,expected_values", [
-    ("", (Command.ON, 0)),
-    # &minutes=15
-    ("&" + webapp.KEY_MINUTES + "=15", (Command.ON, 15)),
-])
+@mark.parametrize(
+    "query_params,expected_values",
+    [
+        ("", (Command.ON, 0)),
+        # &minutes=15
+        ("&" + webapp.KEY_MINUTES + "=15", (Command.ON, 15)),
+    ],
+)
 @patch("aioswitcher.api.SwitcherApi.control_device")
 async def test_successful_turn_on_post_request(
     api_control_device,
@@ -127,7 +130,7 @@ async def test_successful_turn_on_post_request(
     # stub api_control_device to return mock response
     api_control_device.return_value = response_mock
     # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4...
-    uri = webapp.ENDPOINT_TURN_ON + fake_device_qparams + query_params
+    uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}{query_params}"
     # send post request for turn_on endpoint
     response = await api_client.post(uri)
     # verify mocks calling
@@ -145,7 +148,7 @@ async def test_erroneous_turn_on_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_TURN_ON + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}"
     # send post request for turn_on endpoint
     response = await api_client.post(uri)
     # verify mocks calling
@@ -170,7 +173,7 @@ async def test_successful_turn_off_post_request(
     # stub api_control_device to return mock response
     api_control_device.return_value = response_mock
     # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_TURN_OFF + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
     # send post request for turn_off endpoint
     response = await api_client.post(uri)
     # verify mocks calling
@@ -188,7 +191,7 @@ async def test_erroneous_turn_off_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_TURN_OFF + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
     # send post request for turn_off endpoint
     response = await api_client.post(uri)
     # verify mocks calling
@@ -213,7 +216,7 @@ async def test_successful_set_name_patch_request(
     # stub api_set_device_name to return mock response
     api_set_device_name.return_value = response_mock
     # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName"
+    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}&{webapp.KEY_NAME}=newFakedName"
     # send patch request for set_name endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -231,7 +234,7 @@ async def test_erroneous_set_name_patch_request(
     api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams + "&" + webapp.KEY_NAME + "=newFakedName"
+    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}&{webapp.KEY_NAME}=newFakedName"
     # send patch request for set_name endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -249,7 +252,7 @@ async def test_set_name_faulty_no_name_patch_request(
     api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/set_name?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_SET_NAME + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}"
     # send patch request for set_name endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -262,12 +265,18 @@ async def test_set_name_faulty_no_name_patch_request(
     assert_that(await response.json()).contains_entry({"error": "'name'"})
 
 
-@mark.parametrize("query_params,expected_timedelta", [
-    # &hours=2
-    ("&" + webapp.KEY_HOURS + "=2", timedelta(hours=2)),
-    # &hours=2&minutes=30
-    ("&" + webapp.KEY_HOURS + "=2&" + webapp.KEY_MINUTES + "=30", timedelta(hours=2, minutes=30)),
-])
+@mark.parametrize(
+    "query_params,expected_timedelta",
+    [
+        # $ hours=2
+        (webapp.KEY_HOURS + "=2", timedelta(hours=2)),
+        # & hours=2&minutes=30
+        (
+            webapp.KEY_HOURS + "=2&" + webapp.KEY_MINUTES + "=30",
+            timedelta(hours=2, minutes=30),
+        ),
+    ],
+)
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown")
 async def test_successful_set_auto_shutdown_patch_request(
     api_set_auto_shutdown,
@@ -282,7 +291,7 @@ async def test_successful_set_auto_shutdown_patch_request(
     # stub api_set_auto_shutdown to return mock response
     api_set_auto_shutdown.return_value = response_mock
     # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4...
-    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + query_params
+    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}&{query_params}"
     # send patch request for set_auto_shutdown endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -300,7 +309,7 @@ async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
     api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}"
     # send patch request for set_auto_shutdown endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -318,7 +327,7 @@ async def test_erroneous_set_auto_shutdown_patch_request(
     api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
-    uri = webapp.ENDPOINT_SET_AUTO_SHUTDOWN + fake_device_qparams + "&" + webapp.KEY_HOURS + "=2"
+    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}&{webapp.KEY_HOURS}=2"
     # send patch request for set_auto_shutdown endpoint
     response = await api_client.patch(uri)
     # verify mocks calling
@@ -346,7 +355,7 @@ async def test_successful_get_schedules_get_request(
     # stub api_get_schedules to return mock response
     api_get_schedules.return_value = response_mock
     # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
     # send get request for get_schedules endpoint
     response = await api_client.get(uri)
     # verify mocks calling
@@ -365,7 +374,7 @@ async def test_erroneous_get_schedules_get_request(
     api_get_schedules, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_GET_SCHEDULES + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
     # send get request for get_schedules endpoint
     response = await api_client.get(uri)
     # verify mocks calling
@@ -390,7 +399,7 @@ async def test_successful_delete_schedule_delete_request(
     # stub api_delete_schedule to return mock response
     api_delete_schedule.return_value = response_mock
     # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5"
+    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}&{webapp.KEY_SCHEDULE}=5"
     # send delete request for delete_schedule endpoint
     response = await api_client.delete(uri)
     # verify mocks calling
@@ -408,7 +417,7 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams
+    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
     # send delete request for delete_schedule endpoint
     response = await api_client.delete(uri)
     # verify mocks calling
@@ -426,7 +435,7 @@ async def test_errorneous_delete_schedule_delete_request(
     api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    uri = webapp.ENDPOINT_DELETE_SCHEDULE + fake_device_qparams + "&" + webapp.KEY_SCHEDULE + "=5"
+    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}&{webapp.KEY_SCHEDULE}=5"
     # send delete request for delete_schedule endpoint
     response = await api_client.delete(uri)
     # verify mocks calling
@@ -439,31 +448,51 @@ async def test_errorneous_delete_schedule_delete_request(
     assert_that(await response.json()).contains_entry({"error": "blabla"})
 
 
-@mark.parametrize("json_body,expected_values", [
-    (
-        {
-            webapp.KEY_START: "14:00",
-            webapp.KEY_STOP: "15:30"
-        },
-        ("14:00", "15:30", set())
-    ),
-    (
-        {
-            webapp.KEY_START: "13:30",
-            webapp.KEY_STOP: "14:00",
-            webapp.KEY_DAYS: ["Sunday", "Monday", "Friday"]
-        },
-        ("13:30", "14:00", {Days.SUNDAY, Days.MONDAY, Days.FRIDAY})
-    ),
-    (
-        {
-            webapp.KEY_START: "18:15",
-            webapp.KEY_STOP: "19:00",
-            webapp.KEY_DAYS: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        },
-        ("18:15", "19:00", {Days.SUNDAY, Days.MONDAY, Days.TUESDAY, Days.WEDNESDAY, Days.THURSDAY, Days.FRIDAY, Days.SATURDAY})
-    ),
-])
+@mark.parametrize(
+    "json_body,expected_values",
+    [
+        (
+            {webapp.KEY_START: "14:00", webapp.KEY_STOP: "15:30"},
+            ("14:00", "15:30", set()),
+        ),
+        (
+            {
+                webapp.KEY_START: "13:30",
+                webapp.KEY_STOP: "14:00",
+                webapp.KEY_DAYS: ["Sunday", "Monday", "Friday"],
+            },
+            ("13:30", "14:00", {Days.SUNDAY, Days.MONDAY, Days.FRIDAY}),
+        ),
+        (
+            {
+                webapp.KEY_START: "18:15",
+                webapp.KEY_STOP: "19:00",
+                webapp.KEY_DAYS: [
+                    "Sunday",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                ],
+            },
+            (
+                "18:15",
+                "19:00",
+                {
+                    Days.SUNDAY,
+                    Days.MONDAY,
+                    Days.TUESDAY,
+                    Days.WEDNESDAY,
+                    Days.THURSDAY,
+                    Days.FRIDAY,
+                    Days.SATURDAY,
+                },
+            ),
+        ),
+    ],
+)
 @patch("aioswitcher.api.SwitcherApi.create_schedule")
 async def test_successful_create_schedule_post_request(
     api_create_schedule,
@@ -478,12 +507,14 @@ async def test_successful_create_schedule_post_request(
     # stub api_delete_schedule to return mock response
     api_create_schedule.return_value = response_mock
     # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     # send post request for create schedule endpoint
     response = await api_client.post(uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
-    api_create_schedule.assert_called_once_with(expected_values[0], expected_values[1], expected_values[2])
+    api_create_schedule.assert_called_once_with(
+        expected_values[0], expected_values[1], expected_values[2]
+    )
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
@@ -491,10 +522,13 @@ async def test_successful_create_schedule_post_request(
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 
 
-@mark.parametrize("missing_key_json_body,expected_error_msg", [
-    ({webapp.KEY_START: "18:15"}, "'stop'"),
-    ({webapp.KEY_STOP: "19:00"}, "'start'"),
-])
+@mark.parametrize(
+    "missing_key_json_body,expected_error_msg",
+    [
+        ({webapp.KEY_START: "18:15"}, "'stop'"),
+        ({webapp.KEY_STOP: "19:00"}, "'start'"),
+    ],
+)
 @patch("aioswitcher.api.SwitcherApi.create_schedule")
 async def test_create_schedule_with_faulty_missing_key_post_request(
     api_create_schedule,
@@ -506,7 +540,7 @@ async def test_create_schedule_with_faulty_missing_key_post_request(
     expected_error_msg,
 ):
     # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     # send post request for create schedule endpoint
     response = await api_client.post(uri, json=missing_key_json_body)
     # verify mocks calling
@@ -524,7 +558,7 @@ async def test_errorneous_create_schedule(
     api_create_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
     # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}{fake_device_qparams}"
+    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     json_body = {webapp.KEY_START: "11:00", webapp.KEY_STOP: "11:15"}
     # send post request for create schedule endpoint
     response = await api_client.post(uri, json=json_body)
