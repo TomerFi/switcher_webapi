@@ -40,7 +40,7 @@ paths:
           content:
             application/json:
               examples:
-                "Water heater device ON":
+                "Device ON":
                   value:
                     state: "ON"
                     time_left: 01:15:32
@@ -48,7 +48,7 @@ paths:
                     auto_shutdown: 02:30:00
                     power_consumption: 1274
                     electric_current: 16.4
-                "Water heater device OFF":
+                "Device OFF":
                   value:
                     state: "OFF"
                     time_left: 00:00:00
@@ -56,18 +56,7 @@ paths:
                     auto_shutdown: 02:30:00
                     power_consumption: 0
                     electric_current: 0.0
-                "Power plug device ON":
-                  value:
-                    state: "ON"
-                    time_on: 00:14:28
-                    power_consumption: 1274
-                    electric_current: 16.4
-                "Power plug device OFF":
-                  value:
-                    state: "OFF"
-                    time_on: 00:00:00
-                    power_consumption: 0
-                    electric_current: 0.0
+
         "500":
           description: A JSON object hinting for the error
           content:
