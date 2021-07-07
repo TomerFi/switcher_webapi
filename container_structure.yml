@@ -19,6 +19,9 @@ fileContentTests:
     expectedContents: ["Apache License.*Version 2.0.*"]
 
 metadataTest:
+  env:
+    - key: LOG_LEVEL
+      value: INFO
   labels:
     - key: "org.opencontainers.image.created"
       value: "."
@@ -57,5 +60,4 @@ metadataTest:
       isRegex: true
   exposedPorts: ["8000"]
   entrypoint: []
-  cmd: ["/bin/sh", "-c", "python webapp.py -p 8000"]
   workdir: "/usr/switcher_webapi"
