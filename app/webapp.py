@@ -199,7 +199,7 @@ async def error_middleware(request: web.Request, handler: Callable) -> web.Respo
     try:
         return await handler(request)
     except Exception as exc:
-        logging.exception("caught exception while handing over to endpoint")
+        server_logger.exception("caught exception while handing over to endpoint")
         return web.json_response({"error": str(exc)}, status=500)
 
 
