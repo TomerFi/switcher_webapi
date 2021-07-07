@@ -28,6 +28,23 @@ from .. import webapp
 fake_device_qparams = f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
 fake_serialized_data = {"fake": "return_dict"}
 
+# /switcher/get_state?id=ab1c2d&ip=1.2.3.4
+get_state_uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
+# /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
+turn_on_uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}"
+# /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
+turn_off_uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
+# /switcher/set_name?id=ab1c2d&ip=1.2.3.4
+set_name_uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}"
+# /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
+set_auto_shutdown_uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}"
+# /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
+get_schedules_uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
+# /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
+delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
+# /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
+create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
+
 
 @fixture
 async def api_client(aiohttp_client):
@@ -76,10 +93,8 @@ async def test_successful_get_state_get_request(
 ):
     # stub api_get_state to return mock response
     api_get_state.return_value = response_mock
-    # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
     # send get request for get_state endpoint
-    response = await api_client.get(uri)
+    response = await api_client.get(get_state_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_get_state.assert_called_once_with()
@@ -94,10 +109,8 @@ async def test_successful_get_state_get_request(
 async def test_erroneous_get_state_get_request(
     api_get_state, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
     # send get request for get_state endpoint
-    response = await api_client.get(uri)
+    response = await api_client.get(get_state_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_get_state.assert_called_once_with()
@@ -109,11 +122,11 @@ async def test_erroneous_get_state_get_request(
 
 
 @mark.parametrize(
-    "query_params,expected_values",
+    "json_body,expected_values",
     [
-        ("", (Command.ON, 0)),
+        (dict(), (Command.ON, 0)),
         # &minutes=15
-        ("&" + webapp.KEY_MINUTES + "=15", (Command.ON, 15)),
+        ({webapp.KEY_MINUTES: "15"}, (Command.ON, 15)),
     ],
 )
 @patch("aioswitcher.api.SwitcherApi.control_device")
@@ -124,15 +137,13 @@ async def test_successful_turn_on_post_request(
     api_connect,
     api_disconnect,
     api_client,
-    query_params,
+    json_body,
     expected_values,
 ):
     # stub api_control_device to return mock response
     api_control_device.return_value = response_mock
-    # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4...
-    uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}{query_params}"
     # send post request for turn_on endpoint
-    response = await api_client.post(uri)
+    response = await api_client.post(turn_on_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
     api_control_device.assert_called_once_with(expected_values[0], expected_values[1])
@@ -147,10 +158,8 @@ async def test_successful_turn_on_post_request(
 async def test_erroneous_turn_on_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}"
     # send post request for turn_on endpoint
-    response = await api_client.post(uri)
+    response = await api_client.post(turn_on_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_control_device.assert_called_once_with(Command.ON, 0)
@@ -172,10 +181,8 @@ async def test_successful_turn_off_post_request(
 ):
     # stub api_control_device to return mock response
     api_control_device.return_value = response_mock
-    # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
     # send post request for turn_off endpoint
-    response = await api_client.post(uri)
+    response = await api_client.post(turn_off_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_control_device.assert_called_once_with(Command.OFF)
@@ -190,10 +197,8 @@ async def test_successful_turn_off_post_request(
 async def test_erroneous_turn_off_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
     # send post request for turn_off endpoint
-    response = await api_client.post(uri)
+    response = await api_client.post(turn_off_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_control_device.assert_called_once_with(Command.OFF)
@@ -215,10 +220,10 @@ async def test_successful_set_name_patch_request(
 ):
     # stub api_set_device_name to return mock response
     api_set_device_name.return_value = response_mock
-    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}&{webapp.KEY_NAME}=newFakedName"
     # send patch request for set_name endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(
+        set_name_uri, json={webapp.KEY_NAME: "newFakedName"}
+    )
     # verify mocks calling
     api_connect.assert_called_once()
     api_set_device_name.assert_called_once_with("newFakedName")
@@ -233,10 +238,10 @@ async def test_successful_set_name_patch_request(
 async def test_erroneous_set_name_patch_request(
     api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=newFakedName
-    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}&{webapp.KEY_NAME}=newFakedName"
     # send patch request for set_name endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(
+        set_name_uri, json={webapp.KEY_NAME: "newFakedName"}
+    )
     # verify mocks calling
     api_connect.assert_called_once()
     api_set_device_name.assert_called_once_with("newFakedName")
@@ -251,10 +256,8 @@ async def test_erroneous_set_name_patch_request(
 async def test_set_name_faulty_no_name_patch_request(
     api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/set_name?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}"
     # send patch request for set_name endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(set_name_uri)
     # verify mocks calling
     api_connect.assert_not_called()
     api_set_device_name.assert_not_called()
@@ -262,17 +265,17 @@ async def test_set_name_faulty_no_name_patch_request(
     api_disconnect.assert_not_called()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
-    assert_that(await response.json()).contains_entry({"error": "'name'"})
+    assert_that(await response.json()).contains_entry(
+        {"error": "failed to get name from body as json"}
+    )
 
 
 @mark.parametrize(
-    "query_params,expected_timedelta",
+    "json_body,expected_timedelta",
     [
-        # $ hours=2
-        (webapp.KEY_HOURS + "=2", timedelta(hours=2)),
-        # & hours=2&minutes=30
+        ({webapp.KEY_HOURS: "2"}, timedelta(hours=2)),
         (
-            webapp.KEY_HOURS + "=2&" + webapp.KEY_MINUTES + "=30",
+            {webapp.KEY_HOURS: "2", webapp.KEY_MINUTES: "30"},
             timedelta(hours=2, minutes=30),
         ),
     ],
@@ -285,15 +288,13 @@ async def test_successful_set_auto_shutdown_patch_request(
     api_connect,
     api_disconnect,
     api_client,
-    query_params,
+    json_body,
     expected_timedelta,
 ):
     # stub api_set_auto_shutdown to return mock response
     api_set_auto_shutdown.return_value = response_mock
-    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4...
-    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}&{query_params}"
     # send patch request for set_auto_shutdown endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(set_auto_shutdown_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
     api_set_auto_shutdown.assert_called_once_with(expected_timedelta)
@@ -308,10 +309,8 @@ async def test_successful_set_auto_shutdown_patch_request(
 async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
     api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}"
     # send patch request for set_auto_shutdown endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(set_auto_shutdown_uri)
     # verify mocks calling
     api_connect.assert_not_called()
     api_set_auto_shutdown.assert_not_called()
@@ -319,17 +318,17 @@ async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
     api_disconnect.assert_not_called()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
-    assert_that(await response.json()).contains_entry({"error": "'hours'"})
+    assert_that(await response.json()).contains_entry(
+        {"error": "failed to get hours from body as json"}
+    )
 
 
 @patch("aioswitcher.api.SwitcherApi.set_auto_shutdown", side_effect=Exception("blabla"))
 async def test_erroneous_set_auto_shutdown_patch_request(
     api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2
-    uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}&{webapp.KEY_HOURS}=2"
     # send patch request for set_auto_shutdown endpoint
-    response = await api_client.patch(uri)
+    response = await api_client.patch(set_auto_shutdown_uri, json={webapp.KEY_HOURS: 2})
     # verify mocks calling
     api_connect.assert_called_once()
     api_set_auto_shutdown.assert_called_once_with(timedelta(hours=2))
@@ -354,10 +353,8 @@ async def test_successful_get_schedules_get_request(
     response_mock.schedules = {schedule1, schedule2}
     # stub api_get_schedules to return mock response
     api_get_schedules.return_value = response_mock
-    # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
     # send get request for get_schedules endpoint
-    response = await api_client.get(uri)
+    response = await api_client.get(get_schedules_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_get_schedules.assert_called_once_with()
@@ -373,10 +370,8 @@ async def test_successful_get_schedules_get_request(
 async def test_erroneous_get_schedules_get_request(
     api_get_schedules, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
     # send get request for get_schedules endpoint
-    response = await api_client.get(uri)
+    response = await api_client.get(get_schedules_uri)
     # verify mocks calling
     api_connect.assert_called_once()
     api_get_schedules.assert_called_once_with()
@@ -398,10 +393,10 @@ async def test_successful_delete_schedule_delete_request(
 ):
     # stub api_delete_schedule to return mock response
     api_delete_schedule.return_value = response_mock
-    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}&{webapp.KEY_SCHEDULE}=5"
     # send delete request for delete_schedule endpoint
-    response = await api_client.delete(uri)
+    response = await api_client.delete(
+        delete_schedule_uri, json={webapp.KEY_SCHEDULE: "5"}
+    )
     # verify mocks calling
     api_connect.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
@@ -416,10 +411,8 @@ async def test_successful_delete_schedule_delete_request(
 async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
     # send delete request for delete_schedule endpoint
-    response = await api_client.delete(uri)
+    response = await api_client.delete(delete_schedule_uri)
     # verify mocks calling
     api_connect.assert_not_called()
     api_delete_schedule.assert_not_called()
@@ -427,17 +420,19 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     api_disconnect.assert_not_called()
     # assert the expected response
     assert_that(response.status).is_equal_to(500)
-    assert_that(await response.json()).contains_entry({"error": "'schedule'"})
+    assert_that(await response.json()).contains_entry(
+        {"error": "failed to get schedule from body as json"}
+    )
 
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
 async def test_errorneous_delete_schedule_delete_request(
     api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=5
-    uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}&{webapp.KEY_SCHEDULE}=5"
     # send delete request for delete_schedule endpoint
-    response = await api_client.delete(uri)
+    response = await api_client.delete(
+        delete_schedule_uri, json={webapp.KEY_SCHEDULE: "5"}
+    )
     # verify mocks calling
     api_connect.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
@@ -506,10 +501,8 @@ async def test_successful_create_schedule_post_request(
 ):
     # stub api_delete_schedule to return mock response
     api_create_schedule.return_value = response_mock
-    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     # send post request for create schedule endpoint
-    response = await api_client.post(uri, json=json_body)
+    response = await api_client.post(create_schedule_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
     api_create_schedule.assert_called_once_with(
@@ -539,10 +532,8 @@ async def test_create_schedule_with_faulty_missing_key_post_request(
     missing_key_json_body,
     expected_error_msg,
 ):
-    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     # send post request for create schedule endpoint
-    response = await api_client.post(uri, json=missing_key_json_body)
+    response = await api_client.post(create_schedule_uri, json=missing_key_json_body)
     # verify mocks calling
     api_connect.assert_not_called()
     api_create_schedule.assert_not_called()
@@ -557,11 +548,9 @@ async def test_create_schedule_with_faulty_missing_key_post_request(
 async def test_errorneous_create_schedule(
     api_create_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
-    # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-    uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
     json_body = {webapp.KEY_START: "11:00", webapp.KEY_STOP: "11:15"}
     # send post request for create schedule endpoint
-    response = await api_client.post(uri, json=json_body)
+    response = await api_client.post(create_schedule_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
     api_create_schedule.assert_called_once_with("11:00", "11:15", set())

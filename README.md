@@ -20,13 +20,19 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 
 > You can use [this script][7] to discover devices on your network.
 
-## Usage Example
+## Usage Examples
 
-Get the current state of a device:
+### Get State
+
+Get the current state of a device.
+
+Request:
 
 ```http
 GET http://localhost:8000/switcher/get_state?id=ab1c2d&ip=1.2.3.4
 ```
+
+Response:
 
 ```json
 {
@@ -39,35 +45,63 @@ GET http://localhost:8000/switcher/get_state?id=ab1c2d&ip=1.2.3.4
 }
 ```
 
-Turn a device on:
+### Turn On
+
+Turn a device on, optionally with a timer.
+
+Turn on without a timer:
 
 ```http
 POST http://localhost:8000/switcher/turn_on?id=ab1c2d&ip=1.2.3.4
 ```
 
-Turn a device on for 15 minutes:
+Turn on with a 15 minutes timer:
 
 ```http
-POST http://localhost:8000/switcher/turn_on?id=ab1c2d&ip=1.2.3.4&minutes=15
+POST http://localhost:8000/switcher/turn_on?id=ab1c2d&ip=1.2.3.4
+Content-Type: "application/json"
+
+{
+    "minutes": 15
+}
 ```
 
-Turn a device off:
+### Turn Off
+
+Turn off a device:
 
 ```http
 POST http://localhost:8000/switcher/turn_off?id=ab1c2d&ip=1.2.3.4
 ```
 
+### Set Auto Shutdown
+
 Set the auto shutdown value to 2 hours and 30 minutes:
 
 ```http
-PATCH http://localhost:8000/switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4&hours=2&minutes=30
+PATCH http://localhost:8000/switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
+Content-Type: "application/json"
+
+{
+    "hours": 2,
+    "minutes": 30
+}
 ```
+
+### Set Name
 
 Set the device's name to MySwitcher:
 
 ```http
-PATCH http://localhost:8000/switcher/set_name?id=ab1c2d&ip=1.2.3.4&name=MySwitcher
+PATCH http://localhost:8000/switcher/set_name?id=ab1c2d&ip=1.2.3.4
+Content-Type: "application/json"
+
+{
+    "name": "MySwitcher"
+}
 ```
+
+### Create a Schdeule
 
 Create a non-recurring schedule for 17:00-18:30:
 
@@ -94,17 +128,30 @@ Content-Type: "application/json"
 }
 ```
 
+### Delete a Schdeule
+
 Delete schedule id 7:
 
 ```http
-DELETE http://localhost:8000/switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4&schedule=7
+DELETE http://localhost:8000/switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
+Content-Type: "application/json"
+
+{
+    "schedule": "7"
+}
 ```
 
-Get the schedules information from a device:
+### Get Schdeules
+
+Get the schedules information from a device.
+
+Request:
 
 ```http
 GET http://localhost:8000/switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
 ```
+
+Response:
 
 ```json
 [
