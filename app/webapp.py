@@ -14,6 +14,7 @@
 
 """Rest service implemented with aiohttp for integrating the Switcher smart devices."""
 
+import logging
 from argparse import ArgumentParser
 from datetime import timedelta
 from enum import Enum
@@ -42,6 +43,14 @@ ENDPOINT_GET_SCHEDULES = "/switcher/get_schedules"
 ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 
+log_level_dict = {
+    "DEBUG": logging.DEBUG,
+    "INFO": logging.INFO,
+    "WARNING": logging.WARNING,
+    "ERROR": logging.ERROR,
+    "CRITICAL": logging.CRITICAL,
+}
+
 parser = ArgumentParser(
     description="Start an aiohttp rest service integrating with Switcher devices."
 )
@@ -52,6 +61,14 @@ parser.add_argument(
     type=int,
     default=3698,
     help="port for the server to run on, default is 3698",
+)
+
+parser.add_argument(
+    "-l",
+    "--log-level",
+    choices=list(log_level_dict.keys()),
+    default="INFO",
+    help="log level for reporting",
 )
 
 routes = web.RouteTableDef()
@@ -178,6 +195,7 @@ async def error_middleware(request: web.Request, handler: Callable) -> web.Respo
     try:
         return await handler(request)
     except Exception as exc:
+        logging.exception("caught exception while handing over to endpoint")
         return web.json_response({"error": str(exc)}, status=500)
 
 
@@ -185,6 +203,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = web.Application(middlewares=[error_middleware])
+    logging.basicConfig(level=log_level_dict[args.log_level])
     app.add_routes(routes)
 
     web.run_app(app, port=args.port)

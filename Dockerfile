@@ -43,4 +43,6 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "python webapp.py -p 8000"]
+ENV LOG_LEVEL=INFO
+
+CMD ["/bin/sh", "-c", "python webapp.py -p 8000 -l $LOG_LEVEL"]
