@@ -175,11 +175,22 @@
 (Required)</p></li>
 <li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
 (Required)</p></li>
-<li><p><strong>minutes</strong> (<em>integer</em>) -- minutes to set as off timer</p></li>
 </ul>
 </dd>
-<dt class="field-even">Status Codes</dt>
-<dd class="field-even"><ul class="simple">
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/switcher/turn_on?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;minutes&quot;</span><span class="p">:</span> <span class="mi">90</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
 <p><strong>Example for error when failed to turn on the device:</strong></p>
@@ -242,12 +253,22 @@
 (Required)</p></li>
 <li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
 (Required)</p></li>
-<li><p><strong>name</strong> (<em>string</em>) -- the id of the selected device
-(Required)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Status Codes</dt>
-<dd class="field-even"><ul class="simple">
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">PATCH</span> <span class="nn">/switcher/set_name?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MySwitcherDevice&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
 <p><strong>Example for error when deserializing the `name` key:</strong></p>
@@ -255,7 +276,7 @@
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;name&#39;&quot;</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;failed to get name from body as json&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -277,13 +298,23 @@
 (Required)</p></li>
 <li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
 (Required)</p></li>
-<li><p><strong>hours</strong> (<em>integer</em>) -- the hours value for the timedelta
-(Required)</p></li>
-<li><p><strong>minutes</strong> (<em>integer</em>) -- the minutes value for the timedelta, optional</p></li>
 </ul>
 </dd>
-<dt class="field-even">Status Codes</dt>
-<dd class="field-even"><ul class="simple">
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">PATCH</span> <span class="nn">/switcher/set_auto_shutdown?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;hours&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nt">&quot;minutes&quot;</span><span class="p">:</span> <span class="mi">30</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
 <p><strong>Example for error when deserializing the `hours` key:</strong></p>
@@ -291,7 +322,7 @@
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
 <span class="p">{</span>
-    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;&#39;hours&#39;&quot;</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;failed to get hours from body as json&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -384,12 +415,22 @@
 (Required)</p></li>
 <li><p><strong>ip</strong> (<em>string</em>) -- the ip address of the selected device
 (Required)</p></li>
-<li><p><strong>schedule</strong> (<em>string</em>) -- the schedule id for deletion
-(Required)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Status Codes</dt>
-<dd class="field-even"><ul class="simple">
+</dl>
+<p><strong>Example request:</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">DELETE</span> <span class="nn">/switcher/delete_schedule?id=ab1c2d&amp;ip=10.0.0.1</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;7&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- An empty JSON object</p></li>
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> -- <p>A JSON object hinting for the error</p>
 <p><strong>Example for error when deserializing the `schedule` key:</strong></p>
