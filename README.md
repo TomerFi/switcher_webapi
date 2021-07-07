@@ -181,6 +181,7 @@ Response:
 ```
 
 Check out the [documentation][4] for a more detailed usage section.
+Also check out the [wiki pages][8] for additional information.
 
 ## Contributing
 
@@ -199,6 +200,7 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [5]: https://www.switcher.co.il/
 [6]: https://github.com/TomerFi/aioswitcher/wiki
 [7]: https://github.com/TomerFi/aioswitcher/blob/dev/scripts/discover_devices.py
+[8]: https://github.com/TomerFi/switcher_webapi/wiki
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
