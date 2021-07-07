@@ -53,6 +53,15 @@ docker-build-and-run:  build image from Dockerfile and run as container.
 docker-build-no-cache-and-run:  build image from Dockerfile with no caching and run as container.
 ```
 
+## Early-access
+
+An early-access image is deployed to [ghcr.io](https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi)
+for every merge to the default branch, `dev`:
+
+```shell
+docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webapi:early-access
+```
+
 ## Code of Conduct
 
 Please check the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
