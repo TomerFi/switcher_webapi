@@ -8,7 +8,7 @@ REST API web server using [aioswitcher](https://pypi.org/project/aioswitcher/)
 for integrating with the [Switcher Water Heater](https://www.switcher.co.il/).</br>
 Please check out the [documentation][4].
 
-Dockerized rest service integrating with various Switcher[5] smart water heaters
+Dockerized rest service integrating with various [Switcher][5] smart water heaters
 and power plugs.</br>
 Check out the [`aioswticher`'s wiki pages][6] for a list of supported devices.
 
