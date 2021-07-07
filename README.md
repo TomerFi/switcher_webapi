@@ -43,8 +43,6 @@ Response:
 
 ### Turn On
 
-Turn a device on, optionally with a timer.
-
 Turn on without a timer:
 
 ```http
@@ -176,7 +174,7 @@ Response:
 ]
 ```
 
-Check out the [documentation][4] for a more detailed usage section.
+Check out the [documentation][4] for a more detailed usage section.</br>
 Also check out the [wiki pages][8] for additional information.
 
 ## Contributing
