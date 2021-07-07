@@ -21,6 +21,7 @@ from enum import Enum
 from typing import Callable, Dict, List, Set, Union
 
 from aiohttp import web
+from aiohttp.abc import AbstractAccessLogger
 from aioswitcher.api import Command, SwitcherApi
 from aioswitcher.schedule import Days
 
@@ -199,11 +200,24 @@ async def error_middleware(request: web.Request, handler: Callable) -> web.Respo
         return web.json_response({"error": str(exc)}, status=500)
 
 
+class CustomAccessLogger(AbstractAccessLogger):
+    """Custom implementation of the aiohttp access logger, loggin in debug, not info."""
+
+    def log(self, request, response, time):
+        """Log debug."""
+        remote = request.remote
+        method = request.method
+        path = request.path
+        status = response.status
+        self.logger.debug(f"{remote} {method} {path} done in {time}s: {status}")
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    app = web.Application(middlewares=[error_middleware])
     logging.basicConfig(level=log_level_dict[args.log_level])
+
+    app = web.Application(middlewares=[error_middleware])
     app.add_routes(routes)
 
-    web.run_app(app, port=args.port)
+    web.run_app(app, port=args.port, access_log_class=CustomAccessLogger)
