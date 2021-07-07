@@ -94,7 +94,7 @@
 <dt class="field-odd">Status Codes</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> -- <p>A JSON object representing the current state of the selected device</p>
-<p><strong>Water heater device ON:</strong></p>
+<p><strong>Device ON:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
@@ -108,7 +108,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>Water heater device OFF:</strong></p>
+<p><strong>Device OFF:</strong></p>
 <div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
 <span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
 
@@ -117,30 +117,6 @@
     <span class="nt">&quot;time_left&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
     <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
     <span class="nt">&quot;auto_shutdown&quot;</span><span class="p">:</span> <span class="s2">&quot;02:30:00&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>Power plug device ON:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
-<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
-
-<span class="p">{</span>
-    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;ON&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:14:28&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">1274</span><span class="p">,</span>
-    <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">16.4</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>Power plug device OFF:</strong></p>
-<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
-<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
-
-<span class="p">{</span>
-    <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;OFF&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;time_on&quot;</span><span class="p">:</span> <span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span>
     <span class="nt">&quot;power_consumption&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="nt">&quot;electric_current&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
 <span class="p">}</span>
