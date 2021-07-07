@@ -99,13 +99,16 @@ paths:
             type: string
           example:
             "10.0.0.1"
-        - in: query
-          name: minutes
-          description: minutes to set as off timer
-          schema:
-            type: integer
-          example:
-            90
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                minutes:
+                  type: integer
+            example:
+              minutes: 90
       responses:
         "200":
           description: An empty JSON object
@@ -174,14 +177,19 @@ paths:
             type: string
           example:
             "10.0.0.1"
-        - in: query
-          name: name
-          required: true
-          description: the id of the selected device
-          schema:
-            type: string
-          example:
-            "MySwitcherDevice"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+            example:
+              name: MySwitcherDevice
       responses:
         "200":
           description: An empty JSON object
@@ -192,7 +200,7 @@ paths:
               examples:
                 "Example for error when deserializing the `name` key":
                   value:
-                    error: "'name'"
+                    error: "failed to get name from body as json"
 
   /switcher/set_auto_shutdown:
     patch:
@@ -216,21 +224,22 @@ paths:
             type: string
           example:
             "10.0.0.1"
-        - in: query
-          name: hours
-          required: true
-          description: the hours value for the timedelta
-          schema:
-            type: integer
-          example:
-            2
-        - in: query
-          name: minutes
-          description: the minutes value for the timedelta, optional
-          schema:
-            type: integer
-          example:
-            30
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hours:
+                  type: integer
+                minutes:
+                  type: integer
+              required:
+                - hours
+            example:
+              hours: 2
+              minutes: 30
       responses:
         "200":
           description: An empty JSON object
@@ -241,7 +250,7 @@ paths:
               examples:
                 "Example for error when deserializing the `hours` key":
                   value:
-                    error: "'hours'"
+                    error: "failed to get hours from body as json"
 
   /switcher/get_schedules:
     get:
@@ -318,14 +327,17 @@ paths:
             type: string
           example:
             "10.0.0.1"
-        - in: query
-          name: schedule
-          required: true
-          description: the schedule id for deletion
-          schema:
-            type: string
-          example:
-            "7"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule:
+                  type: string
+            example:
+              name: "7"
       responses:
         "200":
           description: An empty JSON object
