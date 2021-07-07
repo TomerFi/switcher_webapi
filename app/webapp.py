@@ -22,6 +22,9 @@ from typing import Callable, Dict, List, Set, Union
 
 from aiohttp import web
 from aiohttp.abc import AbstractAccessLogger
+from aiohttp.log import server_logger
+from aiohttp.web_request import BaseRequest
+from aiohttp.web_response import StreamResponse
 from aioswitcher.api import Command, SwitcherApi
 from aioswitcher.schedule import Days
 
@@ -201,10 +204,10 @@ async def error_middleware(request: web.Request, handler: Callable) -> web.Respo
 
 
 class CustomAccessLogger(AbstractAccessLogger):
-    """Custom implementation of the aiohttp access logger, loggin in debug, not info."""
+    """Custom implementation of the aiohttp access logger."""
 
-    def log(self, request, response, time):
-        """Log debug."""
+    def log(self, request: BaseRequest, response: StreamResponse, time: float) -> None:
+        """Log as debug instead origin info."""
         remote = request.remote
         method = request.method
         path = request.path
@@ -216,8 +219,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     logging.basicConfig(level=log_level_dict[args.log_level])
+    logging.getLogger("aioswitcher.api").setLevel(logging.WARNING)
 
     app = web.Application(middlewares=[error_middleware])
     app.add_routes(routes)
 
+    server_logger.info("starting server")
     web.run_app(app, port=args.port, access_log_class=CustomAccessLogger)
+    server_logger.info("server stopped")
