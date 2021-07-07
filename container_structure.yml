@@ -11,9 +11,6 @@ fileExistenceTests:
   - name: "requirements.txt shouldExist: true"
     path: /usr/switcher_webapi/requirements.txt
     shouldExist: true
-  - name: "tests shouldExist: false"
-    path: /usr/switcher_webapi/tests/
-    shouldExist: false
 
 
 fileContentTests:

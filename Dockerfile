@@ -31,15 +31,13 @@ org.opencontainers.image.vendor="https://switcher.co.il/" \
 org.opencontainers.image.licenses="Apache-2.0" \
 org.opencontainers.image.ref.name=$VERSION \
 org.opencontainers.image.title="tomerfi/switcher_webapi" \
-org.opencontainers.image.description="Switcher Water Heater Unofficial REST API"
+org.opencontainers.image.description="Dockerized rest service integrating with Switcher devices"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 WORKDIR /usr/switcher_webapi
 
-COPY LICENSE requirements.txt ./
-
-COPY app ./
+COPY LICENSE app/webapp.py requirements.txt ./
 
 RUN pip install -r requirements.txt
 
