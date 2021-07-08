@@ -2,11 +2,7 @@
 
 [![gh-build-status]][2] [![gh-pages-status]][4] [![codecov]][0]
 
-Dockerized rest service integrating with various [Switcher][5] smart devices.</br>
-
-- [`aioswitcher`'s wiki pages][6] for a list of supported devices.
-- [documentation][4] for a more detailed usage section.</br>
-- [wiki pages][8] for additional information.
+Dockerized rest service integrating with various [Switcher][5] smart devices.
 
 ## Install
 
@@ -14,7 +10,12 @@ Dockerized rest service integrating with various [Switcher][5] smart devices.</b
 docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 ```
 
-> You can use [this script][7] to discover devices on your network.
+## Links
+
+- [aioswitcher's wiki pages][6] for a list of supported devices.
+- [aioswitcher's discovery script][7] for discovering devices on your network.
+- [documentation][4] for a more detailed usage section.
+- [wiki pages][8] for additional information.
 
 ## Usage Examples
 
