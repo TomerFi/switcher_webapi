@@ -1,12 +1,12 @@
-<!-- markdownlint-disable line-length -->
-# Switcher Water Heater Unofficial REST API</br>[![docker-version]][1] [![docker-pulls]][1] [![license-badge]][3]
-<!-- markdownlint-enable line-length -->
+# Switcher REST API</br>[![docker-version]][1] [![docker-pulls]][1] [![license-badge]][3]
 
 [![gh-build-status]][2] [![gh-pages-status]][4] [![codecov]][0]
 
-Dockerized rest service integrating with various [Switcher][5] smart water heaters
-and power plugs.</br>
-Check out the [`aioswitcher`'s wiki pages][6] for a list of supported devices.
+Dockerized rest service integrating with various [Switcher][5] smart devices.</br>
+
+- [`aioswitcher`'s wiki pages][6] for a list of supported devices.
+- [documentation][4] for a more detailed usage section.</br>
+- [wiki pages][8] for additional information.
 
 ## Install
 
@@ -174,16 +174,13 @@ Response:
 ]
 ```
 
-Check out the [documentation][4] for a more detailed usage section.</br>
-Also check out the [wiki pages][8] for additional information.
-
 ## Contributing
 
-The contributing guidelines are [here](.github/CONTRIBUTING.md)
+The contributing guidelines are [here][9]
 
 ## Code of Conduct
 
-The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
+The code of conduct is [here][10]
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
@@ -195,6 +192,8 @@ The code of conduct is [here](.github/CODE_OF_CONDUCT.md)
 [6]: https://github.com/TomerFi/aioswitcher/wiki
 [7]: https://github.com/TomerFi/aioswitcher/blob/dev/scripts/discover_devices.py
 [8]: https://github.com/TomerFi/switcher_webapi/wiki
+[9]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md
+[10]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls

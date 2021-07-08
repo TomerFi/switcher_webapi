@@ -1,5 +1,6 @@
-Welcome to Switcher water heater WebAPI documentation!
-======================================================
+=========================================
+Welcome to Switcher WebAPI documentation!
+=========================================
 
 .. toctree::
    :maxdepth: 1
