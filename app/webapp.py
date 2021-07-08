@@ -14,15 +14,21 @@
 
 """Rest service implemented with aiohttp for integrating the Switcher smart devices."""
 
-import logging
 from argparse import ArgumentParser
 from datetime import timedelta
 from enum import Enum
+from logging import config
 from typing import Callable, Dict, List, Set, Union
 
 from aiohttp import web
 from aiohttp.abc import AbstractAccessLogger
-from aiohttp.log import server_logger
+from aiohttp.log import (
+    access_logger,
+    client_logger,
+    server_logger,
+    web_logger,
+    ws_logger,
+)
 from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
 from aioswitcher.api import Command, SwitcherApi
@@ -47,14 +53,6 @@ ENDPOINT_GET_SCHEDULES = "/switcher/get_schedules"
 ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 
-log_level_dict = {
-    "DEBUG": logging.DEBUG,
-    "INFO": logging.INFO,
-    "WARNING": logging.WARNING,
-    "ERROR": logging.ERROR,
-    "CRITICAL": logging.CRITICAL,
-}
-
 parser = ArgumentParser(
     description="Start an aiohttp rest service integrating with Switcher devices."
 )
@@ -70,7 +68,7 @@ parser.add_argument(
 parser.add_argument(
     "-l",
     "--log-level",
-    choices=list(log_level_dict.keys()),
+    choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
     default="INFO",
     help="log level for reporting",
 )
@@ -218,8 +216,31 @@ class CustomAccessLogger(AbstractAccessLogger):
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    logging.basicConfig(level=log_level_dict[args.log_level])
-    logging.getLogger("aioswitcher.api").setLevel(logging.WARNING)
+    loggingConfig = {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            }
+        },
+        "handlers": {
+            "stream": {
+                "formatter": "default",
+                "class": "logging.StreamHandler",
+            },
+        },
+        "loggers": {
+            "": {"handlers": ["stream"], "propagate": True},
+            "aioswitcher.api": {"level": "WARNING"},
+            access_logger.name: {"level": args.log_level},
+            client_logger.name: {"level": args.log_level},
+            server_logger.name: {"level": args.log_level},
+            web_logger.name: {"level": args.log_level},
+            ws_logger.name: {"level": args.log_level},
+        },
+    }
+
+    config.dictConfig(loggingConfig)
 
     app = web.Application(middlewares=[error_middleware])
     app.add_routes(routes)
