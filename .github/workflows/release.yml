@@ -37,6 +37,7 @@ jobs:
           sphinx-build -b singlehtml docs docsbuild
 
       - name: Create release
+        id: create_release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
