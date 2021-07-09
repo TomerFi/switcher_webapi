@@ -107,7 +107,7 @@ Content-Type: "application/json"
 }
 ```
 
-### Create a Schdeule
+### Create a Schedule
 
 Create a non-recurring schedule for 17:00-18:30:
 
@@ -134,7 +134,7 @@ Content-Type: "application/json"
 }
 ```
 
-### Delete a Schdeule
+### Delete a Schedule
 
 Delete schedule id 7:
 
