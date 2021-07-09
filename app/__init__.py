@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Aiohttp rest services integrating with Switcher devices."""
+"""Aiohttp web service integrating with Switcher devices."""

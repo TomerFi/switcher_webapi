@@ -31,7 +31,7 @@ org.opencontainers.image.vendor="https://switcher.co.il/" \
 org.opencontainers.image.licenses="Apache-2.0" \
 org.opencontainers.image.ref.name=$VERSION \
 org.opencontainers.image.title="tomerfi/switcher_webapi" \
-org.opencontainers.image.description="Dockerized rest service integrating with Switcher devices"
+org.opencontainers.image.description="Containerized web service integrating with Switcher devices"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 

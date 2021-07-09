@@ -12,4 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Test cases for aiohttp rest services integrating with Switcher devices."""
+"""Test cases for aiohttp web service integrating with Switcher devices."""

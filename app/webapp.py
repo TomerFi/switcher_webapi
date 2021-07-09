@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Rest service implemented with aiohttp for integrating the Switcher smart devices."""
+"""Web service implemented with aiohttp for integrating the Switcher smart devices."""
 
 from argparse import ArgumentParser
 from datetime import timedelta
@@ -54,7 +54,7 @@ ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 
 parser = ArgumentParser(
-    description="Start an aiohttp rest service integrating with Switcher devices."
+    description="Start an aiohttp web service integrating with Switcher devices."
 )
 
 parser.add_argument(

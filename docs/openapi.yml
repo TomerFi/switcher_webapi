@@ -2,7 +2,7 @@
 openapi: 3.0.0
 info:
   title: Switcher Webapi
-  description: Dockerized rest service integrating with Switcher devices
+  description: Containerized web service integrating with Switcher devices
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html

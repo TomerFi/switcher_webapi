@@ -1,8 +1,8 @@
-# Switcher REST API</br>[![docker-version]][1] [![docker-pulls]][1] [![license-badge]][3]
+# Switcher Web API</br>[![docker-version]][1] [![docker-pulls]][1] [![license-badge]][3]
 
 [![gh-build-status]][2] [![gh-pages-status]][4] [![codecov]][0]
 
-Dockerized rest service integrating with various [Switcher][5] smart devices.
+Containerized web service integrating with various [Switcher][5] smart devices.
 
 ## Install
 
@@ -14,7 +14,7 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 
 - [aioswitcher's wiki pages][6] for a list of supported devices.
 - [aioswitcher's discovery script][7] for discovering devices on your network.
-- [documentation][4] for a more detailed usage section.
+- [documentation site][4] for a more detailed usage section.
 - [wiki pages][8] for additional information.
 
 ## Usage Examples
