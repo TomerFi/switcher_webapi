@@ -71,6 +71,17 @@ POST http://localhost:8000/switcher/turn_off?id=ab1c2d&ip=1.2.3.4
 
 ### Set Auto Shutdown
 
+Set the auto shutdown value to 3 hours:
+
+```http
+PATCH http://localhost:8000/switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
+Content-Type: "application/json"
+
+{
+    "hours": 3
+}
+```
+
 Set the auto shutdown value to 2 hours and 30 minutes:
 
 ```http
