@@ -23,7 +23,7 @@ With [Python >= 3.9](https://www.python.org/) use [pip](https://pypi.org/project
 tox
 ```
 
-Will execute linting jobs and run the python's test cases.
+Will execute linting jobs and run python's test cases.
 
 ```shell
 tox -e docs
@@ -39,18 +39,18 @@ Will print the various `Makefile` instruction for testing and building the `Dock
 
 ```shell
 help:  Show this help.
-docker-build:  build image from Dockerfile.
-docker-build-testing-image:  build image from Dockerfile using a testing tag.
-docker-remove-testing-image:  remove the testing image (must be build first).
-docker-build-no-cache:  build image from Dockerfile with no caching.
-structure-test:  run the container-structure-test tool against the built testing image (must be build first) using the relative container_structure.yml file
+docker-build:  build the image from Dockerfile.
+docker-build-testing-image:  build the image from Dockerfile using a testing tag.
+docker-remove-testing-image:  remove the testing image (must be built first).
+docker-build-no-cache:  build the image from Dockerfile with no caching.
+structure-test:  run the container-structure-test tool against the built testing image (must be built first) using the relative container_structure.yml file
 docker-build-structure-test:  build the image and test the container structure
 docker-build-no-cache-structure-test:  build the image with no caching and test the container structure
 docker-full-structure-testing:  build the image with the testing tag and remove after structure test
-docker-tag-latest:  add latest tag before pushing the latest version
+docker-tag-latest:  add the latest tag before pushing the latest version
 docker-run:  run the built image as a container (must be built first).
-docker-build-and-run:  build image from Dockerfile and run as container.
-docker-build-no-cache-and-run:  build image from Dockerfile with no caching and run as container.
+docker-build-and-run:  build the image from Dockerfile and run it as a container.
+docker-build-no-cache-and-run:  build the image from Dockerfile with no caching and run as a container.
 ```
 
 ## Early-access
