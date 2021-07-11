@@ -12,10 +12,9 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 
 ## Links
 
-- [aioswitcher's wiki pages][6] for a list of supported devices.
-- [aioswitcher's discovery script][7] for discovering devices on your network.
 - [documentation site][4] for a more detailed usage section.
 - [wiki pages][8] for additional information.
+- [aioswitcher's wiki pages][6] for a list of supported devices.
 
 ## Usage Examples
 
@@ -207,7 +206,6 @@ The code of conduct is [here][10]
 [4]: https://switcher-webapi.tomfi.info
 [5]: https://www.switcher.co.il/
 [6]: https://github.com/TomerFi/aioswitcher/wiki
-[7]: https://github.com/TomerFi/aioswitcher/blob/dev/scripts/discover_devices.py
 [8]: https://github.com/TomerFi/switcher_webapi/wiki
 [9]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md
 [10]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md
