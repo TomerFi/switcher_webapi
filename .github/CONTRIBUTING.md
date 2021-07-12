@@ -37,7 +37,7 @@ Makefile help
 
 Will print the various `Makefile` targets for testing and building the `Docker` image:
 
-```shell
+```text
 usage: make [target]
 --------------------
 targets:
