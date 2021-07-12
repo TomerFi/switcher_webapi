@@ -43,23 +43,6 @@ jobs:
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml
 
-      - name: Create release
-        uses: marvinpinto/action-automatic-releases@v1.2.1
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: early-access
-          prerelease: true
-          title: early-access
-
-      - name: Push to CodeCov
-        uses: codecov/codecov-action@v1.5.0
-        with:
-          file: coverage.xml
-          fail_ci_if_error: true
-
-      - name: Get current date
-        id: getDate
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1.2.0
@@ -82,6 +65,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }}
+
+      - name: Get current date
+        id: getDate
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Build amd64 docker image and push to GHCR
         uses: docker/build-push-action@v2.6.1
@@ -114,3 +101,17 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: early-access
+          prerelease: true
+          title: early-access
+
+      - name: Push to CodeCov
+        uses: codecov/codecov-action@v1.5.0
+        with:
+          file: coverage.xml
+          fail_ci_if_error: true

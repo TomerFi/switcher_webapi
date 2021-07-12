@@ -49,9 +49,11 @@ docker-build-and-run:  build the image from Dockerfile and run it as a container
 docker-build-no-cache-and-run:  build the image from Dockerfile with no caching and run as a container.
 ```
 
+> Note that Makefile will try to determine the host's architecture and set the base image accordingly.
+
 ## Early-access
 
-An early-access image is deployed to [ghcr.io](https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi)
+An early-access image manifest is deployed to [ghcr.io](https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi)
 for every merge to the default branch, `dev`:
 
 ```shell
