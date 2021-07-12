@@ -106,8 +106,13 @@ jobs:
           tomerfi/switcher_webapi:amd64-${{ steps.getSemver.outputs.semver }}
           tomerfi/switcher_webapi:arm32v7-${{ steps.getSemver.outputs.semver }}
 
-      - name: Push docker manifest as latest to Dockerhub
+      - name: Push docker manifest as latest to DockerHub
         run: docker manifest push --purge tomerfi/switcher_webapi:latest
+
+      - name: Tag latest version as semantic version and push to DockerHub
+        run: |
+          docker tag tomerfi/switcher_webapi:latest tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
+          docker push tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
 
       - name: Create release
         id: create_release
