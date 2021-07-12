@@ -35,7 +35,7 @@ Will test and build the documentation site.
 Makefile help
 ```
 
-Will print the various `Makefile` instructions for testing and building the `Docker` image:
+Will print the various `Makefile` targets for testing and building the `Docker` image:
 
 ```shell
 help:  Show this help.
