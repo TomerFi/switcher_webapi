@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM python:3.9.6-slim
+ARG BASE_IMAGE=python:3.9.6-slim
+
+FROM $BASE_IMAGE
 
 ARG BUILD_DATE
 ARG VCS_REF
