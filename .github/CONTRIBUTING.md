@@ -38,15 +38,17 @@ Makefile help
 Will print the various `Makefile` targets for testing and building the `Docker` image:
 
 ```shell
-help:  Show this help.
-docker-build:  build the image from Dockerfile.
-docker-build-testing-image:  build the image from Dockerfile using a testing tag.
-docker-remove-testing-image:  remove the testing image (must be built first).
-docker-build-no-cache:  build the image from Dockerfile with no caching.
-docker-tag-latest:  add the latest tag before pushing the latest version
-docker-run:  run the built image as a container (must be built first).
-docker-build-and-run:  build the image from Dockerfile and run it as a container.
-docker-build-no-cache-and-run:  build the image from Dockerfile with no caching and run as a container.
+usage: make [target]
+--------------------
+targets:
+********
+docker-build
+docker-build-no-cache
+docker-remove-image
+docker-run
+docker-build-and-run
+docker-build-no-cache-and-run
+docker-tag-latest
 ```
 
 > Note that Makefile will try to determine the host's architecture and set the base image accordingly.
