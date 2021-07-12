@@ -84,7 +84,7 @@ jobs:
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
-          tags: ghcr.io/tomerfi/switcher_webapi:early-access
+          tags: ghcr.io/tomerfi/switcher_webapi:amd64-early-access
           # if base image is modified, make sure to update Makefile accordingly
           build-args: |
             BASE_IMAGE=python:3.9.6-slim
@@ -100,7 +100,7 @@ jobs:
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
-          tags: ghcr.io/tomerfi/switcher_webapi:early-access
+          tags: ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
           # if base image is modified, make sure to update Makefile accordingly
           build-args: |
             BASE_IMAGE=arm32v7/python:3.9.6
