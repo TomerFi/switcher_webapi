@@ -109,8 +109,9 @@ jobs:
       - name: Push docker manifest as latest to DockerHub
         run: docker manifest push --purge tomerfi/switcher_webapi:latest
 
-      - name: Tag latest version as semantic version and push to DockerHub
+      - name: Pull and tag latest as semantic and push back to DockerHub
         run: |
+          docker pull tomerfi/switcher_webapi:latest
           docker tag tomerfi/switcher_webapi:latest tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
           docker push tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
 
