@@ -14,8 +14,19 @@
 
 default: help
 
-help: ## Show this help.
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+help:
+	@echo usage: make [target]
+	@echo --------------------
+	@echo targets:
+	@echo ********
+	@echo docker-build
+	@echo docker-build-no-cache
+	@echo docker-remove-image
+	@echo docker-run
+	@echo docker-build-and-run
+	@echo docker-build-no-cache-and-run
+	@echo docker-tag-latest
+
 
 IMAGE_NAME = tomerfi/switcher_webapi
 
@@ -33,38 +44,46 @@ endif
 
 FULL_IMAGE_NAME = $(strip $(IMAGE_NAME):$(CODE_VERSION))
 
-docker-build: ## build the image from Dockerfile.
+ifeq ($(shell docker info -f '{{json .OSType}}'),"linux")
+	arch = $(shell docker info -f '{{json .Architecture}}')
+	ifeq ($(arch),"x86_64")
+		BASE_IMAGE = python:3.9.6-slim
+	else ifeq ($(arch),"armv7l")
+		BASE_IMAGE = arm32v7/python:3.9.6
+	endif
+endif
+
+ifndef BASE_IMAGE
+$(error Operating system or Architecture is not supported.)
+endif
+
+docker-build:
 	docker build \
+	--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
 	--build-arg BUILD_DATE=$(CURRENT_DATE) \
 	--build-arg VERSION=$(CODE_VERSION) \
 	-t $(FULL_IMAGE_NAME) .
 
-docker-build-testing-image: ## build the image from Dockerfile using a testing tag.
-	docker build \
-	--build-arg VCS_REF=$(GIT_COMMIT) \
-	--build-arg BUILD_DATE=$(CURRENT_DATE) \
-	--build-arg VERSION=testing \
-	-t $(strip $(IMAGE_NAME)):testing .
-
-docker-remove-testing-image: ## remove the testing image (must be built first).
-	docker image rm $(strip $(IMAGE_NAME)):testing
-
-docker-build-no-cache: ## build the image from Dockerfile with no caching.
+docker-build-no-cache:
 	docker build --no-cache \
+	--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
 	--build-arg BUILD_DATE=$(CURRENT_DATE) \
 	--build-arg VERSION=$(CODE_VERSION) \
 	-t $(FULL_IMAGE_NAME) .
 
-docker-tag-latest: ## add the latest tag before pushing the latest version
-	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest
+docker-remove-image:
+	docker image rm $(FULL_IMAGE_NAME)
 
-docker-run: ## run the the built image as a container (must be built first).
+docker-run:
 	docker run -d -p :8000 --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
 
-docker-build-and-run: ## build the image from Dockerfile and run it as a container.
+docker-build-and-run:
 	docker-build docker-run
 
-docker-build-no-cache-and-run: ## build the image from Dockerfile with no caching and run it as a container.
+docker-build-no-cache-and-run:
 	docker-build-no-cache docker-run
+
+docker-tag-latest:
+	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest
