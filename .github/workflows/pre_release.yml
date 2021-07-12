@@ -106,6 +106,16 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm
 
+      - name: Create docker manifest
+        run: >
+          docker manifest create
+          ghcr.io/tomerfi/switcher_webapi:early-access
+          ghcr.io/tomerfi/switcher_webapi:amd64-early-access
+          ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
+
+      - name: Push docker manifest as early-access to GHCR
+        run: docker manifest push --purge ghcr.io/tomerfi/switcher_webapi:early-access
+
       - name: Create release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
