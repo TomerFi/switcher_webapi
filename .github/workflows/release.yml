@@ -99,21 +99,24 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm
 
-      - name: Create docker manifest
+      - name: Create docker latest manifest
         run: >
           docker manifest create
           tomerfi/switcher_webapi:latest
           tomerfi/switcher_webapi:amd64-${{ steps.getSemver.outputs.semver }}
           tomerfi/switcher_webapi:arm32v7-${{ steps.getSemver.outputs.semver }}
 
-      - name: Push docker manifest as latest to DockerHub
-        run: docker manifest push --purge tomerfi/switcher_webapi:latest
+      - name: Create docker semantic manifest
+        run: >
+          docker manifest create
+          tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
+          tomerfi/switcher_webapi:amd64-${{ steps.getSemver.outputs.semver }}
+          tomerfi/switcher_webapi:arm32v7-${{ steps.getSemver.outputs.semver }}
 
-      - name: Pull and tag latest as semantic and push back to DockerHub
+      - name: Push docker manifests to DockerHub
         run: |
-          docker pull tomerfi/switcher_webapi:latest
-          docker tag tomerfi/switcher_webapi:latest tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
-          docker push tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
+          docker manifest push --purge tomerfi/switcher_webapi:latest
+          docker manifest push --purge tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
 
       - name: Create release
         id: create_release
