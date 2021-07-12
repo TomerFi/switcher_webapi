@@ -57,18 +57,6 @@ docker-build-no-cache: ## build the image from Dockerfile with no caching.
 	--build-arg VERSION=$(CODE_VERSION) \
 	-t $(FULL_IMAGE_NAME) .
 
-structure-test: ## run the container-structure-test tool against the built testing image (must be built first) using the relative container_structure.yml file
-	container-structure-test test --force --config container_structure.yml --verbosity info --image $(strip $(IMAGE_NAME)):testing
-
-docker-build-structure-test: ## build the image and test the container structure
-docker-build-structure-test: docker-build structure-test
-
-docker-build-no-cache-structure-test: ## build the image with no caching and test the container structure
-docker-build-no-cache-structure-test: docker-build-no-cache structure-test
-
-docker-full-structure-testing: ## build the image with the testing tag and remove after structure test
-docker-full-structure-testing: docker-build-testing-image structure-test docker-remove-testing-image
-
 docker-tag-latest: ## add the latest tag before pushing the latest version
 	docker tag $(FULL_IMAGE_NAME) $(IMAGE_NAME):latest
 
@@ -76,7 +64,7 @@ docker-run: ## run the the built image as a container (must be built first).
 	docker run -d -p :8000 --name $(CONTAINER_NAME) $(FULL_IMAGE_NAME)
 
 docker-build-and-run: ## build the image from Dockerfile and run it as a container.
-docker-build-and-run: docker-build docker-run
+	docker-build docker-run
 
 docker-build-no-cache-and-run: ## build the image from Dockerfile with no caching and run it as a container.
-docker-build-no-cache-and-run: docker-build-no-cache docker-run
+	docker-build-no-cache docker-run

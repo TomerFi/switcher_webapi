@@ -126,12 +126,6 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           load: true
 
-      - name: Test container structure
-        uses: brpaz/structure-tests-action@v1.1.2
-        with:
-          image: tomerfi/switcher_webapi:testing
-          configFile: container_structure.yml
-
       - name: Delete docker image
         run: docker image rm tomerfi/switcher_webapi:testing
 

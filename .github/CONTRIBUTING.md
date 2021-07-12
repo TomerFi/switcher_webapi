@@ -43,10 +43,6 @@ docker-build:  build the image from Dockerfile.
 docker-build-testing-image:  build the image from Dockerfile using a testing tag.
 docker-remove-testing-image:  remove the testing image (must be built first).
 docker-build-no-cache:  build the image from Dockerfile with no caching.
-structure-test:  run the container-structure-test tool against the built testing image (must be built first) using the relative container_structure.yml file
-docker-build-structure-test:  build the image and test the container structure
-docker-build-no-cache-structure-test:  build the image with no caching and test the container structure
-docker-full-structure-testing:  build the image with the testing tag and remove after structure test
 docker-tag-latest:  add the latest tag before pushing the latest version
 docker-run:  run the built image as a container (must be built first).
 docker-build-and-run:  build the image from Dockerfile and run it as a container.
