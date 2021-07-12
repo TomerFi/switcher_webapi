@@ -43,7 +43,6 @@ jobs:
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml
 
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1.2.0
 
