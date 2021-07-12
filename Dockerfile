@@ -16,10 +16,6 @@ ARG BASE_IMAGE=python:3.9.6-slim
 
 FROM $BASE_IMAGE
 
-ARG BUILD_DATE
-ARG VCS_REF
-ARG VERSION
-
 ARG TIMEZONE="Asia/Jerusalem"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -35,6 +31,10 @@ EXPOSE 8000
 ENV LOG_LEVEL=INFO
 
 CMD ["/bin/sh", "-c", "python webapp.py -p 8000 -l $LOG_LEVEL"]
+
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 
 LABEL org.opencontainers.image.created=$BUILD_DATE \
 org.opencontainers.image.authors="Tomer Figenblat <mailto:tomer.figenblat@gmail.com>" \
