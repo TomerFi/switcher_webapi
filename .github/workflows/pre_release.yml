@@ -82,7 +82,9 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=amd64-early-access
           push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: |
+            type=local,src=/tmp/.buildx-cache
+            ghcr.io/tomerfi/switcher_webapi:amd64-early-access
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/amd64
 
@@ -98,7 +100,9 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=arm32v7-early-access
           push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-from: |
+            type=local,src=/tmp/.buildx-cache
+            ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
           cache-to: type=local,dest=/tmp/.buildx-cache
           platforms: linux/arm
 
