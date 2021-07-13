@@ -32,26 +32,12 @@ tox -e docs
 Will test and build the documentation site.
 
 ```shell
-Makefile help
+make
 ```
 
-Will print the various `Makefile` targets for testing and building the `Docker` image:
+Will use `docker buildx` to build the multi-platform image.
 
-```text
-usage: make [target]
---------------------
-targets:
-********
-docker-build
-docker-build-no-cache
-docker-remove-image
-docker-run
-docker-build-and-run
-docker-build-no-cache-and-run
-docker-tag-latest
-```
-
-> Note that Makefile will try to determine the host's architecture and set the base image accordingly.
+> Note that if you havn't done so before, you need to create your own local custom build profile.
 
 ## Early-access
 

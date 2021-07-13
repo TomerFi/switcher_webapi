@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE_IMAGE=python:3.9.6-slim
-
-FROM $BASE_IMAGE
+FROM python:3.9.6-slim
 
 ARG TIMEZONE="Asia/Jerusalem"
 
@@ -24,7 +22,7 @@ WORKDIR /usr/switcher_webapi
 
 COPY LICENSE app/webapp.py requirements.txt ./
 
-RUN pip install -r requirements.txt
+RUN MULTIDICT_NO_EXTENSIONS=1 YARL_NO_EXTENSIONS=1 pip install -r requirements.txt
 
 EXPOSE 8000
 

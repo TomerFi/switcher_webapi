@@ -9,6 +9,7 @@ on:
 
 env:
   MAIN_PY_VER: 3.9
+  PLATFORMS: linux/amd64,linux/arm/v7
 
 jobs:
   pre-release:
@@ -43,20 +44,18 @@ jobs:
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1.2.0
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1.5.1
-        with:
-          driver-opts: image=moby/buildkit:buildx-stable-1
-
       - name: Cache Docker layers
         uses: actions/cache@v2.1.6
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
           restore-keys: ${{ runner.os }}-buildx-
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1.2.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.5.1
 
       - name: Login to GHCR
         uses: docker/login-action@v1.10.0
@@ -69,51 +68,21 @@ jobs:
         id: getDate
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
-      - name: Build amd64 docker image and push to GHCR
+      - name: Build images and push to GHCR
         uses: docker/build-push-action@v2.6.1
         with:
           context: .
-          tags: ghcr.io/tomerfi/switcher_webapi:amd64-early-access
-          # if base image is modified, make sure to update Makefile accordingly
+          push: true
+          platforms: ${{ env.PLATFORMS }}
+          tags: ghcr.io/tomerfi/switcher_webapi:early-access
           build-args: |
-            BASE_IMAGE=python:3.9.6-slim
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
-            VERSION=amd64-early-access
-          push: true
+            VERSION=early-access
           cache-from: |
             type=local,src=/tmp/.buildx-cache
-            ghcr.io/tomerfi/switcher_webapi:amd64-early-access
+            ghcr.io/tomerfi/switcher_webapi:early-access
           cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/amd64
-
-      - name: Build arm32v7 docker image and push to GHCR
-        uses: docker/build-push-action@v2.6.1
-        with:
-          context: .
-          tags: ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
-          # if base image is modified, make sure to update Makefile accordingly
-          build-args: |
-            BASE_IMAGE=arm32v7/python:3.9.6
-            VCS_REF=${{ github.sha }}
-            BUILD_DATE=${{ steps.getDate.outputs.date }}
-            VERSION=arm32v7-early-access
-          push: true
-          cache-from: |
-            type=local,src=/tmp/.buildx-cache
-            ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
-          cache-to: type=local,dest=/tmp/.buildx-cache
-          platforms: linux/arm/v7
-
-      - name: Create docker manifest
-        run: >
-          docker manifest create
-          ghcr.io/tomerfi/switcher_webapi:early-access
-          ghcr.io/tomerfi/switcher_webapi:amd64-early-access
-          ghcr.io/tomerfi/switcher_webapi:arm32v7-early-access
-
-      - name: Push docker manifest as early-access to GHCR
-        run: docker manifest push --purge ghcr.io/tomerfi/switcher_webapi:early-access
 
       - name: Create release
         uses: marvinpinto/action-automatic-releases@v1.2.1
