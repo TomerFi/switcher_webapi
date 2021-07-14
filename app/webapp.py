@@ -245,7 +245,6 @@ if __name__ == "__main__":
     app = web.Application(middlewares=[error_middleware])
     app.add_routes(routes)
 
-    port = args.port
-    server_logger.info(f"starting server on port {str(port)}")
-    web.run_app(app, port=port, access_log_class=CustomAccessLogger)
+    server_logger.info("starting server")
+    web.run_app(app, port=args.port, access_log_class=CustomAccessLogger)
     server_logger.info("server stopped")
