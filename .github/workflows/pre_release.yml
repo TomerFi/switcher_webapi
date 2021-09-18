@@ -93,7 +93,7 @@ jobs:
           title: early-access
 
       - name: Push to CodeCov
-        uses: codecov/codecov-action@v2.0.3
+        uses: codecov/codecov-action@v2.1.0
         with:
           files: coverage.xml
           fail_ci_if_error: true
