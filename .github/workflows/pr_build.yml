@@ -6,15 +6,12 @@ on:
     branches:
       - dev
 
-env:
-  MAIN_PY_VER: 3.9
-
 jobs:
   lint-docs:
     runs-on: ubuntu-latest
     name: Lint documentation files
     steps:
-      - name: Source checkout
+      - name: Checkout sources
         uses: actions/checkout@v2.3.4
 
       - name: Lint markdown files
@@ -37,20 +34,19 @@ jobs:
     needs: [lint-docs]
     name: Build project
     steps:
-      - name: Source checkout
+      - name: Checkout sources
         uses: actions/checkout@v2.3.4
 
-      - name: Set up Python
+      - name: Setup Python 3.9
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: ${{ env.MAIN_PY_VER }}
+          python-version: 3.9
 
       - name: Cache pip repository
         uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
-          # yamllint disable-line rule:line-length
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}-${{ env.MAIN_PY_VER }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}
 
       - name: Prepare python environment
         run: |
@@ -90,7 +86,7 @@ jobs:
     needs: [lint-docs]
     name: Build docker
     steps:
-      - name: Source checkout
+      - name: Checkout sources
         uses: actions/checkout@v2.3.4
 
       - name: Lint Dockerfile

@@ -2,29 +2,35 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - '[0-9].[0-9].[0-9]'
-
-env:
-  MAIN_PY_VER: 3.9
-  PLATFORMS: linux/amd64,linux/arm/v7
+  workflow_dispatch:
+    inputs:
+      tweet:
+        description: "Tweet new release?"
+        required: false
+        default: "yes"
 
 jobs:
   release:
-    if: github.actor == 'TomerFi'
     runs-on: ubuntu-latest
-    name: Build release and publish to Docker Hub
+    environment: deployment
+    name: Build, publish, release, and announce
     steps:
-      - name: Source checkout
+      - name: Checkout sources
         uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Setup Python 3.9
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.9
 
       - name: Cache pip repository
         uses: actions/cache@v2.1.6
         with:
           path: ~/.cache/pip
-          # yamllint disable-line rule:line-length
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_docs.txt') }}-${{ env.MAIN_PY_VER }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_docs.txt') }}
 
       - name: Prepare python environment
         run: |
@@ -42,7 +48,6 @@ jobs:
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: ${{ runner.os }}-buildx-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1.2.0
@@ -56,56 +61,76 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Get current date
-        id: getDate
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Determine version and create changelog
+        id: bumper
+        uses: tomerfi/version-bumper-action@1.0.0
+        with:
+          changelog: true
 
-      - name: Get semantic version from file
-        id: getSemver
-        run: echo "::set-output name=semver::$(cat VERSION | tr -d ' \t\n\r' )"
+      - name: Set new project version
+        run: echo "${{ steps.bumper.outputs.new_version }}" > VERSION
+
+      - name: Configure git
+        run: |
+          git config --global user.name "switcher_webapi"
+          git config --global user.email "noreply@switcher-webapi.tomfi.info"
+
+      - name: Commit, tag, and push
+        run: |
+          git add VERSION
+          git commit -m "build: bump version to ${{ steps.bumper.outputs.new_version }}"
+          git push
+          git tag ${{ steps.bumper.outputs.new_version }} -m ${{ steps.bumper.outputs.new_version }}
+          git push origin ${{ steps.bumper.outputs.new_version }}
+
+      - name: Get current date
+        id: current_date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       - name: Build images and push to DockerHub
         uses: docker/build-push-action@v2.7.0
         with:
           context: .
           push: true
-          platforms: ${{ env.PLATFORMS }}
+          platforms: linux/amd64,linux/arm/v7
           tags: |
             tomerfi/switcher_webapi:latest
-            tomerfi/switcher_webapi:${{ steps.getSemver.outputs.semver }}
+            tomerfi/switcher_webapi:${{ steps.bumper.outputs.new_version }}
           build-args: |
             VCS_REF=${{ github.sha }}
-            BUILD_DATE=${{ steps.getDate.outputs.date }}
-            VERSION=${{ steps.getSemver.outputs.semver }}
+            BUILD_DATE=${{ steps.current_date.outputs.date }}
+            VERSION=${{ steps.bumper.outputs.new_version }}
           cache-from: |
             type=local,src=/tmp/.buildx-cache
             ghcr.io/tomerfi/switcher_webapi:early-access
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Create release
-        id: create_release
-        uses: marvinpinto/action-automatic-releases@v1.2.1
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
+      - name: Set development project version
+        run: echo "${{ steps.bumper.outputs.next_dev_iteration }}" > VERSION
 
-      - name: Dispatch release event
-        uses: peter-evans/repository-dispatch@v1.1.3
+      - name: Commit and push
+        run: |
+          git add VERSION
+          git commit -m "build: bump version to ${{ steps.bumper.outputs.next_dev_iteration }}"
+          git push
+
+      - name: Release to GitHub
+        id: gh_release
+        uses: ncipollo/release-action@v1.8.9
         with:
-          token: ${{ secrets.EVENT_DISPATCH_PAT }}
-          event-type: switcher-webapi-released
+          bodyFile: changelog-${{ steps.bumper.outputs.new_version }}.md
+          tag: ${{ steps.bumper.outputs.new_version }}
 
       - name: Tweet new release
+        if: ${{ github.event.inputs.tweet == 'yes' }}
         uses: lazy-actions/tweet-action@1.0.1
-        env:
-          RELEASE_TAG: ${{ steps.create_release.outputs.automatic_releases_tag }}
         with:
           oauth_consumer_key: ${{ secrets.TWITTER_API_KEY }}
           oauth_consumer_secret: ${{ secrets.TWITTER_API_SECRET_KEY }}
           oauth_token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           oauth_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           message: |
-            🚀🎉 Switcher_webapi ${{ env.RELEASE_TAG }} has been released! 🎉🚀
-            ${{ github.event.repository.html_url }}/releases/tag/${{ env.RELEASE_TAG }}
+            🚀🎉 Switcher_webapi ${{ steps.bumper.outputs.new_version }} has been released! 🎉🚀
+            ${{ steps.gh_release.outputs.html_url }}
 
             #switcher_webapi
