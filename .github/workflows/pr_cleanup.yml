@@ -35,7 +35,7 @@ jobs:
     name: Handle pull request
     steps:
       - name: Lock pull request
-        uses: dessant/lock-threads@v2.1.2
+        uses: dessant/lock-threads@v3
         with:
           pr-lock-comment: "Locking this pull request."
           process-only: prs
