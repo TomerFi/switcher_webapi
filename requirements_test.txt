@@ -1,6 +1,6 @@
 assertpy==1.1
 bandit==1.7.0
-black==21.9b0
+black==21.10b0
 doc8==0.9.1
 flake8==4.0.1
 flake8-docstrings==1.6.0
