@@ -43,7 +43,7 @@ jobs:
           python-version: 3.9
 
       - name: Cache pip repository
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}
@@ -104,7 +104,7 @@ jobs:
           driver-opts: image=moby/buildkit:buildx-stable-1
 
       - name: Cache Docker layers
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
