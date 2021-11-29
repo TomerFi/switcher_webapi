@@ -19,6 +19,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "saar-win",
+      "name": "Saar wintrov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61886120?v=4",
+      "profile": "https://github.com/saar-win",
+      "contributions": [
+        "test"
+      ]
     }
   ]
 }
