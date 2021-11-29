@@ -193,10 +193,13 @@ The contributing guidelines are [here][9]
 
 The code of conduct is [here][10]
 
-## Thanks
+## Contributors
 
-- Designing and testing by [Shay][11].
-- Testing, support, and community procedures by [Dima][12].
+Thanks goes to these wonderful people ([emoji key][11]):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
@@ -209,8 +212,7 @@ The code of conduct is [here][10]
 [8]: https://github.com/TomerFi/switcher_webapi/wiki
 [9]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md
 [10]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md
-[11]: https://github.com/thecode
-[12]: https://github.com/dmatik
+[11]: https://allcontributors.org/docs/en/emoji-k
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
