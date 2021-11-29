@@ -225,7 +225,7 @@ Thanks goes to these wonderful people ([emoji key][11]):
 [8]: https://github.com/TomerFi/switcher_webapi/wiki
 [9]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md
 [10]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md
-[11]: https://allcontributors.org/docs/en/emoji-k
+[11]: https://allcontributors.org/docs/en/emoji-key
 <!-- Badges Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
