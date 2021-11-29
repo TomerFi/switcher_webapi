@@ -205,6 +205,7 @@ Thanks goes to these wonderful people ([emoji key][11]):
     <td align="center"><a href="https://github.com/OrBin"><img src="https://avatars.githubusercontent.com/u/6897234?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Or Bin</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=OrBin" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/saar-win"><img src="https://avatars.githubusercontent.com/u/61886120?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saar wintrov</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=saar-win" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/thecode"><img src="https://avatars.githubusercontent.com/u/1858925?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shay Levy</b></sub></a><br /><a href="#design-thecode" title="Design">🎨</a> <a href="#userTesting-thecode" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://github.com/dmatik"><img src="https://avatars.githubusercontent.com/u/5577386?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dmatik</b></sub></a><br /><a href="#blog-dmatik" title="Blogposts">📝</a> <a href="#ideas-dmatik" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-dmatik" title="User Testing">📓</a></td>
   </tr>
 </table>
 
