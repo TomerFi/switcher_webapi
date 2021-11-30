@@ -25,7 +25,7 @@ jobs:
 
   triage-by-bots:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && github.actor == 'allcontributors[bot]'
+    if: github.actor == 'dependabot[bot]' || github.actor == 'allcontributors[bot]'
     name: Triage by bots
     steps:
       - name: Auto approve
