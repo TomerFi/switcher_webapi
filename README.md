@@ -217,7 +217,7 @@ Thanks goes to these wonderful people ([emoji key][11]):
 <!-- Real Links -->
 [0]: https://codecov.io/gh/TomerFi/switcher_webapi
 [1]: https://hub.docker.com/r/tomerfi/switcher_webapi
-[2]: https://github.com/TomerFi/switcher_webapi/actions/workflows/pre_release.yml
+[2]: https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml
 [3]: https://github.com/TomerFi/switcher_webapi
 [4]: https://switcher-webapi.tomfi.info
 [5]: https://www.switcher.co.il/
@@ -230,6 +230,6 @@ Thanks goes to these wonderful people ([emoji key][11]):
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
 [docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
 [docker-version]: https://img.shields.io/docker/v/tomerfi/switcher_webapi?color=%230A6799&logo=docker
-[gh-build-status]: https://github.com/TomerFi/switcher_webapi/actions/workflows/pre_release.yml/badge.svg
+[gh-build-status]: https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml/badge.svg
 [gh-pages-status]: https://github.com/TomerFi/switcher_webapi/actions/workflows/pages_deploy.yml/badge.svg
 [license-badge]: https://img.shields.io/github/license/tomerfi/switcher_webapi

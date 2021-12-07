@@ -1,5 +1,5 @@
 ---
-name: Pre-Release
+name: Stage
 
 on:
   workflow_dispatch:
@@ -8,10 +8,10 @@ on:
       - dev
 
 jobs:
-  pre-release:
+  stage:
     runs-on: ubuntu-latest
     environment: staging
-    name: Build pre-release and publish early access to GitHub
+    name: Build and publish early access to GitHub
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
