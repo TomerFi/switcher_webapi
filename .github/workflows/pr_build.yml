@@ -10,9 +10,13 @@ jobs:
   lint-docs:
     runs-on: ubuntu-latest
     name: Lint documentation files
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Lint markdown files
         uses: prologic/action-markdownlint@v0.3
@@ -20,6 +24,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-check
           level: error
+
+      - name: Lint Dockerfile
+        uses: luke142367/Docker-Lint-Action@v1.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check for spelling mistakes
         uses: reviewdog/action-misspell@v1.9
@@ -33,9 +42,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint-docs]
     name: Build project
+    permissions:
+      pull-requests: read
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Setup Python 3.9
         uses: actions/setup-python@v2.3.1
@@ -85,14 +98,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint-docs]
     name: Build docker
+    permissions:
+      pull-requests: read
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
-
-      - name: Lint Dockerfile
-        uses: luke142367/Docker-Lint-Action@v1.1.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Get current date
         id: getDate
@@ -127,12 +139,11 @@ jobs:
 
   report:
     runs-on: ubuntu-latest
-    name: Push coverage report to CodeCov
     needs: [build-app, build-docker]
+    name: Push coverage report to CodeCov
+    permissions:
+      pull-requests: write
     steps:
-      - name: Source checkout
-        uses: actions/checkout@v2.4.0
-
       - name: Download coverage report from artifacts
         uses: actions/download-artifact@v2
         with:
