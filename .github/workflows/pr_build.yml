@@ -87,7 +87,7 @@ jobs:
         run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
       - name: Push coverage and test reports as artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v2.3.0
         with:
           name: reports
           if-no-files-found: error
