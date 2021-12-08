@@ -137,10 +137,6 @@ jobs:
           tags: tomerfi/switcher_webapi:testing
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-          load: true
-
-      - name: Delete docker image
-        run: docker image rm tomerfi/switcher_webapi:testing
 
   report:
     runs-on: ubuntu-latest
