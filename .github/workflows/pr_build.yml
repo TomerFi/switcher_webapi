@@ -9,7 +9,7 @@ on:
 jobs:
   lint-docs:
     runs-on: ubuntu-latest
-    name: Lint documentation files
+    name: Lint sources
     permissions:
       checks: write
       pull-requests: write
@@ -86,7 +86,7 @@ jobs:
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
-      - name: Push coverage and test reports as artifact
+      - name: Upload coverage and test reports as artifact
         uses: actions/upload-artifact@v2.3.0
         with:
           name: reports
@@ -155,7 +155,6 @@ jobs:
 
       - name: Report test summary
         uses: EnricoMi/publish-unit-test-result-action@v1.25
-        if: always()
         with:
           test_changes_limit: 0
           files: reports/junit.xml
