@@ -107,6 +107,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name: print content
+        run: cat requirements.txt
+
       - name: Get current date
         id: getDate
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
