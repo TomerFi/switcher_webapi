@@ -156,7 +156,7 @@ jobs:
           path: reports
 
       - name: Report test summary
-        uses: EnricoMi/publish-unit-test-result-action@v1.25
+        uses: EnricoMi/publish-unit-test-result-action@v1.26
         with:
           test_changes_limit: 0
           files: reports/junit.xml
