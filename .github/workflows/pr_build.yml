@@ -108,9 +108,6 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: print content
-        run: cat requirements.txt
-
       - name: Get current date
         id: getDate
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
@@ -131,6 +128,7 @@ jobs:
       - name: Build docker image (no push)
         uses: docker/build-push-action@v2.8.0
         with:
+          context: .
           platforms: linux/amd64,linux/arm/v7
           build-args: |
             VCS_REF=${{ github.head_ref }}
