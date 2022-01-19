@@ -22,7 +22,7 @@ WORKDIR /usr/switcher_webapi
 
 COPY LICENSE app/webapp.py requirements.txt ./
 
-RUN MULTIDICT_NO_EXTENSIONS=1 YARL_NO_EXTENSIONS=1 pip install -r requirements.txt
+RUN AIOHTTP_NO_EXTENSIONS=1 FROZENLIST_NO_EXTENSIONS=1 MULTIDICT_NO_EXTENSIONS=1 YARL_NO_EXTENSIONS=1 pip install -r requirements.txt
 
 EXPOSE 8000
 
