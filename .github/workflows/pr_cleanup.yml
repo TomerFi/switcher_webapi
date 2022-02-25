@@ -30,12 +30,3 @@ jobs:
         with:
           labels: "status: merged"
 
-  handle-pr:
-    runs-on: ubuntu-latest
-    name: Handle pull request
-    steps:
-      - name: Lock pull request
-        uses: dessant/lock-threads@v3
-        with:
-          pr-comment: "Locking this pull request."
-          process-only: prs
