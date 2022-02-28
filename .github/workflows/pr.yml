@@ -2,7 +2,7 @@
 name: Pull request build
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - dev
 
@@ -27,8 +27,6 @@ jobs:
     steps:
       - name: Source checkout
         uses: actions/checkout@v2.4.0
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Label if conflicts found
         uses: mschilde/auto-label-merge-conflicts@v2.0
@@ -51,8 +49,6 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Lint markdown files
         uses: prologic/action-markdownlint@v0.3
@@ -83,8 +79,6 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Setup Python 3.9
         uses: actions/setup-python@v2.3.2
@@ -140,7 +134,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2.4.0
         with:
-          ref: ${{ github.head_ref }}
           fetch-depth: 0
 
       - name: Get current date
