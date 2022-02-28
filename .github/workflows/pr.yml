@@ -159,7 +159,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm/v7
           build-args: |
-            VCS_REF=${{ github.head_ref }}
+            VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=testing
           tags: tomerfi/switcher_webapi:testing
