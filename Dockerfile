@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM python:3.10.2-slim
+FROM python:3.11.0a6-slim
 
 ARG TIMEZONE="Asia/Jerusalem"
 
