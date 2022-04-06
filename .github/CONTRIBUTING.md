@@ -10,7 +10,7 @@ Contributing is pretty straight-forward:
 
 ## Prepare the environment
 
-With [Python >= 3.9](https://www.python.org/) use [pip](https://pypi.org/project/pip/) to install
+With [Python >= 3.10](https://www.python.org/) use [pip](https://pypi.org/project/pip/) to install
 [tox](https://tox.readthedocs.io/):
 
 ```shell
