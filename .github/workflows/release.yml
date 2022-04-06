@@ -137,7 +137,7 @@ jobs:
       - name: Commit and push
         run: |
           git add VERSION
-          git commit -m "build: bump version to ${{ steps.bumper.outputs.next_dev_iteration }}"
+          git commit -m "build: bump version to ${{ steps.bumper.outputs.next_dev_iteration }} [skip ci]"
           git push
 
       - name: Tweet new release
