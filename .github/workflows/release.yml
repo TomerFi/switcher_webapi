@@ -81,7 +81,7 @@ jobs:
           git add VERSION
           git commit -m "build: bump version to ${{ steps.bumper.outputs.new_version }}"
           git push
-          git tag ${{ steps.bumper.outputs.new_version }} -m ${{ github.event.inputs.title }}
+          git tag ${{ steps.bumper.outputs.new_version }} -m "${{ github.event.inputs.title }}"
           git push origin ${{ steps.bumper.outputs.new_version }}
 
       - name: Get current date
