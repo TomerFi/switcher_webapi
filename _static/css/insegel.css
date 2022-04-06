@@ -45,7 +45,7 @@ blockquote, q {
 
 blockquote:before, blockquote:after,
 q:before, q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -137,6 +137,7 @@ pre {
   color: #2D2D2D;
   padding: 2em;
   margin-bottom: 1em;
+  overflow-x: auto;
 }
 
 img {
@@ -207,6 +208,12 @@ table tbody tr:nth-of-type(odd) code {
 
 #main-content-container {
   flex: 1;
+  width: 0;
+}
+@media screen and (max-width: 880px) {
+  #main-content-container {
+    width: inherit;
+  }
 }
 
 #main-content-container, #side-menu-container {
@@ -219,15 +226,8 @@ table tbody tr:nth-of-type(odd) code {
 #main-content .figure {
   text-align: center;
 }
-#main-content h1:first-child {
-  display: none;
-}
-
-#main-content-header {
-  padding: 2em 2em 0 2em;
-}
-#main-content-header h1 {
-  margin: 0;
+#main-content h1:first-of-type {
+  margin-top: 0;
 }
 
 #side-menu-container {
@@ -299,7 +299,7 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 }
 
 #side-menu .caption {
-  opacity: 0.5;
+  opacity: 0.7;
   font-weight: 300;
   list-style-type: none;
   margin-bottom: 0px;
@@ -309,6 +309,15 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
   text-transform: none;
   list-style-type: none;
   padding-left: 0px;
+}
+#side-menu .toctree-l2 > a {
+  font-weight: normal;
+  margin-left: 1em;
+}
+#side-menu .toctree-l3 > a, #side-menu .toctree-l4 > a, #side-menu .toctree-l5 > a {
+  font-weight: normal;
+  opacity: 0.7;
+  margin-left: 2em;
 }
 
 #search {
