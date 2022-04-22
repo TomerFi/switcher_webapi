@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check for spelling mistakes
-        uses: reviewdog/action-misspell@v1.11
+        uses: reviewdog/action-misspell@v1.12
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           locale: "US"
