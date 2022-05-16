@@ -105,7 +105,7 @@ jobs:
         run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
       - name: Report test summary
-        uses: EnricoMi/publish-unit-test-result-action@v1.34
+        uses: EnricoMi/publish-unit-test-result-action@v1.35
         if: always()
         with:
           test_changes_limit: 0
