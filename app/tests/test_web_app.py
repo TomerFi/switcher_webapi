@@ -17,6 +17,7 @@
 from datetime import timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
+import pytest_asyncio
 from aiohttp import web
 from aioswitcher.api import Command
 from aioswitcher.schedule import Days
@@ -24,6 +25,8 @@ from assertpy import assert_that
 from pytest import fixture, mark
 
 from .. import webapp
+
+pytestmark = mark.asyncio
 
 fake_device_qparams = f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
 fake_serialized_data = {"fake": "return_dict"}
@@ -46,7 +49,7 @@ delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
 create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
 
 
-@fixture
+@pytest_asyncio.fixture
 async def api_client(aiohttp_client):
     # create application
     app = web.Application(middlewares=[webapp.error_middleware])
