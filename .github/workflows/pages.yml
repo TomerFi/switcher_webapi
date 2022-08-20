@@ -35,9 +35,8 @@ jobs:
 
       - name: Build documenation site
         run: |
-          sphinx-build -b spelling docs docsbuild
-          sphinx-build -b linkcheck docs docsbuild
-          sphinx-build -b singlehtml docs docsbuild
+          mkdocs build
+          mkdocs-linkcheck -r ./docs --exclude ./codedocs.md
 
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@v3.8.0
