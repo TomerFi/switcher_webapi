@@ -46,6 +46,7 @@ jobs:
           level: error
 
       - name: Lint Dockerfile
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         uses: luke142367/Docker-Lint-Action@v1.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
