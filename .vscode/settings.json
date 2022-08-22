@@ -1,5 +1,3 @@
 {
-    "python.defaultInterpreterPath": "${workspaceFolder}/.tox/py310/bin/python",
-    "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
-    "esbonio.sphinx.buildDir": "${workspaceFolder}/docsbuild"
+    "python.defaultInterpreterPath": "${workspaceFolder}/.tox/py310/bin/python"
 }

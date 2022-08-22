@@ -1,7 +1,6 @@
 assertpy==1.1
 bandit==1.7.4
 black==22.6.0
-doc8==1.0.0
 flake8==5.0.4
 flake8-docstrings==1.6.0
 isort==5.10.1

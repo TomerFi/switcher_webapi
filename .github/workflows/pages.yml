@@ -35,14 +35,13 @@ jobs:
 
       - name: Build documenation site
         run: |
-          sphinx-build -b spelling docs docsbuild
-          sphinx-build -b linkcheck docs docsbuild
-          sphinx-build -b singlehtml docs docsbuild
+          mkdocs build
+          mkdocs-linkcheck -r ./docs --exclude ./codedocs.md
 
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docsbuild
+          publish_dir: ./site
           cname: switcher-webapi.tomfi.info
           commit_message: 'docs: deployed documentation site'

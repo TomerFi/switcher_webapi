@@ -94,12 +94,11 @@ jobs:
 
       - name: Lint project with python linters
         run: |
-          bandit -r -x app/tests/* app/ docs/
-          black --check app/ docs/
-          flake8 --count --statistics app/ docs/
-          isort --check-only app/ docs/
-          mypy --ignore-missing-imports app/ docs/
-          doc8 docs/
+          bandit -r -x app/tests/* app/
+          black --check app/
+          flake8 --count --statistics app/
+          isort --check-only app/
+          mypy --ignore-missing-imports app/
           yamllint --format colored --strict .
 
       - name: Test project

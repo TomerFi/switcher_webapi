@@ -42,9 +42,8 @@ jobs:
 
       - name: Build documenation site
         run: |
-          sphinx-build -b spelling docs docsbuild
-          sphinx-build -b linkcheck docs docsbuild
-          sphinx-build -b singlehtml docs docsbuild
+          mkdocs build
+          mkdocs-linkcheck -r ./docs --exclude ./codedocs.md
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -157,3 +156,7 @@ jobs:
             ${{ steps.gh_release.outputs.html_url }}
 
             #switcher_webapi #smarthome
+
+      - name: Update documentation with new version
+        run: |
+          sed -i 's/  version: .*/  version: "${{ steps.bumper.outputs.new_version }}"/g' mkdocs.yml
