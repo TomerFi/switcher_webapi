@@ -1,206 +1,81 @@
-# Switcher Web API</br>[![docker-version]][1] [![docker-pulls]][1] [![license-badge]][3]
+<!-- markdownlint-disable MD033 -->
+<h1 align="center">
+  Switcher Web API
+  <br/>
+  <a href="https://hub.docker.com/r/tomerfi/switcher_webapi">
+    <img src="https://img.shields.io/docker/v/tomerfi/switcher_webapi?color=%230A6799&logo=docker"/>
+  </a>
+  <a href="https://hub.docker.com/r/tomerfi/switcher_webapi">
+    <img src="https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls"/>
+  </a>
+  <a href="https://codecov.io/gh/TomerFi/switcher_webapi">
+    <img src="https://img.shields.io/github/license/tomerfi/switcher_webapi"/>
+  </a>
+  <br/>
+  <a href="https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml">
+    <img src="https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml/badge.svg"/>
+  </a>
+  <a href="https://github.com/TomerFi/switcher_webapi/actions/workflows/pages.yml">
+    <img src="https://github.com/TomerFi/switcher_webapi/actions/workflows/pages.yml/badge.svg"/>
+  </a>
+  <a href="https://codecov.io/gh/TomerFi/switcher_webapi">
+    <img src="https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg"/>
+  </a>
+</h1>
 
-[![gh-build-status]][2] [![gh-pages-status]][4] [![codecov]][0]
+<h3 align="center">
+  Gain containerized access to your local <a href="https://www.switcher.co.il/">Switcher</a> smart devices
+</h3>
+<p align="center">
 
-Containerized web service integrating with various [Switcher][5] smart devices.
+  ```mermaid
+  flowchart LR
+    A([User]) -- HTTP --> B([Container]) -- TCP --> C([Device])
+  ```
 
-## Install
+  ```shell
+  docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
+  ```
 
-```shell
-docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
-```
+</p>
 
-## Links
+<p align="center">
+  <table align="center">
+    <tr>
+      <td align="left">
+        <a href="https://switcher-webapi.tomfi.info" target="_blank">Read Docs</a>
+      </td>
+      <td align="left">
+        <a href="https://github.com/TomerFi/switcher_webapi/wiki" target="_blank">Wiki Pages</a>
+      </td>
+      <td align="left">
+        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md" target="_blank">
+          Code of Conduct
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" colspan="2">
+        <a href="https://github.com/TomerFi/aioswitcher/wiki" target="_blank">
+          <em>aioswitcher</em>'s Wiki Pages
+        </a>
+      </td>
+      <td align="left">
+        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md" target="_blank">
+          Contributing Guidelines
+        </a>
+      </td>
+    </tr>
+  </table>
+</p>
 
-- [documentation site][4] for a more detailed usage section.
-- [wiki pages][8] for additional information.
-- [aioswitcher's wiki pages][6] for a list of supported devices.
-
-## Usage Examples
-
-### Get State
-
-Get the current state of a device.
-
-Request:
-
-```http
-GET http://localhost:8000/switcher/get_state?id=ab1c2d&ip=1.2.3.4
-```
-
-Response:
-
-```json
-{
-  "state": "ON",
-  "time_left": "00:09:57",
-  "time_on": "00:35:03",
-  "auto_shutdown": "02:30:00",
-  "power_consumption": 2623,
-  "electric_current": 11.9
-}
-```
-
-### Turn On
-
-Turn on without a timer:
-
-```http
-POST http://localhost:8000/switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-```
-
-Turn on with a 15 minutes timer:
-
-```http
-POST http://localhost:8000/switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "minutes": 15
-}
-```
-
-### Turn Off
-
-Turn off a device:
-
-```http
-POST http://localhost:8000/switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-```
-
-### Set Auto Shutdown
-
-Set the auto shutdown value to 3 hours:
-
-```http
-PATCH http://localhost:8000/switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "hours": 3
-}
-```
-
-Set the auto shutdown value to 2 hours and 30 minutes:
-
-```http
-PATCH http://localhost:8000/switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "hours": 2,
-    "minutes": 30
-}
-```
-
-### Set Name
-
-Set the device's name to MySwitcher:
-
-```http
-PATCH http://localhost:8000/switcher/set_name?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "name": "MySwitcher"
-}
-```
-
-### Create a Schedule
-
-Create a non-recurring schedule for 17:00-18:30:
-
-```http
-POST http://localhost:8000/switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "start": "17:00",
-    "stop": "18:30"
-}
-```
-
-Create a recurring schedule for 23:00-23:30 on Sunday, Monday, and Friday:
-
-```http
-POST http://localhost:8000/switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "start": "23:00",
-    "stop": "23:30",
-    "days": ["Sunday", "Monday", "Friday"]
-}
-```
-
-### Delete a Schedule
-
-Delete schedule id 7:
-
-```http
-DELETE http://localhost:8000/switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-Content-Type: "application/json"
-
-{
-    "schedule": "7"
-}
-```
-
-### Get Schdeules
-
-Get the schedules information from a device.
-
-Request:
-
-```http
-GET http://localhost:8000/switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-```
-
-Response:
-
-```json
-[
-  {
-    "schedule_id": "0",
-    "recurring": true,
-    "days": [
-      "SUNDAY",
-      "FRIDAY",
-      "MONDAY"
-    ],
-    "start_time": "23:00",
-    "end_time": "23:30",
-    "duration": "0:30:00",
-    "display": "Due next Friday at 23:00"
-  },
-  {
-    "schedule_id": "1",
-    "recurring": false,
-    "days": [],
-    "start_time": "17:00",
-    "end_time": "18:30",
-    "duration": "1:30:00",
-    "display": "Due today at 17:00"
-  }
-]
-```
-
-## Contributing
-
-The contributing guidelines are [here][9]
-
-## Code of Conduct
-
-The code of conduct is [here][10]
-
-## Contributors
-
-Thanks goes to these wonderful people ([emoji key][11]):
-
+<p align="center">
+<strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a>
+<br/>
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
+<table align="center">
   <tr>
     <td align="center"><a href="https://github.com/dolby360"><img src="https://avatars.githubusercontent.com/u/22151399?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dolev Ben Aharon</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=dolby360" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/OrBin"><img src="https://avatars.githubusercontent.com/u/6897234?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Or Bin</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=OrBin" title="Code">💻</a></td>
@@ -214,23 +89,4 @@ Thanks goes to these wonderful people ([emoji key][11]):
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-<!-- Real Links -->
-[0]: https://codecov.io/gh/TomerFi/switcher_webapi
-[1]: https://hub.docker.com/r/tomerfi/switcher_webapi
-[2]: https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml
-[3]: https://github.com/TomerFi/switcher_webapi
-[4]: https://switcher-webapi.tomfi.info
-[5]: https://www.switcher.co.il/
-[6]: https://github.com/TomerFi/aioswitcher/wiki
-[8]: https://github.com/TomerFi/switcher_webapi/wiki
-[9]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md
-[10]: https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md
-[11]: https://allcontributors.org/docs/en/emoji-key
-<!-- Badges Links -->
-[codecov]: https://codecov.io/gh/TomerFi/switcher_webapi/graph/badge.svg
-[docker-pulls]: https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls
-[docker-version]: https://img.shields.io/docker/v/tomerfi/switcher_webapi?color=%230A6799&logo=docker
-[gh-build-status]: https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml/badge.svg
-[gh-pages-status]: https://github.com/TomerFi/switcher_webapi/actions/workflows/pages.yml/badge.svg
-[license-badge]: https://img.shields.io/github/license/tomerfi/switcher_webapi
+</p>

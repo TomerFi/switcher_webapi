@@ -1,9 +1,12 @@
 ---
-openapi: 3.0.0
+openapi: 3.0.3
+
 paths:
   /switcher/get_state:
     get:
       description: Returns the current state of a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -57,6 +60,8 @@ paths:
   /switcher/turn_on:
     post:
       description: Turn a device on, optionally setting an off timer for supporting devices
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -100,6 +105,8 @@ paths:
   /switcher/turn_off:
     post:
       description: Turn a device off
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -133,6 +140,8 @@ paths:
   /switcher/set_name:
     patch:
       description: Set the name of a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -179,6 +188,8 @@ paths:
   /switcher/set_auto_shutdown:
     patch:
       description: Set the auto shutdown configuration for a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -228,6 +239,8 @@ paths:
   /switcher/get_schedules:
     get:
       description: Returns the schedules configured on a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -280,6 +293,8 @@ paths:
   /switcher/delete_schedule:
     delete:
       description: Delete an existing schedule from a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
@@ -324,6 +339,8 @@ paths:
   /switcher/create_schedule:
     post:
       description: Create a new schedule on a device
+      tags:
+        - "API Endpoints"
       parameters:
         - in: query
           name: id
