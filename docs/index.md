@@ -1,6 +1,8 @@
+<!-- markdownlint-disable MD033 -->
+# Switcher WebAPI Docs
 
-# Welcome to Switcher WebAPI documentation
+```shell
+docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
+```
 
---8<-- "docs/install.md"
-
---8<-- "docs/apidocs.md"
+<swagger-ui src="openapi.yml" supportedSubmitMethods="[]"/>

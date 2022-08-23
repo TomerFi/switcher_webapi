@@ -1,32 +1,17 @@
 ---
-site_name: switcher_webapi
-site_url: https://switcher-webapi.tomfi.info/
+site_name: Switcher WebAPI
+site_url: https://switcher-webapi.tomfi.info
 site_author: Tomer Figenblat
-site_description: Containerized web service integrating with various Switcher devices.
+site_description: Switcher WebAPI Documentation
 
-repo_name: TomerFi/switcher_webapi
 repo_url: https://github.com/TomerFi/switcher_webapi
 edit_uri: ""
 
-nav:
-  - Install: install.md
-  - api documentations: apidocs.md
+copyright: Copyright &copy; 2022 Tomer Figenblat
 
 markdown_extensions:
-  - admonition
-  - def_list
   - pymdownx.betterem
-  - pymdownx.details
-  - pymdownx.highlight
-  - pymdownx.inlinehilite
   - pymdownx.smartsymbols
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
-  - tables
-  - toc:
-      permalink: ⚓︎
 
 extra:
   version: "1.1.9"
@@ -48,31 +33,8 @@ extra:
       name: tomerfi on LinkedIn
 
 plugins:
-  - swagger-ui-tag
-  - search
   - git-revision-date
-  - autorefs
-  - mkdocstrings:
-      custom_templates: templates
-      default_handler: python
-      handlers:
-        python:
-          selection:
-            filters:
-              - "!^_"
-          options:
-            show_source: true
-  - spellcheck:
-      # known_words can also be a list of words
-      known_words: spelling_wordlist.txt
-      # ignore words in <code> tags
-      ignore_code: yes
-      # minimum length of words to consider
-      min_length: 2
-      # maximum number of capital letters in a word
-      max_capital: 1
-      # keep unicode characters
-      allow_unicode: no
+  - swagger-ui-tag
 
 theme:
   name: material
@@ -90,11 +52,3 @@ theme:
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-  features:
-    - content.code.annotate
-    - header.autohide
-    - navigation.indexes
-    - navigation.tracking
-    - search.highlight
-    - search.share
-    - search.suggest

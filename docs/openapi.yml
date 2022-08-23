@@ -1,20 +1,8 @@
 ---
 openapi: 3.0.0
-info:
-  title: Switcher Webapi
-  description: Containerized web service integrating with Switcher devices
-  license:
-    name: Apache 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-
-externalDocs:
-  description: Find more info here
-  url: https://switcher-webapi.tomfi.info
-
 paths:
   /switcher/get_state:
     get:
-      summary: Get a device state
       description: Returns the current state of a device
       parameters:
         - in: query
@@ -68,7 +56,6 @@ paths:
 
   /switcher/turn_on:
     post:
-      summary: Turn on a device
       description: Turn a device on, optionally setting an off timer for supporting devices
       parameters:
         - in: query
@@ -112,7 +99,6 @@ paths:
 
   /switcher/turn_off:
     post:
-      summary: Turn off a device
       description: Turn a device off
       parameters:
         - in: query
@@ -146,7 +132,6 @@ paths:
 
   /switcher/set_name:
     patch:
-      summary: Set a device name
       description: Set the name of a device
       parameters:
         - in: query
@@ -193,7 +178,6 @@ paths:
 
   /switcher/set_auto_shutdown:
     patch:
-      summary: Set auto shutdown
       description: Set the auto shutdown configuration for a device
       parameters:
         - in: query
@@ -243,7 +227,6 @@ paths:
 
   /switcher/get_schedules:
     get:
-      summary: Get a device schedules
       description: Returns the schedules configured on a device
       parameters:
         - in: query
@@ -296,7 +279,6 @@ paths:
 
   /switcher/delete_schedule:
     delete:
-      summary: Delete a schedule
       description: Delete an existing schedule from a device
       parameters:
         - in: query
@@ -341,7 +323,6 @@ paths:
 
   /switcher/create_schedule:
     post:
-      summary: Create a schedule
       description: Create a new schedule on a device
       parameters:
         - in: query

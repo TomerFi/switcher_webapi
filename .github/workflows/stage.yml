@@ -16,11 +16,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Lint Dockerfile
-        uses: luke142367/Docker-Lint-Action@v1.1.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with:
