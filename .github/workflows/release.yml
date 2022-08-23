@@ -24,6 +24,11 @@ jobs:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Configure git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with:
@@ -40,10 +45,8 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt -r requirements_docs.txt
 
-      - name: Build documenation site
-        run: |
-          mkdocs build
-          mkdocs-linkcheck -r ./docs --exclude ./codedocs.md
+      - name: Build documentation site
+        run: mkdocs build
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -68,20 +71,20 @@ jobs:
         uses: tomerfi/version-bumper-action@1.2.0
 
       - name: Set new project version
-        run: echo "${{ steps.bumper.outputs.new_version }}" > VERSION
-
-      - name: Configure git
+        # yamllint disable rule:line-length
+        # editorconfig-checker-disable
         run: |
-          git config --global user.name "switcher_webapi"
-          git config --global user.email "noreply@switcher-webapi.tomfi.info"
+          echo "${{ steps.bumper.outputs.new_version }}" > VERSION
+          sed -i 's/  version: .*/  version: "${{ steps.bumper.outputs.new_version }}"/g' mkdocs.yml
+        # yamllint enable rule:line-length
+        # editorconfig-checker-enable
 
       - name: Commit, tag, and push
         run: |
           git add VERSION
+          git add mkdocs.yml
           git commit -m "build: bump version to ${{ steps.bumper.outputs.new_version }}"
           git push
-          git tag ${{ steps.bumper.outputs.new_version }} -m "${{ github.event.inputs.title }}"
-          git push origin ${{ steps.bumper.outputs.new_version }}
 
       - name: Get current date
         id: current_date
@@ -156,7 +159,3 @@ jobs:
             ${{ steps.gh_release.outputs.html_url }}
 
             #switcher_webapi #smarthome
-
-      - name: Update documentation with new version
-        run: |
-          sed -i 's/  version: .*/  version: "${{ steps.bumper.outputs.new_version }}"/g' mkdocs.yml

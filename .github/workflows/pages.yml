@@ -33,10 +33,8 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt -r requirements_docs.txt
 
-      - name: Build documenation site
-        run: |
-          mkdocs build
-          mkdocs-linkcheck -r ./docs --exclude ./codedocs.md
+      - name: Build documentation site
+        run: mkdocs build
 
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@v3.8.0
@@ -44,4 +42,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           cname: switcher-webapi.tomfi.info
-          commit_message: 'docs: deployed documentation site'
+          commit_message: 'docs: deployed to gh-pages for ${{ github.ref }}'
