@@ -8,7 +8,7 @@
 <meta content="Switcher WebAPI Documentation" name="description"/>
 <meta content="Tomer Figenblat" name="author"/>
 <link href="https://switcher-webapi.tomfi.info/" rel="canonical"/>
-<link href="assets/images/favicon.png" rel="icon"/>
+<link href="img/favicon.ico" rel="icon"/>
 <meta content="mkdocs-1.3.1, mkdocs-material-8.4.1" name="generator"/>
 <title>Switcher WebAPI</title>
 <link href="assets/stylesheets/main.69437709.min.css" rel="stylesheet"/>
@@ -35,7 +35,7 @@
 <header class="md-header" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
 <a aria-label="Switcher WebAPI" class="md-header__button md-logo" data-md-component="logo" href="." title="Switcher WebAPI">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+<img alt="logo" src="img/logo.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
@@ -81,13 +81,13 @@
 <div class="md-container" data-md-component="container">
 <main class="md-main" data-md-component="main">
 <div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden="">
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
 <a aria-label="Switcher WebAPI" class="md-nav__button md-logo" data-md-component="logo" href="." title="Switcher WebAPI">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"></path></svg>
+<img alt="logo" src="img/logo.png"/>
 </a>
     Switcher WebAPI
   </label>
@@ -125,9 +125,11 @@
 <article class="md-content__inner md-typeset">
 <!-- markdownlint-disable MD033 -->
 <h1 id="switcher-webapi-docs">Switcher WebAPI Docs</h1>
-<pre><code class="language-shell">docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
-</code></pre>
-<p><iframe class="swagger-ui-iframe" frameborder="0" id="5778e117" src="swagger-5778e117.html" style="overflow:hidden;width:100%;" width="100%"></iframe></p>
+<div class="highlight"><pre><span></span><code>docker run -d -p <span class="m">8000</span>:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
+</code></pre></div>
+<pre class="mermaid"><code>flowchart LR
+  A([User]) -- HTTP --&gt; B([Container]) -- TCP --&gt; C([Device])</code></pre>
+<p><iframe class="swagger-ui-iframe" frameborder="0" id="2bd25026" src="swagger-2bd25026.html" style="overflow:hidden;width:100%;" width="100%"></iframe></p>
 <hr/>
 <div class="md-source-file">
 <small>
@@ -179,7 +181,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "1.1.10"}</script>
+<script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": "1.1.11"}</script>
 <script src="assets/javascripts/bundle.9c69f0bc.min.js"></script>
 <script>document$.subscribe(() => {
             window.update_swagger_ui_iframe_height = function (id) {
