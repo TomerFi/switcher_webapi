@@ -1,0 +1,382 @@
+---
+openapi: 3.0.0
+paths:
+  /switcher/get_state:
+    get:
+      description: Returns the current state of a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON object representing the current state of the selected device
+          content:
+            application/json:
+              examples:
+                "Device ON":
+                  value:
+                    state: "ON"
+                    time_left: 01:15:32
+                    time_on: 00:14:28
+                    auto_shutdown: 02:30:00
+                    power_consumption: 1274
+                    electric_current: 16.4
+                "Device OFF":
+                  value:
+                    state: "OFF"
+                    time_left: 00:00:00
+                    time_on: 00:00:00
+                    auto_shutdown: 02:30:00
+                    power_consumption: 0
+                    electric_current: 0.0
+
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/turn_on:
+    post:
+      description: Turn a device on, optionally setting an off timer for supporting devices
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                minutes:
+                  type: integer
+            example:
+              minutes: 90
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to turn on the device":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/turn_off:
+    post:
+      description: Turn a device off
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to turn off the device":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/set_name:
+    patch:
+      description: Set the name of a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+            example:
+              name: MySwitcherDevice
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when deserializing the `name` key":
+                  value:
+                    error: "failed to get name from body as json"
+
+  /switcher/set_auto_shutdown:
+    patch:
+      description: Set the auto shutdown configuration for a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hours:
+                  type: integer
+                minutes:
+                  type: integer
+              required:
+                - hours
+            example:
+              hours: 2
+              minutes: 30
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when deserializing the `hours` key":
+                  value:
+                    error: "failed to get hours from body as json"
+
+  /switcher/get_schedules:
+    get:
+      description: Returns the schedules configured on a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON array of the schedules
+          content:
+            application/json:
+              examples:
+                "Multiple schedules found on a Tuesday":
+                  value:
+                    - schedule_id: "0"
+                      recurring: true
+                      days: ["FRIDAY", "SUNDAY", "MONDAY"]
+                      start_time: "23:00"
+                      end_time: "23:30"
+                      duration: "0:30:00"
+                      display: "Due next Friday at 23:00"
+                    - schedule_id: "1"
+                      recurring: false
+                      days: []
+                      start_time: "22:45"
+                      end_time: "23:30"
+                      duration: "0:45:00"
+                      display: "Due today at 22:45"
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/delete_schedule:
+    delete:
+      description: Delete an existing schedule from a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule:
+                  type: string
+            example:
+              name: "7"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when deserializing the `schedule` key":
+                  value:
+                    error: "'schedule'"
+
+  /switcher/create_schedule:
+    post:
+      description: Create a new schedule on a device
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start:
+                  type: string
+                stop:
+                  type: string
+                days:
+                  type: array
+                  items:
+                    type: string
+                    enum: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+              required:
+                - start
+                - stop
+            example:
+              start: "17:00"
+              stop: "18:30"
+              days: ["Wednesday", "Saturday"]
+            encoding:
+              days:
+                style: from
+                explode: false
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when deserializing the `start` key":
+                  value:
+                    error: "'start'"
