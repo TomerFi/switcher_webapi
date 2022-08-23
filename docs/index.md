@@ -1,3 +1,7 @@
+---
+hide:
+    - navigation
+---
 <!-- markdownlint-disable MD033 -->
 # Switcher WebAPI Docs
 
