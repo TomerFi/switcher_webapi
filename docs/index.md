@@ -9,4 +9,4 @@ hide:
 docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 ```
 
-<swagger-ui src="openapi.yml" supportedSubmitMethods="[]"/>
+<swagger-ui src="openapi.yml" oauth2RedirectUrl="" supportedSubmitMethods="[]" validatorUrl="none"/>
