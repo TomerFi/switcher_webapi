@@ -8,7 +8,7 @@
   <a href="https://hub.docker.com/r/tomerfi/switcher_webapi">
     <img src="https://img.shields.io/docker/pulls/tomerfi/switcher_webapi.svg?logo=docker&label=pulls"/>
   </a>
-  <a href="https://codecov.io/gh/TomerFi/switcher_webapi">
+  <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/LICENSE">
     <img src="https://img.shields.io/github/license/tomerfi/switcher_webapi"/>
   </a>
   <br/>
