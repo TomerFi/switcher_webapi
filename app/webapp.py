@@ -56,6 +56,7 @@ ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 ENDPOINT_SET_POSITION = "/switcher/set_position"
 ENDPOINT_GET_BREEZE_STATE = "/switcher/get_breeze_state"
 ENDPOINT_GET_SHUTTER_STATE = "/switcher/get_shutter_state"
+ENDPOINT_POST_STOP_SHUTTER = "/switcher/set_stop_shutter"
 
 parser = ArgumentParser(
     description="Start an aiohttp web service integrating with Switcher devices."
@@ -224,6 +225,15 @@ async def get_schedules(request: web.Request) -> web.Response:
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
         response = await swapi.get_shutter_state()
         return web.json_response(_serialize_object(response))
+
+
+@routes.post(ENDPOINT_POST_STOP_SHUTTER)
+async def set_position(request: web.Request) -> web.Response:
+    """Use for stopping the shutter."""
+    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+        return web.json_response(
+            _serialize_object(await swapi.stop())
+        )
 
 
 @web.middleware
