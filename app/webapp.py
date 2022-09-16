@@ -31,7 +31,7 @@ from aiohttp.log import (
 )
 from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
-from aioswitcher.api import Command, SwitcherApi
+from aioswitcher.api import Command, SwitcherApi, SWITCHER_TCP_PORT_TYPE2
 from aioswitcher.schedule import Days
 
 KEY_ID = "id"
@@ -43,6 +43,7 @@ KEY_SCHEDULE = "schedule"
 KEY_START = "start"
 KEY_STOP = "stop"
 KEY_DAYS = "days"
+KEY_POSITION = "position"
 
 ENDPOINT_GET_STATE = "/switcher/get_state"
 ENDPOINT_TURN_ON = "/switcher/turn_on"
@@ -52,6 +53,7 @@ ENDPOINT_SET_NAME = "/switcher/set_name"
 ENDPOINT_GET_SCHEDULES = "/switcher/get_schedules"
 ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
+ENDPOINT_SET_POSITION = "/switcher/set_position"
 
 parser = ArgumentParser(
     description="Start an aiohttp web service integrating with Switcher devices."
@@ -189,6 +191,22 @@ async def create_schedule(request: web.Request) -> web.Response:
                 await swapi.create_schedule(start_time, stop_time, selected_days)
             )
         )
+
+
+@routes.post(ENDPOINT_SET_POSITION)
+async def set_position(request: web.Request) -> web.Response:
+    """Use for setting the shutter position of the Runner and Runner Mini devices."""
+    try:
+        position = int(request.query[KEY_POSITION])
+    except Exception as exc:
+        raise ValueError("failed to get position from body as json") from exc
+    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+        return web.json_response(
+            _serialize_object(
+                await swapi.set_position(position)
+            )
+        )
+
 
 
 @web.middleware
