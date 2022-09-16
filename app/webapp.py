@@ -54,6 +54,8 @@ ENDPOINT_GET_SCHEDULES = "/switcher/get_schedules"
 ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 ENDPOINT_SET_POSITION = "/switcher/set_position"
+ENDPOINT_GET_BREEZE_STATE = "/switcher/get_breeze_state"
+ENDPOINT_GET_SHUTTER_STATE = "/switcher/get_shutter_state"
 
 parser = ArgumentParser(
     description="Start an aiohttp web service integrating with Switcher devices."
@@ -207,6 +209,21 @@ async def set_position(request: web.Request) -> web.Response:
             )
         )
 
+
+@routes.get(ENDPOINT_GET_BREEZE_STATE)
+async def get_schedules(request: web.Request) -> web.Response:
+    """Use for sending the get state packet to the Breeze device."""
+    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+        response = await swapi.get_breeze_state()
+        return web.json_response(_serialize_object(response))
+
+
+@routes.get(ENDPOINT_GET_SHUTTER_STATE)
+async def get_schedules(request: web.Request) -> web.Response:
+    """Use for sending the get state packet to the Breeze device."""
+    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+        response = await swapi.get_shutter_state()
+        return web.json_response(_serialize_object(response))
 
 
 @web.middleware
