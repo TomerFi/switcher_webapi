@@ -95,6 +95,7 @@ parser.add_argument(
 
 routes = web.RouteTableDef()
 
+
 def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
     """Use for converting enum to primitives and remove not relevant keys ."""
     serialized_dict = dict()  # type: Dict[str, Union[List[str], str]]
@@ -218,18 +219,18 @@ async def set_position(request: web.Request) -> web.Response:
         position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
-    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
-        return web.json_response(
-            _serialize_object(
-                await swapi.set_position(position)
-            )
-        )
+    async with SwitcherApi(
+        request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2
+    ) as swapi:
+        return web.json_response(_serialize_object(await swapi.set_position(position)))
 
 
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
 async def get_schedules(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+    async with SwitcherApi(
+        request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2
+    ) as swapi:
         response = await swapi.get_breeze_state()
         return web.json_response(_serialize_object(response))
 
@@ -237,7 +238,9 @@ async def get_schedules(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_schedules(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+    async with SwitcherApi(
+        request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2
+    ) as swapi:
         response = await swapi.get_shutter_state()
         return web.json_response(_serialize_object(response))
 
@@ -245,18 +248,29 @@ async def get_schedules(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
 async def set_position(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
-    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
-        return web.json_response(
-            _serialize_object(await swapi.stop())
-        )
+    async with SwitcherApi(
+        request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2
+    ) as swapi:
+        return web.json_response(_serialize_object(await swapi.stop()))
 
 
 @routes.patch(ENDPOINT_CONTROL_BREEZE_DEVICE)
 async def control_breeze_device(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
     device_states = {"on": DeviceState.ON, "off": DeviceState.OFF}
-    thermostat_modes = {"auto": ThermostatMode.AUTO, "dry": ThermostatMode.DRY, "fan": ThermostatMode.FAN, "cool": ThermostatMode.COOL, "heat": ThermostatMode.HEAT}
-    thermostat_fan_levels = {"low": ThermostatFanLevel.LOW, "medium": ThermostatFanLevel.MEDIUM,"high": ThermostatFanLevel.HIGH, "auto": ThermostatFanLevel.AUTO }
+    thermostat_modes = {
+        "auto": ThermostatMode.AUTO,
+        "dry": ThermostatMode.DRY,
+        "fan": ThermostatMode.FAN,
+        "cool": ThermostatMode.COOL,
+        "heat": ThermostatMode.HEAT,
+    }
+    thermostat_fan_levels = {
+        "low": ThermostatFanLevel.LOW,
+        "medium": ThermostatFanLevel.MEDIUM,
+        "high": ThermostatFanLevel.HIGH,
+        "auto": ThermostatFanLevel.AUTO,
+    }
     thermostat_swings = {"on": ThermostatSwing.ON, "off": ThermostatSwing.OFF}
     body = await request.json()
     try:
@@ -267,17 +281,27 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         thermostat_swing = thermostat_swings[body[KEY_THERMOSTAT_SWING]]
         device_current_state = device_states[body[KEY_CURRENT_DEVICE_STATE]]
     except Exception as exc:
-        raise ValueError("failed to get commands from body as json, you might sent illegal value") from exc
+        raise ValueError(
+            "failed to get commands from body as json, you might sent illegal value"
+        ) from exc
     # TODO: need to get the remote id somehow
     remote_manager = BreezeRemoteManager()
     remote = BreezeRemote(remote_manager.get_remote())
     command = remote.get_command(
-        device_state, thermostat_mode, target_temp, fan_level, thermostat_swing, device_current_state
+        device_state,
+        thermostat_mode,
+        target_temp,
+        fan_level,
+        thermostat_swing,
+        device_current_state,
     )
-    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+    async with SwitcherApi(
+        request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2
+    ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.control_breeze_device(command))
         )
+
 
 @web.middleware
 async def error_middleware(request: web.Request, handler: Callable) -> web.Response:
