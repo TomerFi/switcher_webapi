@@ -33,6 +33,14 @@ from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
 from aioswitcher.api import Command, SwitcherApi, SWITCHER_TCP_PORT_TYPE2
 from aioswitcher.schedule import Days
+from aioswitcher.device import (
+    DeviceState,
+    ThermostatFanLevel,
+    ThermostatMode,
+    ThermostatSwing,
+)
+from aioswitcher.api import BreezeRemote, BreezeRemoteManager
+
 
 KEY_ID = "id"
 KEY_IP = "ip"
@@ -44,6 +52,12 @@ KEY_START = "start"
 KEY_STOP = "stop"
 KEY_DAYS = "days"
 KEY_POSITION = "position"
+KEY_DEVICE_STATE = "device_state"
+KEY_THERMOSTAT_MODE = "thermostat_mode"
+KEY_TARGET_TEMP = "target_temp"
+KEY_FAN_LEVL = "fan_level"
+KEY_THERMOSTAT_SWING = "thermostat_swing"
+KEY_CURRENT_DEVICE_STATE = "current_device_state"
 
 ENDPOINT_GET_STATE = "/switcher/get_state"
 ENDPOINT_TURN_ON = "/switcher/turn_on"
@@ -57,6 +71,7 @@ ENDPOINT_SET_POSITION = "/switcher/set_position"
 ENDPOINT_GET_BREEZE_STATE = "/switcher/get_breeze_state"
 ENDPOINT_GET_SHUTTER_STATE = "/switcher/get_shutter_state"
 ENDPOINT_POST_STOP_SHUTTER = "/switcher/set_stop_shutter"
+ENDPOINT_CONTROL_BREEZE_DEVICE = "/switcher/control_breeze_device"
 
 parser = ArgumentParser(
     description="Start an aiohttp web service integrating with Switcher devices."
@@ -79,7 +94,6 @@ parser.add_argument(
 )
 
 routes = web.RouteTableDef()
-
 
 def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
     """Use for converting enum to primitives and remove not relevant keys ."""
@@ -236,6 +250,34 @@ async def set_position(request: web.Request) -> web.Response:
             _serialize_object(await swapi.stop())
         )
 
+
+@routes.patch(ENDPOINT_CONTROL_BREEZE_DEVICE)
+async def control_breeze_device(request: web.Request) -> web.Response:
+    """Use for stopping the shutter."""
+    device_states = {"on": DeviceState.ON, "off": DeviceState.OFF}
+    thermostat_modes = {"auto": ThermostatMode.AUTO, "dry": ThermostatMode.DRY, "fan": ThermostatMode.FAN, "cool": ThermostatMode.COOL, "heat": ThermostatMode.HEAT}
+    thermostat_fan_levels = {"low": ThermostatFanLevel.LOW, "medium": ThermostatFanLevel.MEDIUM,"high": ThermostatFanLevel.HIGH, "auto": ThermostatFanLevel.AUTO }
+    thermostat_swings = {"on": ThermostatSwing.ON, "off": ThermostatSwing.OFF}
+    body = await request.json()
+    try:
+        device_state = device_states[body[KEY_DEVICE_STATE]]
+        thermostat_mode = thermostat_modes[body[KEY_THERMOSTAT_MODE]]
+        target_temp = int(body[KEY_TARGET_TEMP])
+        fan_level = thermostat_fan_levels[body[KEY_FAN_LEVL]]
+        thermostat_swing = thermostat_swings[body[KEY_THERMOSTAT_SWING]]
+        device_current_state = device_states[body[KEY_CURRENT_DEVICE_STATE]]
+    except Exception as exc:
+        raise ValueError("failed to get commands from body as json, you might sent illegal value") from exc
+    # TODO: need to get the remote id somehow
+    remote_manager = BreezeRemoteManager()
+    remote = BreezeRemote(remote_manager.get_remote())
+    command = remote.get_command(
+        device_state, thermostat_mode, target_temp, fan_level, thermostat_swing, device_current_state
+    )
+    async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
+        return web.json_response(
+            _serialize_object(await swapi.control_breeze_device(command))
+        )
 
 @web.middleware
 async def error_middleware(request: web.Request, handler: Callable) -> web.Response:
