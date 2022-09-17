@@ -1,4 +1,5 @@
 ---
+info:
 openapi: 3.0.3
 
 paths:
@@ -397,3 +398,166 @@ paths:
                 "Example for error when deserializing the `start` key":
                   value:
                     error: "'start'"
+
+  /switcher/set_position:
+    post:
+      description: Use for setting the shutter position of the Runner and Runner Mini devices.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+            example:
+              position: "50"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "failed to get position from body as json":
+                  value:
+                    error: "'position'"
+
+  /switcher/get_breeze_state:
+    get:
+      description: Get state of the Breeze device.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON dictionary of breeze state
+          content:
+            application/json:
+              examples:
+                state: "OFF"
+                mode: "COOL"
+                fan_level: "AUTO"
+                temperature: 9.5
+                target_temperature: 0,
+                swing: "ON"
+                remote_id: ""
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/get_shutter_state:
+    get:
+      description: Get state of the Shutter device.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON dictionary of breeze state
+          content:
+            application/json:
+              examples:
+                direction: "SHUTTER_STOP"
+                position: 95
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/set_stop_shutter:
+      post:
+      description: Stop shutter
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to turn off the device":
+                  value:
+                    error: "an error of some type was raised"

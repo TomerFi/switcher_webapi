@@ -200,7 +200,8 @@ async def create_schedule(request: web.Request) -> web.Response:
 async def set_position(request: web.Request) -> web.Response:
     """Use for setting the shutter position of the Runner and Runner Mini devices."""
     try:
-        position = int(request.query[KEY_POSITION])
+        body = await request.json()
+        position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
     async with SwitcherApi(request.query[KEY_IP], request.query[KEY_ID], SWITCHER_TCP_PORT_TYPE2) as swapi:
