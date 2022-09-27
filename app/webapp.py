@@ -31,12 +31,7 @@ from aiohttp.log import (
 )
 from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
-from aioswitcher.api import (
-    Command, 
-    SwitcherApi,
-    SwitcherType1Api,
-    SwitcherType2Api
-)
+from aioswitcher.api import Command, SwitcherApi, SwitcherType1Api, SwitcherType2Api
 from aioswitcher.schedule import Days
 from aioswitcher.device import (
     DeviceState,
@@ -44,9 +39,8 @@ from aioswitcher.device import (
     ThermostatMode,
     ThermostatSwing,
 )
-from aioswitcher.api.remotes import (
-    SwitcherBreezeRemoteManager
-)
+from aioswitcher.api.remotes import SwitcherBreezeRemoteManager
+
 KEY_ID = "id"
 KEY_IP = "ip"
 KEY_NAME = "name"
@@ -225,18 +219,14 @@ async def set_position(request: web.Request) -> web.Response:
         position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
-    async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID]
-    ) as swapi:
+    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         return web.json_response(_serialize_object(await swapi.set_position(position)))
 
 
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
 async def get_breeze_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID]
-    ) as swapi:
+    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         response = await swapi.get_breeze_state()
         return web.json_response(_serialize_object(response))
 
@@ -244,9 +234,7 @@ async def get_breeze_state(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_shutter_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID]
-    ) as swapi:
+    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         response = await swapi.get_shutter_state()
         return web.json_response(_serialize_object(response))
 
@@ -254,9 +242,7 @@ async def get_shutter_state(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
 async def stop_shutter(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
-    async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID]
-    ) as swapi:
+    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         return web.json_response(_serialize_object(await swapi.stop()))
 
 
@@ -291,20 +277,20 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         raise ValueError(
             "failed to get commands from body as json, you might sent illegal value"
         ) from exc
-    async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID]
-    ) as swapi:
+    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
         await swapi.get_breeze_state()
         remote = remote_manager.get_remote(remote_id)
         return web.json_response(
-            _serialize_object(await swapi.control_breeze_device(
-                remote,
-                device_state,
-                thermostat_mode,
-                target_temp,
-                fan_level,
-                thermostat_swing,
-            ))
+            _serialize_object(
+                await swapi.control_breeze_device(
+                    remote,
+                    device_state,
+                    thermostat_mode,
+                    target_temp,
+                    fan_level,
+                    thermostat_swing,
+                )
+            )
         )
 
 

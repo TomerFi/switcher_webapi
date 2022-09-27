@@ -56,7 +56,10 @@ get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_device_qpara
 # /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4
 get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_device_qparams}"
 # /switcher/control_breeze_device?id=ab1c2d&ip=1.2.3.4
-set_control_breeze_device_uri = f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_device_qparams}"
+set_control_breeze_device_uri = (
+    f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_device_qparams}"
+)
+
 
 @pytest_asyncio.fixture
 async def api_client(aiohttp_client):
@@ -166,7 +169,9 @@ async def test_successful_turn_on_post_request(
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 
 
-@patch("aioswitcher.api.SwitcherType1Api.control_device", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.control_device", side_effect=Exception("blabla")
+)
 async def test_erroneous_turn_on_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -205,7 +210,9 @@ async def test_successful_turn_off_post_request(
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 
 
-@patch("aioswitcher.api.SwitcherType1Api.control_device", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.control_device", side_effect=Exception("blabla")
+)
 async def test_erroneous_turn_off_post_request(
     api_control_device, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -246,7 +253,9 @@ async def test_successful_set_name_patch_request(
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 
 
-@patch("aioswitcher.api.SwitcherType1Api.set_device_name", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.set_device_name", side_effect=Exception("blabla")
+)
 async def test_erroneous_set_name_patch_request(
     api_set_device_name, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -335,7 +344,10 @@ async def test_set_auto_shutdown_with_faulty_no_hours_patch_request(
     )
 
 
-@patch("aioswitcher.api.SwitcherType1Api.set_auto_shutdown", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.set_auto_shutdown",
+    side_effect=Exception("blabla"),
+)
 async def test_erroneous_set_auto_shutdown_patch_request(
     api_set_auto_shutdown, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -378,7 +390,9 @@ async def test_successful_get_schedules_get_request(
     assert_that(await response.json()).contains(fake_serialized_data)
 
 
-@patch("aioswitcher.api.SwitcherType1Api.get_schedules", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.get_schedules", side_effect=Exception("blabla")
+)
 async def test_erroneous_get_schedules_get_request(
     api_get_schedules, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -437,7 +451,9 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     )
 
 
-@patch("aioswitcher.api.SwitcherType1Api.delete_schedule", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.delete_schedule", side_effect=Exception("blabla")
+)
 async def test_errorneous_delete_schedule_delete_request(
     api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -556,7 +572,9 @@ async def test_create_schedule_with_faulty_missing_key_post_request(
     assert_that(await response.json()).contains_entry({"error": expected_error_msg})
 
 
-@patch("aioswitcher.api.SwitcherType1Api.create_schedule", side_effect=Exception("blabla"))
+@patch(
+    "aioswitcher.api.SwitcherType1Api.create_schedule", side_effect=Exception("blabla")
+)
 async def test_errorneous_create_schedule(
     api_create_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
@@ -575,9 +593,7 @@ async def test_errorneous_create_schedule(
 
 @mark.parametrize(
     "json_body,expected_values",
-    [
-        ({webapp.KEY_POSITION: "25"}, (25,))
-    ],
+    [({webapp.KEY_POSITION: "25"}, (25,))],
 )
 @patch("aioswitcher.api.SwitcherType2Api.set_position")
 async def test_set_position_post_request(
@@ -587,7 +603,7 @@ async def test_set_position_post_request(
     api_disconnect,
     api_client,
     json_body,
-    expected_values
+    expected_values,
 ):
     # stub set_position to return mock response
     set_position.return_value = response_mock
@@ -595,9 +611,7 @@ async def test_set_position_post_request(
     response = await api_client.post(set_position_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
-    set_position.assert_called_once_with(
-        expected_values[0]
-    )
+    set_position.assert_called_once_with(expected_values[0])
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
@@ -659,11 +673,7 @@ async def test_successful_get_shutter_state_get_request(
 
 @patch("aioswitcher.api.SwitcherType2Api.stop")
 async def test_stop_shutter_post_request(
-    stop,
-    response_serializer,
-    api_connect,
-    api_disconnect,
-    api_client
+    stop, response_serializer, api_connect, api_disconnect, api_client
 ):
     # stub set_position to return mock response
     stop.return_value = response_mock
@@ -692,7 +702,8 @@ async def test_control_breeze_device_patch_request(
     control_breeze_device.return_value = response_mock
     # send patch request for control_breeze_device endpoint
     response = await api_client.patch(
-        set_control_breeze_device_uri, json={
+        set_control_breeze_device_uri,
+        json={
             webapp.KEY_DEVICE_STATE: "on",
             webapp.KEY_THERMOSTAT_MODE: "auto",
             webapp.KEY_TARGET_TEMP: 25,
@@ -700,13 +711,11 @@ async def test_control_breeze_device_patch_request(
             webapp.KEY_THERMOSTAT_SWING: "off",
             webapp.KEY_CURRENT_DEVICE_STATE: "off",
             webapp.KEY_REMOTE_ID: "DLK65863",
-        }
+        },
     )
     # verify mocks calling
     api_connect.assert_called_once()
-    control_breeze_device.assert_called_once_with(
-
-    )
+    control_breeze_device.assert_called_once_with()
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert the expected response
