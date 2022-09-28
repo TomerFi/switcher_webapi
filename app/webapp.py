@@ -31,7 +31,7 @@ from aiohttp.log import (
 )
 from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
-from aioswitcher.api import Command, SwitcherApi, SwitcherType1Api, SwitcherType2Api
+from aioswitcher.api import Command, SwitcherType1Api, SwitcherType2Api
 from aioswitcher.schedule import Days
 from aioswitcher.device import (
     DeviceState,
