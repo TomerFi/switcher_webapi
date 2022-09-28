@@ -32,14 +32,14 @@ from aiohttp.log import (
 from aiohttp.web_request import BaseRequest
 from aiohttp.web_response import StreamResponse
 from aioswitcher.api import Command, SwitcherType1Api, SwitcherType2Api
-from aioswitcher.schedule import Days
+from aioswitcher.api.remotes import SwitcherBreezeRemoteManager
 from aioswitcher.device import (
     DeviceState,
     ThermostatFanLevel,
     ThermostatMode,
     ThermostatSwing,
 )
-from aioswitcher.api.remotes import SwitcherBreezeRemoteManager
+from aioswitcher.schedule import Days
 
 KEY_ID = "id"
 KEY_IP = "ip"
@@ -227,16 +227,14 @@ async def set_position(request: web.Request) -> web.Response:
 async def get_breeze_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
     async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
-        response = await swapi.get_breeze_state()
-        return web.json_response(_serialize_object(response))
+        return web.json_response(_serialize_object(await swapi.get_breeze_state()))
 
 
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_shutter_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
     async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
-        response = await swapi.get_shutter_state()
-        return web.json_response(_serialize_object(response))
+        return web.json_response(_serialize_object(await swapi.get_shutter_state()))
 
 
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
@@ -248,30 +246,19 @@ async def stop_shutter(request: web.Request) -> web.Response:
 
 @routes.patch(ENDPOINT_CONTROL_BREEZE_DEVICE)
 async def control_breeze_device(request: web.Request) -> web.Response:
-    remote_manager = SwitcherBreezeRemoteManager()
     """Use for update breez device state."""
-    device_states = {"on": DeviceState.ON, "off": DeviceState.OFF}
-    thermostat_modes = {
-        "auto": ThermostatMode.AUTO,
-        "dry": ThermostatMode.DRY,
-        "fan": ThermostatMode.FAN,
-        "cool": ThermostatMode.COOL,
-        "heat": ThermostatMode.HEAT,
-    }
-    thermostat_fan_levels = {
-        "low": ThermostatFanLevel.LOW,
-        "medium": ThermostatFanLevel.MEDIUM,
-        "high": ThermostatFanLevel.HIGH,
-        "auto": ThermostatFanLevel.AUTO,
-    }
-    thermostat_swings = {"on": ThermostatSwing.ON, "off": ThermostatSwing.OFF}
+    remote_manager = SwitcherBreezeRemoteManager()
+    device_states = {s.display: s for s in DeviceState}
+    thermostat_modes = {m.display: m for m in ThermostatMode}
+    thermostat_fan_levels = {fl.display: fl for fl in ThermostatFanLevel}
+    thermostat_swings = {sw.display: sw for sw in ThermostatSwing}
     body = await request.json()
     try:
-        device_state = device_states[body[KEY_DEVICE_STATE]]
-        thermostat_mode = thermostat_modes[body[KEY_THERMOSTAT_MODE]]
-        target_temp = int(body[KEY_TARGET_TEMP])
-        fan_level = thermostat_fan_levels[body[KEY_FAN_LEVL]]
-        thermostat_swing = thermostat_swings[body[KEY_THERMOSTAT_SWING]]
+        device_state = device_states.get([body[KEY_DEVICE_STATE]])
+        thermostat_mode = thermostat_modes.get([body[KEY_THERMOSTAT_MODE]])
+        target_temp = int(body[KEY_TARGET_TEMP]) if body[KEY_TARGET_TEMP] else None
+        fan_level = thermostat_fan_levels.get([body[KEY_FAN_LEVL]])
+        thermostat_swing = thermostat_swings.get([body[KEY_THERMOSTAT_SWING]])
         remote_id = body[KEY_REMOTE_ID]
     except Exception as exc:
         raise ValueError(
