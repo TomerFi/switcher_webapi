@@ -529,7 +529,7 @@ paths:
                     error: "an error of some type was raised"
 
   /switcher/set_stop_shutter:
-      post:
+    post:
       description: Stop shutter
       tags:
         - "API Endpoints"
