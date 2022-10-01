@@ -54,7 +54,7 @@ KEY_POSITION = "position"
 KEY_DEVICE_STATE = "device_state"
 KEY_THERMOSTAT_MODE = "thermostat_mode"
 KEY_TARGET_TEMP = "target_temp"
-KEY_FAN_LEVL = "fan_level"
+KEY_FAN_LEVEL = "fan_level"
 KEY_THERMOSTAT_SWING = "thermostat_swing"
 KEY_CURRENT_DEVICE_STATE = "current_device_state"
 KEY_REMOTE_ID = "remote_id"
@@ -257,7 +257,7 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         device_state = device_states.get(body.get(KEY_DEVICE_STATE))
         thermostat_mode = thermostat_modes.get(body.get(KEY_THERMOSTAT_MODE))
         target_temp = int(body[KEY_TARGET_TEMP]) if body.get(KEY_TARGET_TEMP) else None
-        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVL))
+        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVEL))
         thermostat_swing = thermostat_swings.get(body.get(KEY_THERMOSTAT_SWING))
         remote_id = body[KEY_REMOTE_ID]
     except Exception as exc:

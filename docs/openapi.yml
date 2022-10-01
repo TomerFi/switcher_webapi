@@ -516,7 +516,7 @@ paths:
           description: A JSON dictionary of breeze state
           content:
             application/json:
-              examples:
+              example:
                 direction: "SHUTTER_STOP"
                 position: 95
         "500":

@@ -707,7 +707,7 @@ async def test_control_breeze_device_patch_request(
             webapp.KEY_DEVICE_STATE: "on",
             webapp.KEY_THERMOSTAT_MODE: "auto",
             webapp.KEY_TARGET_TEMP: 25,
-            webapp.KEY_FAN_LEVL: "low",
+            webapp.KEY_FAN_LEVEL: "low",
             webapp.KEY_THERMOSTAT_SWING: "off",
             webapp.KEY_CURRENT_DEVICE_STATE: "off",
             webapp.KEY_REMOTE_ID: "AUX07001",
