@@ -75,14 +75,19 @@
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table align="center">
-  <tr>
-    <td align="center"><a href="https://github.com/dolby360"><img src="https://avatars.githubusercontent.com/u/22151399?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dolev Ben Aharon</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=dolby360" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/OrBin"><img src="https://avatars.githubusercontent.com/u/6897234?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Or Bin</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=OrBin" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/saar-win"><img src="https://avatars.githubusercontent.com/u/61886120?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saar wintrov</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=saar-win" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://github.com/thecode"><img src="https://avatars.githubusercontent.com/u/1858925?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shay Levy</b></sub></a><br /><a href="#design-thecode" title="Design">🎨</a> <a href="#userTesting-thecode" title="User Testing">📓</a></td>
-    <td align="center"><a href="https://github.com/dmatik"><img src="https://avatars.githubusercontent.com/u/5577386?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dmatik</b></sub></a><br /><a href="#blog-dmatik" title="Blogposts">📝</a> <a href="#ideas-dmatik" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-dmatik" title="User Testing">📓</a></td>
-  </tr>
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/dolby360"><img src="https://avatars.githubusercontent.com/u/22151399?v=4?s=100" width="100px;" alt="Dolev Ben Aharon"/><br /><sub><b>Dolev Ben Aharon</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=dolby360" title="Documentation">📖</a> <a href="https://github.com/TomerFi/switcher_webapi/commits?author=dolby360" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/OrBin"><img src="https://avatars.githubusercontent.com/u/6897234?v=4?s=100" width="100px;" alt="Or Bin"/><br /><sub><b>Or Bin</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=OrBin" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/saar-win"><img src="https://avatars.githubusercontent.com/u/61886120?v=4?s=100" width="100px;" alt="Saar wintrov"/><br /><sub><b>Saar wintrov</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=saar-win" title="Tests">⚠️</a></td>
+      <td align="center"><a href="https://github.com/thecode"><img src="https://avatars.githubusercontent.com/u/1858925?v=4?s=100" width="100px;" alt="Shay Levy"/><br /><sub><b>Shay Levy</b></sub></a><br /><a href="#design-thecode" title="Design">🎨</a> <a href="#userTesting-thecode" title="User Testing">📓</a></td>
+      <td align="center"><a href="https://github.com/dmatik"><img src="https://avatars.githubusercontent.com/u/5577386?v=4?s=100" width="100px;" alt="dmatik"/><br /><sub><b>dmatik</b></sub></a><br /><a href="#blog-dmatik" title="Blogposts">📝</a> <a href="#ideas-dmatik" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-dmatik" title="User Testing">📓</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    
+  </tfoot>
 </table>
 
 <!-- markdownlint-restore -->
