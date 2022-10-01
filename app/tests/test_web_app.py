@@ -710,12 +710,64 @@ async def test_control_breeze_device_patch_request(
             webapp.KEY_FAN_LEVL: "low",
             webapp.KEY_THERMOSTAT_SWING: "off",
             webapp.KEY_CURRENT_DEVICE_STATE: "off",
-            webapp.KEY_REMOTE_ID: "DLK65863",
+            webapp.KEY_REMOTE_ID: "AUX07001",
         },
     )
     # verify mocks calling
     api_connect.assert_called_once()
-    control_breeze_device.assert_called_once_with()
+    control_breeze_device.assert_called_once()
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherType2Api.control_breeze_device")
+async def test_control_breeze_device_patch_request_only_device_state(
+    control_breeze_device,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # stub api_set_device_name to return mock response
+    control_breeze_device.return_value = response_mock
+    # send patch request for control_breeze_device endpoint
+    response = await api_client.patch(
+        set_control_breeze_device_uri,
+        json={webapp.KEY_DEVICE_STATE: "on", webapp.KEY_REMOTE_ID: "AUX07001"},
+    )
+    # verify mocks calling
+    api_connect.assert_called_once()
+    control_breeze_device.assert_called_once()
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@patch("aioswitcher.api.SwitcherType2Api.control_breeze_device")
+async def test_control_breeze_device_patch_request_only_target_temp(
+    control_breeze_device,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # stub api_set_device_name to return mock response
+    control_breeze_device.return_value = response_mock
+    # send patch request for control_breeze_device endpoint
+    response = await api_client.patch(
+        set_control_breeze_device_uri,
+        json={webapp.KEY_TARGET_TEMP: 25, webapp.KEY_REMOTE_ID: "AUX07001"},
+    )
+    # verify mocks calling
+    api_connect.assert_called_once()
+    control_breeze_device.assert_called_once()
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert the expected response
