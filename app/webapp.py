@@ -252,20 +252,19 @@ async def control_breeze_device(request: web.Request) -> web.Response:
     thermostat_modes = {m.display: m for m in ThermostatMode}
     thermostat_fan_levels = {fl.display: fl for fl in ThermostatFanLevel}
     thermostat_swings = {sw.display: sw for sw in ThermostatSwing}
-    body = await request.json()
+    body: dict = await request.json()
     try:
-        device_state = device_states.get(body[KEY_DEVICE_STATE])
-        thermostat_mode = thermostat_modes.get(body[KEY_THERMOSTAT_MODE])
-        target_temp = int(body[KEY_TARGET_TEMP]) if body[KEY_TARGET_TEMP] else None
-        fan_level = thermostat_fan_levels.get(body[KEY_FAN_LEVL])
-        thermostat_swing = thermostat_swings.get(body[KEY_THERMOSTAT_SWING])
+        device_state = device_states.get(body.get(KEY_DEVICE_STATE))
+        thermostat_mode = thermostat_modes.get(body.get(KEY_THERMOSTAT_MODE))
+        target_temp = int(body[KEY_TARGET_TEMP]) if body.get(KEY_TARGET_TEMP) else None
+        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVL))
+        thermostat_swing = thermostat_swings.get(body.get(KEY_THERMOSTAT_SWING))
         remote_id = body[KEY_REMOTE_ID]
     except Exception as exc:
         raise ValueError(
             "failed to get commands from body as json, you might sent illegal value"
         ) from exc
     async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
-        await swapi.get_breeze_state()
         remote = remote_manager.get_remote(remote_id)
         return web.json_response(
             _serialize_object(
