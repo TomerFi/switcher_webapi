@@ -397,3 +397,238 @@ paths:
                 "Example for error when deserializing the `start` key":
                   value:
                     error: "'start'"
+
+  /switcher/set_position:
+    post:
+      description: Use for setting the shutter position of the Runner and Runner Mini devices.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: string
+                - type: integer
+            example:
+              position: 50
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when deserializing the `position` key":
+                  value:
+                    error: "'failed to get position from body as json'"
+
+  /switcher/get_breeze_state:
+    get:
+      description: Get state of the Breeze device.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON dictionary of breeze state
+          content:
+            application/json:
+              example:
+                state: "OFF"
+                mode: "COOL"
+                fan_level: "AUTO"
+                temperature: 9.5
+                target_temperature: 0,
+                swing: "ON"
+                remote_id: "DLK65863"
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/get_shutter_state:
+    get:
+      description: Get state of the Shutter device.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: A JSON dictionary of breeze state
+          content:
+            application/json:
+              example:
+                direction: "SHUTTER_STOP"
+                position: 95
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to get the current device state":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/set_stop_shutter:
+    post:
+      description: Stop shutter
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to turn off the device":
+                  value:
+                    error: "an error of some type was raised"
+
+  /switcher/control_breeze_device:
+    post:
+      description: Use for update breez device state.
+      tags:
+        - "API Endpoints"
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: the id of the selected device
+          schema:
+            type: string
+          example:
+            "ab1c2d"
+        - in: query
+          name: ip
+          required: true
+          allowReserved: true
+          description: the ip address of the selected device
+          schema:
+            type: string
+          example:
+            "10.0.0.1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              "Set all fields":
+                value:
+                  device_state: "on"
+                  thermostat_mode: "auto"
+                  target_temp: 25
+                  fan_level: "low"
+                  thermostat_swing: "off"
+                  remote_id: "DLK65863"
+              "Change only device state":
+                value:
+                  device_state: "on"
+                  remote_id: "DLK65863"
+              "Change only thermostat mode":
+                value:
+                  thermostat_mode: "auto"
+                  remote_id: "DLK65863"
+              "Change only target temp":
+                value:
+                  target_temp: 25
+                  remote_id: "DLK65863"
+              "Change only fan level":
+                value:
+                  fan_level: "low"
+                  remote_id: "DLK65863"
+              "Change only thermostat swing":
+                value:
+                  thermostat_swing: "off"
+                  remote_id: "DLK65863"
+      responses:
+        "200":
+          description: An empty JSON object
+        "500":
+          description: A JSON object hinting for the error
+          content:
+            application/json:
+              examples:
+                "Example for error when failed to parse json body":
+                  value:
+                    error: "failed to get commands from body as json, you might sent illegal value"
