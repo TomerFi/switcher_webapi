@@ -34,3 +34,11 @@ build:
 	--platform $(PLATFORMS) \
 	--tag $(FULL_IMAGE_NAME) \
 	--tag $(IMAGE_NAME):latest .
+
+dockerfile-lint:
+	npx dockerfilelint Dockerfile
+
+verify-license-headers: # requires deno (https://deno.land/#installation)
+	deno run --unstable --allow-read https://deno.land/x/license_checker@v3.1.3/main.ts
+
+.PHONY: build dockerfile-lint verify-license-headers
