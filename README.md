@@ -72,6 +72,7 @@
 <p align="center">
 <strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a>
 <br/>
+<div align="center">
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -86,7 +87,7 @@
     </tr>
   </tbody>
   <tfoot>
-    
+
   </tfoot>
 </table>
 
@@ -94,4 +95,5 @@
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+</div>
 </p>
