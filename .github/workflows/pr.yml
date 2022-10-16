@@ -36,9 +36,6 @@ jobs:
       - name: Install deno runtime
         uses: denoland/setup-deno@v1.1.0
 
-      - name: Check license headers on source files
-        run: deno run --unstable --allow-read https://deno.land/x/license_checker@v3.1.3/main.ts
-
       - name: Lint project with python linters
         run: |
           black --check app/

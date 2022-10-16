@@ -119,16 +119,10 @@ mkdocs serve
 
 ## Extra linters
 
-For CI purposes, we use two more linters outside the scope of *Python*.
+For CI purposes, we use an extra linter outside the scope of *Python*.
 
-If use use [npm](https://www.npmjs.com/), you can lint the *Dockerfile*:
+We use use [npm](https://www.npmjs.com/), for linting lint the *Dockerfile*:
 
 ```shell
 make dockerfile-lint
-```
-
-If you use [deno](https://deno.land/#installation), you can verify license headers on sources:
-
-```shell
-make verify-license-headers
 ```
