@@ -61,7 +61,7 @@
         </a>
       </td>
       <td align="left">
-        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CONTRIBUTING.md" target="_blank">
+        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/CONTRIBUTING.md" target="_blank">
           Contributing Guidelines
         </a>
       </td>
