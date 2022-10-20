@@ -47,8 +47,6 @@ pip install tox
 - `tox -e docs` will test and build the documentation site
 - `make` will use `docker buildx` to build the multi-platform image
 
-> Note that if you haven't done so before, you need to create your own local custom build profile.
-
 ## Code development
 
 Activate the development virtual environment (after running `tox`):

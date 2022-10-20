@@ -12,7 +12,7 @@ ifndef CODE_VERSION
 $(error You need to create a VERSION file to build the image.)
 endif
 
-build:
+build: enable-multiarch
 	docker buildx build \
 	--build-arg VCS_REF=$(GIT_COMMIT) \
 	--build-arg BUILD_DATE=$(CURRENT_DATE) \
@@ -24,4 +24,7 @@ build:
 dockerfile-lint:
 	npx dockerfilelint Dockerfile
 
-.PHONY: build dockerfile-lint
+enable-multiarch:
+	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+.PHONY: build dockerfile-lint enable-multiarch
