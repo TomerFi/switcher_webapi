@@ -18,7 +18,7 @@ docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webap
 
 > Note: *ghcr.io* requires *GitHub* login.
 
-## Project walk through
+## Project walkthrough
 
 A [Python](https://www.python.org/) WebApp running inside a container,<br/>
 the documentation site is built with [MkDocs](https://www.mkdocs.org/).
