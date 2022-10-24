@@ -68,7 +68,7 @@ jobs:
 
       - name: Determine next SemVer
         id: bumper
-        uses: tomerfi/version-bumper-action@1.2.0
+        uses: tomerfi/version-bumper-action@1.2.1
 
       - name: Set new project version
         # yamllint disable rule:line-length
