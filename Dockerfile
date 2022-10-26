@@ -27,7 +27,7 @@ ARG VCS_REF
 ARG VERSION
 
 LABEL org.opencontainers.image.created=$BUILD_DATE \
-org.opencontainers.image.authors="Tomer Figenblat <mailto:tomer.figenblat@gmail.com>" \
+org.opencontainers.image.authors="Tomer Figenblat <mailto:tomer@tomfi.info>" \
 org.opencontainers.image.url="https://hub.docker.com/r/tomerfi/switcher_webapi" \
 org.opencontainers.image.documentation="https://switcher-webapi.tomfi.info" \
 org.opencontainers.image.source="https://github.com/TomerFi/switcher_webapi" \
