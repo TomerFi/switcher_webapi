@@ -6,6 +6,7 @@
   <title>Swagger UI</title>
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/swagger-ui.css" />
   <link rel="stylesheet" type="text/css" id="slate-css" media="none" href="assets/stylesheets/swagger-ui-dark.css" />
+  
 </head>
 
 <body style="overflow:hidden;background: ;">
@@ -15,24 +16,26 @@
   <script>
     window.onload = function () {
       window.ui = SwaggerUIBundle({
-        dom_id: '#swagger-ui',
+        dom_id: "#swagger-ui",
         onComplete: onComplete,
         presets: [
           SwaggerUIBundle.presets.apis,
           SwaggerUIStandalonePreset
         ],
         
-        url: 'openapi.yml',
+        url: "openapi.yml",
         
         
         "oauth2RedirectUrl": "#",
         
+        "validatorUrl": "none",
         
     "docExpansion": "list",
     "filter": false,
     "tryItOutEnabled": false,
     "supportedSubmitMethods": [],
     "validatorUrl": "none",
+    "extra_css": [],
     "syntaxHighlight.theme": "agate"
 
       })
@@ -54,7 +57,7 @@
     }
 
     const resize_ob = new ResizeObserver(function(entries) {
-      parent.update_swagger_ui_iframe_height("93c4b406");
+      parent.update_swagger_ui_iframe_height("d0e7addc");
     });
 
     // start observing for resizing
