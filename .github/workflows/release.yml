@@ -7,10 +7,6 @@ on:
       title:
         description: "Release title"
         required: false
-      tweet:
-        description: "Tweet new release?"
-        required: false
-        default: "no"
 
 jobs:
   release:
@@ -145,17 +141,3 @@ jobs:
           git push
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
-
-      - name: Tweet new release
-        if: ${{ github.event.inputs.tweet == 'yes' }}
-        uses: lazy-actions/tweet-action@1.0.1
-        with:
-          oauth_consumer_key: ${{ secrets.TWITTER_API_KEY }}
-          oauth_consumer_secret: ${{ secrets.TWITTER_API_SECRET_KEY }}
-          oauth_token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          oauth_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          message: |
-            🚀🎉 Switcher_webapi ${{ steps.bumper.outputs.new_version }} has been released! 🎉🚀
-            ${{ steps.gh_release.outputs.html_url }}
-
-            #switcher_webapi #smarthome
