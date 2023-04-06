@@ -1,4 +1,4 @@
-FROM python:3.11.2-slim
+FROM python:3.12.0a7-slim
 
 ARG TIMEZONE="Asia/Jerusalem"
 
