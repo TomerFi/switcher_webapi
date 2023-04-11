@@ -8,5 +8,5 @@ pytest==7.3.0
 pytest-aiohttp==1.0.4
 pytest-asyncio==0.21.0
 pytest-cov==4.0.0
-pytest-sugar==0.9.6
+pytest-sugar==0.9.7
 yamllint==1.30.0
