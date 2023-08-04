@@ -84,7 +84,7 @@ jobs:
 
       - name: Get current date
         id: current_date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Build images and push to DockerHub
         uses: docker/build-push-action@v4.1.1
