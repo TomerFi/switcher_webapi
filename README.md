@@ -70,7 +70,8 @@
 </p>
 
 <p align="center">
-<strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a>
+<strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a><br/>
+<img alt="all-contributors" src="https://img.shields.io/github/all-contributors/tomerfi/switcher_webapi?color=ee8449&style=flat-square">
 <br/>
 <div align="center">
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
