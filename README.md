@@ -1,3 +1,15 @@
+# Help Wanted
+
+<p align="left">
+<strong>
+Switcher WebAPI project is looking for maintainers and contributors!<br/>
+For various reasons, I can only keep maintaining this project as far as dependency bumps and publishing.<br/>
+As for new features and the occasional bug support, these will require other maintainers/contributors.<br/>
+<br/>
+If that's you - please feel free to ping me and I will do all I can to make the onboarding process easy.
+</strong>
+</p>
+
 <!-- markdownlint-disable MD033 -->
 <h1 align="center">
   Switcher Web API
