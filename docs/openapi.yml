@@ -9,6 +9,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -64,6 +82,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -109,6 +145,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -143,6 +197,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
@@ -191,6 +263,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
@@ -242,6 +332,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
@@ -297,6 +405,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -342,6 +468,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
@@ -405,6 +549,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -449,6 +611,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
@@ -495,6 +675,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -535,6 +733,24 @@ paths:
         - "API Endpoints"
       parameters:
         - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
+        - in: query
           name: id
           required: true
           description: the id of the selected device
@@ -569,6 +785,24 @@ paths:
       tags:
         - "API Endpoints"
       parameters:
+        - in: query
+          name: type
+          required: true
+          description: the type of the selected device
+          schema:
+            type: string
+            enum: [
+              Switcher Mini,
+              Switcher Power Plug,
+              Switcher Touch,
+              Switcher V2 (esp),
+              Switcher V2 (qualcomm),
+              Switcher V4, Switcher Breeze,
+              Switcher Runner,
+              Switcher Runner Mini
+            ]
+          example:
+            "Switcher Mini"
         - in: query
           name: id
           required: true
