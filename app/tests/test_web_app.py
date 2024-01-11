@@ -14,7 +14,9 @@ from .. import webapp
 
 pytestmark = mark.asyncio
 
-fake_device_qparams = f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
+fake_device_qparams = (
+    f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4&{webapp.KEY_LOGIN_KEY}=18"
+)
 fake_serialized_data = {"fake": "return_dict"}
 
 # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
