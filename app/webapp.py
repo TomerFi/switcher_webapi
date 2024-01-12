@@ -28,6 +28,7 @@ from aioswitcher.device import (
 from aioswitcher.schedule import Days
 
 KEY_ID = "id"
+KEY_LOGIN_KEY = "id"
 KEY_IP = "ip"
 KEY_NAME = "name"
 KEY_HOURS = "hours"
@@ -99,7 +100,13 @@ def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
 @routes.get(ENDPOINT_GET_STATE)
 async def get_state(request: web.Request) -> web.Response:
     """Use to get the current state of the device."""
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.get_state()))
 
 
@@ -111,7 +118,13 @@ async def turn_on(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     else:
         minutes = 0
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.control_device(Command.ON, minutes))
         )
@@ -120,7 +133,13 @@ async def turn_on(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_TURN_OFF)
 async def turn_off(request: web.Request) -> web.Response:
     """Use to turn on the device."""
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.control_device(Command.OFF))
         )
@@ -134,7 +153,13 @@ async def set_name(request: web.Request) -> web.Response:
         name = body[KEY_NAME]
     except Exception as exc:
         raise ValueError(f"failed to get {KEY_NAME} from body as json") from exc
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.set_device_name(name)))
 
 
@@ -147,7 +172,13 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     except Exception as exc:
         raise ValueError("failed to get hours from body as json") from exc
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(
             _serialize_object(
                 await swapi.set_auto_shutdown(
@@ -160,7 +191,13 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SCHEDULES)
 async def get_schedules(request: web.Request) -> web.Response:
     """Use to get the current configured schedules on the device."""
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         response = await swapi.get_schedules()
         return web.json_response([_serialize_object(s) for s in response.schedules])
 
@@ -173,7 +210,13 @@ async def delete_schedule(request: web.Request) -> web.Response:
         schedule_id = body[KEY_SCHEDULE]
     except Exception as exc:
         raise ValueError("failed to get schedule from body as json") from exc
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.delete_schedule(schedule_id))
         )
@@ -189,7 +232,13 @@ async def create_schedule(request: web.Request) -> web.Response:
     selected_days = (
         set([weekdays[d] for d in body[KEY_DAYS]]) if body.get(KEY_DAYS) else set()
     )
-    async with SwitcherType1Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType1Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(
             _serialize_object(
                 await swapi.create_schedule(start_time, stop_time, selected_days)
@@ -205,28 +254,52 @@ async def set_position(request: web.Request) -> web.Response:
         position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
-    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType2Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.set_position(position)))
 
 
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
 async def get_breeze_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType2Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.get_breeze_state()))
 
 
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_shutter_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType2Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.get_shutter_state()))
 
 
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
 async def stop_shutter(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
-    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType2Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         return web.json_response(_serialize_object(await swapi.stop()))
 
 
@@ -250,7 +323,13 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         raise ValueError(
             "failed to get commands from body as json, you might sent illegal value"
         ) from exc
-    async with SwitcherType2Api(request.query[KEY_IP], request.query[KEY_ID]) as swapi:
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    async with SwitcherType2Api(
+        request.query[KEY_IP], request.query[KEY_ID], login_key
+    ) as swapi:
         remote = remote_manager.get_remote(remote_id)
         return web.json_response(
             _serialize_object(
