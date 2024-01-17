@@ -1,0 +1,13 @@
+{
+  "name": "Switcher WebAPI Dev",
+  "context": "..",
+  "dockerFile": "../Dockerfile",
+  "postStartCommand": "python app/webapp.py -p 8000 -l DEBUG",
+  "containerEnv": {
+    "DEVCONTAINER": "1"
+  },
+  "appPort": [
+    "8000:8000"
+  ],
+  "privileged": true
+}

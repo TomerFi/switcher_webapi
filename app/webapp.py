@@ -28,7 +28,7 @@ from aioswitcher.device import (
 from aioswitcher.schedule import Days
 
 KEY_ID = "id"
-KEY_LOGIN_KEY = "id"
+KEY_LOGIN_KEY = "key"
 KEY_IP = "ip"
 KEY_NAME = "name"
 KEY_HOURS = "hours"
