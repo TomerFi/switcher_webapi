@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Switcher WebAPI: Attach Local",
+        "type": "python",
+        "request": "attach",
+        "port": 8000,
+        "host": "localhost",
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "."
+          }
+        ]
+      }
+    ]
+}
