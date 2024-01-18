@@ -1,16 +1,3 @@
-# Help Wanted
-
-<p align="left">
-<strong>
-Switcher WebAPI project is looking for maintainers and contributors!<br/>
-For various reasons, I can only keep maintaining this project as far as dependency bumps and publishing.<br/>
-As for new features and the occasional bug support, these will require other maintainers/contributors.<br/>
-<br/>
-If that's you - please feel free to ping me and I will do all I can to make the onboarding process easy.
-</strong>
-</p>
-
-<!-- markdownlint-disable MD033 -->
 <h1 align="center">
   Switcher Web API
   <br/>
@@ -98,7 +85,7 @@ If that's you - please feel free to ping me and I will do all I can to make the 
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/saar-win"><img src="https://avatars.githubusercontent.com/u/61886120?v=4?s=100" width="100px;" alt="Saar wintrov"/><br /><sub><b>Saar wintrov</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=saar-win" title="Tests">⚠️</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/thecode"><img src="https://avatars.githubusercontent.com/u/1858925?v=4?s=100" width="100px;" alt="Shay Levy"/><br /><sub><b>Shay Levy</b></sub></a><br /><a href="#design-thecode" title="Design">🎨</a> <a href="#userTesting-thecode" title="User Testing">📓</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/YogevBokobza"><img src="https://avatars.githubusercontent.com/u/22839127?v=4?s=100" width="100px;" alt="YogevBokobza"/><br /><sub><b>YogevBokobza</b></sub></a><br /><a href="https://github.com/TomerFi/switcher_webapi/commits?author=YogevBokobza" title="Code">💻</a> <a href="https://github.com/TomerFi/switcher_webapi/commits?author=YogevBokobza" title="Documentation">📖</a> <a href="https://github.com/TomerFi/switcher_webapi/commits?author=YogevBokobza" title="Tests">⚠️</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dmatik"><img src="https://avatars.githubusercontent.com/u/5577386?v=4?s=100" width="100px;" alt="dmatik"/><br /><sub><b>dmatik</b></sub></a><br /><a href="#blog-dmatik" title="Blogposts">📝</a> <a href="#ideas-dmatik" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-dmatik" title="User Testing">📓</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dmatik"><img src="https://avatars.githubusercontent.com/u/5577386?v=4?s=100" width="100px;" alt="dmatik"/><br /><sub><b>dmatik</b></sub></a><br /><a href="#blog-dmatik" title="Blogposts">📝</a> <a href="#ideas-dmatik" title="Ideas, Planning, & Feedback">🤔</a> <a href="#userTesting-dmatik" title="User Testing">📓</a> <a href="#maintenance-dmatik" title="Maintenance">🚧</a></td>
     </tr>
   </tbody>
 </table>
