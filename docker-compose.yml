@@ -1,0 +1,12 @@
+services:
+  switcher_webapi:
+      image: tomerfi/switcher_webapi:latest
+      container_name: switcher_webapi
+      hostname: switcher_webapi
+      restart: always
+      network_mode: bridge
+      ports:
+        - 8000:8000
+      environment:
+          TZ: "Asia/Jerusalem"
+          LOG_LEVEL: "DEBUG"
