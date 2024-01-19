@@ -91,7 +91,7 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm/v7
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           tags: |
             tomerfi/switcher_webapi:latest
             tomerfi/switcher_webapi:${{ steps.bumper.outputs.new_version }}
