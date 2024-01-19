@@ -90,7 +90,7 @@ jobs:
         uses: docker/build-push-action@v4.1.1
         with:
           context: .
-          platforms: linux/amd64,linux/arm/v7
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
