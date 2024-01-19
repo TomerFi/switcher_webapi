@@ -6,7 +6,7 @@ CURRENT_DATE = $(strip $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
 CODE_VERSION = $(strip $(shell cat VERSION))
 FULL_IMAGE_NAME = $(strip $(IMAGE_NAME):$(CODE_VERSION))
 
-PLATFORMS = linux/amd64,linux/arm/v7
+PLATFORMS = linux/amd64,linux/arm/v7,linux/arm64/v8
 
 ifndef CODE_VERSION
 $(error You need to create a VERSION file to build the image.)
