@@ -14,39 +14,44 @@ from .. import webapp
 
 pytestmark = mark.asyncio
 
+fake_devicetype_powerplug_qparams = f"{webapp.KEY_TYPE}=Switcher Power Plug"
+fake_devicetype_touch_qparams = f"{webapp.KEY_TYPE}=Switcher Touch"
+fake_devicetype_runner_qparams = f"{webapp.KEY_TYPE}=Switcher Runner"
+fake_devicetype_single_runner_dual_light_qparams = (
+    f"{webapp.KEY_TYPE}=Switcher Runner S11"
+)
+fake_devicetype_breeze_qparams = f"{webapp.KEY_TYPE}=Switcher Breeze"
 fake_device_qparams = (
     f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4&{webapp.KEY_LOGIN_KEY}=18"
 )
 fake_serialized_data = {"fake": "return_dict"}
 
 # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-get_state_uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
+get_state_uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-turn_on_uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}"
+turn_on_uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-turn_off_uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
+turn_off_uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/set_name?id=ab1c2d&ip=1.2.3.4
-set_name_uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}"
+set_name_uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-set_auto_shutdown_uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}"
+set_auto_shutdown_uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-get_schedules_uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
+get_schedules_uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
+delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
+create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4
-set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_device_qparams}"
+set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/get_breeze_state?id=ab1c2d&ip=1.2.3.4
-get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_device_qparams}"
+get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
 # /switcher/get_shutter_state?id=ab1c2d&ip=1.2.3.4
-get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_device_qparams}"
+get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4
-get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_device_qparams}"
+get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/control_breeze_device?id=ab1c2d&ip=1.2.3.4
-set_control_breeze_device_uri = (
-    f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_device_qparams}"
-)
+set_control_breeze_device_uri = f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
 
 
 @pytest_asyncio.fixture
@@ -659,7 +664,7 @@ async def test_successful_get_shutter_state_get_request(
     assert_that(fake_serialized_data).is_subset_of(await response.json())
 
 
-@patch("aioswitcher.api.SwitcherType2Api.stop")
+@patch("aioswitcher.api.SwitcherType2Api.stop_shutter")
 async def test_stop_shutter_post_request(
     stop, response_serializer, api_connect, api_disconnect, api_client
 ):

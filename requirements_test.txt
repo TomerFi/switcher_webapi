@@ -1,3 +1,4 @@
+requests==2.32.3
 assertpy==1.1
 black==24.3.0
 flake8==6.1.0

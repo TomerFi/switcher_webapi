@@ -25,11 +25,15 @@ from aioswitcher.device import (
     ThermostatMode,
     ThermostatSwing,
 )
+from aioswitcher.device.tools import convert_str_to_devicetype
 from aioswitcher.schedule import Days
 
+KEY_TYPE = "type"
 KEY_ID = "id"
 KEY_LOGIN_KEY = "key"
 KEY_IP = "ip"
+KEY_INDEX = "index"
+KEY_TOKEN = "token"
 KEY_NAME = "name"
 KEY_HOURS = "hours"
 KEY_MINUTES = "minutes"
@@ -100,12 +104,13 @@ def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
 @routes.get(ENDPOINT_GET_STATE)
 async def get_state(request: web.Request) -> web.Response:
     """Use to get the current state of the device."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(_serialize_object(await swapi.get_state()))
 
@@ -118,12 +123,13 @@ async def turn_on(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     else:
         minutes = 0
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.control_device(Command.ON, minutes))
@@ -133,12 +139,13 @@ async def turn_on(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_TURN_OFF)
 async def turn_off(request: web.Request) -> web.Response:
     """Use to turn on the device."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.control_device(Command.OFF))
@@ -153,12 +160,13 @@ async def set_name(request: web.Request) -> web.Response:
         name = body[KEY_NAME]
     except Exception as exc:
         raise ValueError(f"failed to get {KEY_NAME} from body as json") from exc
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(_serialize_object(await swapi.set_device_name(name)))
 
@@ -172,12 +180,13 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     except Exception as exc:
         raise ValueError("failed to get hours from body as json") from exc
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(
             _serialize_object(
@@ -191,12 +200,13 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SCHEDULES)
 async def get_schedules(request: web.Request) -> web.Response:
     """Use to get the current configured schedules on the device."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         response = await swapi.get_schedules()
         return web.json_response([_serialize_object(s) for s in response.schedules])
@@ -210,12 +220,13 @@ async def delete_schedule(request: web.Request) -> web.Response:
         schedule_id = body[KEY_SCHEDULE]
     except Exception as exc:
         raise ValueError("failed to get schedule from body as json") from exc
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.delete_schedule(schedule_id))
@@ -232,12 +243,13 @@ async def create_schedule(request: web.Request) -> web.Response:
     selected_days = (
         set([weekdays[d] for d in body[KEY_DAYS]]) if body.get(KEY_DAYS) else set()
     )
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
     async with SwitcherType1Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
         return web.json_response(
             _serialize_object(
@@ -254,25 +266,39 @@ async def set_position(request: web.Request) -> web.Response:
         position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
+    if KEY_INDEX in request.query:
+        index = int(request.query[KEY_INDEX])
+    else:
+        index = 0
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
     async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
-        return web.json_response(_serialize_object(await swapi.set_position(position)))
+        return web.json_response(_serialize_object(await swapi.set_position(position, index)))
 
 
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
 async def get_breeze_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
     async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
         return web.json_response(_serialize_object(await swapi.get_breeze_state()))
 
@@ -280,27 +306,45 @@ async def get_breeze_state(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_shutter_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
+    if KEY_INDEX in request.query:
+        index = int(request.query[KEY_INDEX])
+    else:
+        index = 0
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
     async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
-        return web.json_response(_serialize_object(await swapi.get_shutter_state()))
+        return web.json_response(_serialize_object(await swapi.get_shutter_state(index)))
 
 
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
 async def stop_shutter(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
+    if KEY_INDEX in request.query:
+        index = int(request.query[KEY_INDEX])
+    else:
+        index = 0
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
     async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
-        return web.json_response(_serialize_object(await swapi.stop()))
+        return web.json_response(_serialize_object(await swapi.stop_shutter(index)))
 
 
 @routes.patch(ENDPOINT_CONTROL_BREEZE_DEVICE)
@@ -313,22 +357,31 @@ async def control_breeze_device(request: web.Request) -> web.Response:
     thermostat_swings = {sw.display: sw for sw in ThermostatSwing}
     body: dict = await request.json()
     try:
-        device_state = device_states.get(body.get(KEY_DEVICE_STATE))
-        thermostat_mode = thermostat_modes.get(body.get(KEY_THERMOSTAT_MODE))
-        target_temp = int(body[KEY_TARGET_TEMP]) if body.get(KEY_TARGET_TEMP) else None
-        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVEL))
-        thermostat_swing = thermostat_swings.get(body.get(KEY_THERMOSTAT_SWING))
+        device_state = device_states.get(body.get(KEY_DEVICE_STATE, None))
+        thermostat_mode = thermostat_modes.get(body.get(KEY_THERMOSTAT_MODE, None))
+        target_temp = int(body[KEY_TARGET_TEMP]) if body.get(KEY_TARGET_TEMP) else 0
+        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVEL, None))
+        thermostat_swing = thermostat_swings.get(body.get(KEY_THERMOSTAT_SWING, None))
         remote_id = body[KEY_REMOTE_ID]
     except Exception as exc:
         raise ValueError(
             "failed to get commands from body as json, you might sent illegal value"
         ) from exc
+    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
     async with SwitcherType2Api(
-        request.query[KEY_IP], request.query[KEY_ID], login_key
+        device_type,
+        request.query[KEY_IP],
+        request.query[KEY_ID],
+        login_key,
+        token,
     ) as swapi:
         remote = remote_manager.get_remote(remote_id)
         return web.json_response(
