@@ -586,7 +586,15 @@ async def test_errorneous_create_schedule(
 
 @mark.parametrize(
     "json_body,expected_values",
-    [({webapp.KEY_POSITION: "25"}, (25,0,))],
+    [
+        (
+            {webapp.KEY_POSITION: "25"},
+            (
+                25,
+                0,
+            ),
+        )
+    ],
 )
 @patch("aioswitcher.api.SwitcherType2Api.set_position")
 async def test_set_position_post_request(
