@@ -282,7 +282,9 @@ async def set_position(request: web.Request) -> web.Response:
     async with SwitcherType2Api(
         device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
-        return web.json_response(_serialize_object(await swapi.set_position(position, index)))
+        return web.json_response(
+            _serialize_object(await swapi.set_position(position, index))
+        )
 
 
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
@@ -322,7 +324,9 @@ async def get_shutter_state(request: web.Request) -> web.Response:
     async with SwitcherType2Api(
         device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
-        return web.json_response(_serialize_object(await swapi.get_shutter_state(index)))
+        return web.json_response(
+            _serialize_object(await swapi.get_shutter_state(index))
+        )
 
 
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)

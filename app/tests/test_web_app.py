@@ -586,7 +586,7 @@ async def test_errorneous_create_schedule(
 
 @mark.parametrize(
     "json_body,expected_values",
-    [({webapp.KEY_POSITION: "25"}, (25,))],
+    [({webapp.KEY_POSITION: "25"}, (25,0,))],
 )
 @patch("aioswitcher.api.SwitcherType2Api.set_position")
 async def test_set_position_post_request(
@@ -604,7 +604,7 @@ async def test_set_position_post_request(
     response = await api_client.post(set_position_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
-    set_position.assert_called_once_with(expected_values[0])
+    set_position.assert_called_once_with(expected_values[0], expected_values[1])
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
@@ -640,7 +640,7 @@ async def test_successful_get_breeze_state_get_request(
 
 @patch("aioswitcher.api.SwitcherType2Api.get_shutter_state")
 async def test_successful_get_shutter_state_get_request(
-    get_breeze_state,
+    get_shutter_state,
     response_serializer,
     response_mock,
     api_connect,
@@ -651,12 +651,12 @@ async def test_successful_get_shutter_state_get_request(
     state = Mock()
     response_mock = state
     # stub api_get_schedules to return mock response
-    get_breeze_state.return_value = response_mock
+    get_shutter_state.return_value = response_mock
     # send get request for get_schedules endpoint
     response = await api_client.get(get_shutter_state_uri)
     # verify mocks calling
     api_connect.assert_called_once()
-    get_breeze_state.assert_called_once_with()
+    get_shutter_state.assert_called_once_with(0)
     response_serializer.assert_called_once_with(state)
     api_disconnect.assert_called_once()
     # assert the expected response
@@ -666,15 +666,15 @@ async def test_successful_get_shutter_state_get_request(
 
 @patch("aioswitcher.api.SwitcherType2Api.stop_shutter")
 async def test_stop_shutter_post_request(
-    stop, response_serializer, api_connect, api_disconnect, api_client
+    stop_shutter, response_serializer, api_connect, api_disconnect, api_client
 ):
     # stub set_position to return mock response
-    stop.return_value = response_mock
+    stop_shutter.return_value = response_mock
     # send post request for create schedule endpoint
     response = await api_client.post(get_stop_shutter_uri, json={})
     # verify mocks calling
     api_connect.assert_called_once()
-    stop.assert_called_once_with()
+    stop_shutter.assert_called_once_with(0)
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
