@@ -4,7 +4,7 @@ ARG TIMEZONE="Asia/Jerusalem"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
-RUN apt-get update && apt-get -y install build-essential && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install build-essential git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/switcher_webapi
 
