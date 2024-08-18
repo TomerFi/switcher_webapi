@@ -25,7 +25,6 @@
 <h3 align="center">
   Gain containerized access to your local <a href="https://www.switcher.co.il/">Switcher</a> smart devices
 </h3>
-
 <p align="center">
 
   ```mermaid
