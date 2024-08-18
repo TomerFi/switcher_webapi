@@ -26,10 +26,6 @@
   Gain containerized access to your local <a href="https://www.switcher.co.il/">Switcher</a> smart devices
 </h3>
 
-<h4 align="center">
-For a newer devices there is a need to get a token from Switcher API. For more info see <a href="https://github.com/TomerFi/aioswitcher/wiki">here</a>
-</h4>
-
 <p align="center">
 
   ```mermaid
@@ -71,6 +67,10 @@ For a newer devices there is a need to get a token from Switcher API. For more i
       </td>
     </tr>
   </table>
+</p>
+
+<p align="center">
+Newer device types might require a token. See info <a href="https://github.com/TomerFi/aioswitcher/wiki">here</a>.
 </p>
 
 <p align="center">
