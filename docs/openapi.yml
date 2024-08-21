@@ -15,18 +15,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -97,18 +98,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -169,18 +171,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -231,18 +234,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -306,18 +310,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -384,18 +389,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -465,18 +471,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -538,18 +545,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -627,18 +635,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -715,18 +724,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -787,18 +797,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -870,18 +881,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true
@@ -948,18 +960,19 @@ paths:
           schema:
             type: string
             enum: [
-              Switcher Mini,
-              Switcher Power Plug,
-              Switcher Touch,
-              Switcher V2 (esp),
-              Switcher V2 (qualcomm),
-              Switcher V4, Switcher Breeze,
-              Switcher Runner,
-              Switcher Runner Mini,
-              Switcher Runner S11
+              mini,
+              plug,
+              touch,
+              v2esp,
+              v2qual,
+              v4,
+              breeze,
+              runner,
+              runnermini,
+              runners11
             ]
           example:
-            "Switcher Mini"
+            "mini"
         - in: query
           name: id
           required: true

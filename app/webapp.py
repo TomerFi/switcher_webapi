@@ -21,6 +21,7 @@ from aioswitcher.api import Command, SwitcherType1Api, SwitcherType2Api
 from aioswitcher.api.remotes import SwitcherBreezeRemoteManager
 from aioswitcher.device import (
     DeviceState,
+    DeviceType,
     ThermostatFanLevel,
     ThermostatMode,
     ThermostatSwing,
@@ -87,6 +88,31 @@ parser.add_argument(
 routes = web.RouteTableDef()
 
 
+def convert_url_devicetype_to_devicetype(device_type: str) -> DeviceType:
+    """Convert url string name to DeviceType."""
+    devicetype_str = "Switcher Mini"
+    if device_type == "mini":
+        devicetype_str = "Switcher Mini"
+    elif device_type == "plug":
+        devicetype_str =  "Switcher Power Plug"
+    elif device_type == "touch":
+        devicetype_str =  "Switcher Touch"
+    elif device_type == "v2esp":
+        devicetype_str =  "Switcher V2 (esp)"
+    elif device_type == "v2qual":
+        devicetype_str =  "Switcher V2 (qualcomm)"
+    elif device_type == "v4":
+        devicetype_str =  "Switcher V4"
+    elif device_type == "breeze":
+        devicetype_str =  "Switcher Breeze"
+    elif device_type == "runner":
+        devicetype_str =  "Switcher Runner"
+    elif device_type == "runnermini":
+        devicetype_str =  "Switcher Runner Mini"
+    elif device_type == "runners11":
+        devicetype_str =  "Switcher Runner S11"
+    return convert_str_to_devicetype(devicetype_str)
+
 def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
     """Use for converting enum to primitives and remove not relevant keys ."""
     serialized_dict = dict()  # type: Dict[str, Union[List[str], str]]
@@ -104,7 +130,7 @@ def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
 @routes.get(ENDPOINT_GET_STATE)
 async def get_state(request: web.Request) -> web.Response:
     """Use to get the current state of the device."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -123,7 +149,7 @@ async def turn_on(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     else:
         minutes = 0
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -139,7 +165,7 @@ async def turn_on(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_TURN_OFF)
 async def turn_off(request: web.Request) -> web.Response:
     """Use to turn on the device."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -160,7 +186,7 @@ async def set_name(request: web.Request) -> web.Response:
         name = body[KEY_NAME]
     except Exception as exc:
         raise ValueError(f"failed to get {KEY_NAME} from body as json") from exc
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -180,7 +206,7 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
         minutes = int(body[KEY_MINUTES]) if body.get(KEY_MINUTES) else 0
     except Exception as exc:
         raise ValueError("failed to get hours from body as json") from exc
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -200,7 +226,7 @@ async def set_auto_shutdown(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SCHEDULES)
 async def get_schedules(request: web.Request) -> web.Response:
     """Use to get the current configured schedules on the device."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -220,7 +246,7 @@ async def delete_schedule(request: web.Request) -> web.Response:
         schedule_id = body[KEY_SCHEDULE]
     except Exception as exc:
         raise ValueError("failed to get schedule from body as json") from exc
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -243,7 +269,7 @@ async def create_schedule(request: web.Request) -> web.Response:
     selected_days = (
         set([weekdays[d] for d in body[KEY_DAYS]]) if body.get(KEY_DAYS) else set()
     )
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -266,7 +292,7 @@ async def set_position(request: web.Request) -> web.Response:
         position = int(body[KEY_POSITION])
     except Exception as exc:
         raise ValueError("failed to get position from body as json") from exc
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -290,7 +316,7 @@ async def set_position(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_BREEZE_STATE)
 async def get_breeze_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -308,7 +334,7 @@ async def get_breeze_state(request: web.Request) -> web.Response:
 @routes.get(ENDPOINT_GET_SHUTTER_STATE)
 async def get_shutter_state(request: web.Request) -> web.Response:
     """Use for sending the get state packet to the Breeze device."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -332,7 +358,7 @@ async def get_shutter_state(request: web.Request) -> web.Response:
 @routes.post(ENDPOINT_POST_STOP_SHUTTER)
 async def stop_shutter(request: web.Request) -> web.Response:
     """Use for stopping the shutter."""
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
@@ -371,7 +397,7 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         raise ValueError(
             "failed to get commands from body as json, you might sent illegal value"
         ) from exc
-    device_type = convert_str_to_devicetype(request.query[KEY_TYPE])
+    device_type = convert_url_devicetype_to_devicetype(request.query[KEY_TYPE])
     if KEY_LOGIN_KEY in request.query:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
