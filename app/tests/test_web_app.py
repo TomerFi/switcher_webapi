@@ -17,9 +17,7 @@ pytestmark = mark.asyncio
 fake_devicetype_powerplug_qparams = f"{webapp.KEY_TYPE}=plug"
 fake_devicetype_touch_qparams = f"{webapp.KEY_TYPE}=touch"
 fake_devicetype_runner_qparams = f"{webapp.KEY_TYPE}=runner"
-fake_devicetype_single_runner_dual_light_qparams = (
-    f"{webapp.KEY_TYPE}=runners11"
-)
+fake_devicetype_single_runner_dual_light_qparams = f"{webapp.KEY_TYPE}=runners11"
 fake_devicetype_breeze_qparams = f"{webapp.KEY_TYPE}=breeze"
 fake_device_qparams = (
     f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4&{webapp.KEY_LOGIN_KEY}=18"
