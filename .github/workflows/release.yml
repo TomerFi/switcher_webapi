@@ -7,6 +7,10 @@ on:
       title:
         description: "Release title"
         required: false
+      bump:
+        description: "Bump type (major/minor/patch) defaults to auto"
+        default: "auto"
+        required: true
 
 jobs:
   release:
@@ -64,7 +68,9 @@ jobs:
 
       - name: Determine next SemVer
         id: bumper
-        uses: tomerfi/version-bumper-action@1.2.2
+        uses: tomerfi/version-bumper-action@2.0.2
+        with:
+          bump: '${{ github.event.inputs.bump }}'
 
       - name: Set new project version
         # yamllint disable rule:line-length
