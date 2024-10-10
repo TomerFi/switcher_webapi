@@ -14,39 +14,42 @@ from .. import webapp
 
 pytestmark = mark.asyncio
 
+fake_devicetype_powerplug_qparams = f"{webapp.KEY_TYPE}=plug"
+fake_devicetype_touch_qparams = f"{webapp.KEY_TYPE}=touch"
+fake_devicetype_runner_qparams = f"{webapp.KEY_TYPE}=runner"
+fake_devicetype_single_runner_dual_light_qparams = f"{webapp.KEY_TYPE}=runners11"
+fake_devicetype_breeze_qparams = f"{webapp.KEY_TYPE}=breeze"
 fake_device_qparams = (
     f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4&{webapp.KEY_LOGIN_KEY}=18"
 )
 fake_serialized_data = {"fake": "return_dict"}
 
 # /switcher/get_state?id=ab1c2d&ip=1.2.3.4
-get_state_uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_device_qparams}"
+get_state_uri = f"{webapp.ENDPOINT_GET_STATE}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/turn_on?id=ab1c2d&ip=1.2.3.4
-turn_on_uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_device_qparams}"
+turn_on_uri = f"{webapp.ENDPOINT_TURN_ON}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/turn_off?id=ab1c2d&ip=1.2.3.4
-turn_off_uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_device_qparams}"
+turn_off_uri = f"{webapp.ENDPOINT_TURN_OFF}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/set_name?id=ab1c2d&ip=1.2.3.4
-set_name_uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_device_qparams}"
+set_name_uri = f"{webapp.ENDPOINT_SET_NAME}?{fake_devicetype_powerplug_qparams}&{fake_device_qparams}"
 # /switcher/set_auto_shutdown?id=ab1c2d&ip=1.2.3.4
-set_auto_shutdown_uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_device_qparams}"
+set_auto_shutdown_uri = f"{webapp.ENDPOINT_SET_AUTO_SHUTDOWN}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/get_schedules?id=ab1c2d&ip=1.2.3.4
-get_schedules_uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_device_qparams}"
+get_schedules_uri = f"{webapp.ENDPOINT_GET_SCHEDULES}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/delete_schedule?id=ab1c2d&ip=1.2.3.4
-delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_device_qparams}"
+delete_schedule_uri = f"{webapp.ENDPOINT_DELETE_SCHEDULE}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/create_schedule?id=ab1c2d&ip=1.2.3.4
-create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_device_qparams}"
+create_schedule_uri = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_devicetype_touch_qparams}&{fake_device_qparams}"
 # /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4
-set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_device_qparams}"
+set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/get_breeze_state?id=ab1c2d&ip=1.2.3.4
-get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_device_qparams}"
+get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
 # /switcher/get_shutter_state?id=ab1c2d&ip=1.2.3.4
-get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_device_qparams}"
+get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4
-get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_device_qparams}"
+get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/control_breeze_device?id=ab1c2d&ip=1.2.3.4
-set_control_breeze_device_uri = (
-    f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_device_qparams}"
-)
+set_control_breeze_device_uri = f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
 
 
 @pytest_asyncio.fixture
@@ -581,7 +584,15 @@ async def test_errorneous_create_schedule(
 
 @mark.parametrize(
     "json_body,expected_values",
-    [({webapp.KEY_POSITION: "25"}, (25,))],
+    [
+        (
+            {webapp.KEY_POSITION: "25"},
+            (
+                25,
+                0,
+            ),
+        )
+    ],
 )
 @patch("aioswitcher.api.SwitcherType2Api.set_position")
 async def test_set_position_post_request(
@@ -599,7 +610,7 @@ async def test_set_position_post_request(
     response = await api_client.post(set_position_uri, json=json_body)
     # verify mocks calling
     api_connect.assert_called_once()
-    set_position.assert_called_once_with(expected_values[0])
+    set_position.assert_called_once_with(expected_values[0], expected_values[1])
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
@@ -635,7 +646,7 @@ async def test_successful_get_breeze_state_get_request(
 
 @patch("aioswitcher.api.SwitcherType2Api.get_shutter_state")
 async def test_successful_get_shutter_state_get_request(
-    get_breeze_state,
+    get_shutter_state,
     response_serializer,
     response_mock,
     api_connect,
@@ -646,12 +657,12 @@ async def test_successful_get_shutter_state_get_request(
     state = Mock()
     response_mock = state
     # stub api_get_schedules to return mock response
-    get_breeze_state.return_value = response_mock
+    get_shutter_state.return_value = response_mock
     # send get request for get_schedules endpoint
     response = await api_client.get(get_shutter_state_uri)
     # verify mocks calling
     api_connect.assert_called_once()
-    get_breeze_state.assert_called_once_with()
+    get_shutter_state.assert_called_once_with(0)
     response_serializer.assert_called_once_with(state)
     api_disconnect.assert_called_once()
     # assert the expected response
@@ -659,17 +670,17 @@ async def test_successful_get_shutter_state_get_request(
     assert_that(fake_serialized_data).is_subset_of(await response.json())
 
 
-@patch("aioswitcher.api.SwitcherType2Api.stop")
+@patch("aioswitcher.api.SwitcherType2Api.stop_shutter")
 async def test_stop_shutter_post_request(
-    stop, response_serializer, api_connect, api_disconnect, api_client
+    stop_shutter, response_serializer, api_connect, api_disconnect, api_client
 ):
     # stub set_position to return mock response
-    stop.return_value = response_mock
+    stop_shutter.return_value = response_mock
     # send post request for create schedule endpoint
     response = await api_client.post(get_stop_shutter_uri, json={})
     # verify mocks calling
     api_connect.assert_called_once()
-    stop.assert_called_once_with()
+    stop_shutter.assert_called_once_with(0)
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response

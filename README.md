@@ -69,6 +69,10 @@
 </p>
 
 <p align="center">
+Newer device types might require a token. See info <a href="https://github.com/TomerFi/aioswitcher/wiki">here</a>.
+</p>
+
+<p align="center">
 <strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a><br/>
 <img alt="all-contributors" src="https://img.shields.io/github/all-contributors/tomerfi/switcher_webapi?color=ee8449&style=flat-square">
 <br/>
