@@ -519,7 +519,7 @@ paths:
                 schedule:
                   type: string
             example:
-              name: "7"
+              schedule: "7"
       responses:
         "200":
           description: An empty JSON object
