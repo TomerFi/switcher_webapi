@@ -53,7 +53,7 @@ jobs:
           report_individual_runs: true
 
       - name: Push to CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.xml
