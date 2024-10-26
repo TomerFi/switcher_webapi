@@ -75,6 +75,9 @@ DEVICES = {
     "runner": DeviceType.RUNNER,
     "runnermini": DeviceType.RUNNER_MINI,
     "runners11": DeviceType.RUNNER_S11,
+    "runners12": DeviceType.RUNNER_S12,
+    "light01": DeviceType.LIGHT_SL01,
+    "light01mini": DeviceType.LIGHT_SL01_MINI,
 }
 
 parser = ArgumentParser(
