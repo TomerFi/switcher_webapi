@@ -32,20 +32,25 @@
     A([User]) -- HTTP --> B([Container]) -- TCP --> C([Device])
   ```
 
+</p>
+<p align="left">
+
   ```shell
   docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
   ```
 
 </p>
 
-<p align="center">
-  <table align="center">
+<p align="left">
+  <table align="left">
     <tr>
       <td align="left">
         <a href="https://switcher-webapi.tomfi.info" target="_blank">Read Docs</a>
       </td>
       <td align="left">
-        <a href="https://github.com/TomerFi/switcher_webapi/wiki" target="_blank">Wiki Pages</a>
+        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/CONTRIBUTING.md" target="_blank">
+          Contributing Guidelines
+        </a>
       </td>
       <td align="left">
         <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/.github/CODE_OF_CONDUCT.md" target="_blank">
@@ -53,30 +58,21 @@
         </a>
       </td>
     </tr>
-    <tr>
-      <td align="left" colspan="2">
-        <a href="https://github.com/TomerFi/aioswitcher/wiki" target="_blank">
-          <em>aioswitcher</em>'s Wiki Pages
-        </a>
-      </td>
-      <td align="left">
-        <a href="https://github.com/TomerFi/switcher_webapi/blob/dev/CONTRIBUTING.md" target="_blank">
-          Contributing Guidelines
-        </a>
-      </td>
-    </tr>
   </table>
+</p><br/><br/>
+
+<p align="left">
+
+> [!IMPORTANT]  
+> Since version 2.x.x, all endpoints require a device type. See [docs](https://switcher-webapi.tomfi.info/).
+
 </p>
 
-<p align="center">
-Newer device types might require a token. See info <a href="https://github.com/TomerFi/aioswitcher/wiki">here</a>.
-</p>
-
-<p align="center">
+<p align="left">
 <strong>Our contributors </strong><a href="https://allcontributors.org/docs/en/emoji-key"><em>emoji keys</em></a><br/>
 <img alt="all-contributors" src="https://img.shields.io/github/all-contributors/tomerfi/switcher_webapi?color=ee8449&style=flat-square">
 <br/>
-<div align="center">
+<div align="left">
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -100,3 +96,4 @@ Newer device types might require a token. See info <a href="https://github.com/T
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 </div>
 </p>
+
