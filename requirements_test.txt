@@ -1,6 +1,6 @@
 assertpy==1.1
 black==24.10.0
-flake8==6.1.0
+flake8==7.1.1
 flake8-docstrings==1.7.0
 isort==5.13.2
 mypy==1.4.1
