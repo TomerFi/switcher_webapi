@@ -11,8 +11,11 @@
 | runnermini  | [Switcher Runner Mini][switcher-runner-mini]         |
 | runners11   | [Switcher Runner S11][switcher-runner-s11]           |
 | runners12   | [Switcher Runner S12][switcher-runner-s12]           |
-| light01     | [Switcher Light SL01][switcher-light-sl01]           |         
-| light01mini | [Switcher Light SL01 Mini][switcher-light-sl01-mini] | 
+| light01     | [Switcher Light SL01][switcher-light-sl01]           |
+| light01mini | [Switcher Light SL01 Mini][switcher-light-sl01-mini] |
+| light02     | [Switcher Light SL02][switcher-light-sl02]           |
+| light02mini | [Switcher Light SL02 Mini][switcher-light-sl02-mini] |
+| light03     | [Switcher Light SL03][switcher-light-sl03]           |
 
 [switcher-v2]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/%d7%a1%d7%95%d7%95%d7%99%d7%a6%d7%a8/
 [switcher-mini]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-mini/
@@ -26,3 +29,6 @@
 [switcher-runner-s12]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/runner-lights-s12/
 [switcher-light-sl01]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-light-sl01/
 [switcher-light-sl01-mini]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-light-slmini01/
+[switcher-light-sl02]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-light-sl02/
+[switcher-light-sl02-mini]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-light-slmini02/
+[switcher-light-sl03]: https://switcher.co.il/%D7%9E%D7%95%D7%A6%D7%A8/switcher-light-sl03/
