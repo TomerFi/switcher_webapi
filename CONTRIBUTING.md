@@ -81,6 +81,7 @@ And run the tests:
 
 ```shell
 pytest -v --cov --cov-report term
+pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 ```
 
 ## Docs development

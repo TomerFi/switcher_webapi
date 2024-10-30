@@ -311,10 +311,7 @@ async def get_breeze_state(request: web.Request) -> web.Response:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
-    if KEY_TOKEN in request.query:
-        token = request.query[KEY_TOKEN]
-    else:
-        token = None
+    token = None
     async with SwitcherType2Api(
         device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
     ) as swapi:
@@ -392,10 +389,7 @@ async def control_breeze_device(request: web.Request) -> web.Response:
         login_key = request.query[KEY_LOGIN_KEY]
     else:
         login_key = "00"
-    if KEY_TOKEN in request.query:
-        token = request.query[KEY_TOKEN]
-    else:
-        token = None
+    token = None
     async with SwitcherType2Api(
         device_type,
         request.query[KEY_IP],
