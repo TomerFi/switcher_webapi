@@ -19,9 +19,7 @@ fake_devicetype_touch_qparams = f"{webapp.KEY_TYPE}=touch"
 fake_devicetype_runner_qparams = f"{webapp.KEY_TYPE}=runner"
 fake_devicetype_single_runner_dual_light_qparams = f"{webapp.KEY_TYPE}=runners11"
 fake_devicetype_breeze_qparams = f"{webapp.KEY_TYPE}=breeze"
-fake_device_qparams = (
-    f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
-)
+fake_device_qparams = f"{webapp.KEY_ID}=ab1c2d&{webapp.KEY_IP}=1.2.3.4"
 fake_device_login_key_qparams = f"{webapp.KEY_LOGIN_KEY}=18"
 fake_device_index_qparams = f"{webapp.KEY_INDEX}=0"
 fake_device_token_qparams = f"{webapp.KEY_TOKEN}=zvVvd7JxtN7CgvkD1Psujw=="
@@ -63,7 +61,7 @@ create_schedule_uri2 = f"{webapp.ENDPOINT_CREATE_SCHEDULE}?{fake_devicetype_touc
 set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4&key=18
 set_position_uri2 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
-# /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4&index=1&token=zvVvd7JxtN7CgvkD1Psujw==
+# /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 set_position_uri3 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/get_breeze_state?id=ab1c2d&ip=1.2.3.4
 get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
@@ -73,13 +71,15 @@ get_breeze_state_uri2 = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_devicetype_br
 get_shutter_state_uri = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/get_shutter_state?id=ab1c2d&ip=1.2.3.4&key=18
 get_shutter_state_uri2 = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
-# /switcher/get_shutter_state?id=ab1c2d&ip=1.2.3.4&index=1&token=zvVvd7JxtN7CgvkD1Psujw==
+# /switcher/get_shutter_state?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 get_shutter_state_uri3 = f"{webapp.ENDPOINT_GET_SHUTTER_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
+# /switcher/get_light_state?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
+get_light_state_uri = f"{webapp.ENDPOINT_GET_LIGHT_STATE}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4
 get_stop_shutter_uri = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
 # /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4&key=18
 get_stop_shutter_uri2 = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
-# /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4&index=1&token=zvVvd7JxtN7CgvkD1Psujw==
+# /switcher/stop_shutter?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 get_stop_shutter_uri3 = f"{webapp.ENDPOINT_POST_STOP_SHUTTER}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/control_breeze_device?id=ab1c2d&ip=1.2.3.4
 set_control_breeze_device_uri = f"{webapp.ENDPOINT_CONTROL_BREEZE_DEVICE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
@@ -138,7 +138,7 @@ async def test_successful_get_state_get_request(
     api_connect,
     api_disconnect,
     api_client,
-    api_uri
+    api_uri,
 ):
     # stub api_get_state to return mock response
     api_get_state.return_value = response_mock
@@ -294,9 +294,7 @@ async def test_successful_set_name_patch_request(
     # stub api_set_device_name to return mock response
     api_set_device_name.return_value = response_mock
     # send patch request for set_name endpoint
-    response = await api_client.patch(
-        api_uri, json={webapp.KEY_NAME: "newFakedName"}
-    )
+    response = await api_client.patch(api_uri, json={webapp.KEY_NAME: "newFakedName"})
     # verify mocks calling
     api_connect.assert_called_once()
     api_set_device_name.assert_called_once_with("newFakedName")
@@ -498,9 +496,7 @@ async def test_successful_delete_schedule_delete_request(
     # stub api_delete_schedule to return mock response
     api_delete_schedule.return_value = response_mock
     # send delete request for delete_schedule endpoint
-    response = await api_client.delete(
-        api_uri, json={webapp.KEY_SCHEDULE: "5"}
-    )
+    response = await api_client.delete(api_uri, json={webapp.KEY_SCHEDULE: "5"})
     # verify mocks calling
     api_connect.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
@@ -742,7 +738,7 @@ async def test_errorneous_create_schedule(
                 25,
                 0,
             ),
-        )
+        ),
     ],
 )
 @patch("aioswitcher.api.SwitcherType2Api.set_position")
@@ -957,3 +953,36 @@ async def test_control_breeze_device_patch_request_only_target_temp(
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri",
+    [
+        (get_light_state_uri),
+    ],
+)
+@patch("aioswitcher.api.SwitcherType2Api.get_light_state")
+async def test_successful_get_light_state_get_request(
+    get_light_state,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+):
+    # stub mock response to return a set mocked state
+    state = Mock()
+    response_mock = state
+    # stub api_get_light_state to return mock response
+    get_light_state.return_value = response_mock
+    # send get request for get_light_state endpoint
+    response = await api_client.get(api_uri)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    get_light_state.assert_called_once_with(0)
+    response_serializer.assert_called_once_with(state)
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(fake_serialized_data).is_subset_of(await response.json())
