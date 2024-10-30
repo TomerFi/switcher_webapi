@@ -22,6 +22,22 @@
 
 --8<-- "query_params.md"
 
+### ==Turn On Light==
+
+| Method | Endpoint                | Description             |
+|:-------|:------------------------|:------------------------|
+| POST   | /switcher/turn_on_light | Turn a light device on. |
+
+--8<-- "query_params.md"
+
+### ==Turn Off Light==
+
+| Method | Endpoint                 | Description              |
+|:-------|:-------------------------|:-------------------------|
+| POST   | /switcher/turn_off_light | Turn a light device off. |
+
+--8<-- "query_params.md"
+
 ### ==Stop Shutter==
 
 | Method | Endpoint                   | Description            |

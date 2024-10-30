@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest_asyncio
 from aiohttp import web
-from aioswitcher.api import Command
+from aioswitcher.api import Command, DeviceState
 from aioswitcher.schedule import Days
 from assertpy import assert_that
 from pytest import fixture, mark
@@ -63,6 +63,10 @@ set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qpar
 set_position_uri2 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
 # /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 set_position_uri3 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
+# /switcher/turn_on_light?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
+turn_on_light_uri = f"{webapp.ENDPOINT_TURN_ON_LIGHT}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
+# /switcher/turn_off_light?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
+turn_off_light_uri = f"{webapp.ENDPOINT_TURN_OFF_LIGHT}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/get_breeze_state?id=ab1c2d&ip=1.2.3.4
 get_breeze_state_uri = f"{webapp.ENDPOINT_GET_BREEZE_STATE}?{fake_devicetype_breeze_qparams}&{fake_device_qparams}"
 # /switcher/get_breeze_state?id=ab1c2d&ip=1.2.3.4&key=18
@@ -762,6 +766,70 @@ async def test_set_position_post_request(
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri, json_body, expected_values",
+    [
+        (turn_on_light_uri, dict(), (DeviceState.ON, 0)),
+    ],
+)
+@patch("aioswitcher.api.SwitcherType2Api.set_light")
+async def test_successful_turn_on_light_post_request(
+    set_light,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+    json_body,
+    expected_values,
+):
+    # stub api_turn_on_light to return mock response
+    set_light.return_value = response_mock
+    # send post request for turn_on_light endpoint
+    response = await api_client.post(api_uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    set_light.assert_called_once_with(expected_values[0], expected_values[1])
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri, json_body, expected_values",
+    [
+        (turn_off_light_uri, dict(), (DeviceState.OFF, 0)),
+    ],
+)
+@patch("aioswitcher.api.SwitcherType2Api.set_light")
+async def test_successful_turn_off_light_post_request(
+    set_light,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+    json_body,
+    expected_values,
+):
+    # stub api_turn_off_light to return mock response
+    set_light.return_value = response_mock
+    # send post request for turn_off_light endpoint
+    response = await api_client.post(api_uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    set_light.assert_called_once_with(expected_values[0], expected_values[1])
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 
