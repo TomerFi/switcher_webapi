@@ -4,6 +4,7 @@ site_url: https://switcher-webapi.tomfi.info
 site_author: Tomer Figenblat
 site_description: Switcher WebAPI Documentation
 
+repo_name: TomerFi/switcher_webapi
 repo_url: https://github.com/TomerFi/switcher_webapi
 edit_uri: ""
 
