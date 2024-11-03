@@ -7,7 +7,7 @@
 [![pages-badge]][pages]
 [![codecov-badge]][codecov]
 
-Gain containerized access to your local [Switcher][switcher] smart devices.
+Gain access to your local [Switcher][switcher] smart devices.
 
 ```shell
 docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest

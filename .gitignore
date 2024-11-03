@@ -134,6 +134,7 @@ dmypy.json
 .env_vars
 
 # coverage reports
+htmlcov
 coverage.xml
 junit.xml
 

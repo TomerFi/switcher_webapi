@@ -9,65 +9,78 @@
 
 ## Early-access
 
-An early-access image manifest is deployed to [ghcr.io](https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi)
-for every merge to the default branch, `dev`:
+Early-access image deployed to [GitHub container registry][ghcr]:
 
 ```shell
 docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webapi:early-access
 ```
 
-> Note: *ghcr.io* requires *GitHub* login.
+## Project
 
-## Project walkthrough
-
-A [Python](https://www.python.org/) WebApp running inside a container,<br/>
-the documentation site is built with [MkDocs](https://www.mkdocs.org/).
+[Docker][docker] multi-platform image running a [Python][python] web app. The doc site is built with [Mkdocs][mkdocs].
 
 - [app/webapp.py](https://github.com/TomerFi/switcher_webapi/blob/dev/app/webapp.py) the application file
 - [app/tests/](https://github.com/TomerFi/switcher_webapi/tree/dev/app/tests) unit tests
 - [Dockerfile](https://github.com/TomerFi/switcher_webapi/blob/dev/Dockerfile) image instructions
 - [docs](https://github.com/TomerFi/switcher_webapi/tree/dev/docs) sources for the documentation site
 
-The released image is deployed to [Docker Hub](https://hub.docker.com/r/tomerfi/switcher_webapi).
+The released image is deployed to [Docker hub][docker_hub].
 
-> Note: *Docker Hub* requires login.
+## Develop
 
-## Prepare the environment
-
-With [Python >= 3.10](https://www.python.org/) use [pip](https://pypi.org/project/pip/) to install
-[tox](https://tox.readthedocs.io/):
+Run commands using [tox][tox]:
 
 ```shell
-pip install tox
+# Run linters and tests
+tox -e test
+# Generate the docs site
+tox -e docs
+# Serve the docs site
+tox -e docs-serve
 ```
 
-## Build commands
+### Environment
 
-- `tox` will execute linting jobs and run python's test cases
-- `tox -e docs` will test and build the documentation site
-- `make` will use `docker buildx` to build the multi-platform image
+If you need to work inside the development environment, keep reading.
 
-## Code development
-
-Activate the development virtual environment (after running `tox`):
+Prepare the environment:
 
 ```shell
-source .tox/dev/bin/activate
+tox
 ```
 
-Deactivate with:
-
-```shell
-deactivate
-```
-
-For dependency updates, update the virtual environment:
+Update the environment:
 
 ```shell
 tox -r
 ```
 
-Once inside the virtual environment, you can the various linters:
+Activate the environment:
+
+```shell
+source .tox/dev/bin/activate
+```
+
+Deactivate the environment:
+
+```shell
+deactivate
+```
+
+### Code
+
+Running tests and linters is done using (pytest takes positional arguments):
+
+```shell
+# run all tests
+tox -e test
+# run a specific test
+tox -e test -- -k "test_name_goes_here"
+```
+
+If you need to work inside the development environment, [prepare the environment](#environment).
+
+Run the various linters inside the environment:
 
 ```shell
 black --check app/
@@ -77,51 +90,74 @@ mypy --ignore-missing-imports app/
 yamllint --format colored --strict .
 ```
 
-And run the tests:
+Run tests inside the environment:
 
 ```shell
-pytest -v --cov --cov-report term
-pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
+# run all tests
+pytest -v
+# run a specific test
+tox -e test -- -k "test_name_goes_here"
+# run tests and print coverage summary to stdout
+pytest -v --cov --cov-report term-missing
+# run tests and create coverage report
+pytest -v --cov --cov-report=html
 ```
 
-## Docs development
+### Docs
 
-Activate the development virtual environment (after running `tox -e docs`):
+Generating or serving the docs is done using:
 
 ```shell
-source .tox/docs/bin/activate
+# generate the docs site
+tox -e docs
+# generate and serve the docs site
+tox -e docs-serve
 ```
 
-Deactivate with:
+If you need to work inside the development environment, [prepare the environment](#environment).
 
-```shell
-deactivate
-```
-
-For dependency updates, update the virtual environment:
-
-```shell
-tox -e docs -r
-```
-
-Once inside the virtual environment, you can build the documentation site:
+Generate the site inside the environment:
 
 ```shell
 mkdocs build
 ```
 
-Or even serve it locally while watching the sources and reloading for modifications:
+Generate and serve the site from within the environment:
 
 ```shell
-mkdocs serve
+tox -e docs-serve
 ```
 
-## Extra linters
+### Docker 
 
-For CI purposes, we use an extra linter outside the scope of *Python*.
+> [!IMPORTANT]  
+> Testing requires [make][make] and [npm][npm].
 
-We use use [npm](https://www.npmjs.com/), for linting lint the *Dockerfile*:
+Lint the Dockerfile:
 
 ```shell
 make dockerfile-lint
 ```
+
+Configure [qemu][qemu] for multi-platform builds:
+
+```shell
+make enable-multiarch
+```
+
+Builds the multi-platform image using `docker buildx`:
+
+```shell
+make build
+```
+
+<!-- LINKS -->
+[docker]: https://www.docker.com/
+[docker_hub]: https://hub.docker.com/r/tomerfi/switcher_webapi
+[ghcr]: https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi
+[make]: https://www.gnu.org/software/make/manual/make.html
+[mkdocs]: https://www.mkdocs.org/
+[npm]: https://www.npmjs.com/
+[python]: https://www.python.org/
+[tox]: https://tox.readthedocs.io/
+[qemu]: https://docs.docker.com/build/building/multi-platform/#qemu
