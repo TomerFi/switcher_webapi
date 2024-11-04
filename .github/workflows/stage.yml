@@ -14,7 +14,7 @@ jobs:
     name: Build and publish early access to GitHub
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python 3.13
         uses: actions/setup-python@v5
