@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://switcher-webapi.tomfi.info/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/device_types/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/endpoints_action/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/endpoints_all/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/endpoints_config/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/endpoints_schedule/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/endpoints_state/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
     <url>
          <loc>https://switcher-webapi.tomfi.info/query_params/</loc>
-         <lastmod>2024-11-03</lastmod>
+         <lastmod>2024-11-19</lastmod>
     </url>
 </urlset>
