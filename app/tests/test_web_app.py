@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest_asyncio
 from aiohttp import web
-from aioswitcher.api import Command, DeviceState
+from aioswitcher.api import Command, DeviceState, ShutterChildLock
 from aioswitcher.schedule import Days
 from assertpy import assert_that
 from pytest import fixture, mark
@@ -63,6 +63,18 @@ set_position_uri = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qpar
 set_position_uri2 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
 # /switcher/set_shutter_position?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 set_position_uri3 = f"{webapp.ENDPOINT_SET_POSITION}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
+# /switcher/turn_on_shutter_child_lock?id=ab1c2d&ip=1.2.3.4
+turn_on_shutter_child_lock_uri = f"{webapp.ENDPOINT_TURN_ON_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
+# /switcher/turn_on_shutter_child_lock?id=ab1c2d&ip=1.2.3.4&key=18
+turn_on_shutter_child_lock_uri2 = f"{webapp.ENDPOINT_TURN_ON_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
+# /switcher/turn_on_shutter_child_lock?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
+turn_on_shutter_child_lock_uri3 = f"{webapp.ENDPOINT_TURN_ON_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
+# /switcher/turn_on_shutter_child_lock?id=ab1c2d&ip=1.2.3.4
+turn_off_shutter_child_lock_uri = f"{webapp.ENDPOINT_TURN_OFF_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}"
+# /switcher/turn_off_shutter_child_lock?id=ab1c2d&ip=1.2.3.4&key=18
+turn_off_shutter_child_lock_uri2 = f"{webapp.ENDPOINT_TURN_OFF_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_login_key_qparams}"
+# /switcher/turn_off_shutter_child_lock?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
+turn_off_shutter_child_lock_uri3 = f"{webapp.ENDPOINT_TURN_OFF_SHUTTER_CHILD_LOCK}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/turn_on_light?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
 turn_on_light_uri = f"{webapp.ENDPOINT_TURN_ON_LIGHT}?{fake_devicetype_runner_qparams}&{fake_device_qparams}&{fake_device_index_qparams}&{fake_device_token_qparams}"
 # /switcher/turn_off_light?id=ab1c2d&ip=1.2.3.4&index=0&token=zvVvd7JxtN7CgvkD1Psujw==
@@ -754,6 +766,78 @@ async def test_set_position_post_request(
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri, json_body, expected_values",
+    [
+        (turn_on_shutter_child_lock_uri, dict(), (ShutterChildLock.ON, 0)),
+        (turn_on_shutter_child_lock_uri2, dict(), (ShutterChildLock.ON, 0)),
+        (turn_on_shutter_child_lock_uri3, dict(), (ShutterChildLock.ON, 0)),
+    ],
+)
+@patch("aioswitcher.api.SwitcherApi.set_shutter_child_lock")
+async def test_successful_turn_on_shutter_child_lock_post_request(
+    set_shutter_child_lock,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+    json_body,
+    expected_values,
+):
+    # stub api_turn_on_shutter_child_lock to return mock response
+    set_shutter_child_lock.return_value = response_mock
+    # send post request for turn_on_shutter_child_lock endpoint
+    response = await api_client.post(api_uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    set_shutter_child_lock.assert_called_once_with(
+        expected_values[0], expected_values[1]
+    )
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(200)
+    assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri, json_body, expected_values",
+    [
+        (turn_off_shutter_child_lock_uri, dict(), (ShutterChildLock.OFF, 0)),
+        (turn_off_shutter_child_lock_uri2, dict(), (ShutterChildLock.OFF, 0)),
+        (turn_off_shutter_child_lock_uri3, dict(), (ShutterChildLock.OFF, 0)),
+    ],
+)
+@patch("aioswitcher.api.SwitcherApi.set_shutter_child_lock")
+async def test_successful_turn_off_shutter_child_lock_post_request(
+    set_shutter_child_lock,
+    response_serializer,
+    response_mock,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+    json_body,
+    expected_values,
+):
+    # stub turn_off_shutter_child_lock to return mock response
+    set_shutter_child_lock.return_value = response_mock
+    # send post request for turn_off_shutter_child_lock endpoint
+    response = await api_client.post(api_uri, json=json_body)
+    # verify mocks calling
+    api_connect.assert_called_once()
+    set_shutter_child_lock.assert_called_once_with(
+        expected_values[0], expected_values[1]
+    )
+    response_serializer.assert_called_once_with(response_mock)
+    api_disconnect.assert_called_once()
+    # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
 

@@ -22,6 +22,22 @@
 
 --8<-- "query_params.md"
 
+### ==Turn On Shutter Child Lock==
+
+| Method | Endpoint                             | Description                   |
+|:-------|:-------------------------------------|:------------------------------|
+| POST   | /switcher/turn_on_shutter_child_lock | Turn a shutter child lock on. |
+
+--8<-- "query_params.md"
+
+### ==Turn Off Shutter Child Lock==
+
+| Method | Endpoint                              | Description                    |
+|:-------|:--------------------------------------|:-------------------------------|
+| POST   | /switcher/turn_off_shutter_child_lock | Turn a shutter child lock off. |
+
+--8<-- "query_params.md"
+
 ### ==Turn On Light==
 
 | Method | Endpoint                | Description             |

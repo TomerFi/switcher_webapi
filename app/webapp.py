@@ -22,6 +22,7 @@ from aioswitcher.api.remotes import SwitcherBreezeRemoteManager
 from aioswitcher.device import (
     DeviceState,
     DeviceType,
+    ShutterChildLock,
     ThermostatFanLevel,
     ThermostatMode,
     ThermostatSwing,
@@ -59,6 +60,8 @@ ENDPOINT_GET_SCHEDULES = "/switcher/get_schedules"
 ENDPOINT_DELETE_SCHEDULE = "/switcher/delete_schedule"
 ENDPOINT_CREATE_SCHEDULE = "/switcher/create_schedule"
 ENDPOINT_SET_POSITION = "/switcher/set_shutter_position"
+ENDPOINT_TURN_ON_SHUTTER_CHILD_LOCK = "/switcher/turn_on_shutter_child_lock"
+ENDPOINT_TURN_OFF_SHUTTER_CHILD_LOCK = "/switcher/turn_off_shutter_child_lock"
 ENDPOINT_TURN_ON_LIGHT = "/switcher/turn_on_light"
 ENDPOINT_TURN_OFF_LIGHT = "/switcher/turn_off_light"
 ENDPOINT_GET_BREEZE_STATE = "/switcher/get_breeze_state"
@@ -306,6 +309,58 @@ async def set_position(request: web.Request) -> web.Response:
     ) as swapi:
         return web.json_response(
             _serialize_object(await swapi.set_position(position, index))
+        )
+
+
+@routes.post(ENDPOINT_TURN_ON_SHUTTER_CHILD_LOCK)
+async def turn_on_shutter_child_lock(request: web.Request) -> web.Response:
+    """Use to turn on the shutter child lock."""
+    device_type = DEVICES[request.query[KEY_TYPE]]
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    if KEY_INDEX in request.query:
+        index = int(request.query[KEY_INDEX])
+    else:
+        index = 0
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
+    async with SwitcherApi(
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
+    ) as swapi:
+        return web.json_response(
+            _serialize_object(
+                await swapi.set_shutter_child_lock(ShutterChildLock.ON, index)
+            )
+        )
+
+
+@routes.post(ENDPOINT_TURN_OFF_SHUTTER_CHILD_LOCK)
+async def turn_off_shutter_child_lock(request: web.Request) -> web.Response:
+    """Use to turn off the shutter child lock."""
+    device_type = DEVICES[request.query[KEY_TYPE]]
+    if KEY_LOGIN_KEY in request.query:
+        login_key = request.query[KEY_LOGIN_KEY]
+    else:
+        login_key = "00"
+    if KEY_INDEX in request.query:
+        index = int(request.query[KEY_INDEX])
+    else:
+        index = 0
+    if KEY_TOKEN in request.query:
+        token = request.query[KEY_TOKEN]
+    else:
+        token = None
+    async with SwitcherApi(
+        device_type, request.query[KEY_IP], request.query[KEY_ID], login_key, token
+    ) as swapi:
+        return web.json_response(
+            _serialize_object(
+                await swapi.set_shutter_child_lock(ShutterChildLock.OFF, index)
+            )
         )
 
 
