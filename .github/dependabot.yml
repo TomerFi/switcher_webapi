@@ -13,6 +13,7 @@ updates:
     assignees:
       - "tomerfi"
       - "dmatik"
+      - "YogevBokobza"
 
   - package-ecosystem: "pip"
     directory: "/"
@@ -28,6 +29,7 @@ updates:
     assignees:
       - "tomerfi"
       - "dmatik"
+      - "YogevBokobza"
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -40,3 +42,5 @@ updates:
     rebase-strategy: disabled
     assignees:
       - "tomerfi"
+      - "dmatik"
+      - "YogevBokobza"
