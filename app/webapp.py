@@ -505,11 +505,19 @@ async def control_breeze_device(request: web.Request) -> web.Response:
     thermostat_swings = {sw.display: sw for sw in ThermostatSwing}
     body: dict = await request.json()
     try:
-        device_state = device_states.get(body.get(KEY_DEVICE_STATE, None))
-        thermostat_mode = thermostat_modes.get(body.get(KEY_THERMOSTAT_MODE, None))
+        device_state = device_states.get(
+            body.get(KEY_DEVICE_STATE, None)  # type: ignore[arg-type]
+        )
+        thermostat_mode = thermostat_modes.get(
+            body.get(KEY_THERMOSTAT_MODE, None)  # type: ignore[arg-type]
+        )
         target_temp = int(body[KEY_TARGET_TEMP]) if body.get(KEY_TARGET_TEMP) else 0
-        fan_level = thermostat_fan_levels.get(body.get(KEY_FAN_LEVEL, None))
-        thermostat_swing = thermostat_swings.get(body.get(KEY_THERMOSTAT_SWING, None))
+        fan_level = thermostat_fan_levels.get(
+            body.get(KEY_FAN_LEVEL, None)  # type: ignore[arg-type]
+        )
+        thermostat_swing = thermostat_swings.get(
+            body.get(KEY_THERMOSTAT_SWING, None)  # type: ignore[arg-type]
+        )
         remote_id = body[KEY_REMOTE_ID]
     except Exception as exc:
         raise ValueError(
