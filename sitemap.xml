@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://switcher-webapi.tomfi.info/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/device_types/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/device_types/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/endpoints_action/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/endpoints_action/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/endpoints_all/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/endpoints_all/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/endpoints_config/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/endpoints_config/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/endpoints_schedule/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/endpoints_schedule/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/endpoints_state/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/endpoints_state/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
     <url>
-         <loc>https://switcher-webapi.tomfi.info/query_params/</loc>
-         <lastmod>2025-09-11</lastmod>
+         <loc>https://switcher-webapi.figenblat.com/query_params/</loc>
+         <lastmod>2025-10-18</lastmod>
     </url>
 </urlset>
