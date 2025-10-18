@@ -13,14 +13,14 @@ Gain access to your local [Switcher][switcher] smart devices.
 docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 ```
 
-Check the docs: [https://switcher-webapi.tomfi.info][docs].
+Check the docs: [https://switcher-webapi.figenblat.com][docs].
 
 > [!IMPORTANT]  
 > Since version 2, all endpoints require a device type. See [docs][docs].
 
 <!-- Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi
-[docs]: https://switcher-webapi.tomfi.info
+[docs]: https://switcher-webapi.figenblat.com
 [dockerhub]: https://hub.docker.com/r/tomerfi/switcher_webapi
 [license]: https://github.com/TomerFi/switcher_webapi/blob/dev/LICENSE
 [pages]: https://github.com/TomerFi/switcher_webapi/actions/workflows/pages.yml
