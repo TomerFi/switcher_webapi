@@ -20,7 +20,7 @@ body:
     id: module-version
     attributes:
       label: Module Version
-      description: What version of `switcher_webapo` are you using?
+      description: What version of `switcher_webapi` are you using?
       placeholder: ex. 1.0.0
     validations:
       required: true
@@ -36,6 +36,16 @@ body:
         - Switcher Touch (V3)
         - Switcher V4
         - Switcher Power Plug
+        - Switcher Breeze
+        - Switcher Runner
+        - Switcher Runner Mini
+        - Switcher Runner S11
+        - Switcher Runner S12
+        - Switcher Light SL01
+        - Switcher Light SL01 Mini
+        - Switcher Light SL02
+        - Switcher Light SL02 Mini
+        - Switcher Light SL03
     validations:
       required: true
 
