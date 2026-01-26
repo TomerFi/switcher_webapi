@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+---
+reviews:
+  path_instructions:
+    - path: app/**/*.py
+      instructions: |
+        Review Python code for:
+        - Type annotations and proper typing
+        - Async/await patterns for FastAPI endpoints
+        - Docstrings following PEP 257 conventions
+        - Proper error handling and HTTP status codes
+    - path: Dockerfile
+      instructions: |
+        Review Dockerfile for:
+        - Multi-stage build efficiency
+        - Security best practices
+        - Minimal image size
