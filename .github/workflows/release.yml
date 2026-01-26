@@ -32,6 +32,7 @@ jobs:
       - name: Setup SSH signing
         run: |
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           echo "${{ secrets.SIGNING_KEY }}" > ~/.ssh/signing_key
           chmod 600 ~/.ssh/signing_key
           git config gpg.format ssh
@@ -153,3 +154,7 @@ jobs:
           git push
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
+
+      - name: Cleanup SSH signing key
+        if: always()
+        run: rm -f ~/.ssh/signing_key
