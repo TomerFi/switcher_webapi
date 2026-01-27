@@ -71,13 +71,6 @@ jobs:
         id: getDate
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
-      - name: Cache Docker layers
-        uses: actions/cache@v5
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: ${{ runner.os }}-buildx-
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.7.0
 
@@ -94,5 +87,5 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=testing
           tags: tomerfi/switcher_webapi:testing
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
