@@ -2,16 +2,29 @@
 ---
 reviews:
   path_instructions:
-    - path: app/**/*.py
+    - path: app/webapp.py
       instructions: |
         Review Python code for:
         - Type annotations and proper typing
-        - Async/await patterns for FastAPI endpoints
+        - Async/await patterns for aiohttp web handlers
         - Docstrings following PEP 257 conventions
         - Proper error handling and HTTP status codes
+        - Correct usage of aioswitcher API
+    - path: app/tests/**/*.py
+      instructions: |
+        Review test code for:
+        - Proper async test patterns with pytest-asyncio
+        - Adequate mocking of aioswitcher API
+        - Test coverage for error cases
     - path: Dockerfile
       instructions: |
         Review Dockerfile for:
-        - Multi-stage build efficiency
-        - Security best practices
+        - Security best practices (non-root user, minimal image)
+        - Proper layer caching
         - Minimal image size
+    - path: .github/workflows/*.yml
+      instructions: |
+        Review GitHub Actions workflows for:
+        - Security best practices
+        - Proper caching strategies
+        - Correct action versions
