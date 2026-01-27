@@ -89,7 +89,27 @@ mkdocs build
 mkdocs serve
 ```
 
+### Cursor IDE
+
+If using [Cursor][cursor], agents and commands are available in `.cursor/`:
+
+**Agents:**
+
+- `code-reviewer` - Reviews code before committing
+- `test-writer` - Writes tests using pytest-asyncio
+- `docs-writer` - Updates documentation
+- `smoke-tester` - Runs E2E smoke tests on the container
+
+**Commands:**
+
+- `/lint` - Run linting checks
+- `/test` - Run tests
+- `/serve-docs` - Serve docs locally
+- `/stop-docs` - Stop docs server
+- `/image-build` - Build container image
+
 <!-- LINKS -->
+[cursor]: https://cursor.sh/
 [docker]: https://www.docker.com/
 [docker_hub]: https://hub.docker.com/r/tomerfi/switcher_webapi
 [ghcr]: https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi
