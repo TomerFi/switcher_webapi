@@ -2,8 +2,8 @@
 # https://docs.sourcery.ai/Configuration/
 ---
 ignore:
-  - tests/**
+  - app/tests/**
   - docs/**
 
 rule_settings:
-  python_version: "3.12"
+  python_version: "3.13"

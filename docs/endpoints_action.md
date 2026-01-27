@@ -56,17 +56,17 @@
 
 ### ==Stop Shutter==
 
-| Method | Endpoint                   | Description            |
-|:-------|:---------------------------|:-----------------------|
-| POST   | /switcher/set_stop_shutter | Stop a shutter device. |
+| Method | Endpoint               | Description            |
+|:-------|:-----------------------|:-----------------------|
+| POST   | /switcher/stop_shutter | Stop a shutter device. |
 
 --8<-- "query_params.md"
 
 ### ==Control Breeze==
 
-| Method | Endpoint                        | Description                 |
-|:-------|:--------------------------------|:----------------------------|
-| POST   | /switcher/control_breeze_device | Control a breeze device.    |
+| Method | Endpoint                        | Description              |
+|:-------|:--------------------------------|:-------------------------|
+| PATCH  | /switcher/control_breeze_device | Control a breeze device. |
 
 --8<-- "query_params.md"
 
