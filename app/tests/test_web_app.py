@@ -142,6 +142,7 @@ def response_mock():
 async def test_health_endpoint_returns_healthy_status(api_client):
     resp = await api_client.get(webapp.ENDPOINT_HEALTH)
     assert_that(resp.status).is_equal_to(200)
+    assert_that(resp.content_type).is_equal_to("application/json")
     body = await resp.json()
     assert_that(body).is_equal_to({"status": "healthy"})
 

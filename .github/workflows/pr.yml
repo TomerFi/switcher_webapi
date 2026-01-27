@@ -112,8 +112,11 @@ jobs:
       - name: Run container and test health endpoint
         run: |
           docker run -d --name test-container -p 8000:8000 switcher_webapi:test
-          sleep 5
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health)
+          for i in {1..12}; do
+            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
+            [ "$response" = "200" ] && break
+            sleep 5
+          done
           docker logs test-container
           docker stop test-container
           if [ "$response" != "200" ]; then
