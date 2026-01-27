@@ -6,14 +6,14 @@ description: Run ruff linter and formatter checks
 Run linting and format checks:
 
 ```bash
-ruff check app/
-ruff format --check app/
+ruff check .
+ruff format --check .
 mypy --ignore-missing-imports app/
 ```
 
 To auto-fix issues:
 
 ```bash
-ruff check --fix app/
-ruff format app/
+ruff check --fix .
+ruff format .
 ```
