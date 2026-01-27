@@ -6,9 +6,11 @@ RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
 RUN apt-get update && apt-get -y install build-essential && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/switcher_webapi
+RUN adduser --system --home /app appuser
 
-COPY LICENSE app/webapp.py requirements.txt ./
+WORKDIR /app
+
+COPY --chown=appuser:nogroup LICENSE app/webapp.py requirements.txt ./
 
 RUN pip install -U pip
 
@@ -17,6 +19,8 @@ RUN AIOHTTP_NO_EXTENSIONS=1 \
     MULTIDICT_NO_EXTENSIONS=1 \
     YARL_NO_EXTENSIONS=1 \
     pip install -r requirements.txt
+
+USER appuser
 
 EXPOSE 8000
 
