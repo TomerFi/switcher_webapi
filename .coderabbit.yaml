@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 ---
 reviews:
+  commit_status: true
   path_instructions:
     - path: app/webapp.py
       instructions: |
