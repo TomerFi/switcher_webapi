@@ -57,8 +57,8 @@ pip install -r requirements.txt -r requirements_test.txt -r requirements_docs.tx
 Run linters using [ruff][ruff]:
 
 ```shell
-ruff check app/
-ruff format --check app/
+ruff check .
+ruff format --check .
 mypy --ignore-missing-imports app/
 ```
 

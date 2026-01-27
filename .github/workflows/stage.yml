@@ -22,7 +22,7 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
           cache-dependency-path: |
-            requirements-dev.txt
+            requirements.txt
             requirements_test.txt
 
       - name: Prepare python environment
@@ -31,12 +31,6 @@ jobs:
 
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml
-
-      - name: Cache Docker layers
-        uses: actions/cache@v5
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('**/Dockerfile') }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.7.0
@@ -66,10 +60,8 @@ jobs:
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=early-access
-          cache-from: |
-            type=local,src=/tmp/.buildx-cache
-            ghcr.io/tomerfi/switcher_webapi:early-access
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Push coverage report to CodeCov
         uses: codecov/codecov-action@v5
