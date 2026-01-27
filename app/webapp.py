@@ -51,6 +51,7 @@ KEY_THERMOSTAT_SWING = "thermostat_swing"
 KEY_CURRENT_DEVICE_STATE = "current_device_state"
 KEY_REMOTE_ID = "remote_id"
 
+ENDPOINT_HEALTH = "/health"
 ENDPOINT_GET_STATE = "/switcher/get_state"
 ENDPOINT_TURN_ON = "/switcher/turn_on"
 ENDPOINT_TURN_OFF = "/switcher/turn_off"
@@ -124,6 +125,12 @@ def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
             else:
                 serialized_dict[k] = v
     return serialized_dict
+
+
+@routes.get(ENDPOINT_HEALTH)
+async def health(request: web.Request) -> web.Response:
+    """Health check endpoint for container orchestration."""
+    return web.json_response({"status": "healthy"})
 
 
 @routes.get(ENDPOINT_GET_STATE)
