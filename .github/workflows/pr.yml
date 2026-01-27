@@ -89,3 +89,38 @@ jobs:
           tags: tomerfi/switcher_webapi:testing
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  e2e-smoke-test:
+    runs-on: ubuntu-latest
+    name: E2E smoke test
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.12.0
+
+      - name: Build image for testing
+        uses: docker/build-push-action@v6.18.0
+        with:
+          context: .
+          load: true
+          tags: switcher_webapi:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run container and test health endpoint
+        run: |
+          docker run -d --name test-container -p 8000:8000 switcher_webapi:test
+          for i in {1..12}; do
+            response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
+            [ "$response" = "200" ] && break
+            sleep 5
+          done
+          docker logs test-container
+          docker stop test-container
+          if [ "$response" != "200" ]; then
+            echo "Health check failed with status $response"
+            exit 1
+          fi
+          echo "Health check passed with status $response"

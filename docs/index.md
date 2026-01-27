@@ -20,4 +20,15 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 ???- warning "Since version 2.x.x, all endpoints require a device type query param."
     --8<-- "device_types.md"
 
+## Health Check
+
+=== ":material-check-circle: GET /health"
+
+    Health check endpoint for container orchestration (e.g., Kubernetes liveness probes).
+    Returns `{"status": "healthy"}` with HTTP 200.
+
+    ```shell
+    curl http://localhost:8000/health
+    ```
+
 --8<-- "endpoints_all.md"

@@ -14,8 +14,9 @@ When invoked:
 
 **Key Files:**
 - `README.md` - User-facing overview and quick start
-- `CONTRIBUTING.md` - Developer setup and workflow
+- `CONTRIBUTING.md` - Developer setup, workflow, and Cursor IDE agents/commands
 - `docs/` - MkDocs site with endpoint documentation
+- `.cursor/` - Cursor agents, commands, rules, and skills (self-documenting)
 
 ## Documentation Style
 
