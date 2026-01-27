@@ -1,0 +1,38 @@
+[project]
+name = "switcher_webapi"
+description = "Web service for controlling Switcher smart devices"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.13"
+dynamic = ["version"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "D", "W"]
+ignore = ["D100", "D104"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/tests/*.py" = ["E501", "D103"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/tests/*"]
+
+[tool.coverage.report]
+fail_under = 85.00
+precision = 2
+skip_covered = true
+exclude_lines = ["if __name__ == \"__main__\":"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["app/tests"]

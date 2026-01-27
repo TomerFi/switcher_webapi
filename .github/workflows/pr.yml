@@ -33,13 +33,11 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt -r requirements_test.txt
 
-      - name: Lint project with python linters
+      - name: Lint project
         run: |
-          black --check app/
-          flake8 --count --statistics app/
-          isort --check-only app/
+          ruff check app/
+          ruff format --check app/
           mypy --ignore-missing-imports app/
-          yamllint --format colored --strict .
 
       - name: Test project
         run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
