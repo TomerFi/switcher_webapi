@@ -9,6 +9,7 @@ dynamic = ["version"]
 [tool.ruff]
 line-length = 88
 target-version = "py313"
+exclude = [".venv", "venv", ".git", "build", "dist", "__pycache__", "site"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "D", "W"]
