@@ -33,8 +33,17 @@ The released image is deployed to [Docker Hub][docker_hub].
 Create and activate a virtual environment:
 
 ```shell
+# Unix/Linux/macOS
 python -m venv .venv
 source .venv/bin/activate
+
+# Windows (Command Prompt)
+python -m venv .venv
+.venv\Scripts\activate
+
+# Windows (PowerShell)
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
 Install dependencies:
