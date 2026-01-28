@@ -21,7 +21,7 @@ When invoked:
 
 **Security:**
 - No exposed secrets
-- Dockerfile runs as non-root user
+- Dockerfile should run as non-root user (pending fix)
 - Input validation on endpoints
 
 **Project Conventions:**

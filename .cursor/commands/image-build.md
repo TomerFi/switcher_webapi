@@ -20,7 +20,7 @@ $CONTAINER_CMD run -d -p 8000:8000 --name switcher_webapi switcher_webapi:local
 Test it's running:
 
 ```bash
-curl http://localhost:8000/
+curl http://localhost:8000/health
 ```
 
 Stop and remove:

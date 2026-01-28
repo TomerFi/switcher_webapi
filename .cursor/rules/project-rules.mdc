@@ -14,14 +14,14 @@ alwaysApply: true
 ## Architecture Constraints
 - All handlers must be async
 - Mock aioswitcher in tests (no real devices)
-- Docker runs as non-root user
+- Docker should run as non-root user (pending)
 - Multi-platform builds (amd64, arm/v7, arm64/v8)
 
 ## Git Rules
 - Conventional commits for PR titles (feat:, fix:, docs:, chore:)
 - Always squash merge PRs
 - GPG sign all commits
-- CodeRabbit and Sourcery review all PRs
+- Address CodeRabbit and Sourcery comments before merging
 
 ## Development Tools
 - **Linting/Formatting**: Ruff (configured in pyproject.toml)
