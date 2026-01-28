@@ -107,6 +107,7 @@ If using [Cursor][cursor], agents and commands are available in `.cursor/`:
 - `/serve-docs` - Serve docs locally
 - `/stop-docs` - Stop docs server
 - `/image-build` - Build container image
+- `/dockerfile-lint` - Lint Dockerfile with hadolint
 
 <!-- LINKS -->
 [cursor]: https://cursor.sh/

@@ -20,8 +20,12 @@ Then run and test:
 ```bash
 CONTAINER_CMD=$(command -v podman 2>/dev/null || echo docker)
 $CONTAINER_CMD run -d --name smoke-test -p 8000:8000 switcher_webapi:local
-sleep 5
-curl -sf http://localhost:8000/health && echo "Health check passed" || echo "Health check FAILED"
+for i in {1..12}; do
+  response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
+  [ "$response" = "200" ] && break
+  sleep 5
+done
+[ "$response" = "200" ] && echo "Health check passed" || echo "Health check FAILED"
 $CONTAINER_CMD logs smoke-test
 $CONTAINER_CMD stop smoke-test
 $CONTAINER_CMD rm smoke-test
