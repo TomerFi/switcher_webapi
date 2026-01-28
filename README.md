@@ -34,3 +34,4 @@ Check the docs: [https://switcher-webapi.figenblat.com][docs].
 [stage-badge]: https://github.com/TomerFi/switcher_webapi/actions/workflows/stage.yml/badge.svg
 [version-badge]: https://img.shields.io/docker/v/tomerfi/switcher_webapi?color=%230A6799&logo=docker
 
+# Test
