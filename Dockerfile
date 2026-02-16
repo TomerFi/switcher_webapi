@@ -18,6 +18,11 @@ RUN AIOHTTP_NO_EXTENSIONS=1 \
     YARL_NO_EXTENSIONS=1 \
     pip install -r requirements.txt
 
+RUN adduser --system --no-create-home appuser \
+    && chown -R appuser /usr/switcher_webapi
+
+USER appuser
+
 EXPOSE 8000
 
 ENV LOG_LEVEL=INFO
