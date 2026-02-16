@@ -589,6 +589,36 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     )
 
 
+@patch("aioswitcher.api.SwitcherApi.delete_schedule")
+@patch(
+    "aioswitcher.api.SwitcherApi.get_schedules",
+    side_effect=Exception("get_schedules failure"),
+)
+async def test_errorneous_delete_schedule_get_schedules_failure(
+    api_get_schedules,
+    api_delete_schedule,
+    response_serializer,
+    api_connect,
+    api_disconnect,
+    api_client,
+):
+    # send delete request for delete_schedule endpoint
+    response = await api_client.delete(
+        delete_schedule_uri, json={webapp.KEY_SCHEDULE: "5"}
+    )
+    # verify mocks calling
+    api_connect.assert_called_once()
+    api_get_schedules.assert_called_once()
+    api_delete_schedule.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(500)
+    assert_that(await response.json()).contains_entry(
+        {"error": "get_schedules failure"}
+    )
+
+
 @patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
 @patch("aioswitcher.api.SwitcherApi.get_schedules")
 async def test_errorneous_delete_schedule_delete_request(
