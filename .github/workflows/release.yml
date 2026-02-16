@@ -76,17 +76,21 @@ jobs:
       - name: Set new project version
         # yamllint disable rule:line-length
         # editorconfig-checker-disable
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
         run: |
-          echo "${{ steps.bumper.outputs.next }}" > VERSION
-          sed -i 's/  version: .*/  version: "${{ steps.bumper.outputs.next }}"/g' mkdocs.yml
+          echo "$NEXT_VERSION" > VERSION
+          sed -i "s/  version: .*/  version: \"$NEXT_VERSION\"/g" mkdocs.yml
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
 
       - name: Commit, tag, and push
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
         run: |
           git add VERSION
           git add mkdocs.yml
-          git commit -m "build: bump version to ${{ steps.bumper.outputs.next }}"
+          git commit -m "build: bump version to $NEXT_VERSION"
           git push
 
       - name: Get current date
@@ -141,14 +145,18 @@ jobs:
             core.setOutput('html_url', response.data.html_url)
 
       - name: Set development project version
-        run: echo "${{ steps.bumper.outputs.dev }}" > VERSION
+        env:
+          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
+        run: echo "$DEV_VERSION" > VERSION
 
       - name: Commit and push
         # yamllint disable rule:line-length
         # editorconfig-checker-disable
+        env:
+          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
         run: |
           git add VERSION
-          git commit -m "build: bump version to ${{ steps.bumper.outputs.dev }} [skip ci]"
+          git commit -m "build: bump version to $DEV_VERSION [skip ci]"
           git push
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
