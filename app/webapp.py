@@ -260,6 +260,13 @@ async def delete_schedule(request: web.Request) -> web.Response:
     async with SwitcherApi(
         device_type, request.query[KEY_IP], request.query[KEY_ID], login_key
     ) as swapi:
+        schedules_response = await swapi.get_schedules()
+        existing_ids = [s.schedule_id for s in schedules_response.schedules]
+        if schedule_id not in existing_ids:
+            return web.json_response(
+                {"error": f"schedule {schedule_id} does not exist"},
+                status=404,
+            )
         return web.json_response(
             _serialize_object(await swapi.delete_schedule(schedule_id))
         )

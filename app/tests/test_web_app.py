@@ -500,7 +500,9 @@ async def test_erroneous_get_schedules_get_request(
     ],
 )
 @patch("aioswitcher.api.SwitcherApi.delete_schedule")
+@patch("aioswitcher.api.SwitcherApi.get_schedules")
 async def test_successful_delete_schedule_delete_request(
+    api_get_schedules,
     api_delete_schedule,
     response_serializer,
     response_mock,
@@ -509,18 +511,64 @@ async def test_successful_delete_schedule_delete_request(
     api_client,
     api_uri,
 ):
+    # stub get_schedules to return a schedule with matching id
+    schedule_mock = Mock()
+    schedule_mock.schedule_id = "5"
+    schedules_response = Mock()
+    schedules_response.schedules = [schedule_mock]
+    api_get_schedules.return_value = schedules_response
     # stub api_delete_schedule to return mock response
     api_delete_schedule.return_value = response_mock
     # send delete request for delete_schedule endpoint
     response = await api_client.delete(api_uri, json={webapp.KEY_SCHEDULE: "5"})
     # verify mocks calling
     api_connect.assert_called_once()
+    api_get_schedules.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
     response_serializer.assert_called_once_with(response_mock)
     api_disconnect.assert_called_once()
     # assert the expected response
     assert_that(response.status).is_equal_to(200)
     assert_that(await response.json()).contains_entry(fake_serialized_data)
+
+
+@mark.parametrize(
+    "api_uri",
+    [
+        (delete_schedule_uri),
+        (delete_schedule_uri2),
+    ],
+)
+@patch("aioswitcher.api.SwitcherApi.delete_schedule")
+@patch("aioswitcher.api.SwitcherApi.get_schedules")
+async def test_delete_schedule_returns_404_for_nonexistent_schedule(
+    api_get_schedules,
+    api_delete_schedule,
+    response_serializer,
+    api_connect,
+    api_disconnect,
+    api_client,
+    api_uri,
+):
+    # stub get_schedules to return schedules that don't include the requested id
+    schedule_mock = Mock()
+    schedule_mock.schedule_id = "3"
+    schedules_response = Mock()
+    schedules_response.schedules = [schedule_mock]
+    api_get_schedules.return_value = schedules_response
+    # send delete request for delete_schedule endpoint
+    response = await api_client.delete(api_uri, json={webapp.KEY_SCHEDULE: "8"})
+    # verify mocks calling
+    api_connect.assert_called_once()
+    api_get_schedules.assert_called_once()
+    api_delete_schedule.assert_not_called()
+    response_serializer.assert_not_called()
+    api_disconnect.assert_called_once()
+    # assert the expected response
+    assert_that(response.status).is_equal_to(404)
+    assert_that(await response.json()).contains_entry(
+        {"error": "schedule 8 does not exist"}
+    )
 
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule")
@@ -542,15 +590,28 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
 
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
+@patch("aioswitcher.api.SwitcherApi.get_schedules")
 async def test_errorneous_delete_schedule_delete_request(
-    api_delete_schedule, response_serializer, api_connect, api_disconnect, api_client
+    api_get_schedules,
+    api_delete_schedule,
+    response_serializer,
+    api_connect,
+    api_disconnect,
+    api_client,
 ):
+    # stub get_schedules to return a schedule with matching id
+    schedule_mock = Mock()
+    schedule_mock.schedule_id = "5"
+    schedules_response = Mock()
+    schedules_response.schedules = [schedule_mock]
+    api_get_schedules.return_value = schedules_response
     # send delete request for delete_schedule endpoint
     response = await api_client.delete(
         delete_schedule_uri, json={webapp.KEY_SCHEDULE: "5"}
     )
     # verify mocks calling
     api_connect.assert_called_once()
+    api_get_schedules.assert_called_once()
     api_delete_schedule.assert_called_once_with("5")
     response_serializer.assert_not_called()
     api_disconnect.assert_called_once()
