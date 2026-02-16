@@ -76,17 +76,21 @@ jobs:
       - name: Set new project version
         # yamllint disable rule:line-length
         # editorconfig-checker-disable
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
         run: |
-          echo "${{ steps.bumper.outputs.next }}" > VERSION
-          sed -i 's/  version: .*/  version: "${{ steps.bumper.outputs.next }}"/g' mkdocs.yml
+          echo "$NEXT_VERSION" > VERSION
+          sed -i "s/  version: .*/  version: \"$NEXT_VERSION\"/g" mkdocs.yml
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
 
       - name: Commit, tag, and push
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
         run: |
           git add VERSION
           git add mkdocs.yml
-          git commit -m "build: bump version to ${{ steps.bumper.outputs.next }}"
+          git commit -m "build: bump version to $NEXT_VERSION"
           git push
 
       - name: Get current date
@@ -112,37 +116,47 @@ jobs:
       - name: Create a release name
         id: release_name
         uses: actions/github-script@v8
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
+          INPUT_TITLE: ${{ github.event.inputs.title }}
         with:
           script: |
-            var retval = '${{ steps.bumper.outputs.next }}'
-            if ('${{ github.event.inputs.title }}') {
-              retval = retval.concat(' - ${{ github.event.inputs.title }}')
+            var retval = process.env.NEXT_VERSION
+            if (process.env.INPUT_TITLE) {
+              retval = retval.concat(' - ' + process.env.INPUT_TITLE)
             }
             core.setOutput('value', retval)
 
       - name: Create a release
         id: gh_release
         uses: actions/github-script@v8
+        env:
+          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
+          RELEASE_NAME: ${{ steps.release_name.outputs.value }}
         with:
           github-token: ${{ secrets.RELEASE_PAT }}
           script: |
             const repo_name = context.payload.repository.full_name
             const response = await github.request('POST /repos/' + repo_name + '/releases', {
-              tag_name: '${{ steps.bumper.outputs.next }}',
-              name: '${{ steps.release_name.outputs.value }}',
+              tag_name: process.env.NEXT_VERSION,
+              name: process.env.RELEASE_NAME,
               generate_release_notes: true
             })
             core.setOutput('html_url', response.data.html_url)
 
       - name: Set development project version
-        run: echo "${{ steps.bumper.outputs.dev }}" > VERSION
+        env:
+          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
+        run: echo "$DEV_VERSION" > VERSION
 
       - name: Commit and push
         # yamllint disable rule:line-length
         # editorconfig-checker-disable
+        env:
+          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
         run: |
           git add VERSION
-          git commit -m "build: bump version to ${{ steps.bumper.outputs.dev }} [skip ci]"
+          git commit -m "build: bump version to $DEV_VERSION [skip ci]"
           git push
         # yamllint enable rule:line-length
         # editorconfig-checker-enable
