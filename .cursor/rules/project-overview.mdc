@@ -1,0 +1,19 @@
+---
+description: Project overview and tech stack for switcher_webapi
+alwaysApply: true
+---
+
+# switcher_webapi
+
+An aiohttp web service wrapping [aioswitcher](https://github.com/TomerFi/aioswitcher) for controlling Switcher smart devices via REST API.
+
+## Tech Stack
+
+- **Runtime**: Python 3.13+
+- **Web framework**: aiohttp
+- **Device communication**: aioswitcher
+- **Linting/Formatting**: Ruff (configured in pyproject.toml)
+- **Type checking**: mypy
+- **Testing**: pytest with pytest-asyncio (auto mode), pytest-aiohttp
+- **Docs**: MkDocs with Material theme
+- **Container**: Multi-platform builds (amd64, arm/v7, arm64/v8)

@@ -1,0 +1,19 @@
+---
+description: CI/CD conventions for GitHub Actions workflows
+globs: ".github/workflows/**"
+alwaysApply: false
+---
+
+# CI/CD Rules
+
+## Workflows
+
+- `pr.yml` — runs on pull requests
+- `stage.yml` — runs on push to default branch
+- `release.yml` — handles releases
+- `pages.yml` — deploys MkDocs documentation
+
+## Container Builds
+
+- Multi-platform: amd64, arm/v7, arm64/v8
+- Dockerfile should run as non-root user (pending fix)
