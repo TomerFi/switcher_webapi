@@ -1,0 +1,19 @@
+---
+description: Testing conventions for switcher_webapi test files
+globs: "app/tests/**"
+alwaysApply: false
+---
+
+# Testing Rules
+
+- Mock aioswitcher in all tests — never communicate with real devices
+- Use `pytest-asyncio` in auto mode (no `@pytest.mark.asyncio` decorators needed)
+- Use `pytest-aiohttp` for web client testing via the `api_client` fixture
+- Tests live in `app/tests/`
+- Minimum 85% coverage (configured in pyproject.toml)
+
+## Test Structure
+
+- `test_web_app.py` — endpoint tests
+- `test_serialization_helper.py` — helper function tests
+- `test_access_logger_implementation.py` — logger tests

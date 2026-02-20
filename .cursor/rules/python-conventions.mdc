@@ -1,0 +1,15 @@
+---
+description: Python coding conventions for switcher_webapi source files
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python Conventions
+
+- Use venv (`.venv/bin/` binaries for tooling)
+- Type annotations on all function signatures
+- PEP 257 docstrings on all public modules, classes, and functions
+- All request handlers must be `async`
+- Ruff for linting and formatting (not flake8/black/isort)
+- Configuration lives in `pyproject.toml`
+- Line length: 88 characters

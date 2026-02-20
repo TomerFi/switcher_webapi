@@ -1,0 +1,22 @@
+---
+description: Architecture constraints and handler patterns for switcher_webapi
+alwaysApply: false
+---
+
+# Architecture
+
+## Handler Pattern
+
+All endpoint handlers follow this structure:
+
+1. Extract `device_type`, `ip`, `id`, and optional `login_key` from query params
+2. Open `SwitcherApi` async context manager
+3. Call the appropriate aioswitcher method
+4. Serialize and return the result as JSON
+
+## Constraints
+
+- All handlers must be `async def` and return `web.Response`
+- Use `@routes.get` / `@routes.post` / `@routes.patch` / `@routes.delete` decorators
+- Endpoint path constants defined at module level in `app/webapp.py`
+- Error handling must return appropriate HTTP status codes (400, 404, 500)
