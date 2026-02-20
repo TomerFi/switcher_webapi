@@ -16,4 +16,4 @@ alwaysApply: false
 ## Container Builds
 
 - Multi-platform: amd64, arm/v7, arm64/v8
-- Dockerfile should run as non-root user (pending fix)
+- Dockerfile must run as a non-root user
