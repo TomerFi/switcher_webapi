@@ -594,7 +594,7 @@ async def test_delete_schedule_with_faulty_no_schedule_delete_request(
     "aioswitcher.api.SwitcherApi.get_schedules",
     side_effect=Exception("get_schedules failure"),
 )
-async def test_errorneous_delete_schedule_get_schedules_failure(
+async def test_erroneous_delete_schedule_get_schedules_failure(
     api_get_schedules,
     api_delete_schedule,
     response_serializer,
@@ -621,7 +621,7 @@ async def test_errorneous_delete_schedule_get_schedules_failure(
 
 @patch("aioswitcher.api.SwitcherApi.delete_schedule", side_effect=Exception("blabla"))
 @patch("aioswitcher.api.SwitcherApi.get_schedules")
-async def test_errorneous_delete_schedule_delete_request(
+async def test_erroneous_delete_schedule_delete_request(
     api_get_schedules,
     api_delete_schedule,
     response_serializer,
@@ -799,7 +799,7 @@ async def test_create_schedule_with_faulty_missing_key_post_request(
 
 
 @patch("aioswitcher.api.SwitcherApi.create_schedule", side_effect=Exception("blabla"))
-async def test_errorneous_create_schedule(
+async def test_erroneous_create_schedule(
     api_create_schedule, response_serializer, api_connect, api_disconnect, api_client
 ):
     json_body = {webapp.KEY_START: "11:00", webapp.KEY_STOP: "11:15"}
