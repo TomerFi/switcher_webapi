@@ -1,2 +1,2 @@
-aioswitcher==6.1.0
+aioswitcher==6.1.1
 aiohttp==3.13.3
