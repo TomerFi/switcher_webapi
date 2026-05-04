@@ -17,8 +17,8 @@ All endpoint handlers follow this structure:
 
 - All handlers must be `async def` and return `web.Response`
 - Use `@routes.get` / `@routes.post` / `@routes.patch` / `@routes.delete` decorators
-- Endpoint path constants defined at module level in `app/webapp.py`
-- Error handling must return appropriate HTTP status codes (400, 404, 500)
+- Endpoint path constants are defined at module level in `app/webapp.py`
+- Uncaught exceptions are caught by `error_middleware` and translated into 500 responses; `delete_schedule` is the only handler returning 404
 
 ## Python Conventions
 

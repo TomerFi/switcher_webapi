@@ -34,15 +34,27 @@ podman run -d --name smoke-test -p 8000:8000 switcher_webapi:local
 3. Poll health:
 
 ```bash
+healthy=0
 for i in {1..12}; do
   response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
-  [ "$response" = "200" ] && break
+  if [ "$response" = "200" ]; then
+    healthy=1
+    break
+  fi
   echo "Attempt $i: status $response, retrying in 5s..."
   sleep 5
 done
+
+if [ "$healthy" != "1" ]; then
+  echo "Health check failed after 12 attempts!"
+  podman logs smoke-test || true
+  podman stop smoke-test || true
+  podman rm smoke-test || true
+  exit 1
+fi
 ```
 
-4. If healthy (else report failure):
+4. Show logs and clean up:
 
 ```bash
 podman logs smoke-test
