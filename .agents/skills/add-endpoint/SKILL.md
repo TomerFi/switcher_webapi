@@ -1,16 +1,35 @@
 ---
 name: add-endpoint
-description: Step-by-step guide for adding a new API endpoint to switcher_webapi. Use when adding new device functionality or API routes.
+description: Step-by-step guide for adding a new API endpoint to switcher_webapi. Covers defining endpoint constants, creating async handlers, adding tests, updating docs, and running tests.
 ---
 
-# Adding a New Endpoint
+## What I do
 
-## When to Use
+- Define endpoint path constants in `app/webapp.py`
+- Create async handler functions with the standard pattern
+- Add pytest-asyncio tests using the `api_client` fixture
+- Update MkDocs endpoint documentation
+- Guide through running tests and verifying coverage
+
+## When to use me
+
+Use this when adding a new API endpoint to switcher_webapi, such as:
 - Adding new device control functionality
 - Exposing new aioswitcher API methods
 - Creating new query endpoints
 
-## Step 1: Define Endpoint Constant
+## Use the standard handler pattern
+
+All endpoint handlers follow this structure:
+
+1. Extract `device_type`, `ip`, `id`, and optional `login_key` from query params
+2. Open `SwitcherApi` async context manager
+3. Call the appropriate aioswitcher method
+4. Serialize and return the result as JSON
+
+## Steps to add an endpoint
+
+### Step 1: Define Endpoint Constant
 
 In `app/webapp.py`, add the endpoint path constant (around line 54-71):
 
@@ -18,7 +37,7 @@ In `app/webapp.py`, add the endpoint path constant (around line 54-71):
 ENDPOINT_YOUR_ENDPOINT = "/switcher/your_endpoint"
 ```
 
-## Step 2: Create Handler Function
+### Step 2: Create Handler Function
 
 Add the async handler with the appropriate decorator:
 
@@ -38,7 +57,7 @@ async def your_endpoint(request: web.Request) -> web.Response:
         return web.json_response(_serialize_object(result))
 ```
 
-## Step 3: Add Tests
+### Step 3: Add Tests
 
 In `app/tests/test_web_app.py`, add test cases:
 
@@ -56,19 +75,19 @@ async def test_successful_your_endpoint_get_request(api_client, url):
         assert resp.status == 200
 ```
 
-## Step 4: Update Documentation
+### Step 4: Update Documentation
 
 Create or update the relevant docs file in `docs/`:
 - Add endpoint to the appropriate `endpoints_*.md` file
 - Include method, path, description, and query parameters
 
-## Step 5: Run Tests
+### Step 5: Run Tests
 
-Use the `/test` command to run tests with coverage.
+Run `ruff` for linting and `pytest` with coverage to verify the changes.
 
 ## Reference
 
 Look at existing endpoints for patterns:
-- `get_state` - Simple GET returning device state
-- `turn_on` - POST with optional body parameters
-- `control_breeze_device` - PATCH with complex body handling
+- `get_state` — Simple GET returning device state
+- `turn_on` — POST with optional body parameters
+- `control_breeze_device` — PATCH with complex body handling
