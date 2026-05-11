@@ -12,6 +12,10 @@ on:
         default: "auto"
         required: true
 
+concurrency:
+  group: ${{workflow}}-${{github.ref}}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest

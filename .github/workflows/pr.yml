@@ -6,6 +6,10 @@ on:
 #    branches:
 #      - dev
 
+concurrency:
+  group: ${{workflow}}-${{github.ref}}-${{github.event.number}}
+  cancel-in-progress: true
+
 permissions:
   content: read
 

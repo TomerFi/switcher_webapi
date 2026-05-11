@@ -5,6 +5,10 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: ${{workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
 jobs:
   deploy-pages:
     runs-on: ubuntu-latest
