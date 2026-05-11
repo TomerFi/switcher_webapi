@@ -9,6 +9,8 @@ jobs:
   deploy-pages:
     runs-on: ubuntu-latest
     environment: github-pages
+    permissions:
+      pages: write
     if: ${{ github.ref != 'refs/tags/early-access' }}
     name: Build documentation site and deploy to GH-Pages
     steps:

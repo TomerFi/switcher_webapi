@@ -6,6 +6,9 @@ on:
 #    branches:
 #      - dev
 
+permissions:
+  content: read
+
 jobs:
   build-app:
     runs-on: ubuntu-latest
@@ -59,8 +62,6 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     name: Build docker
-    permissions:
-      pull-requests: read
     steps:
       - name: Checkout sources
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
