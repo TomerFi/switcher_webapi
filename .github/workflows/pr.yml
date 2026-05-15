@@ -10,9 +10,6 @@ concurrency:
   group: ${{workflow}}-${{github.ref}}-${{github.event.number}}
   cancel-in-progress: true
 
-permissions:
-  content: read
-
 jobs:
   build-app:
     runs-on: ubuntu-latest
