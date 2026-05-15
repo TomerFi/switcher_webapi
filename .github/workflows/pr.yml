@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build project
     permissions:
+      contents: read
       checks: write
       pull-requests: write
     steps:
