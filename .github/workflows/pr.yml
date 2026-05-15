@@ -72,6 +72,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Hadolint Dockerfile
+        id: hadolint
+        uses: hadolint/hadolint-action@3fc49fb50d59c6ab7917a2e4195dba633e515b29 # v3.2.0
+        with:
+          dockerfile: Dockerfile
+
       - name: Get current date
         id: getDate
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
@@ -96,6 +102,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   e2e-smoke-test:
+    needs: build-docker
     runs-on: ubuntu-latest
     name: E2E smoke test
     steps:

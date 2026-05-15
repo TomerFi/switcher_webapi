@@ -31,6 +31,12 @@ jobs:
           fetch-depth: 0
           ssh-key: ${{ secrets.DEPLOY_KEY }}
 
+      - name: Hadolint Dockerfile
+        id: hadolint
+        uses: hadolint/hadolint-action@3fc49fb50d59c6ab7917a2e4195dba633e515b29 # v3.2.0
+        with:
+          dockerfile: Dockerfile
+
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"

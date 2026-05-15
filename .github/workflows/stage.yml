@@ -25,6 +25,12 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Hadolint Dockerfile
+        id: hadolint
+        uses: hadolint/hadolint-action@3fc49fb50d59c6ab7917a2e4195dba633e515b29 # v3.2.0
+        with:
+          dockerfile: Dockerfile
+
       - name: Setup Python 3.13
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
