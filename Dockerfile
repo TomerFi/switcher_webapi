@@ -4,19 +4,19 @@ ARG TIMEZONE="Asia/Jerusalem"
 
 RUN ln -fs /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 
-RUN apt-get update && apt-get -y install build-essential && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y --no-install-recommends install build-essential && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/switcher_webapi
 
 COPY LICENSE app/webapp.py requirements.txt ./
 
-RUN pip install -U pip
+RUN pip install --no-cache-dir -U pip
 
 RUN AIOHTTP_NO_EXTENSIONS=1 \
     FROZENLIST_NO_EXTENSIONS=1 \
     MULTIDICT_NO_EXTENSIONS=1 \
     YARL_NO_EXTENSIONS=1 \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
 RUN adduser --system --no-create-home appuser \
     && chown -R appuser /usr/switcher_webapi

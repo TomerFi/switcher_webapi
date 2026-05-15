@@ -5,20 +5,27 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy-pages:
     runs-on: ubuntu-latest
     environment: github-pages
+    permissions:
+      contents: write
     if: ${{ github.ref != 'refs/tags/early-access' }}
     name: Build documentation site and deploy to GH-Pages
     steps:
       - name: Source checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ github.ref }}
+          persist-credentials: false
 
       - name: Setup Python 3.13
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: '3.13'
           cache: 'pip'
@@ -34,7 +41,7 @@ jobs:
         run: mkdocs build
 
       - name: Deploy to GH-Pages
-        uses: peaceiris/actions-gh-pages@v4.0.0
+        uses: peaceiris/actions-gh-pages@47f197a2200bb9de68ba5f48fad1c088eb1c4a32 # v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
