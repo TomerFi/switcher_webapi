@@ -12,6 +12,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "assertpy>=1.1",
     "mypy>=2.3.0",
     "pytest>=9.1.1",
     "pytest-aiohttp>=1.1.1",
