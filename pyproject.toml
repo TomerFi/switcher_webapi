@@ -13,7 +13,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "assertpy>=1.1",
-    "mypy>=2.3.0",
+    "ty>=0.0.66",
     "pytest>=9.1.1",
     "pytest-aiohttp>=1.1.1",
     "pytest-asyncio>=1.4.0",
@@ -41,9 +41,6 @@ ignore = ["D100", "D104"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"
-
-[tool.mypy]
-ignore_missing_imports = true
 
 [tool.coverage.run]
 source = ["app"]

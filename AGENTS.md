@@ -27,6 +27,7 @@ All endpoint handlers follow this structure:
 - PEP 257 docstrings on all public modules, classes, and functions
 - All request handlers must be `async`
 - Ruff for linting and formatting (not flake8/black/isort)
+- Ty for type checking (not mypy)
 - Configuration lives in `pyproject.toml`
 - Line length: 88 characters
 
@@ -76,8 +77,10 @@ This project has an [AI policy](AI_POLICY.md). Always read it and ensure all sug
 
 **Key Files:**
 - `README.md` — user-facing overview and quick start
-- `CONTRIBUTING.md` — developer setup, workflow, and IDE configuration
+- `CONTRIBUTING.md` — developer setup, workflow, IDE configuration, and commands
 - `docs/` — MkDocs site with endpoint documentation
+
+For all dev commands (linting, testing, building), see CONTRIBUTING.md.
 
 When to update docs:
 - New endpoint added

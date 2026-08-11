@@ -51,7 +51,7 @@ Run linters using [ruff][ruff]:
 ```shell
 uv run ruff check .
 uv run ruff format --check .
-uv run mypy app/
+uv run ty check app/
 ```
 
 ### Testing
