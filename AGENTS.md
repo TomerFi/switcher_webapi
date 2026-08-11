@@ -22,7 +22,7 @@ All endpoint handlers follow this structure:
 
 ## Python Conventions
 
-- Use venv (`.venv/bin/` binaries for tooling)
+- Use uv for dependency management and tool execution
 - Type annotations on all function signatures
 - PEP 257 docstrings on all public modules, classes, and functions
 - All request handlers must be `async`

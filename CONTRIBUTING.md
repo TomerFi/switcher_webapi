@@ -30,26 +30,10 @@ The released image is deployed to [Docker Hub][docker_hub].
 
 ### Setup
 
-Create and activate a virtual environment:
+Install [uv](https://docs.astral.sh/uv/), then:
 
 ```shell
-# Unix/Linux/macOS
-python -m venv .venv
-source .venv/bin/activate
-
-# Windows (Command Prompt)
-python -m venv .venv
-.venv\Scripts\activate
-
-# Windows (PowerShell)
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-Install dependencies:
-
-```shell
-pip install -r requirements.txt -r requirements_test.txt -r requirements_docs.txt
+uv sync --no-install-project --group dev --group docs
 ```
 
 ### Linting
@@ -57,9 +41,9 @@ pip install -r requirements.txt -r requirements_test.txt -r requirements_docs.tx
 Run linters using [ruff][ruff]:
 
 ```shell
-ruff check .
-ruff format --check .
-mypy --ignore-missing-imports app/
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy app/
 ```
 
 ### Testing
@@ -68,13 +52,13 @@ Run tests using [pytest][pytest]:
 
 ```shell
 # run all tests
-pytest -v
+uv run pytest -v
 
 # run a specific test
-pytest -v -k "test_name_goes_here"
+uv run pytest -v -k "test_name_goes_here"
 
 # run tests with coverage
-pytest -v --cov --cov-report term-missing
+uv run pytest -v --cov --cov-report term-missing
 ```
 
 ### Documentation
@@ -83,10 +67,10 @@ Generate and serve the docs site:
 
 ```shell
 # generate the docs site
-mkdocs build
+uv run mkdocs build
 
 # serve the docs site locally
-mkdocs serve
+uv run mkdocs serve
 ```
 
 ### Cursor IDE
