@@ -49,9 +49,9 @@ uv sync --no-install-project --group dev --group docs
 Run linters using [ruff][ruff]:
 
 ```shell
-uv run ruff check .
-uv run ruff format --check .
-uv run ty check app/
+uv run ruff check
+uv run ruff format --check
+uv run ty check
 ```
 
 ### Testing

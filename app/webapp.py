@@ -1,10 +1,10 @@
 """Web service implemented with aiohttp for integrating the Switcher smart devices."""
 
 from argparse import ArgumentParser
+from collections.abc import Callable
 from datetime import timedelta
 from enum import Enum
 from logging import config
-from typing import Callable, Dict, List, Set, Union
 
 from aiohttp import web
 from aiohttp.abc import AbstractAccessLogger
@@ -113,14 +113,14 @@ parser.add_argument(
 routes = web.RouteTableDef()
 
 
-def _serialize_object(obj: object) -> Dict[str, Union[List[str], str]]:
+def _serialize_object(obj: object) -> dict[str, list[str] | str]:
     """Use for converting enum to primitives and remove not relevant keys ."""
     serialized_dict = dict()  # type: Dict[str, Union[List[str], str]]
     for k, v in obj.__dict__.items():
         if not k == "unparsed_response":
             if isinstance(v, Enum):
                 serialized_dict[k] = v.name
-            elif isinstance(v, Set):
+            elif isinstance(v, set):
                 serialized_dict[k] = [m.name if isinstance(m, Enum) else m for m in v]
             else:
                 serialized_dict[k] = v

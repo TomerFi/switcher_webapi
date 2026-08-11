@@ -62,10 +62,13 @@ async def your_endpoint(request: web.Request) -> web.Response:
 In `app/tests/test_web_app.py`, add test cases:
 
 ```python
-@mark.parametrize("url", [
-    "/switcher/your_endpoint?type=plug&id=ab1c2d&ip=1.2.3.4",
-    "/switcher/your_endpoint?type=plug&id=ab1c2d&ip=1.2.3.4&key=18",
-])
+@mark.parametrize(
+    "url",
+    [
+        "/switcher/your_endpoint?type=plug&id=ab1c2d&ip=1.2.3.4",
+        "/switcher/your_endpoint?type=plug&id=ab1c2d&ip=1.2.3.4&key=18",
+    ],
+)
 async def test_successful_your_endpoint_get_request(api_client, url):
     with patch("app.webapp.SwitcherApi") as mock_api:
         mock_api.return_value.__aenter__.return_value.your_method = AsyncMock(

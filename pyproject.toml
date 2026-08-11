@@ -28,13 +28,10 @@ docs = [
 ]
 
 [tool.ruff]
-line-length = 88
 target-version = "py313"
-exclude = [".venv", "venv", ".git", "build", "dist", "__pycache__", "site"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "D", "W"]
-ignore = ["D100", "D104"]
+select = ["E", "F", "I", "W", "UP", "B", "RUF"]
 
 [tool.ruff.lint.per-file-ignores]
 "app/tests/*.py" = ["E501", "D103"]
