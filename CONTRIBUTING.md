@@ -17,7 +17,15 @@ docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webap
 
 ## Project
 
-[Docker][docker] multi-platform image running a [Python][python] web app. The doc site is built with [MkDocs][mkdocs].
+[Docker][docker] multi-platform image running a [Python][python] web app. Supported platforms: amd64, arm/v7, arm64/v8.
+
+When building locally, build for all three platforms.
+
+## AI Policy
+
+This project has a clear AI policy — read [AI_POLICY.md](AI_POLICY.md) and follow it. You're responsible for everything you submit.
+
+The doc site is built with [MkDocs][mkdocs].
 
 - [app/webapp.py](https://github.com/TomerFi/switcher_webapi/blob/dev/app/webapp.py) the application file
 - [app/tests/](https://github.com/TomerFi/switcher_webapi/tree/dev/app/tests) unit tests

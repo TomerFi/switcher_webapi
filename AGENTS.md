@@ -43,6 +43,19 @@ All endpoint handlers follow this structure:
 - Multi-platform: amd64, arm/v7, arm64/v8
 - Dockerfile must run as a non-root user
 
+### Multi-Platform Builds
+
+Requires QEMU emulation (`/usr/share/qemu/binfmt.d/*` copied to `/etc/binfmt.d/`).
+
+```bash
+podman buildx build \
+  --build-arg BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
+  --build-arg VCS_REF=$(git rev-parse --short HEAD) \
+  --build-arg VERSION=$(grep '^version' pyproject.toml | head -1 | cut -d'"' -f2) \
+  --platform linux/amd64,linux/arm/v7,linux/arm64/v8 \
+  -t switcher_webapi:<tag> .
+```
+
 ## Git Workflow
 
 - Conventional commit format for PR titles (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`)
@@ -54,6 +67,10 @@ When reviewing changes:
 - **Code Quality**: no duplicated code, proper error handling, correct async/await patterns
 - **Security**: no exposed secrets, input validation on endpoint parameters
 - **Conventions**: ruff linting configured in `pyproject.toml`, tests mock aioswitcher
+
+## AI Policy
+
+This project has an [AI policy](AI_POLICY.md). Always read it and ensure all suggestions, code, and contributions comply. If any behavior seems to conflict with the policy, warn the user and ask for guidance.
 
 ## Documentation
 
