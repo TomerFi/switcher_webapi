@@ -1,9 +1,0 @@
-# Sourcery configuration for switcher_webapi
-# https://docs.sourcery.ai/Configuration/
----
-ignore:
-  - app/tests/**
-  - docs/**
-
-rule_settings:
-  python_version: "3.13"
