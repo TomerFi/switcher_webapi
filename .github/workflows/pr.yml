@@ -41,6 +41,9 @@ jobs:
           uv run --locked ruff format --check
           uv run --locked ty check
 
+      - name: Ensure assistants links are up to date
+        run: uvx aicfg link agents --to claude-code --ci
+
       - name: Test project
         run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
@@ -76,7 +79,7 @@ jobs:
 
       - name: Get current date
         id: getDate
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
@@ -122,7 +125,7 @@ jobs:
       - name: Run container and test health endpoint
         run: |
           docker run -d --name test-container -p 8000:8000 switcher_webapi:test
-          for i in {1..12}; do
+          for _ in {1..12}; do
             response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
             [ "$response" = "200" ] && break
             sleep 5

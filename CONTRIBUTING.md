@@ -1,112 +1,54 @@
 # Contributing to *switcher_webapi*
 
-:clap: First off, thank you for taking the time to contribute. :clap:
-
-- Fork the repository
-- Create a new branch on your fork
-- Commit your changes
-- Create a pull request against the `dev` branch
-
-## Early-access
-
-Early-access image deployed to [GitHub container registry][ghcr]:
-
-```shell
-docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webapi:early-access
-```
-
-## Project
-
-[Docker][docker] multi-platform image running a [Python][python] web app. Supported platforms: amd64, arm/v7, arm64/v8.
-
-When building locally, build for all three platforms.
+Thank you for contributing. This guide covers the essentials.
 
 ## AI Policy
 
 This project has a clear AI policy — read [AI_POLICY.md](AI_POLICY.md) and follow it. You're responsible for everything you submit.
 
-The doc site is built with [MkDocs][mkdocs].
+## Setup
 
-- [app/webapp.py](https://github.com/TomerFi/switcher_webapi/blob/dev/app/webapp.py) the application file
-- [app/tests/](https://github.com/TomerFi/switcher_webapi/tree/dev/app/tests) unit tests
-- [Dockerfile](https://github.com/TomerFi/switcher_webapi/blob/dev/Dockerfile) image instructions
-- [docs](https://github.com/TomerFi/switcher_webapi/tree/dev/docs) sources for the documentation site
-
-The released image is deployed to [Docker Hub][docker_hub].
-
-## Development
-
-### Setup
-
-Install [uv](https://docs.astral.sh/uv/), then:
-
-```shell
+```bash
+git clone <repo-url>
+cd switcher_webapi
 uv sync --no-install-project --group dev --group docs
 ```
 
-### Linting
+See [AGENTS.md](AGENTS.md) for linting, testing, and build commands.
 
-Run linters using [ruff][ruff]:
+## How to Add Handlers
 
-```shell
-uv run ruff check
-uv run ruff format --check
-uv run ty check
+1. Define an endpoint path constant at module level in `app/webapp.py`
+2. Write the handler — it must be `async def` and return `web.Response`
+3. The handler extracts `device_type`, `ip`, `id`, and optional `login_key` from query params
+4. Open `SwitcherApi` as an async context manager, call the appropriate aioswitcher method, and return the serialized result
+5. Register the route with the matching `@routes.get` / `@routes.post` / `@routes.patch` / `@routes.delete` decorator
+6. Add tests — mock aioswitcher and test with the `api_client` fixture
+
+## Local Checks
+
+This project uses [prek](https://github.com/j178/prek) (pre-commit replacement) to run lint and format checks automatically before each commit.
+
+```bash
+uv run prek install
 ```
 
-### Testing
+This installs the Git hook. After that, checks run automatically on every commit. To run them manually against all files:
 
-Run tests using [pytest][pytest]:
-
-```shell
-# run all tests
-uv run pytest -v
-
-# run a specific test
-uv run pytest -v -k "test_name_goes_here"
-
-# run tests with coverage
-uv run pytest -v --cov --cov-report term-missing
+```bash
+uv run prek run --all-files
 ```
 
-### Documentation
+## Commit Style
 
-Generate and serve the docs site:
+- Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`
+- One logical change per commit
 
-```shell
-# generate the docs site
-uv run mkdocs build
+## PR Process
 
-# serve the docs site locally
-uv run mkdocs serve
-```
+1. Branch from `dev` with a conventional name: `feat/add-endpoint`, `fix/health-check`
+2. Commit with a descriptive message
+3. Run all checks before submitting: `uv run ruff check --fix && uv run ruff format && uv run ty check && uv run pytest -v --cov`
+4. Open PR against `dev` with a clear description of what changed and why
+5. Address feedback
 
-### Cursor IDE
-
-If using [Cursor][cursor], agents and commands are available in `.cursor/`:
-
-**Agents:**
-
-- `code-reviewer` - Reviews code before committing
-- `test-writer` - Writes tests using pytest-asyncio
-- `docs-writer` - Updates documentation
-- `smoke-tester` - Runs E2E smoke tests on the container
-
-**Commands:**
-
-- `/lint` - Run linting checks
-- `/test` - Run tests
-- `/serve-docs` - Serve docs locally
-- `/stop-docs` - Stop docs server
-- `/image-build` - Build container image
-- `/dockerfile-lint` - Lint Dockerfile with hadolint
-
-<!-- LINKS -->
-[cursor]: https://cursor.sh/
-[docker]: https://www.docker.com/
-[docker_hub]: https://hub.docker.com/r/tomerfi/switcher_webapi
-[ghcr]: https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi
-[mkdocs]: https://www.mkdocs.org/
-[pytest]: https://docs.pytest.org/
-[python]: https://www.python.org/
-[ruff]: https://docs.astral.sh/ruff/

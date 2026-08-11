@@ -1,0 +1,39 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+    hooks:
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 39d9ac5938dadb73df0564a45f163e25ff9fa6e2  # frozen: v0.16.1
+    hooks:
+      - id: ruff-check
+        args: [ --fix ]
+      - id: ruff-format
+
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: a4405bd34b6505ed51226ba2a5b5428625177d6a  # frozen: v0.0.69
+    hooks:
+      - id: ty
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: 914e7df21a07ef503a81201c76d2b11c789d3fca  # frozen: v1.7.12
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
+    rev: 3aa28ce11a84d747c5695ad10b81945f2400b54f  # frozen: v3.8.0
+    hooks:
+      - id: editorconfig-checker
+
+  - repo: https://github.com/TomerFi/aicfg
+    rev: 2e26b58b953cb06b64837d5769edde559ba4d91f  # frozen: v0.0.6
+    hooks:
+      - id: link
+        args: ["agents", "--to", "claude-code"]
