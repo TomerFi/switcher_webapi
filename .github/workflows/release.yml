@@ -22,6 +22,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  UV_PYTHON: "3.13"
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -49,28 +52,23 @@ jobs:
 
       - name: Setup SSH signing
         run: |
-          mkdir -p $RUNNER_TEMP
-          echo "${{ secrets.SIGNING_KEY }}" > $RUNNER_TEMP/signing_key
-          chmod 600 $RUNNER_TEMP/signing_key
+          mkdir -p "$RUNNER_TEMP"
+          echo "${{ secrets.SIGNING_KEY }}" > "$RUNNER_TEMP/signing_key"
+          chmod 600 "$RUNNER_TEMP/signing_key"
           git config gpg.format ssh
-          git config user.signingkey $RUNNER_TEMP/signing_key
+          git config user.signingkey "$RUNNER_TEMP/signing_key"
           git config commit.gpgsign true
 
-      - name: Setup Python 3.13
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9  # v9.0.0
         with:
-          python-version: '3.13'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
-            requirements_docs.txt
+          enable-cache: true
 
-      - name: Prepare python environment
-        run: |
-          pip install -r requirements.txt -r requirements_docs.txt
+      - name: Install dependencies
+        run: uv sync --no-install-project --group dev --group docs
 
       - name: Build documentation site
-        run: mkdocs build
+        run: uv run --locked mkdocs build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
@@ -91,23 +89,27 @@ jobs:
           bump: '${{ github.event.inputs.bump }}'
 
       - name: Set new project version
-        # yamllint disable rule:line-length
-        # editorconfig-checker-disable
+        id: uv_new
         env:
-          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
+          NEXT_VERSION: '${{ steps.bumper.outputs.next }}'
         run: |
-          echo "$NEXT_VERSION" > VERSION
-          sed -i "s/  version: .*/  version: \"$NEXT_VERSION\"/g" mkdocs.yml
-        # yamllint enable rule:line-length
-        # editorconfig-checker-enable
+          if [ "${{ github.event.inputs.bump }}" == "auto" ];
+          then jq_output=$(uv version --output-format json --bump stable "$NEXT_VERSION");
+          elif [ "${{ github.event.inputs.bump }}" == "patch" ];
+          then jq_output=$(uv version --output-format json --bump stable);
+          else jq_output=$(uv version --output-format json --bump "${{ github.event.inputs.bump }}"); fi
+          echo "version=$(echo "$jq_output" | jq -r '.version')" >> "$GITHUB_OUTPUT"
+
+      - name: Update mkdocs.yml version
+        run: |
+          sed -i "s/  version: .*/  version: \"${{ steps.uv_new.outputs.version }}\"/" mkdocs.yml
 
       - name: Commit, tag, and push
         env:
-          NEXT_VERSION: ${{ steps.bumper.outputs.next }}
+          NEXT_VERSION: '${{ steps.uv_new.outputs.version }}'
         run: |
-          git add VERSION
-          git add mkdocs.yml
-          git commit -m "build: bump version to $NEXT_VERSION"
+          git add pyproject.toml mkdocs.yml
+          git commit -m "build: bump version to $NEXT_VERSION [skip ci]"
           git push
 
       - name: Get current date
@@ -162,19 +164,14 @@ jobs:
             core.setOutput('html_url', response.data.html_url)
 
       - name: Set development project version
-        env:
-          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
-        run: echo "$DEV_VERSION" > VERSION
+        id: uv_dev
+        run: |
+          echo "version=$(uv version --output-format json --bump patch --bump dev | jq -r '.version')" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push
-        # yamllint disable rule:line-length
-        # editorconfig-checker-disable
         env:
-          DEV_VERSION: ${{ steps.bumper.outputs.dev }}
+          DEV_VERSION: '${{ steps.uv_dev.outputs.version }}'
         run: |
-          git add VERSION
+          git add pyproject.toml
           git commit -m "build: bump version to $DEV_VERSION [skip ci]"
           git push
-        # yamllint enable rule:line-length
-        # editorconfig-checker-enable
-

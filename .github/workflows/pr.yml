@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.number }}
   cancel-in-progress: true
 
+env:
+  UV_PYTHON: "3.13"
+
 jobs:
   build-app:
     runs-on: ubuntu-latest
@@ -24,30 +27,22 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Python 3.13
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9  # v9.0.0
         with:
-          python-version: '3.13'
+          enable-cache: true
 
-      - name: Cache pip repository
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}
-
-      - name: Prepare python environment
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt -r requirements_test.txt
+      - name: Install dependencies
+        run: uv sync --no-install-project --group dev
 
       - name: Lint project
         run: |
-          ruff check app/
-          ruff format --check app/
-          mypy --ignore-missing-imports app/
+          uv run --locked ruff check app/
+          uv run --locked ruff format --check app/
+          uv run --locked mypy app/
 
       - name: Test project
-        run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
+        run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
       - name: Report test summary
         uses: EnricoMi/publish-unit-test-result-action@d0a4676d0e0b938bc201470d88276b7c74c712b3 # v2.24.0
