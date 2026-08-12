@@ -1,6 +1,6 @@
 [project]
 name = "switcher_webapi"
-version = "2.5.3"
+version = "2.5.4.dev1"
 description = "Web service for controlling Switcher smart devices"
 readme = "README.md"
 license = "Apache-2.0"
