@@ -8,6 +8,7 @@ repos:
       - id: check-merge-conflict
       - id: detect-private-key
       - id: no-commit-to-branch
+        args: ["--branch", "dev"]
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -33,13 +34,18 @@ repos:
     hooks:
       - id: editorconfig-checker
 
-  - repo: https://github.com/TomerFi/aicfg
-    rev: 2e26b58b953cb06b64837d5769edde559ba4d91f  # frozen: v0.0.6
-    hooks:
-      - id: link
-        args: ["agents", "--to", "claude-code"]
+  # - repo: https://github.com/TomerFi/aicfg
+  #   rev: 2e26b58b953cb06b64837d5769edde559ba4d91f  # frozen: v0.0.6
+  #   hooks:
+  #     - id: link
+  #       args: ["agents", "--to", "claude-code"]
 
   - repo: https://github.com/hadolint/hadolint
     rev: 2eece55955ced00200be9729e9728cb7dacca505  # frozen: v2.15.1
     hooks:
       - id: hadolint
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 8d582f54b8e4cc5a61a85eeed1f54bbdb1e294fc  # frozen: 0.12.3
+    hooks:
+      - id: uv-lock
