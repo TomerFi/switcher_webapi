@@ -16,7 +16,7 @@ RUN AIOHTTP_NO_EXTENSIONS=1 \
     FROZENLIST_NO_EXTENSIONS=1 \
     MULTIDICT_NO_EXTENSIONS=1 \
     YARL_NO_EXTENSIONS=1 \
-    uv export --no-dev > /tmp/req.txt && \
+    uv export --no-dev --locked > /tmp/req.txt && \
     pip install --no-cache-dir -r /tmp/req.txt
 
 RUN adduser --system --no-create-home appuser \
