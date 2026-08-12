@@ -12,6 +12,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "aicfg>=0.0.6",
     "assertpy>=1.1",
     "ty>=0.0.66",
     "prek>=0.4.13",
