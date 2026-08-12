@@ -1088,7 +1088,7 @@ wheels = [
 
 [[package]]
 name = "switcher-webapi"
-version = "2.5.4.dev1"
+version = "2.5.4"
 source = { virtual = "." }
 dependencies = [
     { name = "aiohttp" },
