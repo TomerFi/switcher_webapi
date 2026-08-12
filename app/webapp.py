@@ -113,9 +113,9 @@ parser.add_argument(
 routes = web.RouteTableDef()
 
 
-def _serialize_object(obj: object) -> dict[str, list[str] | str]:
+def _serialize_object(obj: object) -> dict[str, object]:
     """Use for converting enum to primitives and remove not relevant keys ."""
-    serialized_dict = {}  # type: Dict[str, Union[List[str], str]]
+    serialized_dict: dict[str, object] = {}
     for k, v in obj.__dict__.items():
         if not k == "unparsed_response":
             if isinstance(v, Enum):

@@ -21,6 +21,7 @@ repos:
     rev: a4405bd34b6505ed51226ba2a5b5428625177d6a  # frozen: v0.0.69
     hooks:
       - id: ty
+        args: [--isolated]
 
   - repo: https://github.com/rhysd/actionlint
     rev: 914e7df21a07ef503a81201c76d2b11c789d3fca  # frozen: v1.7.12

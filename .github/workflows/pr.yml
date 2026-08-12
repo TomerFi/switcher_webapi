@@ -33,7 +33,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-install-project --group dev
+        run: uv sync --no-install-project --group dev --locked
 
       - name: Lint project
         run: |
@@ -42,7 +42,7 @@ jobs:
           uv run --locked ty check
 
       - name: Ensure assistants links are up to date
-        run: uvx aicfg link agents --to claude-code --ci
+        run: uv run --locked aicfg link agents --to claude-code --ci
 
       - name: Test project
         run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml

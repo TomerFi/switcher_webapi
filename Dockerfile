@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install build-essential
 
 WORKDIR /usr/switcher_webapi
 
-COPY LICENSE app/webapp.py pyproject.toml ./
+COPY LICENSE app/webapp.py pyproject.toml uv.lock ./
 
 RUN pip install --no-cache-dir uv
 
@@ -16,7 +16,8 @@ RUN AIOHTTP_NO_EXTENSIONS=1 \
     FROZENLIST_NO_EXTENSIONS=1 \
     MULTIDICT_NO_EXTENSIONS=1 \
     YARL_NO_EXTENSIONS=1 \
-    uv pip install --system .
+    uv export --no-dev > /tmp/req.txt && \
+    pip install --no-cache-dir -r /tmp/req.txt
 
 RUN adduser --system --no-create-home appuser \
     && chown -R appuser /usr/switcher_webapi

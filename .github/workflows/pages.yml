@@ -33,7 +33,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-install-project --group docs
+        run: uv sync --no-install-project --group docs --locked
 
       - name: Build documentation site
         run: uv run --locked mkdocs build

@@ -74,7 +74,7 @@ podman buildx build \
   --build-arg VCS_REF=$(git rev-parse --short HEAD) \
   --build-arg VERSION=$(grep '^version' pyproject.toml | head -1 | cut -d'"' -f2) \
   --platform linux/amd64,linux/arm/v7,linux/arm64/v8 \
-  -t switcher_webapi:<tag> .
+  --manifest switcher_webapi:<tag> .
 ```
 
 ## Documentation

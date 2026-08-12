@@ -40,7 +40,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-install-project --group dev
+        run: uv sync --no-install-project --group dev --locked
 
       - name: Test project
         run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml
