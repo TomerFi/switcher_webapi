@@ -108,7 +108,7 @@ jobs:
         env:
           NEXT_VERSION: '${{ steps.uv_new.outputs.version }}'
         run: |
-          git add pyproject.toml mkdocs.yml
+          git add pyproject.toml mkdocs.yml uv.lock
           git commit -m "build: bump version to $NEXT_VERSION [skip ci]"
           git push
 
@@ -172,6 +172,6 @@ jobs:
         env:
           DEV_VERSION: '${{ steps.uv_dev.outputs.version }}'
         run: |
-          git add pyproject.toml
+          git add pyproject.toml uv.lock
           git commit -m "build: bump version to $DEV_VERSION [skip ci]"
           git push
