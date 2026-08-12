@@ -34,11 +34,11 @@ repos:
     hooks:
       - id: editorconfig-checker
 
-  # - repo: https://github.com/TomerFi/aicfg
-  #   rev: 2e26b58b953cb06b64837d5769edde559ba4d91f  # frozen: v0.0.6
-  #   hooks:
-  #     - id: link
-  #       args: ["agents", "--to", "claude-code"]
+  - repo: https://github.com/TomerFi/aicfg
+    rev: 2e26b58b953cb06b64837d5769edde559ba4d91f  # frozen: v0.0.6
+    hooks:
+      - id: link
+        args: ["agents", "--to", "claude-code"]
 
   - repo: https://github.com/hadolint/hadolint
     rev: 2eece55955ced00200be9729e9728cb7dacca505  # frozen: v2.15.1
