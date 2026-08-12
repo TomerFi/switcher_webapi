@@ -97,8 +97,8 @@ jobs:
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=testing
           tags: tomerfi/switcher_webapi:testing
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,key=switcher-webapi-cache
+          cache-to: type=gha,key=switcher-webapi-cache,mode=max
 
   e2e-smoke-test:
     needs: build-docker
@@ -119,8 +119,8 @@ jobs:
           context: .
           load: true
           tags: switcher_webapi:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,key=switcher-webapi-cache
+          cache-to: type=gha,key=switcher-webapi-cache,mode=max
 
       - name: Run container and test health endpoint
         run: |

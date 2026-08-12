@@ -129,8 +129,8 @@ jobs:
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.current_date.outputs.date }}
             VERSION=${{ steps.bumper.outputs.next }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,key=switcher-webapi-cache
+          cache-to: type=gha,key=switcher-webapi-cache,mode=max
 
       - name: Create a release name
         id: release_name
