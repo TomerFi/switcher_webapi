@@ -37,3 +37,8 @@ repos:
     hooks:
       - id: link
         args: ["agents", "--to", "claude-code"]
+
+  - repo: https://github.com/hadolint/hadolint
+    rev: 2eece55955ced00200be9729e9728cb7dacca505  # frozen: v2.15.1
+    hooks:
+      - id: hadolint
