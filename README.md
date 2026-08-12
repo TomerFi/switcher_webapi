@@ -15,8 +15,17 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
 
 Check the docs: [https://switcher-webapi.figenblat.com][docs].
 
-> [!IMPORTANT]  
-> Since version 2, all endpoints require a device type. See [docs][docs].
+> [!IMPORTANT]
+> Starting version 2, all endpoints require a device type. See [docs][docs].
+
+<details>
+<summary><b>Early Access</b></summary>
+An early-access image is available on the <a href="https://github.com/TomerFi/switcher_webapi/pkgs/container/switcher_webapi">GitHub container registry</a>:
+
+```shell
+docker run -d -p 8000:8000 --name switcher_webapi ghcr.io/tomerfi/switcher_webapi:early-access
+```
+</details>
 
 <!-- Links -->
 [codecov]: https://codecov.io/gh/TomerFi/switcher_webapi

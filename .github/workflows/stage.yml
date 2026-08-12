@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  UV_PYTHON: "3.13"
+
 jobs:
   stage:
     runs-on: ubuntu-latest
@@ -31,21 +34,16 @@ jobs:
         with:
           dockerfile: Dockerfile
 
-      - name: Setup Python 3.13
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9  # v9.0.0
         with:
-          python-version: '3.13'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
-            requirements_test.txt
+          enable-cache: true
 
-      - name: Prepare python environment
-        run: |
-          pip install -r requirements.txt -r requirements_test.txt
+      - name: Install dependencies
+        run: uv sync --no-install-project --group dev --locked
 
       - name: Test project
-        run: pytest -v --cov --cov-report=xml:coverage.xml
+        run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
@@ -62,7 +60,7 @@ jobs:
 
       - name: Get current date
         id: getDate
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
 
       - name: Build images and push to GHCR
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0

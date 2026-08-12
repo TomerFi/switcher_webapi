@@ -7,6 +7,3 @@ coverage:
       default:
         branches:
           - dev
-
-comment:
-  layout: diff

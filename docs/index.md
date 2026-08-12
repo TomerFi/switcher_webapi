@@ -14,7 +14,7 @@ docker run -d -p 8000:8000 --name switcher_webapi tomerfi/switcher_webapi:latest
     ```
     Accepted values: DEBUG / **INFO** / WARNING / ERROR / CRITICAL
 
-???- note "New Switcher devices require a token." 
+???- note "New Switcher devices require a token."
     Get the token at https://switcher.co.il/GetKey.
 
 ???- warning "Since version 2.x.x, all endpoints require a device type query param."

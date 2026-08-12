@@ -10,6 +10,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.number }}
   cancel-in-progress: true
 
+env:
+  UV_PYTHON: "3.13"
+
 jobs:
   build-app:
     runs-on: ubuntu-latest
@@ -24,30 +27,25 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Python 3.13
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9  # v9.0.0
         with:
-          python-version: '3.13'
+          enable-cache: true
 
-      - name: Cache pip repository
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'requirements_test.txt') }}
-
-      - name: Prepare python environment
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt -r requirements_test.txt
+      - name: Install dependencies
+        run: uv sync --no-install-project --group dev --locked
 
       - name: Lint project
         run: |
-          ruff check app/
-          ruff format --check app/
-          mypy --ignore-missing-imports app/
+          uv run --locked ruff check
+          uv run --locked ruff format --check
+          uv run --locked ty check
+
+      - name: Ensure assistants links are up to date
+        run: uv run --locked aicfg link agents --to claude-code --ci
 
       - name: Test project
-        run: pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
+        run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml
 
       - name: Report test summary
         uses: EnricoMi/publish-unit-test-result-action@d0a4676d0e0b938bc201470d88276b7c74c712b3 # v2.24.0
@@ -81,7 +79,7 @@ jobs:
 
       - name: Get current date
         id: getDate
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
@@ -127,7 +125,7 @@ jobs:
       - name: Run container and test health endpoint
         run: |
           docker run -d --name test-container -p 8000:8000 switcher_webapi:test
-          for i in {1..12}; do
+          for _ in {1..12}; do
             response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health || true)
             [ "$response" = "200" ] && break
             sleep 5

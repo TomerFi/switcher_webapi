@@ -4,7 +4,7 @@
 
 | Method | Endpoint            | Description                            |
 |:-------|:--------------------|:---------------------------------------|
-| GET    | /switcher/get_state | Returns the current state of a device. | 
+| GET    | /switcher/get_state | Returns the current state of a device. |
 
 --8<-- "query_params.md"
 

@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 description: File a bug report
-labels: ["type: bug"]
+labels: ["bug"]
 
 body:
   - type: markdown
@@ -46,6 +46,7 @@ body:
         - Switcher Light SL02
         - Switcher Light SL02 Mini
         - Switcher Light SL03
+        - Switcher Heater
     validations:
       required: true
 
@@ -55,8 +56,6 @@ body:
       label: Firmware Version
       description: What the firmware version of the device in question?
       placeholder: ex. 3.2.1
-    validations:
-      required: true
 
   - type: textarea
     id: log-output
@@ -64,3 +63,9 @@ body:
       label: Relevant log output
       description: Please provide any relevant log output. Check for private info before submitting.
       render: shell
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the bug report here.

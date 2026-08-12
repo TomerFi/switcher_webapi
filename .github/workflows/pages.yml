@@ -9,6 +9,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  UV_PYTHON: "3.13"
+
 jobs:
   deploy-pages:
     runs-on: ubuntu-latest
@@ -24,21 +27,16 @@ jobs:
           ref: ${{ github.ref }}
           persist-credentials: false
 
-      - name: Setup Python 3.13
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9  # v9.0.0
         with:
-          python-version: '3.13'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
-            requirements_docs.txt
+          enable-cache: true
 
-      - name: Prepare python environment
-        run: |
-          pip install -r requirements.txt -r requirements_docs.txt
+      - name: Install dependencies
+        run: uv sync --no-install-project --group docs --locked
 
       - name: Build documentation site
-        run: mkdocs build
+        run: uv run --locked mkdocs build
 
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0

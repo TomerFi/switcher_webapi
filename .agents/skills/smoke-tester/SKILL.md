@@ -22,7 +22,11 @@ to health checks.
 1. Build:
 
 ```bash
-podman build -t switcher_webapi:local .
+podman build \
+  --build-arg BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
+  --build-arg VCS_REF=$(git rev-parse --short HEAD) \
+  --build-arg VERSION=$(grep '^version' pyproject.toml | head -1 | cut -d'"' -f2) \
+  -t switcher_webapi:local .
 ```
 
 2. Run container:
