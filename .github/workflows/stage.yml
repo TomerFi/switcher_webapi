@@ -73,8 +73,8 @@ jobs:
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ steps.getDate.outputs.date }}
             VERSION=early-access
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,key=switcher-webapi-cache
+          cache-to: type=gha,key=switcher-webapi-cache,mode=max
 
       - name: Push coverage report to CodeCov
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
