@@ -30,7 +30,7 @@ repos:
       - id: actionlint
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3aa28ce11a84d747c5695ad10b81945f2400b54f  # frozen: v3.8.0
+    rev: e8b4e28241a9ae8296ba6e4a491b5da4eda73283  # frozen: 3.11.1
     hooks:
       - id: editorconfig-checker
 
