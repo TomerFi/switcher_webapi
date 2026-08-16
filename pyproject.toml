@@ -12,9 +12,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "aicfg>=0.0.6",
+    "aicfg>=0.0.7",
     "assertpy>=1.1",
-    "ty>=0.0.66",
+    "ty>=0.0.71",
     "prek>=0.4.13",
     "pytest>=9.1.1",
     "pytest-aiohttp>=1.1.1",
