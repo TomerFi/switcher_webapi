@@ -7,15 +7,6 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "aicfg"
-version = "0.0.7"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/4b/58/2f1c06733e5761e6576b833db7d8a448b66d97d1877f81d077d2f0b9433a/aicfg-0.0.7.tar.gz", hash = "sha256:b34908a0eff092b1ec5a82245f74ad3390e72aca1014340f68fb56d01b2fc3a2", size = 210393, upload-time = "2026-08-12T21:44:21.544Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/d6/7c67f075ed6cb71d029e676e82d66b4b1ca1403556efa418169290f8e2d5/aicfg-0.0.7-py3-none-any.whl", hash = "sha256:159bc02957a3fe01d962c53f5899558066fffbd7be1369067110670684413f8a", size = 6923, upload-time = "2026-08-12T21:44:20.388Z" },
-]
-
-[[package]]
 name = "aiohappyeyeballs"
 version = "2.7.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1097,7 +1088,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "aicfg" },
     { name = "assertpy" },
     { name = "prek" },
     { name = "pytest" },
@@ -1122,7 +1112,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "aicfg", specifier = ">=0.0.7" },
     { name = "assertpy", specifier = ">=1.1" },
     { name = "prek", specifier = ">=0.4.13" },
     { name = "pytest", specifier = ">=9.1.1" },
