@@ -6,6 +6,12 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - "app/**"
+      - "Dockerfile"
+      - ".github/workflows/stage.yml"
+      - "pyproject.toml"
+      - "uv.lock"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
