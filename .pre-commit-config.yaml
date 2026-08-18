@@ -34,7 +34,7 @@ repos:
       - id: editorconfig-checker
 
   - repo: https://github.com/TomerFi/aicfg
-    rev: afa98a7a45bbdd2f6f596dd5c8f4c20362829b6d  # frozen: 0.0.7
+    rev: 7a71c5c7e0d8d9ebdd4a2e9212c9bb04a49c687f  # frozen: 0.2.0
     hooks:
       - id: link
         args: ["agents", "--to", "claude-code"]
