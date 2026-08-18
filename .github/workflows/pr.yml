@@ -41,8 +41,11 @@ jobs:
           uv run --locked ruff format --check
           uv run --locked ty check
 
-      - name: Ensure assistants links are up to date
-        run: uv run --locked aicfg link agents --to claude-code --ci
+      - name: Ensure assistant files are linked
+        uses: tomerfi/aicfg/link@7a71c5c7e0d8d9ebdd4a2e9212c9bb04a49c687f # 0.2.0
+        with:
+          source: agents
+          target: claude-code
 
       - name: Test project
         run: uv run --locked pytest -v --cov --cov-report=xml:coverage.xml --junit-xml junit.xml

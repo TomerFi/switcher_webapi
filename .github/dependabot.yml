@@ -7,10 +7,6 @@ updates:
       interval: weekly
     commit-message:
       prefix: "ci"
-    groups:
-      gh-actions:
-        patterns:
-          - "*"
 
   - package-ecosystem: "uv"
     directory: "/"
@@ -19,8 +15,10 @@ updates:
     commit-message:
       prefix: "build"
       include: "scope"
-    versioning-strategy: increase-if-necessary
     groups:
+      mkdocs:
+        patterns:
+          - "mkdocs*"
       dev-deps:
         dependency-type: "development"
 
