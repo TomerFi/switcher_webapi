@@ -3,5 +3,3 @@
 pr:
   conventionalTitle:
   tasksList:
-  autoApprove:
-    users: ["dependabot"]
