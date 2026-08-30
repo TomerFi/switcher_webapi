@@ -110,15 +110,15 @@ wheels = [
 
 [[package]]
 name = "aioswitcher"
-version = "6.2.0"
+version = "6.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
     { name = "pycryptodome" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/89/41/a974dcd3f7bfcb97b81c71b30dfb87a56d53edbfd8235c6b636b86f94c81/aioswitcher-6.2.0.tar.gz", hash = "sha256:f612c0693d62a8ba7a4644910c35475eb4cd74af922cbb4314029f57902ffa3f", size = 800523, upload-time = "2026-08-03T16:14:25.384Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/63/42/3da0bb7b15261e48c8e2c91e0e0db04232fdfbda05890f1fd26d8d9ab333/aioswitcher-6.3.0.tar.gz", hash = "sha256:6333203f9d503442c10d7d6bd80105ba4f52cccb47d6253017ae3fd66b6138e0", size = 800723, upload-time = "2026-08-25T20:37:23.112Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/bf/37bd5d754d0dda4adf55d86f78947c900959ce49b6401da49faa722dfe6b/aioswitcher-6.2.0-py3-none-any.whl", hash = "sha256:2be613b375c0e6bd95c776f935dcc648750fe27ad1ad4ec4a97ab4657d33d127", size = 591262, upload-time = "2026-08-03T16:14:23.586Z" },
+    { url = "https://files.pythonhosted.org/packages/67/5c/6a9f4ba965f46fb47a9b90e1c2aca7f7ca297a12dbe14e67eae93ba64d02/aioswitcher-6.3.0-py3-none-any.whl", hash = "sha256:cdf477961dcc1e8e3e65e16e60744d7ba2e3bb79ad9b575d1d5a0ed1dd948068", size = 591395, upload-time = "2026-08-25T20:37:21.329Z" },
 ]
 
 [[package]]
@@ -1107,7 +1107,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "aiohttp", specifier = "==3.14.3" },
-    { name = "aioswitcher", specifier = "==6.2.0" },
+    { name = "aioswitcher", specifier = "==6.3.0" },
 ]
 
 [package.metadata.requires-dev]
