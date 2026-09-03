@@ -1112,20 +1112,20 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "assertpy", specifier = ">=1.1" },
-    { name = "prek", specifier = ">=0.4.13" },
-    { name = "pytest", specifier = ">=9.1.1" },
-    { name = "pytest-aiohttp", specifier = ">=1.1.1" },
-    { name = "pytest-asyncio", specifier = ">=1.4.0" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
-    { name = "pytest-sugar", specifier = ">=1.1.1" },
-    { name = "ruff", specifier = ">=0.16.3" },
-    { name = "ty", specifier = ">=0.0.72" },
+    { name = "assertpy", specifier = "==1.1" },
+    { name = "prek", specifier = "==0.4.14" },
+    { name = "pytest", specifier = "==9.1.1" },
+    { name = "pytest-aiohttp", specifier = "==1.1.1" },
+    { name = "pytest-asyncio", specifier = "==1.4.0" },
+    { name = "pytest-cov", specifier = "==7.1.0" },
+    { name = "pytest-sugar", specifier = "==1.1.1" },
+    { name = "ruff", specifier = "==0.16.4" },
+    { name = "ty", specifier = "==0.0.75" },
 ]
 docs = [
-    { name = "mkdocs", specifier = ">=1.6.1" },
-    { name = "mkdocs-git-revision-date-plugin", specifier = ">=0.3.2" },
-    { name = "mkdocs-material", specifier = ">=9.7.7" },
+    { name = "mkdocs", specifier = "==1.6.1" },
+    { name = "mkdocs-git-revision-date-plugin", specifier = "==0.3.2" },
+    { name = "mkdocs-material", specifier = "==9.7.7" },
 ]
 
 [[package]]
