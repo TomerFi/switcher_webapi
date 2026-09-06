@@ -13,14 +13,14 @@ dependencies = [
 [dependency-groups]
 dev = [
     "assertpy==1.1",
-    "ty==0.0.75",
-    "prek==0.4.14",
+    "ty==0.0.78",
+    "prek==0.5.2",
     "pytest==9.1.1",
     "pytest-aiohttp==1.1.1",
     "pytest-asyncio==1.4.0",
     "pytest-cov==7.1.0",
     "pytest-sugar==1.1.1",
-    "ruff==0.16.4",
+    "ruff==0.16.5",
 ]
 docs = [
     "mkdocs==1.6.1",
