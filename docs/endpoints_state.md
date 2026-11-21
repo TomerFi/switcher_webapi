@@ -47,6 +47,13 @@
 
 --8<-- "query_params.md"
 
+**Shutter State Response**
+
+| Key       | Type    | Example      |
+|:----------|:--------|:-------------|
+| direction | string  | SHUTTER_STOP |
+| position  | integer | 95           |
+
 ### Get Light State
 
 | Method | Endpoint                    | Description                                   |
@@ -54,11 +61,4 @@
 | GET    | /switcher/get_light_state | Returns the current state of Light devices. |
 
 --8<-- "query_params.md"
-
-**Shutter State Response**
-
-| Key       | Type    | Example      |
-|:----------|:--------|:-------------|
-| direction | string  | SHUTTER_STOP |
-| position  | integer | 95           |
 
