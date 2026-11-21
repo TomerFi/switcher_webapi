@@ -1,6 +1,6 @@
 ## Configuration Endpoints
 
-### ==Set Name==
+### Set Name
 
 | Method | Endpoint           | Description               |
 |:-------|:-------------------|:--------------------------|
@@ -14,7 +14,7 @@
 |:-----|:-------|:---------|------------------|
 | name | string | Yes      | MySwitcherDevice |
 
-### ==Set Auto Shutdown==
+### Set Auto Shutdown
 
 | Method | Endpoint                    | Description                                       |
 |:-------|:----------------------------|:--------------------------------------------------|
@@ -29,7 +29,7 @@
 | hours   | integer | Yes      | 2       |
 | minutes | integer | No       | 30      |
 
-### ==Set Shutter Position==
+### Set Shutter Position
 
 | Method | Endpoint                       | Description                                                     |
 |:-------|:-------------------------------|:----------------------------------------------------------------|

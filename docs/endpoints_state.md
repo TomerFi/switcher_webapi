@@ -1,6 +1,6 @@
 ## State Endpoints
 
-### ==Get State==
+### Get State
 
 | Method | Endpoint            | Description                            |
 |:-------|:--------------------|:---------------------------------------|
@@ -19,7 +19,7 @@
 | power_consumption | string  | 1274     |
 | electric_current  | string  | 16.4     |
 
-### ==Get Breeze State==
+### Get Breeze State
 
 | Method | Endpoint                   | Description                                    |
 |:-------|:---------------------------|:-----------------------------------------------|
@@ -39,7 +39,7 @@
 | swing              | string  | ON       |
 | remote_id          | string  | DLK65863 |
 
-### ==Get Shutter State==
+### Get Shutter State
 
 | Method | Endpoint                    | Description                                   |
 |:-------|:----------------------------|:----------------------------------------------|
@@ -47,7 +47,7 @@
 
 --8<-- "query_params.md"
 
-### ==Get Light State==
+### Get Light State
 
 | Method | Endpoint                    | Description                                   |
 |:-------|:----------------------------|:----------------------------------------------|

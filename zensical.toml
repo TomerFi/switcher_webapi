@@ -1,0 +1,107 @@
+site_name = "Switcher WebAPI"
+site_url = "https://switcher-webapi.figenblat.com"
+site_author = "Tomer Figenblat"
+site_description = "Switcher WebAPI Documentation"
+
+repo_name = "TomerFi/switcher_webapi"
+repo_url = "https://github.com/TomerFi/switcher_webapi"
+edit_uri = ""
+
+nav = [
+  { Home = "index.md" },
+  { "API Endpoints" = [
+    { "All Endpoints" = "endpoints_all.md" },
+    { "State Endpoints" = "endpoints_state.md" },
+    { "Action Endpoints" = "endpoints_action.md" },
+    { "Config Endpoints" = "endpoints_config.md" },
+    { "Schedule Endpoint" = "endpoints_schedule.md" },
+  ] },
+  { "Device Types" = "device_types.md" },
+]
+
+markdown_extensions = [
+  "admonition",
+  "pymdownx.betterem",
+  "pymdownx.caret",
+  "pymdownx.critic",
+  "pymdownx.details",
+  { "pymdownx.emoji" = { emoji_index = "zensical.extensions.emoji.twemoji", emoji_generator = "zensical.extensions.emoji.to_svg" } },
+  "pymdownx.mark",
+  "pymdownx.smartsymbols",
+  { "pymdownx.snippets" = { base_path = [ "docs" ] } },
+  "tables",
+  { toc = { permalink = "⚓︎" } },
+  { "pymdownx.superfences" = { custom_fences = [ { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" } ] } },
+  { "pymdownx.tabbed" = { alternate_style = true } },
+]
+
+[extra.analytics]
+provider = "google"
+property = "G-PMGFCZ93GB"
+
+[[plugins]]
+[plugins.llmstxt]
+full_output = "llms-full.txt"
+markdown_description = "The complete documentation is also available as a single file: [llms-full.txt](https://switcher-webapi.figenblat.com/llms-full.txt)."
+
+[plugins.llmstxt.sections]
+"Getting started" = [
+  { "index.md" = "Overview, quick start, and architecture diagram" },
+]
+"API Endpoints" = [
+  { "endpoints_all.md" = "All REST endpoints in a single reference" },
+  { "endpoints_state.md" = "Device state and telemetry endpoints" },
+  { "endpoints_action.md" = "Device control endpoints (on/off, set power, timer)" },
+  { "endpoints_config.md" = "Device configuration endpoints (name, auto-off)" },
+  { "endpoints_schedule.md" = "Schedule management endpoints" },
+]
+"Device Types" = [
+  { "device_types.md" = "Table of supported Switcher device types" },
+]
+
+[theme]
+name = "material"
+logo = "img/logo.png"
+favicon = "img/favicon.ico"
+features = [
+  "content.code.annotate",
+  "header.autohide",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.progress",
+  "navigation.instant.preview",
+  "navigation.tracking",
+  "navigation.top",
+  "toc.follow",
+  "search.highlight",
+]
+
+[theme.font]
+code = "Fira Code"
+text = "Open Sans"
+
+[[theme.palette]]
+media = "(prefers-color-scheme)"
+primary = "red"
+
+[theme.palette.toggle]
+icon = "material/brightness-auto"
+name = "Switch to system preference"
+
+[[theme.palette]]
+media = "(prefers-color-scheme: light)"
+primary = "red"
+scheme = "default"
+
+[theme.palette.toggle]
+icon = "material/brightness-7"
+name = "Switch to dark mode"
+
+[[theme.palette]]
+media = "(prefers-color-scheme: dark)"
+primary = "red"
+scheme = "slate"
+
+[theme.palette.toggle]
+icon = "material/brightness-4"
+name = "Switch to light mode"

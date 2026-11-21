@@ -1,6 +1,6 @@
 ## Action Endpoints
 
-### ==Turn On==
+### Turn On
 
 | Method | Endpoint          | Description                                                                         |
 |:-------|:------------------|:------------------------------------------------------------------------------------|
@@ -14,7 +14,7 @@
 |:--------|:--------|:---------|---------|
 | minutes | integer | No       | 90      |
 
-### ==Turn Off==
+### Turn Off
 
 | Method | Endpoint           | Description        |
 |:-------|:-------------------|:-------------------|
@@ -22,7 +22,7 @@
 
 --8<-- "query_params.md"
 
-### ==Turn On Shutter Child Lock==
+### Turn On Shutter Child Lock
 
 | Method | Endpoint                             | Description                   |
 |:-------|:-------------------------------------|:------------------------------|
@@ -30,7 +30,7 @@
 
 --8<-- "query_params.md"
 
-### ==Turn Off Shutter Child Lock==
+### Turn Off Shutter Child Lock
 
 | Method | Endpoint                              | Description                    |
 |:-------|:--------------------------------------|:-------------------------------|
@@ -38,7 +38,7 @@
 
 --8<-- "query_params.md"
 
-### ==Turn On Light==
+### Turn On Light
 
 | Method | Endpoint                | Description             |
 |:-------|:------------------------|:------------------------|
@@ -46,7 +46,7 @@
 
 --8<-- "query_params.md"
 
-### ==Turn Off Light==
+### Turn Off Light
 
 | Method | Endpoint                 | Description              |
 |:-------|:-------------------------|:-------------------------|
@@ -54,7 +54,7 @@
 
 --8<-- "query_params.md"
 
-### ==Stop Shutter==
+### Stop Shutter
 
 | Method | Endpoint               | Description            |
 |:-------|:-----------------------|:-----------------------|
@@ -62,7 +62,7 @@
 
 --8<-- "query_params.md"
 
-### ==Control Breeze==
+### Control Breeze
 
 | Method | Endpoint                        | Description              |
 |:-------|:--------------------------------|:-------------------------|
