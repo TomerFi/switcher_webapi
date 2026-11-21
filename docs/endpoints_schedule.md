@@ -1,6 +1,6 @@
 ## Schedule Endpoints
 
-### ==Get Schedules==
+### Get Schedules
 
 | Method | Endpoint                | Description                                         |
 |:-------|:------------------------|:----------------------------------------------------|
@@ -19,7 +19,7 @@
 | duration    | string    | 0:30:00                  |
 | display     | string    | Due next Friday at 23:00 |
 
-### ==Delete a Schedule==
+### Delete a Schedule
 
 | Method | Endpoint                  | Description                            |
 |:-------|:--------------------------|:---------------------------------------|
@@ -33,7 +33,7 @@
 |:----------|:-------|:---------|---------|
 | schedule  | string | Yes      | 7       |
 
-### ==Create a Schedule==
+### Create a Schedule
 
 | Method | Endpoint                  | Description                        |
 |:-------|:--------------------------|:-----------------------------------|

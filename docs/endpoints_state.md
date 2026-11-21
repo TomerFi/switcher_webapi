@@ -1,6 +1,6 @@
 ## State Endpoints
 
-### ==Get State==
+### Get State
 
 | Method | Endpoint            | Description                            |
 |:-------|:--------------------|:---------------------------------------|
@@ -19,7 +19,7 @@
 | power_consumption | string  | 1274     |
 | electric_current  | string  | 16.4     |
 
-### ==Get Breeze State==
+### Get Breeze State
 
 | Method | Endpoint                   | Description                                    |
 |:-------|:---------------------------|:-----------------------------------------------|
@@ -39,19 +39,11 @@
 | swing              | string  | ON       |
 | remote_id          | string  | DLK65863 |
 
-### ==Get Shutter State==
+### Get Shutter State
 
 | Method | Endpoint                    | Description                                   |
 |:-------|:----------------------------|:----------------------------------------------|
 | GET    | /switcher/get_shutter_state | Returns the current state of Shutter devices. |
-
---8<-- "query_params.md"
-
-### ==Get Light State==
-
-| Method | Endpoint                    | Description                                   |
-|:-------|:----------------------------|:----------------------------------------------|
-| GET    | /switcher/get_light_state | Returns the current state of Light devices. |
 
 --8<-- "query_params.md"
 
@@ -61,4 +53,12 @@
 |:----------|:--------|:-------------|
 | direction | string  | SHUTTER_STOP |
 | position  | integer | 95           |
+
+### Get Light State
+
+| Method | Endpoint                    | Description                                   |
+|:-------|:----------------------------|:----------------------------------------------|
+| GET    | /switcher/get_light_state | Returns the current state of Light devices. |
+
+--8<-- "query_params.md"
 

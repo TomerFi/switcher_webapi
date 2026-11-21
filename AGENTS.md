@@ -82,7 +82,7 @@ podman buildx build \
 **Key Files:**
 - `README.md` — user-facing overview and quick start
 - `CONTRIBUTING.md` — developer setup, workflow, IDE configuration, and commands
-- `docs/` — MkDocs site with endpoint documentation
+- `docs/` — Zensical site with endpoint documentation
 
 When to update docs:
 - New endpoint added

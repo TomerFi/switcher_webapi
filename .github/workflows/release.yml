@@ -59,7 +59,7 @@ jobs:
         run: uv sync --no-install-project --group dev --group docs --locked
 
       - name: Build documentation site
-        run: uv run --locked mkdocs build
+        run: uv run --locked zensical build --strict
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
@@ -91,15 +91,11 @@ jobs:
           else jq_output=$(uv version --output-format json --bump "${{ github.event.inputs.bump }}"); fi
           echo "version=$(echo "$jq_output" | jq -r '.version')" >> "$GITHUB_OUTPUT"
 
-      - name: Update mkdocs.yml version
-        run: |
-          sed -i "s/  version: .*/  version: \"${{ steps.uv_new.outputs.version }}\"/" mkdocs.yml
-
       - name: Commit, tag, and push
         env:
           NEXT_VERSION: '${{ steps.uv_new.outputs.version }}'
         run: |
-          git add pyproject.toml mkdocs.yml uv.lock
+          git add pyproject.toml uv.lock
           git commit -m "build: bump version to $NEXT_VERSION [skip ci]"
           git push
 

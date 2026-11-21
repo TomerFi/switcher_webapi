@@ -36,7 +36,7 @@ jobs:
         run: uv sync --no-install-project --group docs --locked
 
       - name: Build documentation site
-        run: uv run --locked mkdocs build
+        run: uv run --locked zensical build --strict
 
       - name: Deploy to GH-Pages
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
