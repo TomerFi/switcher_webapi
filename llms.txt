@@ -1,0 +1,21 @@
+# Switcher WebAPI
+
+> Switcher WebAPI Documentation
+
+The complete documentation is also available as a single file: [llms-full.txt](https://switcher-webapi.figenblat.com/llms-full.txt).
+
+## Getting started
+
+- [Home](<https://switcher-webapi.figenblat.com/index.md>): Overview, quick start, and architecture diagram
+
+## API Endpoints
+
+- [All Endpoints](<https://switcher-webapi.figenblat.com/endpoints_all/index.md>): All REST endpoints in a single reference
+- [State Endpoints](<https://switcher-webapi.figenblat.com/endpoints_state/index.md>): Device state and telemetry endpoints
+- [Action Endpoints](<https://switcher-webapi.figenblat.com/endpoints_action/index.md>): Device control endpoints (on/off, set power, timer)
+- [Config Endpoints](<https://switcher-webapi.figenblat.com/endpoints_config/index.md>): Device configuration endpoints (name, auto-off)
+- [Schedule Endpoint](<https://switcher-webapi.figenblat.com/endpoints_schedule/index.md>): Schedule management endpoints
+
+## Device Types
+
+- [Device Types](<https://switcher-webapi.figenblat.com/device_types/index.md>): Table of supported Switcher device types
