@@ -85,7 +85,7 @@ jobs:
           NEXT_VERSION: '${{ steps.bumper.outputs.next }}'
         run: |
           if [ "${{ github.event.inputs.bump }}" == "auto" ];
-          then jq_output=$(uv version --output-format json --bump stable "$NEXT_VERSION");
+          then jq_output=$(uv version --output-format json "$NEXT_VERSION");
           elif [ "${{ github.event.inputs.bump }}" == "patch" ];
           then jq_output=$(uv version --output-format json --bump stable);
           else jq_output=$(uv version --output-format json --bump "${{ github.event.inputs.bump }}"); fi
