@@ -12,15 +12,15 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "assertpy==2.36.0",
-    "ty==0.0.101",
-    "prek==0.5.10",
+    "assertpy==2.36.1",
+    "ty==0.0.107",
+    "prek==0.5.11",
     "pytest==9.2.0",
     "pytest-aiohttp==1.1.1",
-    "pytest-asyncio==1.4.1.post1",
+    "pytest-asyncio==1.5.0",
     "pytest-cov==7.1.0",
     "pytest-sugar==1.1.1",
-    "ruff==0.17.4",
+    "ruff==0.17.5",
 ]
 docs = [
     "zensical==0.1.3",
